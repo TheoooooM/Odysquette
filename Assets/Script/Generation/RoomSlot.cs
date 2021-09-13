@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class RoomSlot : MonoBehaviour
 {
-    public bool IsUse;
+    public bool IsUse = false;
+    public bool Usable = false;
 }
