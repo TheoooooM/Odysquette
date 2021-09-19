@@ -13,7 +13,6 @@ public class Shoot : MonoBehaviour
     [SerializeField] GameObject Bullet;
     [SerializeField] GameObject Spawner;
     [SerializeField] Playercontroller Playercontroller;
-    float shootCooldown;
 
     [Header("Settings")]
     [SerializeField] int ShootRate;
@@ -29,7 +28,7 @@ public class Shoot : MonoBehaviour
         mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //Debug.Log("rigidbody2D: "+ Parent.GetComponent<Rigidbody2D>().position + "lookdir : " + lookDir + "angle: "+ angle);
 
-        if (Input.GetKey(KeyCode.Mouse0))
+        /*if (Input.GetKey(KeyCode.Mouse0))
         {
             if (shootCooldown <= 0f)
             {
@@ -39,7 +38,7 @@ public class Shoot : MonoBehaviour
                 shootCooldown = 1.5f;
             }
             shootCooldown -= Time.deltaTime*ShootRate;
-        }
+        }*/
 
         //transform.position = GunPos;
     }
