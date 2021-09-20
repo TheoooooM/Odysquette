@@ -90,7 +90,7 @@ public class Shooter : MonoBehaviour
         {
             if (shootCooldown <= 0f)
             {
-                SpawnFromPool("basic");
+                //SpawnFromPool("basic");
                 shootCooldown = 1.5f;
             }
             else
@@ -109,7 +109,7 @@ public class Shooter : MonoBehaviour
         
     }
 
-    virtual public void SpawnFromPool(string tag)
+    /*virtual public void SpawnFromPool(string tag)
     {
         GameObject objToSpawn = poolDictionary[tag].Dequeue();
         objToSpawn.SetActive(true);
@@ -117,6 +117,6 @@ public class Shooter : MonoBehaviour
         objToSpawn.transform.rotation = Quaternion.Euler(0, 0, angle);
         
         poolDictionary[tag].Enqueue(objToSpawn);
-    }
+    }*/
     
 }

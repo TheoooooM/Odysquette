@@ -5,15 +5,17 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    #region Singleton
     public static GameManager Instance;
 
     private void Awake()
     {
         Instance = this;
     }
+    #endregion
     
-    enum Effect {bounce, pierce, explosion, poison, ice}
-    enum Straw {basic, bubble, snipaille, eightPaille, fourDir, tripaille, mitra}
+    public enum Effect {none,bounce, pierce, explosion, poison, ice}
+    public enum Straw {basic, bubble, snipaille, eightPaille, fourDir, tripaille, mitra}
     
     
     
@@ -28,10 +30,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] Effect secondEffect;
     
     //Straw
-    private Straw actualStraw;
-    //GameObject actualStrawGam = (int) actualStraw;
+    private Straw actualStraw = Straw.basic;
+    private GameObject actualStrawGam;
     List<StrawClass> straws = new List<StrawClass>();
 
+    private float shootCooldown;
+    
+    //Bullet
+    private float ShootRate;
+    
     //Player
     public GameObject Player;
 
@@ -40,13 +47,18 @@ public class GameManager : MonoBehaviour
     private float firerateModifier;
     private float speedModifier;
 
+    private void Start()
+    {
+        actualStrawGam = Player.transform.GetChild((int) actualStraw).gameObject;
+    }
+
     private void Update()
     {
         if (Input.GetKey(KeyCode.Mouse0))
         {
             if (shootCooldown <= 0f)
             {
-                SpawnFromPool("basic");
+               PoolManager.Instance.SpawnFromPool("basic");
                 shootCooldown = 1.5f;
             }
             else

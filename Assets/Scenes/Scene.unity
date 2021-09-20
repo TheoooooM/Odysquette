@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 10544508}
+  - component: {fileID: 10544509}
   m_Layer: 0
   m_Name: PoolContainer
   m_TagString: Untagged
@@ -153,6 +154,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &10544509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10544507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c09111c8c5c48d44b49971913c2e589, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &138010070
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,7 +207,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 138010070}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90f6b364e1f44324bb4594085fa39319, type: 3}
   m_Name: 
@@ -208,12 +221,7 @@ MonoBehaviour:
   bulletSpray: 0
   damage: 0
   Range: 0
-  bullets:
-  - Effect: 0
-    doubleEffect: 0
-    secondEffect: 0
-    prefabs: {fileID: 602687282885438852, guid: 59004c82ab0c6614e8579de9e78059f8, type: 3}
-    size: 50
+  bullets: []
 --- !u!114 &138010073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -521,7 +529,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 523661635}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90f6b364e1f44324bb4594085fa39319, type: 3}
   m_Name: 
@@ -535,12 +543,7 @@ MonoBehaviour:
   bulletSpray: 0
   damage: 0
   Range: 0
-  bullets:
-  - Effect: 0
-    doubleEffect: 0
-    secondEffect: 0
-    prefabs: {fileID: 602687282885438852, guid: 59004c82ab0c6614e8579de9e78059f8, type: 3}
-    size: 50
+  bullets: []
 --- !u!114 &523661638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1037,7 +1040,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1063981873}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90f6b364e1f44324bb4594085fa39319, type: 3}
   m_Name: 
@@ -1051,12 +1054,7 @@ MonoBehaviour:
   bulletSpray: 0
   damage: 0
   Range: 0
-  bullets:
-  - Effect: 1
-    doubleEffect: 0
-    secondEffect: 0
-    prefabs: {fileID: 602687282885438852, guid: 59004c82ab0c6614e8579de9e78059f8, type: 3}
-    size: 50
+  bullets: []
 --- !u!1 &1112882755
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,7 +1126,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1171758925}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90f6b364e1f44324bb4594085fa39319, type: 3}
   m_Name: 
@@ -1142,12 +1140,7 @@ MonoBehaviour:
   bulletSpray: 0
   damage: 0
   Range: 0
-  bullets:
-  - Effect: 0
-    doubleEffect: 0
-    secondEffect: 0
-    prefabs: {fileID: 602687282885438852, guid: 59004c82ab0c6614e8579de9e78059f8, type: 3}
-    size: 50
+  bullets: []
 --- !u!114 &1171758928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1621,7 +1614,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1610629937}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90f6b364e1f44324bb4594085fa39319, type: 3}
   m_Name: 
@@ -1635,12 +1628,7 @@ MonoBehaviour:
   bulletSpray: 0
   damage: 0
   Range: 0
-  bullets:
-  - Effect: 0
-    doubleEffect: 0
-    secondEffect: 0
-    prefabs: {fileID: 602687282885438852, guid: 59004c82ab0c6614e8579de9e78059f8, type: 3}
-    size: 50
+  bullets: []
 --- !u!114 &1610629940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1754,7 +1742,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1827252491}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90f6b364e1f44324bb4594085fa39319, type: 3}
   m_Name: 
@@ -1768,12 +1756,7 @@ MonoBehaviour:
   bulletSpray: 0
   damage: 0
   Range: 0
-  bullets:
-  - Effect: 0
-    doubleEffect: 0
-    secondEffect: 0
-    prefabs: {fileID: 602687282885438852, guid: 59004c82ab0c6614e8579de9e78059f8, type: 3}
-    size: 50
+  bullets: []
 --- !u!114 &1827252494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2070,6 +2053,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06127b54c36660a489cdae7e76086074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstEffect: 0
+  secondEffect: 0
+  Player: {fileID: 541801653}
 --- !u!4 &2137677117
 Transform:
   m_ObjectHideFlags: 0
