@@ -15,23 +15,41 @@ public class Shooter : MonoBehaviour
     
     [Header("Settings")]
     [SerializeField] int ShootRate;
-    [SerializeField] private Effects ActualEffect;
+    [SerializeField] private float bulletSize;
+    [SerializeField] private float bulletSpeed;
+    [SerializeField] private float bulletSpray;
+    [SerializeField] private float damage;
+    [SerializeField] private float Range;
     
     
     [System.Serializable]
     public class Pool
     {
         public Effects Effect;
+        public bool doubleEffect; //Est ce que la balle a un double effet
+        public Effects secondEffect;
         public GameObject prefabs;
         public int size;
+    }
+    
+    [System.Serializable]
+    public class Straw
+    {
+        public Straws strawEffect;
+        private Sprite strawSprite;
     }
 
     public enum Effects
     {
-        basic, bounce, throught
+        none, basic, bounce, throught
+    }
+
+    public enum Straws
+    {
+        pierce, bounce, poison, explosion, blackHole, ice
     }
     
-    #region Singletone
+    /*#region Singletone
 
     public static Shooter Instance;
 
@@ -40,16 +58,16 @@ public class Shooter : MonoBehaviour
         Instance = this;
     }
 
-    #endregion
+    #endregion*/
 
-    public List<Pool> pools;
+    public List<Pool> bullets;
     public Dictionary<string, Queue<GameObject>> poolDictionary;
 
     private void Start()
     {
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
-        foreach (Pool pol in pools)
+        foreach (Pool pol in bullets)
         {
             Queue<GameObject> objectPool = new Queue<GameObject>();
             
@@ -72,17 +90,17 @@ public class Shooter : MonoBehaviour
         {
             if (shootCooldown <= 0f)
             {
-                SpawnFromPool(ActualEffect.ToString());
+                SpawnFromPool("basic");
                 shootCooldown = 1.5f;
             }
-            else if(shootCooldown > 0)
+            else
             {
-                
+                Debug.Log("nope");
             }
-            shootCooldown -= Time.deltaTime*ShootRate;
         }
+        shootCooldown -= Time.deltaTime*ShootRate;
     }
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         Vector2 Position = new Vector2(transform.position.x, transform.position.y);
         _lookDir = new Vector2(mousepos.x, mousepos.y) - Position ;
@@ -91,12 +109,12 @@ public class Shooter : MonoBehaviour
         
     }
 
-    public void SpawnFromPool(string tag)
+    virtual public void SpawnFromPool(string tag)
     {
         GameObject objToSpawn = poolDictionary[tag].Dequeue();
         objToSpawn.SetActive(true);
         objToSpawn.transform.position = Spawner.transform.position;
-        //objToSpawn.transform.rotation = angle;
+        objToSpawn.transform.rotation = Quaternion.Euler(0, 0, angle);
         
         poolDictionary[tag].Enqueue(objToSpawn);
     }
