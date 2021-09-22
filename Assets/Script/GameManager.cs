@@ -13,31 +13,48 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
     #endregion
-    
+
+    #region Enum
+
     public enum Effect {none,bounce, pierce, explosion, poison, ice}
     public enum Straw {basic, bubble, snipaille, eightPaille, fourDir, tripaille, mitra}
     
+    #endregion
     
-    
+    #region StrawClass
+    [System.Serializable]
     public class StrawClass
     {
+        public String StrawName;
+        public Straw StrawType;
         public GameObject StrawParent;
         public List<Transform> spawnerTransform;
     }
+    #endregion
+    
+    //mouse
+    private Vector2 mousepos;
+    public  float angle;
+    
     
     //Juices
     [SerializeField] Effect firstEffect;
     [SerializeField] Effect secondEffect;
     
     //Straw
-    private Straw actualStraw = Straw.basic;
-    private GameObject actualStrawGam;
-    List<StrawClass> straws = new List<StrawClass>();
+    public Straw actualStraw = Straw.basic;
+    [SerializeField] List<StrawClass> strawsClass;
 
     private float shootCooldown;
     
     //Bullet
-    private float ShootRate;
+    [Header("Settings")]
+    [SerializeField] int ShootRate;
+    [SerializeField] private float bulletSize;
+    [SerializeField] private float bulletSpeed;
+    [SerializeField] private float bulletSpray;
+    [SerializeField] private float damage;
+    [SerializeField] private float Range;
     
     //Player
     public GameObject Player;
@@ -46,28 +63,71 @@ public class GameManager : MonoBehaviour
     private float damageModifier;
     private float firerateModifier;
     private float speedModifier;
+    
+    
 
+    
+    [Header("----------------DEBUG---------------")]
+    public Vector2 _lookDir;
+    public StrawClass actualStrawClass;
+    
+    
     private void Start()
     {
-        actualStrawGam = Player.transform.GetChild((int) actualStraw).gameObject;
+        actualStrawClass = strawsClass[(int) actualStraw];
+        foreach (StrawClass str in strawsClass)
+        {
+            if (str.StrawType == actualStraw)
+            {
+                str.StrawParent.SetActive((true));
+            }
+            else
+            {
+                str.StrawParent.SetActive((false));
+            }
+        }
     }
 
     private void Update()
     {
+        mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (Input.GetKey(KeyCode.Mouse0))
         {
             if (shootCooldown <= 0f)
             {
-               PoolManager.Instance.SpawnFromPool("basic");
+                PoolManager.Instance.SpawnFromPool();
                 shootCooldown = 1.5f;
             }
-            else
-            {
-                Debug.Log("nope");
-            }
         }
-        shootCooldown -= Time.deltaTime*ShootRate;
+        shootCooldown -= Time.deltaTime * ShootRate;
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ChangeStraw(Straw.tripaille);
+        }
+        
     }
+
+    void FixedUpdate()
+    {
+        Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x, actualStrawClass.StrawParent.transform.position.y);
+        _lookDir = new Vector2(mousepos.x, mousepos.y) - Position ;
+        angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
+        actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        
+    }
+
+    void ChangeStraw(Straw straw)
+    {
+        actualStrawClass.StrawParent.SetActive(false);
+        actualStrawClass = strawsClass[(int) straw];
+        actualStrawClass.StrawParent.SetActive(true);
+        actualStraw = straw;
+
+
+    }
+    
+    
 }
 
 

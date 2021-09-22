@@ -6,13 +6,13 @@ using UnityEngine;
 public class PoolManager : MonoBehaviour
 {
     public List<Pool> bullets;
-    public Dictionary<string, Queue<GameObject>> poolDictionary;
+    public Dictionary<GameManager.Straw, Queue<GameObject>> poolDictionary;
     
+    [System.Serializable]
     public class Pool
     {
-        public GameManager.Effect effect;
-        public bool doubleEffect; //Est ce que la balle a un double effet
-        public GameManager.Effect secondEffect;
+        [SerializeField] private String name;
+        public GameManager.Straw Straw;
         public GameObject prefabs;
         public int size;
     }
@@ -26,11 +26,9 @@ public class PoolManager : MonoBehaviour
     }
     #endregion
     
-    
-    
     private void Start()
     {
-        poolDictionary = new Dictionary<string, Queue<GameObject>>();
+        poolDictionary = new Dictionary<GameManager.Straw, Queue<GameObject>>();
 
         foreach (Pool pol in bullets)
         {
@@ -39,21 +37,38 @@ public class PoolManager : MonoBehaviour
             for (int i = 0; i < pol.size; i++)
             {
                 GameObject obj = Instantiate(pol.prefabs, transform);
-                obj.name = tag;
+                obj.name = GameManager.Instance.actualStraw.ToString();
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
             
-            poolDictionary.Add(pol.effect.ToString(), objectPool);
+            poolDictionary.Add(pol.Straw, objectPool);
         }
     }
     
-    virtual public void SpawnFromPool(string tag)
+    virtual public void SpawnFromPool()
     {
-        GameObject objToSpawn = poolDictionary[tag].Dequeue();
-        objToSpawn.SetActive(true);
-        
-        poolDictionary[tag].Enqueue(objToSpawn);
+        int count = 0;
+        foreach (Transform spawn in GameManager.Instance.actualStrawClass.spawnerTransform)
+        {
+            if (poolDictionary[GameManager.Instance.actualStraw].Count == 0)
+            {
+                GameObject obj = Instantiate(bullets[(int) GameManager.Instance.actualStraw].prefabs, transform);
+                obj.name = GameManager.Instance.actualStraw.ToString();
+                obj.transform.position = spawn.position;
+                obj.transform.rotation = Quaternion.Euler(0f, 0f, GameManager.Instance.angle);
+                poolDictionary[GameManager.Instance.actualStraw].Enqueue(obj);
+            }
+            else
+            {
+                count++;
+                Debug.Log("Count : "+count);    
+                GameObject objToSpawn = poolDictionary[GameManager.Instance.actualStraw].Dequeue();
+                objToSpawn.SetActive(true);
+                objToSpawn.transform.position = spawn.position;
+                objToSpawn.transform.rotation = Quaternion.Euler(0f, 0f, GameManager.Instance.angle);
+            }
+        }
     }
     
 }

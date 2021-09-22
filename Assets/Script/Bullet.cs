@@ -12,6 +12,13 @@ public class Bullet : MonoBehaviour
         GetComponent<Rigidbody2D>().AddForce(transform.right * (BulletSpeed* 0.0001f), ForceMode2D.Impulse);
         
         Timer= Timer + 1 ;
-        if (Timer == 500) Destroy(gameObject);
+        if (Timer == 500)
+        {
+            Timer = 0;
+            gameObject.SetActive(false);
+            
+            PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject);
+        }
+        
     }
 }
