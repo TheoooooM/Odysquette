@@ -22,22 +22,24 @@ public class GameManager : MonoBehaviour
     #endregion
     
     #region StrawClass
+    
+    
     [System.Serializable]
-    public class StrawClass
+    public class StrawClass // Class regroupant toute les informations concernant une paille
     {
-        public Straw StrawType;
         public String StrawName;
-        public GameObject StrawParent;
-        public GameObject prefabs;
-        public BulletStat Scriptable;
-        public List<Transform> spawnerTransform;
-        public int size;
+        public Straw StrawType; 
+        public GameObject StrawParent; // GameObject de la paille
+        public GameObject prefabs; // Prefabs de la balle tiré par la paille
+        public BulletStat Scriptable; //Scriptable object regroupant les stats de la balle
+        public List<Transform> spawnerTransform; // Transform ou spawn les balles
+        public int size; //Taille du nombre de prefabs a instancier au lancement
     }
     #endregion
     
     //mouse
-    private Vector2 mousepos;
-    public  float angle;
+    private Vector2 mousepos; //position de la souris sur l'écran
+    public  float angle; //angle pour orienter la paille
     
     
     //Juices
@@ -46,18 +48,13 @@ public class GameManager : MonoBehaviour
     
     //Straw
     public Straw actualStraw;
-    public List<StrawClass> strawsClass;
+    public List<StrawClass> strawsClass; //Liste de toute les pailles
 
     private float shootCooldown;
     
     //Bullet
     [Header("Settings")]
     [SerializeField] int ShootRate;
-    [SerializeField] private float bulletSize;
-    [SerializeField] private float bulletSpeed;
-    [SerializeField] private float bulletSpray;
-    [SerializeField] private float damage;
-    [SerializeField] private float Range;
     
     //Player
     public GameObject Player;
@@ -77,8 +74,10 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
+        
         actualStrawClass = strawsClass[(int) actualStraw];
-        foreach (StrawClass str in strawsClass)
+        
+        foreach (StrawClass str in strawsClass) //active la bonne paille au début
         {
             if (str == actualStrawClass)
             {
@@ -94,7 +93,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0)) 
         {
             if (shootCooldown <= 0f)
             {
@@ -104,7 +103,7 @@ public class GameManager : MonoBehaviour
         }
         shootCooldown -= Time.deltaTime * ShootRate;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space)) // Test pour changer de paille
         {
             ChangeStraw(Straw.tripaille);
         }
@@ -113,14 +112,15 @@ public class GameManager : MonoBehaviour
 
     void FixedUpdate()
     {
+        //---------------- Oriente la paille ------------------------
         Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x, actualStrawClass.StrawParent.transform.position.y);
         _lookDir = new Vector2(mousepos.x, mousepos.y) - Position ;
         angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
         actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
-        
+        //--------------------------------------------------------------
     }
 
-    void ChangeStraw(Straw straw)
+    void ChangeStraw(Straw straw) //change la paille 
     {
         actualStrawClass.StrawParent.SetActive(false);
         actualStrawClass = strawsClass[(int) straw];

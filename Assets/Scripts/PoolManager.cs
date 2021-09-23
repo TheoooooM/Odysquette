@@ -19,10 +19,11 @@ public class PoolManager : MonoBehaviour
     
     private void Start()
     {
-        poolDictionary = new Dictionary<GameManager.Straw, Queue<GameObject>>();
+        poolDictionary = new Dictionary<GameManager.Straw, Queue<GameObject>>(); //Créer un dictionnaire regroupant chaque pool
 
         foreach (GameManager.StrawClass pol in GameManager.Instance.strawsClass)
         {
+            //---------------------Génère les pool et les bullets de base------------------------- 
             Queue<GameObject> objectPool = new Queue<GameObject>();
             
             for (int i = 0; i < pol.size; i++)
@@ -32,17 +33,18 @@ public class PoolManager : MonoBehaviour
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
+            //---------------------------------------------------------------------------------------
             
             poolDictionary.Add(pol.StrawType, objectPool);
         }
     }
     
-    virtual public void SpawnFromPool()
+    virtual public void SpawnFromPool() //Active ou instancie une balle sur le spawn bullet
     {
         int count = 0;
         foreach (Transform spawn in GameManager.Instance.actualStrawClass.spawnerTransform)
         {
-            if (poolDictionary[GameManager.Instance.actualStraw].Count == 0)
+            if (poolDictionary[GameManager.Instance.actualStraw].Count == 0) // Instancie une balle si il n'y en a plus dans la queue
             {
                 GameObject obj = Instantiate(GameManager.Instance.actualStrawClass.prefabs, transform);
                 obj.name = GameManager.Instance.actualStraw.ToString();
@@ -50,7 +52,7 @@ public class PoolManager : MonoBehaviour
                 obj.transform.rotation = Quaternion.Euler(0f, 0f, GameManager.Instance.angle);
                 poolDictionary[GameManager.Instance.actualStraw].Enqueue(obj);
             }
-            else
+            else // Sinon active la première balle se trouvant dans la queue
             {
                 count++;
                 Debug.Log("Count : "+count);    
