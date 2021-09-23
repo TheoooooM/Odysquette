@@ -166,35 +166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c09111c8c5c48d44b49971913c2e589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullets:
-  - name: Basic
-    Straw: 0
-    prefabs: {fileID: 602687282885438852, guid: 59004c82ab0c6614e8579de9e78059f8, type: 3}
-    size: 10
-  - name: Bubble
-    Straw: 1
-    prefabs: {fileID: 0}
-    size: 0
-  - name: Snipaille
-    Straw: 2
-    prefabs: {fileID: 0}
-    size: 0
-  - name: 8paille
-    Straw: 3
-    prefabs: {fileID: 602687282885438852, guid: 59004c82ab0c6614e8579de9e78059f8, type: 3}
-    size: 0
-  - name: 4dir
-    Straw: 4
-    prefabs: {fileID: 602687282885438852, guid: 59004c82ab0c6614e8579de9e78059f8, type: 3}
-    size: 0
-  - name: Tripaille
-    Straw: 5
-    prefabs: {fileID: 602687282885438852, guid: 59004c82ab0c6614e8579de9e78059f8, type: 3}
-    size: 15
-  - name: Mitra
-    Straw: 6
-    prefabs: {fileID: 602687282885438852, guid: 59004c82ab0c6614e8579de9e78059f8, type: 3}
-    size: 0
 --- !u!1 &138010070
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,7 +247,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.35, y: 0.37}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -293,6 +264,7 @@ GameObject:
   - component: {fileID: 196568772}
   - component: {fileID: 196568771}
   - component: {fileID: 196568770}
+  - component: {fileID: 196568773}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -365,6 +337,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &196568773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196568769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &234964979
 GameObject:
   m_ObjectHideFlags: 0
@@ -502,7 +506,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.35, y: 0.37}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -589,7 +593,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 3.55, y: 5.89}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -650,7 +654,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!1 &837016359
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,7 +717,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.35, y: 0.37}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -886,7 +890,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &930686811
@@ -1144,7 +1148,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.35, y: 0.37}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1257,7 +1261,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.35, y: 0.37}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1355,7 +1359,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1195563897
@@ -1577,10 +1581,10 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 0.16, y: 0.16}
+    newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1628,15 +1632,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 0.1509434, g: 0.054846313, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.16, y: 0.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1554393675
@@ -1760,7 +1764,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.35, y: 0.37}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1843,7 +1847,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.35, y: 0.37}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1993,7 +1997,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &2024828360
@@ -2078,39 +2082,60 @@ MonoBehaviour:
   secondEffect: 0
   actualStraw: 0
   strawsClass:
-  - StrawName: basic
-    StrawType: 0
+  - StrawType: 0
+    StrawName: basic
     StrawParent: {fileID: 1063981873}
+    prefabs: {fileID: 602687282885438852, guid: 59004c82ab0c6614e8579de9e78059f8, type: 3}
+    Scriptable: {fileID: 11400000, guid: 8e96858b7617bf341aad34027fb4bb23, type: 2}
     spawnerTransform:
     - {fileID: 1373875980}
-  - StrawName: bubble
-    StrawType: 1
+    size: 10
+  - StrawType: 1
+    StrawName: bubble
     StrawParent: {fileID: 1827252491}
+    prefabs: {fileID: 0}
+    Scriptable: {fileID: 0}
     spawnerTransform: []
-  - StrawName: snipe
-    StrawType: 2
+    size: 0
+  - StrawType: 2
+    StrawName: snipe
     StrawParent: {fileID: 1610629937}
+    prefabs: {fileID: 0}
+    Scriptable: {fileID: 0}
     spawnerTransform: []
-  - StrawName: 8paille
-    StrawType: 3
+    size: 0
+  - StrawType: 3
+    StrawName: 8paille
     StrawParent: {fileID: 1171758925}
+    prefabs: {fileID: 0}
+    Scriptable: {fileID: 0}
     spawnerTransform: []
-  - StrawName: 4dir
-    StrawType: 4
+    size: 0
+  - StrawType: 4
+    StrawName: 4dir
     StrawParent: {fileID: 523661635}
+    prefabs: {fileID: 0}
+    Scriptable: {fileID: 0}
     spawnerTransform: []
-  - StrawName: Tripaille
-    StrawType: 5
+    size: 0
+  - StrawType: 5
+    StrawName: Tripaille
     StrawParent: {fileID: 138010070}
+    prefabs: {fileID: 602687282885438852, guid: 59004c82ab0c6614e8579de9e78059f8, type: 3}
+    Scriptable: {fileID: 0}
     spawnerTransform:
     - {fileID: 2130989066}
     - {fileID: 375392958}
     - {fileID: 1600546217}
-  - StrawName: mirta
-    StrawType: 6
+    size: 10
+  - StrawType: 6
+    StrawName: mirta
     StrawParent: {fileID: 837016359}
+    prefabs: {fileID: 0}
+    Scriptable: {fileID: 0}
     spawnerTransform: []
-  ShootRate: 0
+    size: 0
+  ShootRate: 5
   bulletSize: 0
   bulletSpeed: 0
   bulletSpray: 0
@@ -2119,10 +2144,13 @@ MonoBehaviour:
   Player: {fileID: 541801653}
   _lookDir: {x: 0, y: 0}
   actualStrawClass:
-    StrawName: 
     StrawType: 0
+    StrawName: 
     StrawParent: {fileID: 0}
+    prefabs: {fileID: 0}
+    Scriptable: {fileID: 0}
     spawnerTransform: []
+    size: 0
 --- !u!4 &2137677117
 Transform:
   m_ObjectHideFlags: 0
