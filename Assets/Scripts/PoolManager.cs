@@ -55,7 +55,7 @@ public class PoolManager : MonoBehaviour
             else // Sinon active la première balle se trouvant dans la queue
             {
                 count++;
-                Debug.Log("Count : "+count);    
+                //Debug.Log("Count : "+count);    
                 GameObject objToSpawn = poolDictionary[GameManager.Instance.actualStraw].Dequeue();
                 objToSpawn.SetActive(true);
                 objToSpawn.transform.position = spawn.position;

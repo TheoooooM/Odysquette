@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
 
     #region Enum
 
-    public enum Effect {none,bounce, pierce, explosion, poison, ice}
+    public enum Effect {none, bounce, pierce, explosion, poison, ice}
     public enum Straw {basic, bubble, snipaille, eightPaille, fourDir, tripaille, mitra}
     
     #endregion
@@ -43,8 +43,11 @@ public class GameManager : MonoBehaviour
     
     
     //Juices
-    [SerializeField] Effect firstEffect;
-    [SerializeField] Effect secondEffect;
+    [SerializeField] Effect _firstEffect;
+    public Effect firstEffect => _firstEffect;
+    
+    [SerializeField] Effect _secondEffect;
+    public Effect secondEffect => _secondEffect;
     
     //Straw
     public Straw actualStraw;
@@ -89,6 +92,8 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    
+    
 
     private void Update()
     {
