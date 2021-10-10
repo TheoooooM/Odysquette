@@ -133,7 +133,15 @@ public class GameManager : MonoBehaviour
         ShootRate = actualStrawClass.Scriptable.ShootRate;
 
     }
-    
+    public enum ShootMode
+    {
+        BasicShoot, CurveShoot,AreaShoot, AngleAreaShoot 
+    }
+    public enum RateMode
+    {
+        fireRate, LoadingRate,
+    }
+
     
 }
 
