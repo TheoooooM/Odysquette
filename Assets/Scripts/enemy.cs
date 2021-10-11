@@ -7,12 +7,20 @@ using UnityEngine.AI;
 
 public class enemy : MonoBehaviour
 {
+    [SerializeField] private bool distanceEnemy;
     [SerializeField] private float range;
 
     private Transform target;
     private NavMeshAgent agent;
+    
+    
+    
     void Start()
     {
+        if (!distanceEnemy)
+        {
+            range = 1;
+        }
         target = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
@@ -25,6 +33,10 @@ public class enemy : MonoBehaviour
     void Update()
     {
         agent.SetDestination(target.position);
+        if (agent.velocity == Vector3.zero)
+        {
+            Debug.Log("shoot");
+        }
     }
 
     private void OnDrawGizmos()

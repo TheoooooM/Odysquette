@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
    private BulletStat Scriptable;
     int Timer = 0;
     private Rigidbody2D rb;
+    private Vector3 lastVelocity;
 
     [Header("==============Effects Stat===============")]
     public int pierceCount;
@@ -23,6 +24,7 @@ public class Bullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         _pierceCount = pierceCount;
+        rb.AddForce(transform.right * (BulletSpeed* 1f), ForceMode2D.Impulse); // met une force sur la paille
     }
 
     private void OnEnable()
@@ -31,12 +33,9 @@ public class Bullet : MonoBehaviour
         canBounce = false;
     }
 
-    void Update()
+    private void Update()
     {
-        rb.AddForce(transform.right * (BulletSpeed* 0.0001f), ForceMode2D.Impulse); // met une force sur la paille
-        
-        
-        
+        lastVelocity = rb.velocity;
     }
 
     private void FixedUpdate()
@@ -53,6 +52,9 @@ public class Bullet : MonoBehaviour
         //-----------------------------------------------------------------------------------------
     }
 
+    
+    
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("boom" + _pierceCount);
@@ -95,10 +97,10 @@ public class Bullet : MonoBehaviour
         {
             
             
-            Vector2 dir = Vector2.Reflect(rb.velocity.normalized, Vector2.right);
+            /*Vector2 dir = Vector2.Reflect(rb.velocity.normalized, Vector2.right);
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             rb.velocity = Vector2.zero;
-            gameObject.transform.rotation = quaternion.Euler(0f, 0f, angle);
+            gameObject.transform.rotation = quaternion.Euler(0f, 0f, angle);*/
             //rb.AddForce(dir);
         }
         else 
@@ -106,6 +108,16 @@ public class Bullet : MonoBehaviour
             gameObject.SetActive(false); 
             PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject);
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        var speed = lastVelocity.magnitude;
+        var direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
+        rb.velocity = direction * Mathf.Max(speed, 0f);
+        var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+        Debug.Log("angle : " + angle);
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     void Bounce()
