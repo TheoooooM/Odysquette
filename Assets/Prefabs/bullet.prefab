@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 5672952729407700744}
   - component: {fileID: 447753167651521645}
   - component: {fileID: 2768319741440879399}
-  - component: {fileID: -8372410408356953461}
-  - component: {fileID: 7207981366350430026}
   - component: {fileID: -7866836818757672500}
+  - component: {fileID: 7046429430305339719}
+  - component: {fileID: 3938930690576097658}
   m_Layer: 6
   m_Name: bullet
   m_TagString: Untagged
@@ -100,60 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletSpeed: 3
   pierceCount: 2
-  _pierceCount: 0
-  canBounce: 0
---- !u!61 &-8372410408356953461
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 602687282885438852}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.2, y: 3.55}
-    newSize: {x: 3.47, y: 2.25}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 6.2, y: 3.55}
-  m_EdgeRadius: 0
---- !u!61 &7207981366350430026
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 602687282885438852}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.2, y: 3.55}
-    newSize: {x: 3.47, y: 2.25}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 6.2, y: 3.55}
-  m_EdgeRadius: 0
+  bounceCount: 2
 --- !u!50 &-7866836818757672500
 Rigidbody2D:
   serializedVersion: 4
@@ -175,3 +122,35 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!58 &7046429430305339719
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602687282885438852}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1.1718895, y: 0.048394136}
+  serializedVersion: 2
+  m_Radius: 1.6100992
+--- !u!58 &3938930690576097658
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602687282885438852}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1.1819615, y: 0.053771257}
+  serializedVersion: 2
+  m_Radius: 1.477617

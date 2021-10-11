@@ -15,22 +15,24 @@ public class Bullet : MonoBehaviour
 
     [Header("==============Effects Stat===============")]
     public int pierceCount;
-    public int _pierceCount;
+    private int _pierceCount;
 
-    public bool canBounce = false;
+    public int bounceCount;
+    private int _bounceCount;
     
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        _pierceCount = pierceCount;
+        if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce)_pierceCount = pierceCount;
+        if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
         rb.AddForce(transform.right * (BulletSpeed* 1f), ForceMode2D.Impulse); // met une force sur la paille
     }
 
     private void OnEnable()
     {
-        _pierceCount = pierceCount;
-        canBounce = false;
+        if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce) _pierceCount = pierceCount;
+        if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
     }
 
     private void Update()
@@ -57,12 +59,9 @@ public class Bullet : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("boom" + _pierceCount);
+        Debug.Log("boom" + other.name);
         switch (GameManager.Instance.firstEffect)
         {
-            case GameManager.Effect.bounce :
-                Bounce();
-                break;
             
             case GameManager.Effect.explosion :
                 Explosion();
@@ -70,22 +69,18 @@ public class Bullet : MonoBehaviour
             
             
             case GameManager.Effect.ice :
-                Ice();
+                Ice(other.gameObject);
                 break;
         }
         
         switch (GameManager.Instance.secondEffect)
         {
-            case GameManager.Effect.bounce :
-                Bounce();
-                break;
-
             case GameManager.Effect.explosion :
                 Explosion();
                 break;
 
             case GameManager.Effect.ice :
-                Ice();
+                Ice(other.gameObject);
                 break;
         }
 
@@ -93,17 +88,7 @@ public class Bullet : MonoBehaviour
         {
             _pierceCount--;
         }
-        else if (canBounce == true)// && other.CompareTag("Walls"))
-        {
-            
-            
-            /*Vector2 dir = Vector2.Reflect(rb.velocity.normalized, Vector2.right);
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            rb.velocity = Vector2.zero;
-            gameObject.transform.rotation = quaternion.Euler(0f, 0f, angle);*/
-            //rb.AddForce(dir);
-        }
-        else 
+        else if (!other.CompareTag("Walls"))
         {
             gameObject.SetActive(false); 
             PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject);
@@ -112,18 +97,21 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        var speed = lastVelocity.magnitude;
-        var direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
-        rb.velocity = direction * Mathf.Max(speed, 0f);
-        var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
-        Debug.Log("angle : " + angle);
-        transform.rotation = Quaternion.Euler(0, 0, angle);
-    }
+        if (_bounceCount > 0)
+        {
+            var speed = lastVelocity.magnitude;
+            var direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
+            rb.velocity = direction * Mathf.Max(speed, 0f);
+            var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+            transform.rotation = Quaternion.Euler(0, 0, angle);
 
-    void Bounce()
-    {
-        canBounce = true;
-        Debug.Log("bounce");
+            _bounceCount--;
+        }
+        else
+        {
+            gameObject.SetActive(false); 
+            PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject);
+        }
     }
 
     void Explosion()
@@ -131,9 +119,11 @@ public class Bullet : MonoBehaviour
         Debug.Log("explosion");
     }
 
-    void Ice()
+    void Ice(GameObject gam)
     {
         Debug.Log("ice");
+        
+        
     }
     
 }
