@@ -19,6 +19,10 @@ public class Bullet : MonoBehaviour
 
     public int bounceCount;
     private int _bounceCount;
+
+    public float poisonCooldown = 5;
+    float _poisonCooldown = 0;
+    
     
 
     private void Start()
@@ -26,18 +30,37 @@ public class Bullet : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce)_pierceCount = pierceCount;
         if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
-        rb.AddForce(transform.right * (BulletSpeed* 1f), ForceMode2D.Impulse); // met une force sur la paille
+        rb.velocity = Vector2.zero;
+        rb.AddForce(GameManager.Instance._lookDir * (BulletSpeed* 1f), ForceMode2D.Impulse); // met une force sur la paille
     }
 
     private void OnEnable()
     {
         if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce) _pierceCount = pierceCount;
         if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.AddForce(GameManager.Instance._lookDir * (BulletSpeed* 1f), ForceMode2D.Impulse); // met une force sur la paille
+        }
     }
 
     private void Update()
     {
         lastVelocity = rb.velocity;
+
+        if (GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison)
+        {
+            if (_poisonCooldown > 0)
+            {
+                _poisonCooldown -= Time.deltaTime * 2;
+            }
+            else
+            {
+                _poisonCooldown = poisonCooldown;
+                PoolManager.Instance.SpawnPoisonPool(transform);
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -59,7 +82,6 @@ public class Bullet : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("boom" + other.name);
         switch (GameManager.Instance.firstEffect)
         {
             
@@ -122,8 +144,8 @@ public class Bullet : MonoBehaviour
     void Ice(GameObject gam)
     {
         Debug.Log("ice");
-        
-        
+        gam.GetComponent<enemy>().freezeTime = 5;
+
     }
     
 }

@@ -8,9 +8,9 @@ using UnityEngine.AI;
 public class enemy : MonoBehaviour
 {
     [SerializeField] private bool distanceEnemy;
-    [SerializeField] private float range;
-    [SerializeField] private float speed;
-    [SerializeField] private float freezeModifier;
+    [SerializeField] private float range = 1;
+    [SerializeField] private float speed = 3.5f;
+    [SerializeField] private float freezeModifier = 0.5f;
 
     private Transform target;
     private NavMeshAgent agent;
@@ -47,6 +47,10 @@ public class enemy : MonoBehaviour
         {
             agent.speed = speed * freezeModifier;
             freezeTime -= Time.deltaTime * 2;
+        }
+        else
+        {
+            agent.speed = speed;
         }
     }
 
