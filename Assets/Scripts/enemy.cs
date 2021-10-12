@@ -56,6 +56,6 @@ public class enemy : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, range*0.4f);
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 }

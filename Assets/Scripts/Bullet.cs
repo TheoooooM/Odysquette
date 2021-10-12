@@ -9,7 +9,6 @@ public class Bullet : MonoBehaviour
     
    [SerializeField] float BulletSpeed;
    private BulletStat Scriptable;
-    int Timer = 0;
     private Rigidbody2D rb;
     private Vector3 lastVelocity;
 
@@ -29,20 +28,30 @@ public class Bullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce)_pierceCount = pierceCount;
+        else _pierceCount = 0;
+        
         if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
+        else _bounceCount = 0;
+        
         rb.velocity = Vector2.zero;
-        rb.AddForce(GameManager.Instance._lookDir * (BulletSpeed* 1f), ForceMode2D.Impulse); // met une force sur la paille
+        rb.AddForce((GameManager.Instance._lookDir).normalized * BulletSpeed, ForceMode2D.Impulse); // met une force sur la paille
     }
 
     private void OnEnable()
     {
+        Debug.Log("enable");
         if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce) _pierceCount = pierceCount;
+        else _pierceCount = 0;
+        
         if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
+        else _bounceCount = 0;
+        
         if (rb != null)
         {
             rb.velocity = Vector2.zero;
-            rb.AddForce(GameManager.Instance._lookDir * (BulletSpeed* 1f), ForceMode2D.Impulse); // met une force sur la paille
+            rb.AddForce((GameManager.Instance._lookDir).normalized * BulletSpeed, ForceMode2D.Impulse); // met une force sur la paille
         }
+        transform.rotation = Quaternion.Euler(0f, 0f, GameManager.Instance.angle);
     }
 
     private void Update()
@@ -63,23 +72,6 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        //------------------------ Debug pour faire disparaitre la balle --------------------
-        Timer= Timer + 1 ;
-        if (Timer == 500)
-        {
-            Timer = 0;
-            gameObject.SetActive(false);
-            
-            PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject); // Remet le GameObject dans la file d'attente, a placer au moment ou elle est "détruite"
-        }
-        //-----------------------------------------------------------------------------------------
-    }
-
-    
-    
-    
     private void OnTriggerEnter2D(Collider2D other)
     {
         switch (GameManager.Instance.firstEffect)
@@ -139,6 +131,7 @@ public class Bullet : MonoBehaviour
     void Explosion()
     {
         Debug.Log("explosion");
+        PoolManager.Instance.SpawnExplosionPool(transform);
     }
 
     void Ice(GameObject gam)

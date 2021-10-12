@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PoolManager : MonoBehaviour
@@ -8,6 +9,9 @@ public class PoolManager : MonoBehaviour
     public Dictionary<GameManager.Straw, Queue<GameObject>> poolDictionary;
     public Queue<GameObject> PoisonQueue;
     public GameObject poisonPrefab;
+    
+    public Queue<GameObject> explosionQueue;
+    public GameObject explosionPrefab;
 
 
     #region  Singleton
@@ -23,6 +27,7 @@ public class PoolManager : MonoBehaviour
     {
         poolDictionary = new Dictionary<GameManager.Straw, Queue<GameObject>>(); //Créer un dictionnaire regroupant chaque pool
         PoisonQueue = new Queue<GameObject>();
+        explosionQueue = new Queue<GameObject>();
         foreach (GameManager.StrawClass pol in GameManager.Instance.strawsClass)
         {
             //---------------------Génère les pool et les bullets de base------------------------- 
@@ -50,9 +55,9 @@ public class PoolManager : MonoBehaviour
                 if (poolDictionary[GameManager.Instance.actualStraw].Count == 0) // Instancie une balle si il n'y en a plus dans la queue
                 {
                     GameObject obj = Instantiate(GameManager.Instance.actualStrawClass.prefabs, transform);
-                    obj.name = GameManager.Instance.actualStraw.ToString();
+                    obj.name = GameManager.Instance.actualStrawClass.StrawName;
                     obj.transform.position = spawn.position;
-                    obj.transform.rotation = Quaternion.Euler(0f, 0f, GameManager.Instance.angle);
+                    //obj.transform.rotation = Quaternion.Euler(0f, 0f, GameManager.Instance.angle);
                     //poolDictionary[GameManager.Instance.actualStraw].Enqueue(obj);
                 }
                 else // Sinon active la première balle se trouvant dans la queue
@@ -62,7 +67,7 @@ public class PoolManager : MonoBehaviour
                     GameObject objToSpawn = poolDictionary[GameManager.Instance.actualStraw].Dequeue();
                     objToSpawn.SetActive(true);
                     objToSpawn.transform.position = spawn.position;
-                    objToSpawn.transform.rotation = Quaternion.Euler(0f, 0f, GameManager.Instance.angle);
+                    //objToSpawn.transform.rotation = Quaternion.Euler(0f, 0f, GameManager.Instance.angle);
                 }
             }
         
@@ -78,6 +83,23 @@ public class PoolManager : MonoBehaviour
         else
         {
             GameObject obj = PoisonQueue.Dequeue();
+            obj.transform.position = bullet.position;
+            obj.SetActive(true);
+        }
+    }
+    
+    
+    public void SpawnExplosionPool(Transform bullet)
+    {
+        if (explosionQueue.Count == 0)
+        {
+            Debug.Log(bullet.position);
+            GameObject obj = Instantiate(explosionPrefab, bullet.position, quaternion.identity);
+            //obj.transform.position = bullet.position;
+        }
+        else
+        {
+            GameObject obj = explosionQueue.Dequeue();
             obj.transform.position = bullet.position;
             obj.SetActive(true);
         }

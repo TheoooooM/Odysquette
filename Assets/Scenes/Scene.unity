@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poisonPrefab: {fileID: 6377906695857148875, guid: b8dafc6431e70a84fa801601c5f403be, type: 3}
+  explosionPrefab: {fileID: 2019729744386939234, guid: d3bfb9199f6ff034ca06aa6ea270a32e, type: 3}
 --- !u!1 &138010070
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,7 +379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceEnemy: 1
-  range: 3.76
+  range: 5.83
   speed: 1.75
   freezeModifier: 0.5
   freezeTime: 0
@@ -693,7 +694,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -2752,8 +2753,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angle: 0
-  _firstEffect: 4
-  _secondEffect: 0
+  _firstEffect: 1
+  _secondEffect: 3
   actualStraw: 0
   strawsClass:
   - StrawName: basic
@@ -2763,7 +2764,7 @@ MonoBehaviour:
     Scriptable: {fileID: 11400000, guid: 8e96858b7617bf341aad34027fb4bb23, type: 2}
     spawnerTransform:
     - {fileID: 1373875980}
-    size: 10
+    size: 0
   - StrawName: bubble
     StrawType: 1
     StrawParent: {fileID: 1827252491}
@@ -2801,7 +2802,7 @@ MonoBehaviour:
     - {fileID: 2130989066}
     - {fileID: 375392958}
     - {fileID: 1600546217}
-    size: 10
+    size: 0
   - StrawName: mirta
     StrawType: 6
     StrawParent: {fileID: 837016359}
@@ -2809,6 +2810,7 @@ MonoBehaviour:
     Scriptable: {fileID: 0}
     spawnerTransform: []
     size: 0
+  shootCooldown: 0
   ShootRate: 5
   Player: {fileID: 541801653}
   _lookDir: {x: 0, y: 0}
