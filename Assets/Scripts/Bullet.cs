@@ -6,9 +6,16 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public bool hasRange;
+    public float damage;
+    public float range;
+    public Color colorBang;
+     Vector3 basePosition;
     
-   [SerializeField] float BulletSpeed;
+  
+    
    private BulletStat Scriptable;
+
     private Rigidbody2D rb;
     private Vector3 lastVelocity;
 
@@ -22,10 +29,12 @@ public class Bullet : MonoBehaviour
     public float poisonCooldown = 5;
     float _poisonCooldown = 0;
     
+
     
 
     private void Start()
     {
+
         rb = GetComponent<Rigidbody2D>();
         if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce)_pierceCount = pierceCount;
         else _pierceCount = 0;
@@ -35,10 +44,49 @@ public class Bullet : MonoBehaviour
         
         rb.velocity = Vector2.zero;
         rb.AddForce((GameManager.Instance._lookDir).normalized * BulletSpeed, ForceMode2D.Impulse); // met une force sur la paille
+
     }
 
     private void OnEnable()
     {
+
+        isEnable = false;
+         basePosition = transform.position;
+        _pierceCount = pierceCount;
+        canBounce = false; 
+        Invoke(nameof(DelayforDrag),0.5f);
+        
+    }
+
+    void Update()
+    {
+           Debug.Log(GetComponent<Rigidbody2D>().velocity);
+           if (hasRange)
+           {
+                 if (Vector3.Distance(basePosition, transform.position) >=range)
+                     {
+                         
+                         PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject);
+                      
+                         gameObject.SetActive(false);
+                         
+                     }
+           }
+    
+   
+      else if (rb.velocity.magnitude <= 0.1 && rb.drag > 0 && isEnable)
+      {
+          
+          PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject);
+      
+          gameObject.SetActive(false);
+       
+      } 
+ 
+
+
+
+ 
         Debug.Log("enable");
         if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce) _pierceCount = pierceCount;
         else _pierceCount = 0;
@@ -70,7 +118,10 @@ public class Bullet : MonoBehaviour
                 PoolManager.Instance.SpawnPoisonPool(transform);
             }
         }
+
     }
+
+   
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -101,8 +152,11 @@ public class Bullet : MonoBehaviour
         if (_pierceCount > 0 && other.CompareTag("Enemy"))
         {
             _pierceCount--;
+            Debug.Log("les degats olalala : " + damage);
         }
+
         else if (!other.CompareTag("Walls"))
+
         {
             gameObject.SetActive(false); 
             PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject);
@@ -139,6 +193,11 @@ public class Bullet : MonoBehaviour
         Debug.Log("ice");
         gam.GetComponent<enemy>().freezeTime = 5;
 
+    }
+
+    void DelayforDrag()
+    {
+        isEnable = true;
     }
     
 }

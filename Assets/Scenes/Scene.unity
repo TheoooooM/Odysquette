@@ -196,11 +196,7 @@ Transform:
   m_LocalPosition: {x: 1.009, y: 2.84, z: 0}
   m_LocalScale: {x: 0.8997113, y: 0.84333813, z: 0.9492775}
   m_Children:
-  - {fileID: 1027674467}
-  - {fileID: 1057630507}
   - {fileID: 2130989066}
-  - {fileID: 375392958}
-  - {fileID: 1600546217}
   m_Father: {fileID: 541801657}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -550,36 +546,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1171758926}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &375392957
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 375392958}
-  m_Layer: 0
-  m_Name: SpawnBullet (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &375392958
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 375392957}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.093, y: 1.078, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 138010071}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &523661635
 GameObject:
@@ -1360,6 +1326,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+
 --- !u!1 &984757768
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,6 +1617,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+
 --- !u!1 &1063981873
 GameObject:
   m_ObjectHideFlags: 0
@@ -2042,9 +2010,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1369069437}
   - component: {fileID: 1369069436}
+
   - component: {fileID: 1369069439}
   - component: {fileID: 1369069438}
   m_Layer: 3
+
   m_Name: cyberfond
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2110,12 +2080,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369069435}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.814602, y: 0.003841978, z: 3.81}
+  m_LocalPosition: {x: 8.79, y: 0.0106, z: 218}
   m_LocalScale: {x: 1.7926, y: 0.1701176, z: 1}
   m_Children: []
   m_Father: {fileID: 2024828360}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+
 --- !u!114 &1369069438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2134,11 +2105,13 @@ MonoBehaviour:
   m_AffectedAgents: ffffffff
 --- !u!61 &1369069439
 BoxCollider2D:
+
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369069435}
+
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -2158,6 +2131,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10.24, y: 5.76}
   m_EdgeRadius: 0
+
 --- !u!1 &1373875979
 GameObject:
   m_ObjectHideFlags: 0
@@ -2298,6 +2272,7 @@ Transform:
   m_Father: {fileID: 2024828360}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+
 --- !u!114 &1554393676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2344,6 +2319,7 @@ Transform:
   m_Father: {fileID: 138010071}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+
 --- !u!1 &1610629937
 GameObject:
   m_ObjectHideFlags: 0
@@ -2721,7 +2697,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 138010071}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2137677115
 GameObject:
@@ -2757,45 +2733,44 @@ MonoBehaviour:
   _secondEffect: 3
   actualStraw: 0
   strawsClass:
-  - StrawName: basic
+  - StrawName: stgfds
     StrawType: 0
     StrawParent: {fileID: 1063981873}
+
     prefabs: {fileID: 602687282885438852, guid: 59004c82ab0c6614e8579de9e78059f8, type: 3}
     Scriptable: {fileID: 11400000, guid: 8e96858b7617bf341aad34027fb4bb23, type: 2}
     spawnerTransform:
     - {fileID: 1373875980}
     size: 0
+
   - StrawName: bubble
     StrawType: 1
     StrawParent: {fileID: 1827252491}
-    prefabs: {fileID: 0}
-    Scriptable: {fileID: 0}
-    spawnerTransform: []
-    size: 0
+    strawSO: {fileID: 0}
+    spawnerTransform: {fileID: 867073894}
+    sizePool: 0
   - StrawName: snipe
     StrawType: 2
     StrawParent: {fileID: 1610629937}
-    prefabs: {fileID: 0}
-    Scriptable: {fileID: 0}
-    spawnerTransform: []
-    size: 0
+    strawSO: {fileID: 0}
+    spawnerTransform: {fileID: 1257951519}
+    sizePool: 0
   - StrawName: 8paille
     StrawType: 3
     StrawParent: {fileID: 1171758925}
-    prefabs: {fileID: 0}
-    Scriptable: {fileID: 0}
-    spawnerTransform: []
-    size: 0
+    strawSO: {fileID: 0}
+    spawnerTransform: {fileID: 234964980}
+    sizePool: 0
   - StrawName: 4dir
     StrawType: 4
     StrawParent: {fileID: 523661635}
-    prefabs: {fileID: 0}
-    Scriptable: {fileID: 0}
-    spawnerTransform: []
-    size: 0
+    strawSO: {fileID: 0}
+    spawnerTransform: {fileID: 1112882756}
+    sizePool: 0
   - StrawName: Tripaille
     StrawType: 5
     StrawParent: {fileID: 138010070}
+
     prefabs: {fileID: 602687282885438852, guid: 59004c82ab0c6614e8579de9e78059f8, type: 3}
     Scriptable: {fileID: 11400000, guid: fb43cac0b1282414091d16ad069c626d, type: 2}
     spawnerTransform:
@@ -2811,6 +2786,7 @@ MonoBehaviour:
     spawnerTransform: []
     size: 0
   shootCooldown: 0
+
   ShootRate: 5
   Player: {fileID: 541801653}
   _lookDir: {x: 0, y: 0}
@@ -2818,10 +2794,9 @@ MonoBehaviour:
     StrawName: 
     StrawType: 0
     StrawParent: {fileID: 0}
-    prefabs: {fileID: 0}
-    Scriptable: {fileID: 0}
-    spawnerTransform: []
-    size: 0
+    strawSO: {fileID: 0}
+    spawnerTransform: {fileID: 0}
+    sizePool: 0
 --- !u!4 &2137677117
 Transform:
   m_ObjectHideFlags: 0

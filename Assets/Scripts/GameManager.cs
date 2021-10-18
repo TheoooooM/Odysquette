@@ -29,19 +29,20 @@ public class GameManager : MonoBehaviour
     {
         public String StrawName;
         public Straw StrawType; 
-        public GameObject StrawParent; // GameObject de la paille
-        public GameObject prefabs; // Prefabs de la balle tiré par la paille
-        public BulletStat Scriptable; //Scriptable object regroupant les stats de la balle
-        public List<Transform> spawnerTransform; // Transform ou spawn les balles
-        public int size; //Taille du nombre de prefabs a instancier au lancement
+        public GameObject StrawParent;      // GameObject de la paille
+        public StrawSO strawSO;
+        public StrawSO ultimateStrawSO;
+      public  Transform spawnerTransform; // Transform ou spawn les balles
+      
+        public int sizePool; //Taille du nombre de prefabs a instancier au lancement
     }
     #endregion
-    
+     float ultimateTimeValue;
     //mouse
     private Vector2 mousepos; //position de la souris sur l'écran
     public  float angle; //angle pour orienter la paille
-    
-    
+
+    private float shootCooldownSeconds;
     //Juices
     [SerializeField] Effect _firstEffect;
     public Effect firstEffect => _firstEffect;
@@ -53,7 +54,15 @@ public class GameManager : MonoBehaviour
     public Straw actualStraw;
     public List<StrawClass> strawsClass; //Liste de toute les pailles
 
+    private int countShootRate ;
+   
+    private float shootLoading;
+
+    private bool EndLoading;
+
+
     public float shootCooldown;
+
     
     //Bullet
     [Header("Settings")]
@@ -61,20 +70,24 @@ public class GameManager : MonoBehaviour
     
     //Player
     public GameObject Player;
-
-    //
-    private float damageModifier;
-    private float firerateModifier;
-    private float speedModifier;
-    
-    
-
     
     [Header("----------------DEBUG---------------")]
     public Vector2 _lookDir;
     public StrawClass actualStrawClass;
+
+    private void OnValidate()
+    {
     
-    
+   
+        foreach (StrawClass str in strawsClass)
+        {
+            
+            if(str.strawSO != null)
+             str.StrawName = str.strawSO.strawName;
+        }
+       
+    }
+
     private void Start()
     {
         
@@ -90,9 +103,11 @@ public class GameManager : MonoBehaviour
             {
                 str.StrawParent.SetActive((false));
             }
+
+     
         }
     }
-    
+
     
 
     private void Update()
@@ -100,18 +115,89 @@ public class GameManager : MonoBehaviour
         mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (Input.GetKey(KeyCode.Mouse0)) 
         {
-            if (shootCooldown <= 0f)
+            switch (actualStrawClass.strawSO.rateMode)
             {
-                PoolManager.Instance.SpawnFromPool();
-                shootCooldown = 1.5f;
+                case StrawSO.RateMode.FireLoading:
+                {
+                  
+                           shootLoading += Time.deltaTime;
+                           if (shootLoading >= 0.25f)
+                           {
+                                EndLoading = true;
+                           }
+                           if (shootLoading >=actualStrawClass.strawSO.timeValue-0.1f )
+                           {
+                               EndLoading = false;
+                           }
+                           if (shootLoading >= actualStrawClass.strawSO.timeValue)
+                           {
+                                                                                                            
+                               actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
+                               shootLoading =0; 
+                                                                          
+                            
+                                                                                                            
+                           }
+                    
+               
+                           break;
+                }
+                case StrawSO.RateMode.FireRate:
+                { 
+                    if ( shootCooldown >= actualStrawClass.strawSO.timeValue)
+                    {
+                 
+                        if (countShootRate ==actualStrawClass.strawSO.effectAllNumberShoot && (actualStrawClass.strawSO.rateMainParameter || actualStrawClass.strawSO.rateSecondParameter))
+                        {
+                            actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, 1);
+                            countShootRate = 0;
+                        }
+                        else
+                        {
+                            actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
+                            countShootRate++;
+                        }
+                                          
+                        shootCooldown = 0;
+                        
+                    }
+                    break;
+                }
+              
+            }
+
+          
+           
+        }
+       if (actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && Input.GetKeyDown(KeyCode.Mouse1))
+       {
+           if (ultimateTimeValue >= actualStrawClass.strawSO.timeValue)
+           {
+               actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
+               ultimateTimeValue = 0;
+           }
+       }
+
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            if (EndLoading)
+            {
+              
+                
+                actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
+                shootLoading =0; 
+             
+                EndLoading = false;
             }
         }
-        shootCooldown -= Time.deltaTime * ShootRate;
+        shootCooldown += Time.deltaTime; 
+      
+        shootCooldown = Mathf.Min(shootCooldown, actualStrawClass.strawSO.timeValue); 
+    
+       ultimateTimeValue+= Time.deltaTime; 
+        ultimateTimeValue = Mathf.Min(ultimateTimeValue, actualStrawClass.strawSO.timeValue); 
 
-        if (Input.GetKeyDown(KeyCode.Space)) // Test pour changer de paille
-        {
-            ChangeStraw(Straw.tripaille);
-        }
+   
         
         //---------------- Oriente la paille ------------------------
         Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x, actualStrawClass.StrawParent.transform.position.y);
@@ -127,13 +213,25 @@ public class GameManager : MonoBehaviour
 
     void ChangeStraw(Straw straw) //change la paille 
     {
+        //dictionnaire
         actualStrawClass.StrawParent.SetActive(false);
         actualStrawClass = strawsClass[(int) straw];
+        actualStrawClass.StrawParent.GetComponent<SpriteRenderer>().sprite = actualStrawClass.strawSO.strawRenderer;
         actualStrawClass.StrawParent.SetActive(true);
-        ShootRate = actualStrawClass.Scriptable.ShootRate;
+        
+        
+
 
     }
-    
+    public enum ShootMode
+    {
+        BasicShoot, CurveShoot,AreaShoot, AngleAreaShoot 
+    }
+    public enum RateMode
+    {
+        fireRate, LoadingRate,
+    }
+
     
 }
 
