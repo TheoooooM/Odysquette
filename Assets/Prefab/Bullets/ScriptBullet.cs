@@ -11,14 +11,13 @@ public class ScriptBullet : MonoBehaviour
 
     public Color colorBang;
     public Vector3 basePosition;
-    public GameManager.Effect firstEffect;
-    public GameManager.Effect secondEffect;
-    public Rigidbody rb;
+    
     
 //pour faire la curve
     void Curve()
     {
-
+//  
+//
     }
     
 

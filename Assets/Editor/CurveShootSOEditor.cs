@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using PlasticPipe.PlasticProtocol.Client;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEditor;
 
@@ -8,12 +10,13 @@ using UnityEditor;
 public class CurveShootSOEditor : StrawSOEditor
 {
     private CurveShootSO strawSo;
-  
+    
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
         serializedObject.Update();
-        strawSo = (CurveShootSO) target;
+       
+       strawSo = (CurveShootSO) target;
         GUIStyle myStyle = new GUIStyle();
         GUIStyle myStylo = new GUIStyle();
         myStylo.fontSize = 13;
@@ -47,8 +50,15 @@ public class CurveShootSOEditor : StrawSOEditor
                     EditorGUILayout.Space(4f);
                 for (int n = 0; n < strawSo.trajectories.Count; n++)
                 {
-                       GUI.contentColor = GizmoColor[n];
-                                        EditorGUILayout.PropertyField(serializedObject.FindProperty("trajectories").GetArrayElementAtIndex(n));
+                 
+
+                   GUI.enabled = false;
+                   EditorGUILayout.ColorField(GizmoColor[n],GUILayout.Width(60f) );
+                   GUI.enabled = true;
+                   
+
+
+                   EditorGUILayout.PropertyField(serializedObject.FindProperty("trajectories").GetArrayElementAtIndex(n));
                 }
                 GUI.contentColor = Color.white;
                 EditorGUILayout.Space(2f);
@@ -74,17 +84,20 @@ public class CurveShootSOEditor : StrawSOEditor
             GUI.backgroundColor = new Color(2f, 2f, 0f, 0.6f);
             using (new GUILayout.VerticalScope(EditorStyles.helpBox))
             {
-                if (serializedObject.FindProperty("loadingRateMode").boolValue == true)
+                if (serializedObject.FindProperty("rateMode").enumValueIndex == 2)
                 {
-                    GUILayout.Label("Specific Parameters for Loading Time ", myStyle);
+                    GUILayout.Label("Specific  Parameters for Loading Time ", myStyle);
                 }
-                else
+                else if(serializedObject.FindProperty("rateMode").enumValueIndex == 1)
                 {
                     GUILayout.Label("Specific Parameters all of (X) Shoot ", myStyle);
-
-
-
+                       
                 }
+                else
+                {GUILayout.Label("Specific  Parameters  ", myStyle);
+                    
+                }
+          
 
                 EditorGUILayout.Space(2f);
                 serializedObject.FindProperty("rateSecondParameter").boolValue =
@@ -93,7 +106,7 @@ public class CurveShootSOEditor : StrawSOEditor
                 if (serializedObject.FindProperty("rateSecondParameter").boolValue == true)
                 {
                     EditorGUILayout.Space(2f);
-                    if (serializedObject.FindProperty("loadingRateMode").boolValue == false)
+                    if (serializedObject.FindProperty("rateMode").enumValueIndex == 2)
                     {
                         EditorGUILayout.PropertyField(
                             serializedObject.FindProperty("effectAllNumberShoot"),
@@ -121,81 +134,105 @@ public class CurveShootSOEditor : StrawSOEditor
     }
 
     public override void OnEditGizmos(SceneView sceneView)
-    {
-        
-              for (int n = 0; n < strawSo.trajectories.Count; n++)
+    {base.OnEditGizmos( sceneView);
+        try 
+        {
+
+            for (int n = 0; n < strawSo.trajectories.Count; n++)
+            {
+                
+                float currentRange = 0;
+             
+                Handles.color = GizmoColor[n];
+                if (strawSo.basePosition.Length != 0)
+                {
+                    if (strawSo.basePosition[n] != null)
                     {
-                        float currentRange = 0;
-                        float  distanceBeginEndCurve= 0;
-                        Handles.color = GizmoColor[n];
-                        if (strawSo.basePosition.Length != 0)
-                        {
-                               if( strawSo.basePosition[n] != null)
-                                                    {  strawSo.basePosition[n] = strawSo.trajectories[n].pointsForBezierCurve[0];
-                                                     
-                                                    }
-                        }
-                     
-                            
-                     
-                     
-        
-                        for (int i = 1; i < strawSo.trajectories[n].pointsForBezierCurve.Count; i += 2)
-                        {  
-                            
-                            Quaternion handleRotation =  Tools.pivotRotation == PivotRotation.Local ? EmptyGizmos.transform.rotation : Quaternion.identity;
-                          
-                            Vector3 start = EmptyGizmos.transform.TransformPoint(strawSo.trajectories[n].pointsForBezierCurve[i - 1]) ;
-                                                         Vector3  middle = EmptyGizmos.transform.TransformPoint(strawSo.trajectories[n].pointsForBezierCurve[i]);
-                                                          Vector3 end = EmptyGizmos.transform.TransformPoint(strawSo.trajectories[n].pointsForBezierCurve[i + 1]) ;
-                            EditorGUI.BeginChangeCheck();
-                           
-                           start =  Handles.PositionHandle(start, handleRotation);
-                          middle =  Handles.PositionHandle(middle, handleRotation );
-                         end =   Handles.PositionHandle(end, handleRotation);
-                         
-                        
-                            if (EditorGUI.EndChangeCheck())
-                            {
-                              
-                                Undo.RecordObject(strawSo, "Move Point");
-                                EditorUtility.SetDirty(strawSo);
-                                strawSo.trajectories[n].pointsForBezierCurve[i - 1] = EmptyGizmos.transform.InverseTransformPoint(start);
-                                strawSo.trajectories[n].pointsForBezierCurve[i]= EmptyGizmos.transform.InverseTransformPoint(middle);
-                                strawSo.trajectories[n].pointsForBezierCurve[i+1]= EmptyGizmos.transform.InverseTransformPoint(end);
-                                
-                               
-                            }
-                            
-                            for (int j = 0; j <= strawSo.stepOfCurve[n]; j++)
-                            {
-                             
-                                Vector3 StepPoint = ExtensionMethods.Bezier(start, strawSo.trajectories[n].pointsForBezierCurve[i],
-                                    end, (j / (float) strawSo.stepOfCurve[n]));
-                                Handles.DrawLine(start, StepPoint, 2f);
-                                currentRange+= Vector3.Distance(start, StepPoint);
-                                start = StepPoint;
-                                
-            
-            
-                            }
-            
-                         
-            
-                         distanceBeginEndCurve =    Vector3.Distance(strawSo.trajectories[n].pointsForBezierCurve[0],
-                                strawSo.trajectories[n].pointsForBezierCurve[strawSo.trajectories[n].pointsForBezierCurve.Count-1]);
-            
-                        }
-                        
-            strawSo.range = currentRange;
-        
-                
-                    Handles.DrawWireDisc(EmptyGizmos.transform.position, EmptyGizmos.transform.up,
-                        distanceBeginEndCurve, 3f);
-                
-              
-                           
+                        strawSo.basePosition[n] = strawSo.trajectories[n].pointsForBezierCurve[0];
+
                     }
+                }
+
+
+
+
+   currentRange=   Vector3.Distance( strawSo.trajectories[n].pointsForBezierCurve[0]+EmptyGizmos, strawSo.trajectories[n].pointsForBezierCurve[strawSo.trajectories[n].pointsForBezierCurve.Count-1]+EmptyGizmos);
+                for (int i = 1; i < strawSo.trajectories[n].pointsForBezierCurve.Count; i += 2)
+                {
+
+                    
+                    Vector3 start =
+                       strawSo.trajectories[n].pointsForBezierCurve[i - 1]+EmptyGizmos;
+                    Vector3 middle =
+                        strawSo.trajectories[n].pointsForBezierCurve[i]+EmptyGizmos;
+                    Vector3 end =
+                  strawSo.trajectories[n].pointsForBezierCurve[i + 1]+EmptyGizmos;
+             
+                    EditorGUI.BeginChangeCheck();
+
+                    start = Handles.PositionHandle(start, quaternion.identity);
+                    middle = Handles.PositionHandle(middle, quaternion.identity);
+                    end = Handles.PositionHandle(end, quaternion.identity);
+                   
+
+                    if (EditorGUI.EndChangeCheck())
+                    {
+
+                        Undo.RecordObject(strawSo, "Move Point");
+                        EditorUtility.SetDirty(strawSo);
+                        strawSo.trajectories[n].pointsForBezierCurve[i - 1] =
+                            start-EmptyGizmos;
+                        strawSo.trajectories[n].pointsForBezierCurve[i] =
+                            middle-EmptyGizmos;
+                        strawSo.trajectories[n].pointsForBezierCurve[i + 1] =
+                            end-EmptyGizmos;
+
+
+                    }
+
+                    for (int j = 0; j <= strawSo.stepOfCurve[n]; j++)
+                    {
+
+                        Vector3 StepPoint = ExtensionMethods.Bezier(start,
+                            middle,
+                            end, (j / (float) strawSo.stepOfCurve[n]));
+                        Handles.DrawLine(start, StepPoint, 2f);
+                       
+                        start = StepPoint;
+
+
+
+                    }
+
+
+
+                   
+
+                }
+
+                strawSo.range = currentRange;
+
+                try
+                {
+                    Handles.DrawWireDisc(EmptyGizmos+strawSo.trajectories[n].pointsForBezierCurve[0], Vector3.forward,currentRange, 3f);
+                }
+                catch (Exception e)
+                {
+                   Handles.DrawWireDisc(EmptyGizmos, Vector3.forward,
+                                       currentRange, 3f);
+                   
+
+                }
+                
+
+
+            }
+        }
+        catch
+        {
+            
+        }
+             
     }
         
       

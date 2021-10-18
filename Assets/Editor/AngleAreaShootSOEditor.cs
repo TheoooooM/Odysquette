@@ -44,16 +44,18 @@ public class AngleAreaShootSOEditor : StrawSOEditor
                             GUI.backgroundColor = new Color(2f,2f, 0f,0.6f);
                             using (new GUILayout.VerticalScope(EditorStyles.helpBox))
                             {
-                                if (serializedObject.FindProperty("loadingRateMode").boolValue == true)
+                                if (serializedObject.FindProperty("rateMode").enumValueIndex == 2)
                                 {
-                                    GUILayout.Label("Specific Parameters for Loading Time ", myStyle);
+                                    GUILayout.Label("Specific  Parameters for Loading Time ", myStyle);
                                 }
-                                else
+                                else if(serializedObject.FindProperty("rateMode").enumValueIndex == 1)
                                 {
                                     GUILayout.Label("Specific Parameters all of (X) Shoot ", myStyle);
-
-
-
+                       
+                                }
+                                else
+                                {GUILayout.Label("Specific  Parameters  ", myStyle);
+                    
                                 }
 
                                 EditorGUILayout.Space(2f);
@@ -63,7 +65,7 @@ public class AngleAreaShootSOEditor : StrawSOEditor
                                 if (serializedObject.FindProperty("rateSecondParameter").boolValue == true)
                                 {
                                     EditorGUILayout.Space(2f);
-                                    if (serializedObject.FindProperty("loadingRateMode").boolValue == false)
+                                    if (serializedObject.FindProperty("rateMode").enumValueIndex == 2)
                                     {
                                         EditorGUILayout.PropertyField(
                                             serializedObject.FindProperty("effectAllNumberShoot"),
@@ -95,60 +97,73 @@ public class AngleAreaShootSOEditor : StrawSOEditor
         serializedObject.ApplyModifiedProperties();
     }
     public override void OnEditGizmos( SceneView sceneView)
-    {
-
-        if (strawSo.angle !=  0)
+    {base.OnEditGizmos( sceneView);
+        try
         {
-            if (strawSo.basePosition.Length != 0)
+            if (strawSo.angle != 0)
             {
-                for (int i = 0; i < strawSo.angleDivision+2; i++)
+                if (strawSo.basePosition.Length != 0)
+                {
+                    for (int i = 0; i < strawSo.angleDivision + 2; i++)
                     {
                         Handles.color = Color.magenta;
                         if (i == 0 || i == strawSo.angleDivision + 1)
                         {
                             Handles.color = Color.red;
-                            
+
                         }
-                       
+
                         Vector3 currentBasePosition = new Vector3();
-                        float currentAngle = -strawSo.angle / 2+ (strawSo.angle/(1+strawSo.angleDivision))*i;
-                        
-              
-                            
-                    Vector3 start = EmptyGizmos.transform.position + strawSo.basePosition[0];
-                    Vector3 rotation = Quaternion.Euler(0, currentAngle, 0)*EmptyGizmos.transform.forward;
-                    Vector3 end = start + rotation * strawSo.range;
-                    Handles.DrawWireDisc(start, EmptyGizmos.transform.up, rotation.magnitude * strawSo.range, 3f);
-                    Handles.DrawLine(start,end, 2f);
-                            
-                } 
-            }
-            else
-            {
-                for (int i = 0; i < strawSo.angleDivision+2; i++)
-                {
-                    Handles.color = Color.magenta;
-                    if (i == 0 || i == strawSo.angleDivision + 1)
-                    {
-                        Handles.color = Color.red;
-                            
+                        float currentAngle = -strawSo.angle / 2 + (strawSo.angle / (1 + strawSo.angleDivision)) * i;
+
+
+
+                        Vector3 start = EmptyGizmos + strawSo.basePosition[0];
+                        Vector3 rotation = Quaternion.Euler(0, currentAngle, 0) * Vector3.right;
+                        Vector3 end = start + rotation * strawSo.range;
+                        Handles.DrawWireDisc(start, Vector3.forward, rotation.magnitude * strawSo.range, 3f);
+                        Handles.DrawLine(start, end, 2f);
+
                     }
-                    Vector3 currentBasePosition = new Vector3();
-                    float currentAngle = -strawSo.angle / 2+ (strawSo.angle/(1+strawSo.angleDivision))*i;
-                
-                       
-                 
-                    Vector3 start = EmptyGizmos.transform.position;
-                            
-                    Vector3 rotation = Quaternion.Euler(0, currentAngle, 0)*EmptyGizmos.transform.forward;
-                    Vector3 end = start + (rotation * strawSo.range);
-                    Handles.DrawWireDisc(EmptyGizmos.transform.position, EmptyGizmos.transform.up, rotation.magnitude * strawSo.range, 3f);
-                    Handles.DrawLine(start,end, 2f);
-                         
-                } 
+                }
+                else
+                {
+                    for (int i = 0; i < strawSo.angleDivision + 2; i++)
+                    {
+                        Handles.color = Color.magenta;
+                        if (i == 0 || i == strawSo.angleDivision + 1)
+                        {
+                            Handles.color = Color.red;
+
+                        }
+
+                        Vector3 currentBasePosition = new Vector3();
+                        float currentAngle = -strawSo.angle / 2 + (strawSo.angle / (1 + strawSo.angleDivision)) * i;
+
+
+
+                        Vector3 start = EmptyGizmos;
+
+                        Vector3 rotation = Quaternion.Euler(0, 0, currentAngle) * Vector3.right;
+                        Vector3 end = start + (rotation * strawSo.range);
+                        if(strawSo.hasRange)
+                        Handles.DrawWireDisc(EmptyGizmos, Vector3.forward, rotation.magnitude * strawSo.range, 3f);
+                        else
+                            Handles.DrawWireDisc(EmptyGizmos, Vector3.forward, rotation.magnitude * 2f, 3f);
+                        Handles.DrawLine(start, end, 2f);
+
+                    }
+                }
+
             }
-           
         }
+        catch
+        {
+            
+        }
+     
+           
+        
       
         
     }

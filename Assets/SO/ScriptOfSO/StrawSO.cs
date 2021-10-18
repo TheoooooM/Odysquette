@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.Remoting.Messaging;
 using Unity.Mathematics;
 using UnityEditor;
@@ -12,15 +13,16 @@ using Object = System.Object;
 
 public class StrawSO : ScriptableObject
 {
-    
-
-  
+    public bool hasRange;
+    public string strawName;
+    public Sprite strawRenderer;
    public float damage = 1;
    public float timeValue;
    public int effectAllNumberShoot;
    public float dragRB = 0;
    public float range = 1;
-   public bool loadingRateMode = false;
+   public RateMode rateMode;
+   public bool isUltimate;
    public bool rateMainParameter = false;
        public bool rateSecondParameter = false;
        public float damageParameter = 0;
@@ -31,10 +33,10 @@ public class StrawSO : ScriptableObject
       public float delay = 0;
      
       public float delayParameter;
-      [NamedArray("vector3")]
+      [NamedArray("vector3", true)]
       public Vector3[] basePositionParameter; 
 
- [NamedArray("vector3")]
+ [NamedArray("vector3", true)]
    public Vector3[] basePosition;
   
    public float speedBullet;
@@ -42,6 +44,9 @@ public class StrawSO : ScriptableObject
    
    public virtual void OnValidate()
    {
+    
+      
+     
       damage = Mathf.Max(damage, 0);
       timeValue = Mathf.Max(timeValue, 0);
       dragRB= Mathf.Max(dragRB, 0);
@@ -52,36 +57,41 @@ public class StrawSO : ScriptableObject
    
       
    }
-   public virtual void Shoot(GameManager.Effect effect1, GameManager.Effect effect2, Transform parentBulletTF , MonoBehaviour script, float currentTimeValue = 1)
+   public virtual void Shoot( Transform parentBulletTF , MonoBehaviour script, float currentTimeValue = 1)
    {
     
    }
 
-   public virtual IEnumerator ShootDelay(GameManager.Effect effect1, GameManager.Effect effect2, Transform parentBulletTF , float currentTimeValue = 1 )
+   public virtual IEnumerator ShootDelay( Transform parentBulletTF , float currentTimeValue = 1 )
    {
        yield return null;
    }
 
-   public virtual void SetParameter(GameObject bullet, float currentTimeValue, GameManager.Effect effect1, GameManager.Effect effect2, Vector3 currentBasePosition)
-   {  ScriptBullet scriptBullet = bullet.GetComponent<ScriptBullet>();
+   public virtual void SetParameter(GameObject bullet, float currentTimeValue, Transform transform = null)
+   {
+       Bullet scriptBullet = bullet.GetComponent<Bullet>();
        if (rateMainParameter == true)
        {
-        
-           scriptBullet.damage = damage+damageParameter * currentTimeValue;
-           scriptBullet.range =range +rangeParameter * currentTimeValue;
+           scriptBullet.hasRange = hasRange;
+           scriptBullet.damage = damage + damageParameter * currentTimeValue;
+           if(hasRange)
+           scriptBullet.range = range + rangeParameter * currentTimeValue;
            scriptBullet.rb.drag = dragRB + dragRBParameter * currentTimeValue;
        }
-else if (rateMainParameter == false)
+       else if (rateMainParameter == false)
        {
-           scriptBullet.damage = damage ;
-           scriptBullet.range = range ;
+           scriptBullet.damage = damage;
+           scriptBullet.range = range;
+
            scriptBullet.rb.drag = dragRB;
        }
-      
-       scriptBullet.firstEffect = effect1;
-       scriptBullet.secondEffect = effect2;
+
+
    }
-   
+public enum  RateMode
+{
+    Ultimate, FireRate, FireLoading
+}
 }
 
 

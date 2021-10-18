@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEditor;
 [CreateAssetMenu(fileName = "BasicShootSO", menuName = "ShootMode/BasicShootSO", order = 1)]
 public class BasicShootSO : StrawSO
 {
-    [NamedArray("float" )]
-   
+  
+    [NamedArray("float", true)]
     public float[] directions;
+    [NamedArray("float", false)]
     public float[] directionParameter;
 
     public override void OnValidate()
@@ -16,102 +18,101 @@ public class BasicShootSO : StrawSO
         
     }
 
-    public override void Shoot(GameManager.Effect effect1, GameManager.Effect effect2, Transform parentBulletTF,MonoBehaviour script, float currentTimeValue = 1 ) 
+    public override void Shoot(Transform parentBulletTF,MonoBehaviour script, float currentTimeValue = 1 ) 
     {
 
-        if (directionParameter != null)
-        {
-              for (int i = 0; i < directions.Length; i++)
-                    {
-                       directions[i] += directionParameter[i] * currentTimeValue;
-                    }
-        }
+     
 
 
-        if (isDelay)
+        if (!isDelay)
         {
             for (int i = 0; i < directions.Length; i++)
             {
-                Vector3 currentBasePosition = new Vector3();
-                GameObject bullet = Instantiate(prefabBullet, parentBulletTF.position, parentBulletTF.rotation);
-                currentBasePosition = bullet.transform.position;
-
-                Vector3 rotation = Quaternion.Euler(0, directions[i], 0) * parentBulletTF.transform.forward;
-                if (basePosition.Length != null)
+             
+               
+                GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet );
+                
+                Vector3 rotation;
+ 
+                if (directionParameter.Length == i +1 )
                 {
-                    bullet.transform.position += basePosition[i] + basePositionParameter[i] * currentTimeValue;
-                    currentBasePosition = bullet.transform.position;
+            
+                   rotation = Quaternion.Euler(0,0 , directions[i]+ directionParameter[i] * currentTimeValue) * parentBulletTF.transform.right;   
+                    
                 }
-                //save pool
+                else
+                {
+                     rotation = Quaternion.Euler(0, directions[i], 0) * parentBulletTF.transform.right;
+                }
+              
+                if (basePosition.Length != 0)
+                {
+                    bullet.transform.position += basePosition[i];
+                    if (basePositionParameter.Length == i +1 )
+                    {
+                        bullet.transform.position +=basePositionParameter[i]*currentTimeValue;
+                    }
+                   
+                }
+              
 
-                bullet.GetComponent<Rigidbody>().AddForce(rotation * (speedBullet + speedParameter * currentTimeValue),
-                    ForceMode.Force);
-                SetParameter(bullet, currentTimeValue, effect1, effect2, currentBasePosition);
+                bullet.GetComponent<Rigidbody2D>().AddForce(rotation * (speedBullet + speedParameter * currentTimeValue),
+                    ForceMode2D.Force);
+                SetParameter(bullet, currentTimeValue,null);
             }
         }
         else
         {
-           script.StartCoroutine(ShootDelay(effect1, effect2, parentBulletTF, currentTimeValue));
+           script.StartCoroutine(ShootDelay(parentBulletTF, currentTimeValue));
         }
       
     }
 
  
 
-    public override IEnumerator ShootDelay(GameManager.Effect effect1, GameManager.Effect effect2, Transform parentBulletTF, float currentTimeValue)
+    public override IEnumerator ShootDelay(Transform parentBulletTF, float currentTimeValue)
     {
         for (int i = 0; i < directions.Length; i++)
         {
             Vector3 currentBasePosition = new Vector3();
-            GameObject bullet = Instantiate(prefabBullet, parentBulletTF.position, parentBulletTF.rotation);
-            currentBasePosition = bullet.transform.position ;
-                            
-            Vector3 rotation = Quaternion.Euler(0, directions[i], 0) * parentBulletTF.transform.forward; 
-            if (basePosition.Length != null)
+            GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet );
+            bullet.SetActive(true);
+            Vector3 rotation;
+            if (directionParameter.Length == i +1 )
             {
-                bullet.transform.position += basePosition[i]+basePositionParameter[i]*currentTimeValue;
-                currentBasePosition = bullet.transform.position;
+            
+                rotation = Quaternion.Euler(0,0 , directions[i]+ directionParameter[i] * currentTimeValue) * parentBulletTF.transform.right;   
+                
+            }
+            else
+            {
+                rotation = Quaternion.Euler(0, directions[i], 0) * parentBulletTF.transform.right;
+            }        
+            
+            if (basePosition.Length != 0)
+            {
+                bullet.transform.position += basePosition[i];
+                if (basePositionParameter.Length == i +1 )
+                {
+                    bullet.transform.position +=basePositionParameter[i]*currentTimeValue;
+                }
+              
             }
             //save pool
                              
-            bullet.GetComponent<Rigidbody>().AddForce(rotation*(speedBullet+speedParameter*currentTimeValue), ForceMode.Force);
-            SetParameter(bullet, currentTimeValue, effect1, effect2, currentBasePosition);
+            bullet.GetComponent<Rigidbody2D>().AddForce(rotation*(speedBullet+speedParameter*currentTimeValue), ForceMode2D.Force );
+            bullet.transform.rotation = Quaternion.Euler(0,0, directions[i]+ directionParameter[i] * currentTimeValue);
+            SetParameter(bullet, currentTimeValue, null);
             yield return new WaitForSeconds(delay + delayParameter * currentTimeValue);
         }
     }
 
-    public class ListoToPopupAttribute : PropertyAttribute
+
+
+    public override void SetParameter(GameObject bullet, float currentTimeValue, Transform transform)
     {
-    
-        public float[] bonsoir = new float[10] ;
-        public string propertyName; 
-        public ListoToPopupAttribute(List<float> _bonsoir )
-        {
+        base.SetParameter(bullet, currentTimeValue);
+        Bullet scriptBullet = bullet.GetComponent<Bullet>();
         
-            for (int i = 0; i < _bonsoir.Count; i++)
-            {
-                bonsoir[i] = _bonsoir[i];
-            }
-        }
-    }
-    [CustomPropertyDrawer(typeof(ListoToPopupAttribute))]
-    public class ListToPopupDrawer : PropertyDrawer
-    {
-        private int selectedIndex = 0;
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
-            ListoToPopupAttribute atb = attribute as ListoToPopupAttribute;
-            for (int i = 0; i < atb.bonsoir.Length; i++)
-            {
-                GUI.color = Random.ColorHSV();
-                EditorGUI.FloatField(position, label, atb.bonsoir[i]);
-            }
-        
-            
-            
-        
-     
-        }
-    
     }
 }

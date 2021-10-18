@@ -6,52 +6,75 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public bool hasRange;
+    public float damage;
+    public float range;
+    public Color colorBang;
+     Vector3 basePosition;
     
-   [SerializeField] float BulletSpeed;
+  
+    
    private BulletStat Scriptable;
     int Timer = 0;
-    private Rigidbody2D rb;
-
+    public Rigidbody2D rb;
+     
     [Header("==============Effects Stat===============")]
     public int pierceCount;
     public int _pierceCount;
-
+    private bool isEnable;
     public bool canBounce = false;
     
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+     
         _pierceCount = pierceCount;
+       
+       
     }
 
     private void OnEnable()
     {
+        isEnable = false;
+         basePosition = transform.position;
         _pierceCount = pierceCount;
-        canBounce = false;
+        canBounce = false; 
+        Invoke(nameof(DelayforDrag),0.5f);
+        
     }
 
     void Update()
     {
-        rb.AddForce(transform.right * (BulletSpeed* 0.0001f), ForceMode2D.Impulse); // met une force sur la paille
-        
-        
-        
+           Debug.Log(GetComponent<Rigidbody2D>().velocity);
+           if (hasRange)
+           {
+                 if (Vector3.Distance(basePosition, transform.position) >=range)
+                     {
+                         
+                         PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject);
+                      
+                         gameObject.SetActive(false);
+                         
+                     }
+           }
+    
+   
+      else if (rb.velocity.magnitude <= 0.1 && rb.drag > 0 && isEnable)
+      {
+          
+          PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject);
+      
+          gameObject.SetActive(false);
+       
+      } 
+ 
+
+
+
+
     }
 
-    private void FixedUpdate()
-    {
-        //------------------------ Debug pour faire disparaitre la balle --------------------
-        Timer= Timer + 1 ;
-        if (Timer == 500)
-        {
-            Timer = 0;
-            gameObject.SetActive(false);
-            
-            PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject); // Remet le GameObject dans la file d'attente, a placer au moment ou elle est "détruite"
-        }
-        //-----------------------------------------------------------------------------------------
-    }
+   
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -90,16 +113,13 @@ public class Bullet : MonoBehaviour
         if (_pierceCount > 0 && other.CompareTag("Enemy"))
         {
             _pierceCount--;
+            Debug.Log("les degats olalala : " + damage);
         }
         else if (canBounce == true)// && other.CompareTag("Walls"))
         {
             
             
-            Vector2 dir = Vector2.Reflect(rb.velocity.normalized, Vector2.right);
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            rb.velocity = Vector2.zero;
-            gameObject.transform.rotation = quaternion.Euler(0f, 0f, angle);
-            //rb.AddForce(dir);
+   
         }
         else 
         {
@@ -122,6 +142,11 @@ public class Bullet : MonoBehaviour
     void Ice()
     {
         Debug.Log("ice");
+    }
+
+    void DelayforDrag()
+    {
+        isEnable = true;
     }
     
 }

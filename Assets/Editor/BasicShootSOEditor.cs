@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using PlasticPipe.PlasticProtocol.Client;
@@ -12,7 +13,7 @@ public class BasicShootSOEditor : StrawSOEditor
     private BasicShootSO strawSo;
 
   
-
+ 
 
     public override void OnInspectorGUI()
     {
@@ -38,19 +39,22 @@ public class BasicShootSOEditor : StrawSOEditor
             
             EditorGUILayout.Space(2f);
             
-            GUI.backgroundColor = new Color(2f,2f, 0f,0.6f);
+           GUI.backgroundColor = new Color(2f,2f, 0f,0.6f);
+          
             using (new GUILayout.VerticalScope(EditorStyles.helpBox))
             {
-                if (serializedObject.FindProperty("loadingRateMode").boolValue == true)
+                if (serializedObject.FindProperty("rateMode").enumValueIndex == 2)
                 {
-                    GUILayout.Label("Specific Parameters for Loading Time ", myStyle);
+                    GUILayout.Label("Specific  Parameters for Loading Time ", myStyle);
                 }
-                else
+                else if(serializedObject.FindProperty("rateMode").enumValueIndex == 1)
                 {
                     GUILayout.Label("Specific Parameters all of (X) Shoot ", myStyle);
-
-
-
+                       
+                }
+                else
+                {GUILayout.Label("Specific  Parameters  ", myStyle);
+                    
                 }
 
                 EditorGUILayout.Space(2f);
@@ -61,13 +65,13 @@ public class BasicShootSOEditor : StrawSOEditor
                 {
                     
                     EditorGUILayout.Space(2f);
-                    if (serializedObject.FindProperty("loadingRateMode").boolValue == false)
+                    if (serializedObject.FindProperty("rateMode").enumValueIndex == 2)
                     {
-                        EditorGUILayout.PropertyField(
-                            serializedObject.FindProperty("effectAllNumberShoot"),
-                            new GUIContent("(X) Shoot"));
+                       
                         EditorGUILayout.Space(2f);
-                    }
+                    } EditorGUILayout.PropertyField(
+                                                 serializedObject.FindProperty("effectAllNumberShoot"),
+                                                 new GUIContent("(X) Shoot"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("directionParameter"),
                         new GUIContent("Directions"));
                     EditorGUILayout.Space(2f);
@@ -82,23 +86,24 @@ public class BasicShootSOEditor : StrawSOEditor
 
     public override void OnEditGizmos( SceneView sceneView)
     {
-      
-        
 
-      
+base.OnEditGizmos( sceneView);
 
-        if (strawSo.directions.Length !=  0)
+
+
+
+        try
         {
-            if (strawSo.basePosition.Length != 0)
+if (strawSo.basePosition.Length != 0)
                     {
                         for (int i = 0; i < strawSo.basePosition.Length; i++)
                         {
                             Handles.color = GizmoColor[i];
                             
-                            Vector3 start = EmptyGizmos.transform.position + strawSo.basePosition[i];
-                            Vector3 rotation = Quaternion.Euler(0, strawSo.directions[i], 0)*EmptyGizmos.transform.forward;
+                            Vector3 start = EmptyGizmos + strawSo.basePosition[i];
+                            Vector3 rotation = Quaternion.Euler(0, 0,strawSo.directions[i] )*Vector3.right;
                             Vector3 end = start + rotation * strawSo.range;
-                            Handles.DrawWireDisc(start, EmptyGizmos.transform.up, rotation.magnitude * strawSo.range, 3f);
+                            Handles.DrawWireDisc(start, Vector3.forward, rotation.magnitude * strawSo.range, 3f);
                             Handles.DrawLine(start,end, 2f);
                             
                         } 
@@ -109,18 +114,28 @@ public class BasicShootSOEditor : StrawSOEditor
                         {
                        
                             Handles.color = GizmoColor[i];
-                            Vector3 start = EmptyGizmos.transform.position;
+                            Vector3 start = EmptyGizmos;
                             
-                            Vector3 rotation = Quaternion.Euler(0, strawSo.directions[i], 0)*EmptyGizmos.transform.forward;
+                            Vector3 rotation = Quaternion.Euler(0, 0, strawSo.directions[i])*Vector3.right;
                             Vector3 end = start + (rotation * strawSo.range);
-                            Handles.DrawWireDisc(EmptyGizmos.transform.position, EmptyGizmos.transform.up, rotation.magnitude * strawSo.range, 3f);
+                            if(strawSo.hasRange)
+                                Handles.DrawWireDisc(EmptyGizmos, Vector3.forward, rotation.magnitude * strawSo.range, 3f);
+                            else
+                                Handles.DrawWireDisc(EmptyGizmos, Vector3.forward, rotation.magnitude * 2f, 3f);
                             Handles.DrawLine(start,end, 2f);
                          
                         } 
                     }
            
+        } 
+        catch (Exception e)
+                 {
+                     
+                 }
         }
+       
+            
       
         
     }
-}
+

@@ -26,9 +26,9 @@ public class PoolManager : MonoBehaviour
             //---------------------Génère les pool et les bullets de base------------------------- 
             Queue<GameObject> objectPool = new Queue<GameObject>();
             
-            for (int i = 0; i < pol.size; i++)
+            for (int i = 0; i < pol.sizePool; i++)
             {
-                GameObject obj = Instantiate(pol.prefabs, transform);
+                GameObject obj = Instantiate(pol.strawSO.prefabBullet, transform);
                 obj.name = GameManager.Instance.actualStraw.ToString();
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
@@ -39,29 +39,31 @@ public class PoolManager : MonoBehaviour
         }
     }
     
-    virtual public void SpawnFromPool() //Active ou instancie une balle sur le spawn bullet
+     public GameObject SpawnFromPool(Transform parentBulletTF, GameObject prefabBullet) //Active ou instancie une balle sur le spawn bullet
     {
-        int count = 0;
-        foreach (Transform spawn in GameManager.Instance.actualStrawClass.spawnerTransform)
-        {
+       
+        GameObject obj;
+        
             if (poolDictionary[GameManager.Instance.actualStraw].Count == 0) // Instancie une balle si il n'y en a plus dans la queue
             {
-                GameObject obj = Instantiate(GameManager.Instance.actualStrawClass.prefabs, transform);
-                obj.name = GameManager.Instance.actualStraw.ToString();
-                obj.transform.position = spawn.position;
-                obj.transform.rotation = Quaternion.Euler(0f, 0f, GameManager.Instance.angle);
-                poolDictionary[GameManager.Instance.actualStraw].Enqueue(obj);
+                obj = Instantiate(prefabBullet, parentBulletTF.position, parentBulletTF.rotation );
+                obj.name = GameManager.Instance.actualStrawClass.strawSO.name;
+             
+                //poolDictionary[GameManager.Instance.actualStraw].Enqueue(obj);
+                return obj;
             }
             else // Sinon active la première balle se trouvant dans la queue
             {
-                count++;
+                
                 //Debug.Log("Count : "+count);    
-                GameObject objToSpawn = poolDictionary[GameManager.Instance.actualStraw].Dequeue();
-                objToSpawn.SetActive(true);
-                objToSpawn.transform.position = spawn.position;
-                objToSpawn.transform.rotation = Quaternion.Euler(0f, 0f, GameManager.Instance.angle);
+                obj = poolDictionary[GameManager.Instance.actualStraw].Dequeue();
+                
+                obj.transform.position = parentBulletTF.position;
+             
+                obj.transform.rotation = parentBulletTF.rotation; 
+                return obj;
             }
-        }
+        
     }
     
 }

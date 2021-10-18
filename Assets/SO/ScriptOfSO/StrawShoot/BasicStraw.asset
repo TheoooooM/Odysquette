@@ -10,17 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3cc10fdd4a18ef46b694668cf653adc, type: 3}
-  m_Name: BasicShootSO
+  m_Name: BasicStraw
   m_EditorClassIdentifier: 
-  damage: 0
+  hasRange: 0
+  strawName: 
+  strawRenderer: {fileID: 0}
+  damage: 1
   timeValue: 0
   effectAllNumberShoot: 0
   dragRB: 0
-  range: 36.77
-  loadingRateMode: 0
-  rateMainParameter: 1
-  rateSecondParameter: 1
-  damageParameter: 0.46
+  range: 0
+  rateMode: 1
+  isUltimate: 0
+  rateMainParameter: 0
+  rateSecondParameter: 0
+  damageParameter: 0
   rangeParameter: 0
   dragRBParameter: 0
   speedParameter: 0
@@ -28,26 +32,9 @@ MonoBehaviour:
   delay: 0
   delayParameter: 0
   basePositionParameter: []
-  basePosition:
-  - {x: 1.55, y: 0, z: 0}
-  - {x: 2, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  basePosition: []
   speedBullet: 0
   prefabBullet: {fileID: 0}
   directions:
-  - 212
-  - 183
-  - 123
-  - 123
-  - 171
-  - 123
-  - 123
-  - 123
-  directionParameter:
-  - 90
   - 0
+  directionParameter: []
