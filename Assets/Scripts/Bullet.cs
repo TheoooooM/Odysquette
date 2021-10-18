@@ -15,26 +15,41 @@ public class Bullet : MonoBehaviour
   
     
    private BulletStat Scriptable;
-    int Timer = 0;
-    public Rigidbody2D rb;
-     
+
+    private Rigidbody2D rb;
+    private Vector3 lastVelocity;
+
     [Header("==============Effects Stat===============")]
     public int pierceCount;
-    public int _pierceCount;
-    private bool isEnable;
-    public bool canBounce = false;
+    private int _pierceCount;
+
+    public int bounceCount;
+    private int _bounceCount;
+
+    public float poisonCooldown = 5;
+    float _poisonCooldown = 0;
+    
+
     
 
     private void Start()
     {
-     
-        _pierceCount = pierceCount;
-       
-       
+
+        rb = GetComponent<Rigidbody2D>();
+        if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce)_pierceCount = pierceCount;
+        else _pierceCount = 0;
+        
+        if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
+        else _bounceCount = 0;
+        
+        rb.velocity = Vector2.zero;
+        rb.AddForce((GameManager.Instance._lookDir).normalized * BulletSpeed, ForceMode2D.Impulse); // met une force sur la paille
+
     }
 
     private void OnEnable()
     {
+
         isEnable = false;
          basePosition = transform.position;
         _pierceCount = pierceCount;
@@ -71,6 +86,38 @@ public class Bullet : MonoBehaviour
 
 
 
+ 
+        Debug.Log("enable");
+        if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce) _pierceCount = pierceCount;
+        else _pierceCount = 0;
+        
+        if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
+        else _bounceCount = 0;
+        
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.AddForce((GameManager.Instance._lookDir).normalized * BulletSpeed, ForceMode2D.Impulse); // met une force sur la paille
+        }
+        transform.rotation = Quaternion.Euler(0f, 0f, GameManager.Instance.angle);
+    }
+
+    private void Update()
+    {
+        lastVelocity = rb.velocity;
+
+        if (GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison)
+        {
+            if (_poisonCooldown > 0)
+            {
+                _poisonCooldown -= Time.deltaTime * 2;
+            }
+            else
+            {
+                _poisonCooldown = poisonCooldown;
+                PoolManager.Instance.SpawnPoisonPool(transform);
+            }
+        }
 
     }
 
@@ -78,12 +125,8 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("boom" + _pierceCount);
         switch (GameManager.Instance.firstEffect)
         {
-            case GameManager.Effect.bounce :
-                Bounce();
-                break;
             
             case GameManager.Effect.explosion :
                 Explosion();
@@ -91,22 +134,18 @@ public class Bullet : MonoBehaviour
             
             
             case GameManager.Effect.ice :
-                Ice();
+                Ice(other.gameObject);
                 break;
         }
         
         switch (GameManager.Instance.secondEffect)
         {
-            case GameManager.Effect.bounce :
-                Bounce();
-                break;
-
             case GameManager.Effect.explosion :
                 Explosion();
                 break;
 
             case GameManager.Effect.ice :
-                Ice();
+                Ice(other.gameObject);
                 break;
         }
 
@@ -115,33 +154,45 @@ public class Bullet : MonoBehaviour
             _pierceCount--;
             Debug.Log("les degats olalala : " + damage);
         }
-        else if (canBounce == true)// && other.CompareTag("Walls"))
-        {
-            
-            
-   
-        }
-        else 
+
+        else if (!other.CompareTag("Walls"))
+
         {
             gameObject.SetActive(false); 
             PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject);
         }
     }
 
-    void Bounce()
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        canBounce = true;
-        Debug.Log("bounce");
+        if (_bounceCount > 0)
+        {
+            var speed = lastVelocity.magnitude;
+            var direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
+            rb.velocity = direction * Mathf.Max(speed, 0f);
+            var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+
+            _bounceCount--;
+        }
+        else
+        {
+            gameObject.SetActive(false); 
+            PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject);
+        }
     }
 
     void Explosion()
     {
         Debug.Log("explosion");
+        PoolManager.Instance.SpawnExplosionPool(transform);
     }
 
-    void Ice()
+    void Ice(GameObject gam)
     {
         Debug.Log("ice");
+        gam.GetComponent<enemy>().freezeTime = 5;
+
     }
 
     void DelayforDrag()

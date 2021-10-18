@@ -53,11 +53,16 @@ public class GameManager : MonoBehaviour
     //Straw
     public Straw actualStraw;
     public List<StrawClass> strawsClass; //Liste de toute les pailles
+
     private int countShootRate ;
-    private float shootCooldown;
+   
     private float shootLoading;
 
     private bool EndLoading;
+
+
+    public float shootCooldown;
+
     
     //Bullet
     [Header("Settings")]
@@ -194,16 +199,16 @@ public class GameManager : MonoBehaviour
 
    
         
-    }
-
-    void FixedUpdate()
-    {
         //---------------- Oriente la paille ------------------------
         Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x, actualStrawClass.StrawParent.transform.position.y);
         _lookDir = new Vector2(mousepos.x, mousepos.y) - Position ;
         angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
         actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
         //--------------------------------------------------------------
+    }
+
+    void FixedUpdate()
+    {
     }
 
     void ChangeStraw(Straw straw) //change la paille 

@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5672952729407700744}
   - component: {fileID: 447753167651521645}
+  - component: {fileID: -7866836818757672500}
+  - component: {fileID: 7046429430305339719}
+  - component: {fileID: 3938930690576097658}
   - component: {fileID: 2768319741440879399}
-  - component: {fileID: -7567172812567126362}
-  - component: {fileID: -8372410408356953461}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,6 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+
 --- !u!114 &2768319741440879399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,6 +107,7 @@ MonoBehaviour:
   _pierceCount: 0
   canBounce: 0
 --- !u!50 &-7567172812567126362
+
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -116,17 +119,17 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.001
-  m_LinearDrag: 17.5
+  m_Mass: 1
+  m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!61 &-8372410408356953461
-BoxCollider2D:
+  m_CollisionDetection: 1
+  m_Constraints: 4
+--- !u!58 &7046429430305339719
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -138,16 +141,38 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.2, y: 3.55}
-    newSize: {x: 3.47, y: 2.25}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 1.1718895, y: 0.048394136}
   serializedVersion: 2
-  m_Size: {x: 6.2, y: 3.55}
-  m_EdgeRadius: 0
+  m_Radius: 1.6100992
+--- !u!58 &3938930690576097658
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602687282885438852}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1.1819615, y: 0.053771257}
+  serializedVersion: 2
+  m_Radius: 1.477617
+--- !u!114 &2768319741440879399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602687282885438852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd39a6a5b272a354da9b3aecb3757baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BulletSpeed: 8
+  pierceCount: 2
+  bounceCount: 2
+  poisonCooldown: 0.07

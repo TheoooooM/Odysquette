@@ -1,13 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PoolManager : MonoBehaviour
 {
     public Dictionary<GameManager.Straw, Queue<GameObject>> poolDictionary;
+    public Queue<GameObject> PoisonQueue;
+    public GameObject poisonPrefab;
     
-    
+    public Queue<GameObject> explosionQueue;
+    public GameObject explosionPrefab;
+
+
     #region  Singleton
     public static PoolManager Instance;
 
@@ -20,7 +26,8 @@ public class PoolManager : MonoBehaviour
     private void Start()
     {
         poolDictionary = new Dictionary<GameManager.Straw, Queue<GameObject>>(); //Créer un dictionnaire regroupant chaque pool
-
+        PoisonQueue = new Queue<GameObject>();
+        explosionQueue = new Queue<GameObject>();
         foreach (GameManager.StrawClass pol in GameManager.Instance.strawsClass)
         {
             //---------------------Génère les pool et les bullets de base------------------------- 
@@ -41,6 +48,7 @@ public class PoolManager : MonoBehaviour
     
      public GameObject SpawnFromPool(Transform parentBulletTF, GameObject prefabBullet) //Active ou instancie une balle sur le spawn bullet
     {
+
        
         GameObject obj;
         
@@ -64,6 +72,40 @@ public class PoolManager : MonoBehaviour
                 return obj;
             }
         
+
+
+    public void SpawnPoisonPool(Transform bullet)
+    {
+        if (PoisonQueue.Count == 0)
+        {
+            GameObject obj = Instantiate(poisonPrefab);
+            obj.transform.position = bullet.position;
+        }
+        else
+        {
+            GameObject obj = PoisonQueue.Dequeue();
+            obj.transform.position = bullet.position;
+            obj.SetActive(true);
+        }
+
     }
+    
+    
+    public void SpawnExplosionPool(Transform bullet)
+    {
+        if (explosionQueue.Count == 0)
+        {
+            Debug.Log(bullet.position);
+            GameObject obj = Instantiate(explosionPrefab, bullet.position, quaternion.identity);
+            //obj.transform.position = bullet.position;
+        }
+        else
+        {
+            GameObject obj = explosionQueue.Dequeue();
+            obj.transform.position = bullet.position;
+            obj.SetActive(true);
+        }
+    }
+    
     
 }
