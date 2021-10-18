@@ -12,7 +12,7 @@ public class PoolManager : MonoBehaviour
     
     public Queue<GameObject> explosionQueue;
     public GameObject explosionPrefab;
-
+  
 
     #region  Singleton
     public static PoolManager Instance;
@@ -36,7 +36,7 @@ public class PoolManager : MonoBehaviour
             for (int i = 0; i < pol.sizePool; i++)
             {
                 GameObject obj = Instantiate(pol.strawSO.prefabBullet, transform);
-                obj.name = GameManager.Instance.actualStraw.ToString();
+                obj.name = i.ToString();
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
@@ -45,49 +45,55 @@ public class PoolManager : MonoBehaviour
             poolDictionary.Add(pol.StrawType, objectPool);
         }
     }
-    
-     public GameObject SpawnFromPool(Transform parentBulletTF, GameObject prefabBullet) //Active ou instancie une balle sur le spawn bullet
+
+    public GameObject SpawnFromPool(Transform parentBulletTF, GameObject prefabBullet) //Active ou instancie une balle sur le spawn bullet
     {
 
-       
+
         GameObject obj;
-        
-            if (poolDictionary[GameManager.Instance.actualStraw].Count == 0) // Instancie une balle si il n'y en a plus dans la queue
-            {
-                obj = Instantiate(prefabBullet, parentBulletTF.position, parentBulletTF.rotation );
-                obj.name = GameManager.Instance.actualStrawClass.strawSO.name;
-             
-                //poolDictionary[GameManager.Instance.actualStraw].Enqueue(obj);
-                return obj;
-            }
-            else // Sinon active la première balle se trouvant dans la queue
-            {
-                
-                //Debug.Log("Count : "+count);    
-                obj = poolDictionary[GameManager.Instance.actualStraw].Dequeue();
-                
-                obj.transform.position = parentBulletTF.position;
-             
-                obj.transform.rotation = parentBulletTF.rotation; 
-                return obj;
-            }
-        
 
+        if (poolDictionary[GameManager.Instance.actualStraw].Count ==
+            0) // Instancie une balle si il n'y en a plus dans la queue
+        {
+            obj = Instantiate(prefabBullet, parentBulletTF.position, parentBulletTF.rotation);
+            
 
-    public void SpawnPoisonPool(Transform bullet)
+            //poolDictionary[GameManager.Instance.actualStraw].Enqueue(obj);
+         
+        }
+        else // Sinon active la première balle se trouvant dans la queue
+        {
+
+          
+            obj = poolDictionary[GameManager.Instance.actualStraw].Dequeue();
+
+            obj.transform.position = parentBulletTF.position;
+
+            obj.transform.rotation = parentBulletTF.rotation;
+          // Debug.Log(obj.name);
+        }
+ return obj;
+
+    }
+
+    public void SpawnPoisonPool(Transform bullet, float speed)
     {
+        GameObject obj;
         if (PoisonQueue.Count == 0)
         {
-            GameObject obj = Instantiate(poisonPrefab);
+             obj = Instantiate(poisonPrefab);
             obj.transform.position = bullet.position;
         }
         else
         {
-            GameObject obj = PoisonQueue.Dequeue();
+            obj = PoisonQueue.Dequeue();
             obj.transform.position = bullet.position;
             obj.SetActive(true);
         }
 
+        obj.GetComponent<Poison>().rbBullet = bullet.GetComponent<Rigidbody2D>();
+       obj.GetComponent<Poison>().speed = speed;
+       obj.transform.rotation = bullet.rotation;
     }
     
     
@@ -105,6 +111,7 @@ public class PoolManager : MonoBehaviour
             obj.transform.position = bullet.position;
             obj.SetActive(true);
         }
+        
     }
     
     

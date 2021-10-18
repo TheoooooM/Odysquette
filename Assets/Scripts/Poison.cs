@@ -7,8 +7,8 @@ public class Poison : MonoBehaviour
 {
     public float Timer;
     public float _Timer;
-    
-
+    public float speed;
+    public Rigidbody2D rbBullet;
     private void OnEnable()
     {
         _Timer = Timer;
@@ -16,6 +16,7 @@ public class Poison : MonoBehaviour
 
     void FixedUpdate()
     {
+      
         if (_Timer>0)
         {
             _Timer -= 1;

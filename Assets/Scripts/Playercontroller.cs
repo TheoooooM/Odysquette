@@ -21,22 +21,22 @@ public class Playercontroller : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             rb.position += new Vector2(MouvementSpeed*0.2f, 0);
-            Debug.Log("d");
+         
         }
         if (Input.GetKey(KeyCode.Q))
         {
             rb.position += new Vector2(-MouvementSpeed*0.2f, 0);
-            Debug.Log("Q");
+          
         }
         if (Input.GetKey(KeyCode.Z))
         {
             rb.position += new Vector2(0, MouvementSpeed*0.2f);
-            Debug.Log("Z");
+          
         }
         if (Input.GetKey(KeyCode.S))
         {
             rb.position += new Vector2(0, -MouvementSpeed*0.2f);
-            Debug.Log("S");
+           
         }
 
     }

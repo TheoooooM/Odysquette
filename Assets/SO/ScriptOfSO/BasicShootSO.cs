@@ -31,7 +31,7 @@ public class BasicShootSO : StrawSO
              
                
                 GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet );
-                
+                bullet.SetActive(true);
                 Vector3 rotation;
  
                 if (directionParameter.Length == i +1 )
@@ -55,8 +55,8 @@ public class BasicShootSO : StrawSO
                    
                 }
               
-
-                bullet.GetComponent<Rigidbody2D>().AddForce(rotation * (speedBullet + speedParameter * currentTimeValue),
+                bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                bullet.GetComponent<Rigidbody2D>().AddForce(rotation* (speedBullet + speedParameter * currentTimeValue),
                     ForceMode2D.Force);
                 SetParameter(bullet, currentTimeValue,null);
             }
@@ -76,6 +76,7 @@ public class BasicShootSO : StrawSO
         {
             Vector3 currentBasePosition = new Vector3();
             GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet );
+            bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             bullet.SetActive(true);
             Vector3 rotation;
             if (directionParameter.Length == i +1 )
@@ -100,7 +101,7 @@ public class BasicShootSO : StrawSO
             }
             //save pool
                              
-            bullet.GetComponent<Rigidbody2D>().AddForce(rotation*(speedBullet+speedParameter*currentTimeValue), ForceMode2D.Force );
+            bullet.GetComponent<Rigidbody2D>().AddForce(rotation.normalized*(speedBullet+speedParameter*currentTimeValue), ForceMode2D.Force );
             bullet.transform.rotation = Quaternion.Euler(0,0, directions[i]+ directionParameter[i] * currentTimeValue);
             SetParameter(bullet, currentTimeValue, null);
             yield return new WaitForSeconds(delay + delayParameter * currentTimeValue);

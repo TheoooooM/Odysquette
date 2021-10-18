@@ -117,11 +117,20 @@ if (strawSo.basePosition.Length != 0)
                             Vector3 start = EmptyGizmos;
                             
                             Vector3 rotation = Quaternion.Euler(0, 0, strawSo.directions[i])*Vector3.right;
-                            Vector3 end = start + (rotation * strawSo.range);
-                            if(strawSo.hasRange)
-                                Handles.DrawWireDisc(EmptyGizmos, Vector3.forward, rotation.magnitude * strawSo.range, 3f);
+                            Vector3 end;
+                            if (strawSo.hasRange)
+                            {
+                                   end = start + (rotation * strawSo.range);
+                                                                Handles.DrawWireDisc(EmptyGizmos, Vector3.forward, rotation.magnitude * strawSo.range, 3f);
+                            }
+                             
+                            
                             else
-                                Handles.DrawWireDisc(EmptyGizmos, Vector3.forward, rotation.magnitude * 2f, 3f);
+                            {
+                                end = start + (rotation * 2f);
+                                                                Handles.DrawWireDisc(EmptyGizmos, Vector3.forward, rotation.magnitude * 2f, 3f);
+                            }
+                         
                             Handles.DrawLine(start,end, 2f);
                          
                         } 

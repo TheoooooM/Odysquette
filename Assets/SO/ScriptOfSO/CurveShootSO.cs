@@ -31,7 +31,7 @@ public class CurveShootSO : StrawSO
                 {
                     Vector3 currentBasePosition = new Vector3();
                     GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet);
-                
+                    bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                     indexBullet = i;
                     if (basePosition.Length != 0)
                     {
@@ -80,7 +80,7 @@ public class CurveShootSO : StrawSO
             {
                 Vector3 currentBasePosition = new Vector3();
                 GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet);
-              
+                bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 indexBullet = i;
                 if (basePosition.Length != 0)
                 {
@@ -164,6 +164,7 @@ public class CurveShootSO : StrawSO
         {
             curveBullet.speed =  speedBullet;
         }
+        
         bullet.SetActive(true);
     }
  

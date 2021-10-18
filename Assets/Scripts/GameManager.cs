@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour
                 { 
                     if ( shootCooldown >= actualStrawClass.strawSO.timeValue)
                     {
-                 
+                 shootCooldown = 0;
                         if (countShootRate ==actualStrawClass.strawSO.effectAllNumberShoot && (actualStrawClass.strawSO.rateMainParameter || actualStrawClass.strawSO.rateSecondParameter))
                         {
                             actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, 1);
@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
                             countShootRate++;
                         }
                                           
-                        shootCooldown = 0;
+                        
                         
                     }
                     break;

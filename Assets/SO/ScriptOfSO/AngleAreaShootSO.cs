@@ -25,7 +25,7 @@ public class AngleAreaShootSO : StrawSO
             
             bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet );
             bullet.SetActive(true);
-                
+            bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 
                 Vector3 rotation;   if (angleDivisionParameter != 0)
                                                  {
@@ -105,7 +105,8 @@ public class AngleAreaShootSO : StrawSO
         for (int i = 0; i < angleDivision + 2; i++)
         {
            GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet); 
-         
+           bullet.SetActive(true);
+           bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             float currentAngle = 0;
             Vector3 rotation = new Vector3();   
             if (angleDivisionParameter != 0)

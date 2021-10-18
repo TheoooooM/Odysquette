@@ -11,12 +11,12 @@ public class Bullet : MonoBehaviour
     public float range;
     public Color colorBang;
      Vector3 basePosition;
-    
-  
-    
+     public float speed;
+
+     public Vector3 oldPositionPoison;
    private BulletStat Scriptable;
 
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     private Vector3 lastVelocity;
 
     [Header("==============Effects Stat===============")]
@@ -28,10 +28,11 @@ public class Bullet : MonoBehaviour
 
     public float poisonCooldown = 5;
     float _poisonCooldown = 0;
-    
+    public float BulletSpeed;
+    public bool isEnable;
+    public bool isDesactive = false;
 
-    
-
+    public float distance;
     private void Start()
     {
 
@@ -42,33 +43,35 @@ public class Bullet : MonoBehaviour
         if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
         else _bounceCount = 0;
         
-        rb.velocity = Vector2.zero;
-        rb.AddForce((GameManager.Instance._lookDir).normalized * BulletSpeed, ForceMode2D.Impulse); // met une force sur la paille
+       // rb.velocity = Vector2.zero;
+        //rb.AddForce((GameManager.Instance._lookDir).normalized * BulletSpeed, ForceMode2D.Impulse); // met une force sur la paille
 
     }
 
     private void OnEnable()
     {
-
+        isDesactive = false;
         isEnable = false;
          basePosition = transform.position;
         _pierceCount = pierceCount;
-        canBounce = false; 
+        //canBounce = false; 
         Invoke(nameof(DelayforDrag),0.5f);
-        
+               if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce) _pierceCount = pierceCount;
+                else _pierceCount = 0;
+                
+                if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
+                else _bounceCount = 0;
+                
     }
 
     void Update()
     {
-           Debug.Log(GetComponent<Rigidbody2D>().velocity);
+         
            if (hasRange)
            {
                  if (Vector3.Distance(basePosition, transform.position) >=range)
                      {
-                         
-                         PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject);
-                      
-                         gameObject.SetActive(false);
+                         DesactiveBullet();
                          
                      }
            }
@@ -76,55 +79,43 @@ public class Bullet : MonoBehaviour
    
       else if (rb.velocity.magnitude <= 0.1 && rb.drag > 0 && isEnable)
       {
-          
-          PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject);
-      
-          gameObject.SetActive(false);
-       
+          DesactiveBullet();
+         
       } 
- 
-
-
-
- 
-        Debug.Log("enable");
-        if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce) _pierceCount = pierceCount;
-        else _pierceCount = 0;
+       
+       // transform.rotation = Quaternion.Euler(0f, 0f, GameManager.Instance.angle);
         
-        if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
-        else _bounceCount = 0;
-        
-        if (rb != null)
-        {
-            rb.velocity = Vector2.zero;
-            rb.AddForce((GameManager.Instance._lookDir).normalized * BulletSpeed, ForceMode2D.Impulse); // met une force sur la paille
-        }
-        transform.rotation = Quaternion.Euler(0f, 0f, GameManager.Instance.angle);
-    }
-
-    private void Update()
-    {
         lastVelocity = rb.velocity;
 
-        if (GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison)
-        {
-            if (_poisonCooldown > 0)
-            {
-                _poisonCooldown -= Time.deltaTime * 2;
-            }
-            else
-            {
-                _poisonCooldown = poisonCooldown;
-                PoolManager.Instance.SpawnPoisonPool(transform);
-            }
-        }
+        
 
     }
 
-   
+
+    private void FixedUpdate()
+    {
+        if (GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison)
+                {
+                    
+      //  Debug.Log(distance/rb.velocity.magnitude +"   " +  _poisonCooldown + "   " + Time.deltaTime + "  = " + (_poisonCooldown + Time.deltaTime));
+        Debug.Log(rb.velocity.magnitude);
+        
+                    if (_poisonCooldown < distance / rb.velocity.magnitude) 
+                    {
+                        _poisonCooldown += Time.fixedDeltaTime;
+                    }
+                    else
+                    {
+                        //Debug.Log(_poisonCooldown);
+                        PoolManager.Instance.SpawnPoisonPool(transform, speed);
+                        _poisonCooldown = poisonCooldown;
+                    }
+                }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+      //  Debug.Log("collid" + other.name);
         switch (GameManager.Instance.firstEffect)
         {
             
@@ -157,28 +148,29 @@ public class Bullet : MonoBehaviour
 
         else if (!other.CompareTag("Walls"))
 
-        {
-            gameObject.SetActive(false); 
-            PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject);
+        { 
+            DesactiveBullet();
         }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        
         if (_bounceCount > 0)
-        {
+        {Debug.Log(_bounceCount); 
+            _bounceCount--;
             var speed = lastVelocity.magnitude;
             var direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
             rb.velocity = direction * Mathf.Max(speed, 0f);
             var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
             transform.rotation = Quaternion.Euler(0, 0, angle);
 
-            _bounceCount--;
+          
         }
         else
         {
-            gameObject.SetActive(false); 
-            PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject);
+           
+            DesactiveBullet();
         }
     }
 
@@ -199,5 +191,16 @@ public class Bullet : MonoBehaviour
     {
         isEnable = true;
     }
-    
+
+    void DesactiveBullet()
+    {
+        if (isDesactive == false)
+        {
+            gameObject.SetActive(false); 
+                  //Debug.Log("enqufds" + name);
+                    PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject);
+                    isDesactive = true;
+        }
+        
+    }
 }

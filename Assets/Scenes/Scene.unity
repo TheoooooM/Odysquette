@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 138010071}
   - component: {fileID: 138010074}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: tripaille
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,6 +197,9 @@ Transform:
   m_LocalScale: {x: 0.8997113, y: 0.84333813, z: 0.9492775}
   m_Children:
   - {fileID: 2130989066}
+  - {fileID: 1027674467}
+  - {fileID: 1057630507}
+  - {fileID: 1600546217}
   m_Father: {fileID: 541801657}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -265,12 +268,12 @@ GameObject:
   - component: {fileID: 191158722}
   - component: {fileID: 191158721}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Ennemi
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &191158718
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -526,7 +529,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 234964980}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SpawnBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -557,7 +560,7 @@ GameObject:
   m_Component:
   - component: {fileID: 523661636}
   - component: {fileID: 523661639}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 4dir
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -643,7 +646,7 @@ GameObject:
   - component: {fileID: 541801655}
   - component: {fileID: 541801659}
   - component: {fileID: 541801658}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -660,7 +663,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -725,8 +728,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 541801653}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -49.07, y: 19.75, z: 0}
-  m_LocalScale: {x: 0.2841671, y: 0.2841671, z: 0.2841671}
+  m_LocalPosition: {x: -45.26, y: 21.98, z: 0}
+  m_LocalScale: {x: 0.2841671, y: 0.2841671, z: 0}
   m_Children:
   - {fileID: 1063981874}
   - {fileID: 1827252492}
@@ -785,7 +788,7 @@ GameObject:
   - component: {fileID: 583710903}
   - component: {fileID: 583710902}
   m_Layer: 0
-  m_Name: Square (2)
+  m_Name: Ennemi 2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -892,7 +895,7 @@ GameObject:
   m_Component:
   - component: {fileID: 837016363}
   - component: {fileID: 837016362}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: mitra
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1004,7 +1007,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 867073894}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SpawnBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1084,7 +1087,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 891120510}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -41.03, y: 22.298483, z: 1.033224}
+  m_LocalPosition: {x: -41.03, y: 22.298483, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2024828360}
@@ -1175,7 +1178,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 0.1509434, g: 0.054846313, b: 0, a: 1}
   m_FlipX: 0
@@ -1229,7 +1232,7 @@ GameObject:
   - component: {fileID: 977248220}
   - component: {fileID: 977248222}
   m_Layer: 0
-  m_Name: Square (1)
+  m_Name: Ennemi 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1326,7 +1329,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
-
 --- !u!1 &984757768
 GameObject:
   m_ObjectHideFlags: 0
@@ -1441,7 +1443,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 0.1509434, g: 0.054846313, b: 0, a: 1}
   m_FlipX: 0
@@ -1463,7 +1465,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1027674467}
   - component: {fileID: 1027674468}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: paille
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1482,7 +1484,7 @@ Transform:
   m_LocalScale: {x: 1.0427855, y: 1.0427856, z: 0.9573737}
   m_Children: []
   m_Father: {fileID: 138010071}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
 --- !u!212 &1027674468
 SpriteRenderer:
@@ -1545,7 +1547,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1057630507}
   - component: {fileID: 1057630508}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: paille (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1564,7 +1566,7 @@ Transform:
   m_LocalScale: {x: 1.0427854, y: 1.0427855, z: 0.9573737}
   m_Children: []
   m_Father: {fileID: 138010071}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
 --- !u!212 &1057630508
 SpriteRenderer:
@@ -1617,7 +1619,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
-
 --- !u!1 &1063981873
 GameObject:
   m_ObjectHideFlags: 0
@@ -1628,7 +1629,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1063981874}
   - component: {fileID: 1063981876}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Basic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1710,7 +1711,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1112882756}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SpawnBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1741,7 +1742,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1171758926}
   - component: {fileID: 1171758929}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 8paille
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1898,7 +1899,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 0.1509434, g: 0.054846313, b: 0, a: 1}
   m_FlipX: 0
@@ -1949,7 +1950,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1257951519}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SpawnBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1979,7 +1980,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1365299201}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SpawnBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2010,12 +2011,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1369069437}
   - component: {fileID: 1369069436}
-
   - component: {fileID: 1369069439}
   - component: {fileID: 1369069438}
   m_Layer: 3
-
-  m_Name: cyberfond
+  m_Name: NavMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2060,7 +2059,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -8
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: b94cba78bfd94d542924a831ce2e15c2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2080,13 +2079,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369069435}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.79, y: 0.0106, z: 218}
+  m_LocalPosition: {x: 8.79, y: 0.0106, z: 0}
   m_LocalScale: {x: 1.7926, y: 0.1701176, z: 1}
   m_Children: []
   m_Father: {fileID: 2024828360}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-
 --- !u!114 &1369069438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2105,20 +2103,18 @@ MonoBehaviour:
   m_AffectedAgents: ffffffff
 --- !u!61 &1369069439
 BoxCollider2D:
-
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369069435}
-
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.055842638, y: -0.069036245}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2129,9 +2125,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 10.24, y: 5.76}
+  m_Size: {x: 10.540857, y: 5.8619285}
   m_EdgeRadius: 0
-
 --- !u!1 &1373875979
 GameObject:
   m_ObjectHideFlags: 0
@@ -2141,7 +2136,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1373875980}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SpawnBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2246,7 +2241,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 0.1509434, g: 0.054846313, b: 0, a: 1}
   m_FlipX: 0
@@ -2272,7 +2267,6 @@ Transform:
   m_Father: {fileID: 2024828360}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-
 --- !u!114 &1554393676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2298,7 +2292,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1600546217}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SpawnBullet (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2317,9 +2311,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 138010071}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-
 --- !u!1 &1610629937
 GameObject:
   m_ObjectHideFlags: 0
@@ -2330,7 +2323,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1610629938}
   - component: {fileID: 1610629941}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: snipe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2413,7 +2406,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1827252492}
   - component: {fileID: 1827252495}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: bubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2642,7 +2635,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2024828357}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -9.274605, y: 1.0332241, z: 0.3014928}
+  m_LocalPosition: {x: -9.274605, y: 1.0332241, z: 0}
   m_LocalScale: {x: 1, y: 10.417497, z: 1}
   m_Children:
   - {fileID: 1554393675}
@@ -2678,7 +2671,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2130989066}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SpawnBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2729,72 +2722,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angle: 0
-  _firstEffect: 1
-  _secondEffect: 3
+  _firstEffect: 4
+  _secondEffect: 0
   actualStraw: 0
   strawsClass:
-  - StrawName: stgfds
+  - StrawName: Basic Straw
     StrawType: 0
     StrawParent: {fileID: 1063981873}
-
-    prefabs: {fileID: 602687282885438852, guid: 59004c82ab0c6614e8579de9e78059f8, type: 3}
-    Scriptable: {fileID: 11400000, guid: 8e96858b7617bf341aad34027fb4bb23, type: 2}
-    spawnerTransform:
-    - {fileID: 1373875980}
-    size: 0
-
-  - StrawName: bubble
-    StrawType: 1
-    StrawParent: {fileID: 1827252491}
-    strawSO: {fileID: 0}
-    spawnerTransform: {fileID: 867073894}
-    sizePool: 0
-  - StrawName: snipe
-    StrawType: 2
-    StrawParent: {fileID: 1610629937}
-    strawSO: {fileID: 0}
-    spawnerTransform: {fileID: 1257951519}
-    sizePool: 0
-  - StrawName: 8paille
-    StrawType: 3
-    StrawParent: {fileID: 1171758925}
-    strawSO: {fileID: 0}
-    spawnerTransform: {fileID: 234964980}
-    sizePool: 0
-  - StrawName: 4dir
-    StrawType: 4
-    StrawParent: {fileID: 523661635}
-    strawSO: {fileID: 0}
-    spawnerTransform: {fileID: 1112882756}
-    sizePool: 0
-  - StrawName: Tripaille
-    StrawType: 5
-    StrawParent: {fileID: 138010070}
-
-    prefabs: {fileID: 602687282885438852, guid: 59004c82ab0c6614e8579de9e78059f8, type: 3}
-    Scriptable: {fileID: 11400000, guid: fb43cac0b1282414091d16ad069c626d, type: 2}
-    spawnerTransform:
-    - {fileID: 2130989066}
-    - {fileID: 375392958}
-    - {fileID: 1600546217}
-    size: 0
-  - StrawName: mirta
-    StrawType: 6
-    StrawParent: {fileID: 837016359}
-    prefabs: {fileID: 0}
-    Scriptable: {fileID: 0}
-    spawnerTransform: []
-    size: 0
+    strawSO: {fileID: 11400000, guid: c6a5e905b2398d442b4ecaa31bd69658, type: 2}
+    ultimateStrawSO: {fileID: 11400000, guid: ca60bda0eb4fbb4499b5a1b68826f7be, type: 2}
+    spawnerTransform: {fileID: 1373875980}
+    sizePool: 10
   shootCooldown: 0
-
-  ShootRate: 5
-  Player: {fileID: 541801653}
+  ShootRate: 0
+  Player: {fileID: 0}
   _lookDir: {x: 0, y: 0}
   actualStrawClass:
     StrawName: 
     StrawType: 0
     StrawParent: {fileID: 0}
     strawSO: {fileID: 0}
+    ultimateStrawSO: {fileID: 0}
     spawnerTransform: {fileID: 0}
     sizePool: 0
 --- !u!4 &2137677117

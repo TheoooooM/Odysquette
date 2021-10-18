@@ -82,7 +82,7 @@ public class StrawSO : ScriptableObject
        {
            scriptBullet.damage = damage;
            scriptBullet.range = range;
-
+           scriptBullet.speed = speedBullet;
            scriptBullet.rb.drag = dragRB;
        }
 

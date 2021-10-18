@@ -332,8 +332,9 @@ SceneView.duringSceneGui -= OnPosVectorGizmos;
 
    public void OnPosVectorGizmos(SceneView sceneView)
    {
-       Ray ray  = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition); 
-       if (Physics.Raycast(ray, out RaycastHit hit))
+       Ray ray  = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+       RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+       if (hit.collider !=null)
        {EmptyGizmos = hit.point;
            
            Handles.DrawWireDisc(EmptyGizmos, Vector3.forward, 1f);
