@@ -65,7 +65,7 @@ public class BasicShootSOEditor : StrawSOEditor
                 {
                     
                     EditorGUILayout.Space(2f);
-                    if (serializedObject.FindProperty("rateMode").enumValueIndex == 2)
+                    if (serializedObject.FindProperty("rateMode").enumValueIndex == 1)
                     {
                        
                         EditorGUILayout.Space(2f);

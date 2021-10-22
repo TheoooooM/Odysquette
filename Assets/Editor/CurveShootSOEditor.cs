@@ -84,7 +84,7 @@ public class CurveShootSOEditor : StrawSOEditor
             GUI.backgroundColor = new Color(2f, 2f, 0f, 0.6f);
             using (new GUILayout.VerticalScope(EditorStyles.helpBox))
             {
-                if (serializedObject.FindProperty("rateMode").enumValueIndex == 2)
+                if (serializedObject.FindProperty("rateMode").enumValueIndex == 1)
                 {
                     GUILayout.Label("Specific  Parameters for Loading Time ", myStyle);
                 }

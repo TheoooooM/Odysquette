@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -8,9 +9,10 @@ public class BasicShootSO : StrawSO
 {
   
     [NamedArray("float", true)]
-    public float[] directions;
+    public float[] directions = Array.Empty<float>();
     [NamedArray("float", false)]
-    public float[] directionParameter;
+    public float[] directionParameter = Array.Empty<float>();
+    
 
     public override void OnValidate()
     {
@@ -24,17 +26,17 @@ public class BasicShootSO : StrawSO
      
 
 
-        if (!isDelay)
+        if (!isDelayBetweenShoot && !isDelayBetweenWaveShoot)
         {
             for (int i = 0; i < directions.Length; i++)
             {
              
                
-                GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet );
+                GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode );
                 bullet.SetActive(true);
-                Vector3 rotation;
+                Vector3 rotation = Vector3.zero;
  
-                if (directionParameter.Length == i +1 )
+                if (directionParameter.Length >= i +1 )
                 {
             
                    rotation = Quaternion.Euler(0,0 , directions[i]+ directionParameter[i] * currentTimeValue) * parentBulletTF.transform.right;   
@@ -42,19 +44,19 @@ public class BasicShootSO : StrawSO
                 }
                 else
                 {
-                     rotation = Quaternion.Euler(0, directions[i], 0) * parentBulletTF.transform.right;
+                     rotation = Quaternion.Euler(0, 0, directions[i]) * parentBulletTF.transform.right;
                 }
               
                 if (basePosition.Length != 0)
                 {
                     bullet.transform.position += basePosition[i];
-                    if (basePositionParameter.Length == i +1 )
+                    if (basePositionParameter.Length >= i +1 )
                     {
                         bullet.transform.position +=basePositionParameter[i]*currentTimeValue;
                     }
                    
                 }
-              
+         
                 bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 bullet.GetComponent<Rigidbody2D>().AddForce(rotation* (speedBullet + speedParameter * currentTimeValue),
                     ForceMode2D.Force);
@@ -72,40 +74,48 @@ public class BasicShootSO : StrawSO
 
     public override IEnumerator ShootDelay(Transform parentBulletTF, float currentTimeValue)
     {
-        for (int i = 0; i < directions.Length; i++)
+        for (int j = 0; j < numberWaveShoot; j++)
         {
-            Vector3 currentBasePosition = new Vector3();
-            GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet );
-            bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            bullet.SetActive(true);
-            Vector3 rotation;
-            if (directionParameter.Length == i +1 )
-            {
+             for (int i = 0; i < directions.Length; i++)
+                    {
+                        Debug.Log("dfqsjdsmljidfqsjdfqsdfqs");
+                  
+                        GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode);
+                        bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                        bullet.SetActive(true);
+                        Vector3 rotation = Vector3.zero;
+                        if (directionParameter.Length >= i +1 )
+                        {
             
-                rotation = Quaternion.Euler(0,0 , directions[i]+ directionParameter[i] * currentTimeValue) * parentBulletTF.transform.right;   
-                
-            }
-            else
-            {
-                rotation = Quaternion.Euler(0, directions[i], 0) * parentBulletTF.transform.right;
-            }        
-            
-            if (basePosition.Length != 0)
-            {
-                bullet.transform.position += basePosition[i];
-                if (basePositionParameter.Length == i +1 )
-                {
-                    bullet.transform.position +=basePositionParameter[i]*currentTimeValue;
-                }
-              
-            }
-            //save pool
-                             
-            bullet.GetComponent<Rigidbody2D>().AddForce(rotation.normalized*(speedBullet+speedParameter*currentTimeValue), ForceMode2D.Force );
-            bullet.transform.rotation = Quaternion.Euler(0,0, directions[i]+ directionParameter[i] * currentTimeValue);
-            SetParameter(bullet, currentTimeValue, null);
-            yield return new WaitForSeconds(delay + delayParameter * currentTimeValue);
+                            rotation = Quaternion.Euler(0,0 , directions[i]+ directionParameter[i] * currentTimeValue) * parentBulletTF.transform.right;   
+                    
+                        }
+                        else
+                        {
+                            rotation = Quaternion.Euler(0, 0, directions[i]) * parentBulletTF.transform.right;
+                        }        
+                        
+                        if (basePosition.Length != 0)
+                        {
+                            bullet.transform.position += basePosition[i];
+                            if (basePositionParameter.Length == i +1 )
+                            {
+                                bullet.transform.position +=basePositionParameter[i]*currentTimeValue;
+                            }
+                          
+                        }
+                        //save pool
+                                         
+                        bullet.GetComponent<Rigidbody2D>().AddForce(rotation*(speedBullet+speedParameter*currentTimeValue), ForceMode2D.Force );
+                   
+                        SetParameter(bullet, currentTimeValue, null);
+                        if(isDelayBetweenShoot)
+                        yield return new WaitForSeconds(delayBetweenShoot + delayParameter * currentTimeValue);
+                    }
+            if(isDelayBetweenWaveShoot)
+                    yield return new WaitForSeconds(delayBetweenShoot);
         }
+       
     }
 
 

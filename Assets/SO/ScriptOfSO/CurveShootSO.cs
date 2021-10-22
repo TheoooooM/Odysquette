@@ -16,12 +16,12 @@ public class CurveShootSO : StrawSO
     public int[] stepOfCurve;
     public int[] stepOfCurveParameter;
     public Vector3[] pointsForBezierCurve;
-    
-    public PointsForBezierCurve[] trajectoriesParameters;
+
+    public PointsForBezierCurve[] trajectoriesParameters ;
     private int indexBullet;
     public override void  Shoot(Transform parentBulletTF, MonoBehaviour script, float currentTimeValue = 1)
     {
-        if (!isDelay)
+        if (!isDelayBetweenShoot && !isDelayBetweenWaveShoot)
         {
           
             for (int i = 0; i < trajectories.Count; i++)
@@ -30,7 +30,7 @@ public class CurveShootSO : StrawSO
                 if (stepOfCurve != null)
                 {
                     Vector3 currentBasePosition = new Vector3();
-                    GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet);
+                    GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode);
                     bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                     indexBullet = i;
                     if (basePosition.Length != 0)
@@ -73,30 +73,36 @@ public class CurveShootSO : StrawSO
     }
     public override IEnumerator ShootDelay( Transform parentBulletTF, float currentTimeValue)
     {
-        for (int i = 0; i < trajectories.Count; i++)
+        for (int j = 0; j < numberWaveShoot; j++)
         {
-
-            if (stepOfCurve != null)
+            for (int i = 0; i < trajectories.Count; i++)
             {
-                Vector3 currentBasePosition = new Vector3();
-                GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet);
-                bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                indexBullet = i;
-                if (basePosition.Length != 0)
-                {
-                    bullet.transform.position += basePosition[i];
-                    if (basePositionParameter.Length == i +1 )
-                    {
-                        bullet.transform.position +=basePositionParameter[i]*currentTimeValue;
-                    }
-                   
-                }
 
-                SetParameter(bullet, currentTimeValue,  parentBulletTF);  
-                yield return new WaitForSeconds(delay+delayParameter*currentTimeValue);
+                if (stepOfCurve != null)
+                {
+                    Vector3 currentBasePosition = new Vector3();
+                    GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode);
+                    bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                    indexBullet = i;
+                    if (basePosition.Length != 0)
+                    {
+                        bullet.transform.position += basePosition[i];
+                        if (basePositionParameter.Length == i + 1)
+                        {
+                            bullet.transform.position += basePositionParameter[i] * currentTimeValue;
+                        }
+
+                    }
+
+                    SetParameter(bullet, currentTimeValue, parentBulletTF);
+                    if(isDelayBetweenShoot)
+                    yield return new WaitForSeconds(delayBetweenShoot + delayParameter * currentTimeValue);
+                }
             }
+            if(isDelayBetweenWaveShoot)
+            yield return new WaitForSeconds(delayBetweenWaveShoot);
         }
-    
+
     }
 
     public override void SetParameter(GameObject bullet, float currentTimeValue,  Transform PBtransform)
@@ -141,8 +147,10 @@ public class CurveShootSO : StrawSO
         
         }
         else if (!rateSecondParameter)
-        {
+            
+        { 
             curveBullet.stepOfCurve = stepOfCurve[indexBullet];
+           
             for (int i = 0; i < trajectories[indexBullet].pointsForBezierCurve.Count; i++)
             {
                 Vector3 vector3 = new Vector3();

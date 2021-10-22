@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5672952729407700744}
   - component: {fileID: 447753167651521645}
-  - component: {fileID: 2768319741440879399}
   - component: {fileID: -7567172812567126362}
   - component: {fileID: 8154455441999037192}
   - component: {fileID: 8038064470467165221}
@@ -21,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5672952729407700744
 Transform:
   m_ObjectHideFlags: 0
@@ -87,28 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2768319741440879399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 602687282885438852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd39a6a5b272a354da9b3aecb3757baf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hasRange: 0
-  damage: 0
-  range: 0
-  colorBang: {r: 0, g: 0, b: 0, a: 0}
-  rb: {fileID: -7567172812567126362}
-  pierceCount: 2
-  bounceCount: 0
-  poisonCooldown: 5
-  BulletSpeed: 3
-  isEnable: 0
 --- !u!50 &-7567172812567126362
 Rigidbody2D:
   serializedVersion: 4
@@ -129,7 +106,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &8154455441999037192
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -174,16 +151,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cc36ea701442e249a860ece9c713f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBounce: 0
   hasRange: 0
   damage: 0
   range: 0
   colorBang: {r: 0, g: 0, b: 0, a: 0}
+  rateMode: 0
+  oldPositionPoison: {x: 0, y: 0, z: 0}
   rb: {fileID: -7567172812567126362}
-  pierceCount: 0
-  bounceCount: 0
+  pierceCount: 2
+  bounceCount: 1
   poisonCooldown: 5
   BulletSpeed: 0
   isEnable: 0
+  isDesactive: 0
+  distance: 0
   pointsForBezierCurve: []
   trajectories: []
   stepOfCurve: 0

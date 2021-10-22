@@ -31,10 +31,11 @@ public class GameManager : MonoBehaviour
         public Straw StrawType; 
         public GameObject StrawParent;      // GameObject de la paille
         public StrawSO strawSO;
+        public int sizeUltimatePool;
         public StrawSO ultimateStrawSO;
       public  Transform spawnerTransform; // Transform ou spawn les balles
       
-        public int sizePool; //Taille du nombre de prefabs a instancier au lancement
+        public int sizeShootPool; //Taille du nombre de prefabs a instancier au lancement
     }
     #endregion
      float ultimateTimeValue;
@@ -42,7 +43,7 @@ public class GameManager : MonoBehaviour
     private Vector2 mousepos; //position de la souris sur l'écran
     public  float angle; //angle pour orienter la paille
 
-    private float shootCooldownSeconds;
+   
     //Juices
     [SerializeField] Effect _firstEffect;
     public Effect firstEffect => _firstEffect;
@@ -156,6 +157,7 @@ public class GameManager : MonoBehaviour
                         {
                             actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
                             countShootRate++;
+                            
                         }
                                           
                         
@@ -171,7 +173,7 @@ public class GameManager : MonoBehaviour
         }
        if (actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && Input.GetKeyDown(KeyCode.Mouse1))
        {
-           if (ultimateTimeValue >= actualStrawClass.strawSO.timeValue)
+           if (ultimateTimeValue >= actualStrawClass.ultimateStrawSO.timeValue)
            {
                actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
                ultimateTimeValue = 0;
@@ -193,9 +195,10 @@ public class GameManager : MonoBehaviour
         shootCooldown += Time.deltaTime; 
       
         shootCooldown = Mathf.Min(shootCooldown, actualStrawClass.strawSO.timeValue); 
-    
+   
        ultimateTimeValue+= Time.deltaTime; 
-        ultimateTimeValue = Mathf.Min(ultimateTimeValue, actualStrawClass.strawSO.timeValue); 
+  
+        ultimateTimeValue = Mathf.Min(ultimateTimeValue, actualStrawClass.ultimateStrawSO.timeValue); 
 
    
         
@@ -207,9 +210,7 @@ public class GameManager : MonoBehaviour
         //--------------------------------------------------------------
     }
 
-    void FixedUpdate()
-    {
-    }
+  
 
     void ChangeStraw(Straw straw) //change la paille 
     {
@@ -227,10 +228,7 @@ public class GameManager : MonoBehaviour
     {
         BasicShoot, CurveShoot,AreaShoot, AngleAreaShoot 
     }
-    public enum RateMode
-    {
-        fireRate, LoadingRate,
-    }
+   
 
     
 }

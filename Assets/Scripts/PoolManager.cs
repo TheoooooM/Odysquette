@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PoolManager : MonoBehaviour
 {
-    public Dictionary<GameManager.Straw, Queue<GameObject>> poolDictionary;
+    public Dictionary<GameManager.Straw, Queue<GameObject>[]> poolDictionary;
     public Queue<GameObject> PoisonQueue;
     public GameObject poisonPrefab;
     
@@ -25,34 +25,48 @@ public class PoolManager : MonoBehaviour
     
     private void Start()
     {
-        poolDictionary = new Dictionary<GameManager.Straw, Queue<GameObject>>(); //Créer un dictionnaire regroupant chaque pool
+        poolDictionary = new Dictionary<GameManager.Straw, Queue<GameObject>[]>(); //Créer un dictionnaire regroupant chaque pool
         PoisonQueue = new Queue<GameObject>();
         explosionQueue = new Queue<GameObject>();
         foreach (GameManager.StrawClass pol in GameManager.Instance.strawsClass)
         {
             //---------------------Génère les pool et les bullets de base------------------------- 
             Queue<GameObject> objectPool = new Queue<GameObject>();
-            
-            for (int i = 0; i < pol.sizePool; i++)
+            Queue<GameObject> ultimatePool = new Queue<GameObject>();
+            for (int i = 0; i < pol.sizeShootPool; i++)
             {
-                GameObject obj = Instantiate(pol.strawSO.prefabBullet, transform);
-                obj.name = i.ToString();
+                GameObject obj = Instantiate(pol.strawSO.prefabBullet); 
+                obj.name = pol.strawSO.strawName+" "+i;
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
+
+            for (int i = 0; i < pol.sizeUltimatePool; i++)
+            {
+             GameObject obj = Instantiate(pol.ultimateStrawSO.prefabBullet); 
+                obj.name = pol.ultimateStrawSO.strawName+" "+i;
+                obj.SetActive(false); 
+                ultimatePool.Enqueue(obj);
+
+               
+            }
+          
             //---------------------------------------------------------------------------------------
-            
-            poolDictionary.Add(pol.StrawType, objectPool);
+            poolDictionary.Add(pol.StrawType, new []{objectPool, ultimatePool});
+         
         }
     }
 
-    public GameObject SpawnFromPool(Transform parentBulletTF, GameObject prefabBullet) //Active ou instancie une balle sur le spawn bullet
+    public GameObject SpawnFromPool(Transform parentBulletTF, GameObject prefabBullet, StrawSO.RateMode rateMode) //Active ou instancie une balle sur le spawn bullet
     {
 
 
         GameObject obj;
-
-        if (poolDictionary[GameManager.Instance.actualStraw].Count ==
+        int index = 0;
+        if (rateMode == StrawSO.RateMode.Ultimate)
+            index = 1;
+            
+        if (poolDictionary[GameManager.Instance.actualStraw][index].Count ==
             0) // Instancie une balle si il n'y en a plus dans la queue
         {
             obj = Instantiate(prefabBullet, parentBulletTF.position, parentBulletTF.rotation);
@@ -65,7 +79,7 @@ public class PoolManager : MonoBehaviour
         {
 
           
-            obj = poolDictionary[GameManager.Instance.actualStraw].Dequeue();
+            obj = poolDictionary[GameManager.Instance.actualStraw][index].Dequeue();
 
             obj.transform.position = parentBulletTF.position;
 
@@ -76,7 +90,7 @@ public class PoolManager : MonoBehaviour
 
     }
 
-    public void SpawnPoisonPool(Transform bullet, float speed)
+    public void SpawnPoisonPool(Transform bullet)
     {
         GameObject obj;
         if (PoisonQueue.Count == 0)
@@ -92,7 +106,7 @@ public class PoolManager : MonoBehaviour
         }
 
         obj.GetComponent<Poison>().rbBullet = bullet.GetComponent<Rigidbody2D>();
-       obj.GetComponent<Poison>().speed = speed;
+      
        obj.transform.rotation = bullet.rotation;
     }
     

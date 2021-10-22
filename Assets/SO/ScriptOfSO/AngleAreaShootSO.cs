@@ -5,25 +5,25 @@ using UnityEditor;
 [CreateAssetMenu(fileName = "AngleAreaShootSO", menuName = "ShootMode/AngleAreaShootSO", order = 3)]
 public class AngleAreaShootSO : StrawSO
 {
-    public int angleDivision;
-    public float angle;
+    public int angleDivision = 0;
+    public float angle = 0;
     
-    public int angleDivisionParameter;
+    public int angleDivisionParameter = 0 ;
     
-    public float angleParameter;
+    public float angleParameter = 0;
     private GameObject bullet;
-    Vector3 rotation ;float currentAngle;
+    Vector3 rotation = new Vector3();float currentAngle = 0 ;
     public override void Shoot( Transform parentBulletTF, MonoBehaviour script, float currentTimeValue = 1 )
     {
         
       
      
-        if (!isDelay)
+        if (!isDelayBetweenShoot && !isDelayBetweenWaveShoot)
         {
             for (int i = 0; i < angleDivision+2+Mathf.RoundToInt(angleDivisionParameter * currentTimeValue); i++)
             {
             
-            bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet );
+            bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode);
             bullet.SetActive(true);
             bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 
@@ -54,17 +54,9 @@ public class AngleAreaShootSO : StrawSO
                                                                                        
                                                  }
 
-                  
-                    
-                  
-               
                      
                      rotation = Quaternion.Euler(0, 0, currentAngle) * parentBulletTF.transform.right;  
-                    
-                 
-             
-               
-                
+                     
                 if (basePosition.Length != 0)
                 {
                   
@@ -77,7 +69,7 @@ public class AngleAreaShootSO : StrawSO
                  
                 }
                 
-                bullet.transform.rotation = Quaternion.Euler(0,0, currentAngle );
+               Debug.Log(rotation);
                 bullet.GetComponent<Rigidbody2D>().AddForce(rotation * (speedBullet + speedParameter * currentTimeValue),
                     ForceMode2D.Force);
                 SetParameter(bullet, currentTimeValue,null);
@@ -102,48 +94,62 @@ public class AngleAreaShootSO : StrawSO
 
     public override IEnumerator ShootDelay( Transform parentBulletTF, float currentTimeValue)
     {
-        for (int i = 0; i < angleDivision + 2; i++)
+      
+        for (int j = 0; j < numberWaveShoot; j++)
         {
-           GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet); 
-           bullet.SetActive(true);
-           bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            float currentAngle = 0;
-            Vector3 rotation = new Vector3();   
-            if (angleDivisionParameter != 0)
+            for (int i = 0; i < angleDivision + 2; i++)
             {
-                currentAngle += -angle / 2 + (angle / (angleDivision+Mathf.RoundToInt(angleDivisionParameter * currentTimeValue))) * i; 
-            }
-            else
-            {
-                currentAngle = -angle / 2 + (angle / angleDivision) * i;                                         
-            }
-            if (angleParameter != 0)
-            {
-                rotation = Quaternion.Euler(0, 0, currentAngle + angleParameter * currentTimeValue) * parentBulletTF.transform.right;
-            }
-            else
-            {
-                rotation = Quaternion.Euler(0, 0, currentAngle) * parentBulletTF.transform.right;
-            }
-
-         
-          
-
-            if (basePosition.Length != 0)
-            {
-                bullet.transform.position += basePosition[i];
-                if (basePositionParameter.Length == 1 )
+                GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode);
+                bullet.SetActive(true);
+                bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                float currentAngle = 0;
+                Vector3 rotation = new Vector3();
+                if (angleDivisionParameter != 0)
                 {
-                    bullet.transform.position +=basePositionParameter[i]*currentTimeValue;
+                    currentAngle += -angle / 2 +
+                                    (angle / (angleDivision +
+                                              Mathf.RoundToInt(angleDivisionParameter * currentTimeValue))) * i;
                 }
-               
+                else
+                {
+                    currentAngle = -angle / 2 + (angle / angleDivision) * i;
+                }
+
+                if (angleParameter != 0)
+                {
+                    rotation = Quaternion.Euler(0, 0, currentAngle + angleParameter * currentTimeValue) *
+                               parentBulletTF.transform.right;
+                }
+                else
+                {
+                    rotation = Quaternion.Euler(0, 0, currentAngle) * parentBulletTF.transform.right;
+                }
+                
+                if (basePosition.Length != 0)
+                {
+                    bullet.transform.position += basePosition[i];
+                    if (basePositionParameter.Length >= 1)
+                    {
+                        bullet.transform.position += basePositionParameter[i] * currentTimeValue;
+                    }
+
+                }
+
+                bullet.GetComponent<Rigidbody2D>()
+                    .AddForce(rotation * (speedBullet + speedParameter * currentTimeValue), ForceMode2D.Force);
+                SetParameter(bullet, currentTimeValue, null);
+                if(isDelayBetweenShoot)
+                yield return new WaitForSeconds(delayBetweenShoot + delayParameter * currentTimeValue);
             }
 
-            bullet.GetComponent<Rigidbody2D>().AddForce(rotation * (speedBullet+ speedParameter * currentTimeValue), ForceMode2D.Force);
-            SetParameter(bullet, currentTimeValue,null); 
-            yield return new WaitForSeconds(delay+delayParameter*currentTimeValue);
+            if (isDelayBetweenWaveShoot)
+            {
+                Debug.Log("fjdls");
+            yield return new WaitForSeconds(delayBetweenShoot);
+                
+            }
         }
-       
+
     }
 
     //save pool

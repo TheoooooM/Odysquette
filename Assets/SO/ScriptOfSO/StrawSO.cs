@@ -17,29 +17,32 @@ public class StrawSO : ScriptableObject
     public string strawName;
     public Sprite strawRenderer;
    public float damage = 1;
-   public float timeValue;
-   public int effectAllNumberShoot;
+   public float timeValue = 0;
+   public int effectAllNumberShoot = 0;
    public float dragRB = 0;
    public float range = 1;
    public RateMode rateMode;
-   public bool isUltimate;
+  
    public bool rateMainParameter = false;
        public bool rateSecondParameter = false;
        public float damageParameter = 0;
       public float rangeParameter =0;
       public float dragRBParameter =0;
       public float speedParameter = 0 ;
-      public bool isDelay;
-      public float delay = 0;
+      public bool isDelayBetweenShoot;
+      public bool isDelayBetweenWaveShoot;
+      public int numberWaveShoot = 1;
+      public float delayBetweenShoot = 0;
+      public float delayBetweenWaveShoot = 0;
      
-      public float delayParameter;
+      public float delayParameter = 0;
       [NamedArray("vector3", true)]
-      public Vector3[] basePositionParameter; 
+      public Vector3[] basePositionParameter = new Vector3[0]; 
 
  [NamedArray("vector3", true)]
-   public Vector3[] basePosition;
+   public Vector3[] basePosition = new Vector3[0];
   
-   public float speedBullet;
+   public float speedBullet = 0;
    public GameObject prefabBullet;
    
    public virtual void OnValidate()
@@ -51,7 +54,7 @@ public class StrawSO : ScriptableObject
       timeValue = Mathf.Max(timeValue, 0);
       dragRB= Mathf.Max(dragRB, 0);
       range = Mathf.Max(range, 0);
-      delay = Mathf.Max(delay, 0);
+      delayBetweenShoot = Mathf.Max(delayBetweenShoot, 0);
       speedBullet = Mathf.Max(speedBullet, 0);
           effectAllNumberShoot= Mathf.Max(effectAllNumberShoot, 0);
    
@@ -67,7 +70,7 @@ public class StrawSO : ScriptableObject
        yield return null;
    }
 
-   public virtual void SetParameter(GameObject bullet, float currentTimeValue, Transform transform = null)
+   public virtual void SetParameter(GameObject bullet, float currentTimeValue, Transform transform = null )
    {
        Bullet scriptBullet = bullet.GetComponent<Bullet>();
        if (rateMainParameter == true)
@@ -81,9 +84,11 @@ public class StrawSO : ScriptableObject
        else if (rateMainParameter == false)
        {
            scriptBullet.damage = damage;
+           scriptBullet.hasRange = hasRange;
            scriptBullet.range = range;
-           scriptBullet.speed = speedBullet;
+         
            scriptBullet.rb.drag = dragRB;
+           scriptBullet.rateMode = rateMode;
        }
 
 

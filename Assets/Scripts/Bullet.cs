@@ -6,13 +6,14 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public bool isBounce;
     public bool hasRange;
     public float damage;
     public float range;
     public Color colorBang;
      Vector3 basePosition;
-     public float speed;
-
+   
+    public StrawSO.RateMode rateMode;
      public Vector3 oldPositionPoison;
    private BulletStat Scriptable;
 
@@ -20,10 +21,10 @@ public class Bullet : MonoBehaviour
     private Vector3 lastVelocity;
 
     [Header("==============Effects Stat===============")]
-    public int pierceCount;
+    public int pierceCount = 2 ;
     private int _pierceCount;
 
-    public int bounceCount;
+    public int bounceCount = 2;
     private int _bounceCount;
 
     public float poisonCooldown = 5;
@@ -35,7 +36,7 @@ public class Bullet : MonoBehaviour
     public float distance;
     private void Start()
     {
-
+       
         rb = GetComponent<Rigidbody2D>();
         if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce)_pierceCount = pierceCount;
         else _pierceCount = 0;
@@ -48,14 +49,17 @@ public class Bullet : MonoBehaviour
 
     }
 
-    private void OnEnable()
-    {
+    public  virtual void OnEnable()
+    {  
+        isBounce = false;
         isDesactive = false;
         isEnable = false;
          basePosition = transform.position;
         _pierceCount = pierceCount;
         //canBounce = false; 
+    
         Invoke(nameof(DelayforDrag),0.5f);
+    
                if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce) _pierceCount = pierceCount;
                 else _pierceCount = 0;
                 
@@ -64,8 +68,9 @@ public class Bullet : MonoBehaviour
                 
     }
 
-    void Update()
+   public virtual void Update()
     {
+    
          
            if (hasRange)
            {
@@ -77,7 +82,7 @@ public class Bullet : MonoBehaviour
            }
     
    
-      else if (rb.velocity.magnitude <= 0.1 && rb.drag > 0 && isEnable)
+       if (rb.velocity.magnitude <= 0.1 && rb.drag > 0 && isEnable)
       {
           DesactiveBullet();
          
@@ -85,8 +90,8 @@ public class Bullet : MonoBehaviour
        
        // transform.rotation = Quaternion.Euler(0f, 0f, GameManager.Instance.angle);
         
-        lastVelocity = rb.velocity;
-
+       
+       lastVelocity = rb.velocity;
         
 
     }
@@ -107,7 +112,7 @@ public class Bullet : MonoBehaviour
                     else
                     {
                         //Debug.Log(_poisonCooldown);
-                        PoolManager.Instance.SpawnPoisonPool(transform, speed);
+                        PoolManager.Instance.SpawnPoisonPool(transform);
                         _poisonCooldown = poisonCooldown;
                     }
                 }
@@ -115,6 +120,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+    
       //  Debug.Log("collid" + other.name);
         switch (GameManager.Instance.firstEffect)
         {
@@ -155,16 +161,20 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        
+       
         if (_bounceCount > 0)
-        {Debug.Log(_bounceCount); 
+        {Debug.Log(_bounceCount);
+           
             _bounceCount--;
             var speed = lastVelocity.magnitude;
+            Debug.Log(lastVelocity);
+           
             var direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
             rb.velocity = direction * Mathf.Max(speed, 0f);
             var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
             transform.rotation = Quaternion.Euler(0, 0, angle);
-
+            
+ isBounce = true;
           
         }
         else
@@ -198,7 +208,15 @@ public class Bullet : MonoBehaviour
         {
             gameObject.SetActive(false); 
                   //Debug.Log("enqufds" + name);
-                    PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject);
+                  if (rateMode == StrawSO.RateMode.Ultimate)
+                  {
+                      PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][1].Enqueue(gameObject);
+                  }
+                  else
+                  {
+                      PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][0].Enqueue(gameObject);
+                  }
+                    
                     isDesactive = true;
         }
         

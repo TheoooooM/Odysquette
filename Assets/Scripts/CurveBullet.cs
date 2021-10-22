@@ -18,17 +18,11 @@ public class CurveBullet : Bullet
    public float speed;
    public bool isCurve;
    public bool isParameterTrajectories;
-  private void Start()
+
+
+   public override void OnEnable()
   {
-   
-
-
-
-  }
-
-  private void OnEnable()
-  {
-
+     base.OnEnable();
       for (int i = 0; i < trajectories.Count; i++)
       {
           trajectories[i] += transform.position;
@@ -41,13 +35,13 @@ public class CurveBullet : Bullet
                 if (i + 1 < trajectories.Count)
                 {
                     i++;
-                    Debug.Log("aaaaaa");
+               
                 }
                 else
                 { 
                     break; 
                 } 
-                Debug.Log("aaaaa");
+            
                   PointsForBezierCurve a = new PointsForBezierCurve();  PointsForBezierCurve b = new PointsForBezierCurve();
                                a.pointsForBezierCurve = new List<Vector3>();
                                b.pointsForBezierCurve = new List<Vector3>();
@@ -55,7 +49,7 @@ public class CurveBullet : Bullet
                                pointsForBezierCurve.Add(b);
                                
                 Vector3 Start = trajectories[i - 1];
-                Debug.Log(Start);
+             
                 Vector3 End = trajectories[i + 1];
             
                 for (int j = 0; j < stepOfCurve; 
@@ -104,85 +98,103 @@ public class CurveBullet : Bullet
   private void OnDisable()
   {
       isCurve = false;
+      trajectories = new List<Vector3>();
+                    
+      pointsForBezierCurve = new List<PointsForBezierCurve>();
+                    
+                     
+      currentListWaypoint = new List<Vector3>();
   }
 
-  private void Update()
+  public override void Update()
   {
-      if (isCurve)
+      base.Update();
+      if (!isBounce)
       {
-       
-            if (Vector3.Distance(transform.position, currentListWaypoint[currentStepPoint]) < 0.1f )
+             if (isCurve)
                 {
-                    Debug.Log(currentStepPoint + "premiercheck");
-                    
-                    Debug.Log("test");
-
-               
-             
-   if ( currentListWaypoint[currentStepPoint] ==currentListWaypoint[currentListWaypoint.Count-1] && pointsForBezierCurve[currentWaypoint] != pointsForBezierCurve[pointsForBezierCurve.Count-1]  )
-                    {
-                        Debug.Log("test1");
-                      
-                        currentWaypoint += 2 ;
-                        currentStepPoint = 1;  
-                        currentListWaypoint.Clear();
-                        currentListWaypoint.AddRange(pointsForBezierCurve[currentWaypoint].pointsForBezierCurve);
-                        currentDirection = new Vector3(currentListWaypoint[currentStepPoint].x - currentListWaypoint[currentStepPoint - 1].x,
-                            currentListWaypoint[currentStepPoint].y - currentListWaypoint[currentStepPoint - 1].y,
-                            currentListWaypoint[currentStepPoint].z - currentListWaypoint[currentStepPoint - 1].z).normalized;
-                        
-                    }
-                  
-                    else
-                    {
-                        if (currentListWaypoint[currentStepPoint] ==currentListWaypoint[currentListWaypoint.Count-1] )
-                        {
-                            
-                       
-                            speed = 0;
-                      
-                            gameObject.SetActive(false);
-                      
-                        PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw].Enqueue(gameObject);
-                    
-                        trajectories = new List<Vector3>();
-                    
-                        pointsForBezierCurve = new List<PointsForBezierCurve>();
-                    
-                     
-                        currentListWaypoint = new List<Vector3>();
-                        Debug.Log("7test3");
-                        
-                   
-                        }
-                        else
-                        {
-                                Debug.Log("test2");
-                                                    currentStepPoint++;
-                                                    currentDirection = new Vector3(currentListWaypoint[currentStepPoint].x - currentListWaypoint[currentStepPoint - 1].x,
-                                                        currentListWaypoint[currentStepPoint].y - currentListWaypoint[currentStepPoint - 1].y,
-                                                        currentListWaypoint[currentStepPoint].z - currentListWaypoint[currentStepPoint - 1].z).normalized;
-                                                    Debug.Log(currentStepPoint + "deusièmecheck");
-                        }
-                    
-                     
-                    }
-                   
-                
-                    }
-                   
                  
+                      if (Vector3.Distance(transform.position, currentListWaypoint[currentStepPoint]) < 0.1f )
+                          {
+                          
+                              
+                         
+          
+                         
+                       
+             if ( currentListWaypoint[currentStepPoint] ==currentListWaypoint[currentListWaypoint.Count-1] && pointsForBezierCurve[currentWaypoint] != pointsForBezierCurve[pointsForBezierCurve.Count-1]  )
+                              {
+                              
+                                
+                                  currentWaypoint += 2 ;
+                                  currentStepPoint = 1;  
+                                  currentListWaypoint.Clear();
+                                  currentListWaypoint.AddRange(pointsForBezierCurve[currentWaypoint].pointsForBezierCurve);
+                                  currentDirection = new Vector3(currentListWaypoint[currentStepPoint].x - currentListWaypoint[currentStepPoint - 1].x,
+                                      currentListWaypoint[currentStepPoint].y - currentListWaypoint[currentStepPoint - 1].y,
+                                      currentListWaypoint[currentStepPoint].z - currentListWaypoint[currentStepPoint - 1].z).normalized;
+                                  
+                              }
+                            
+                              else
+                              {
+                                  if (currentListWaypoint[currentStepPoint] ==currentListWaypoint[currentListWaypoint.Count-1] )
+                                  {
+          
+                                      speed = 0;
+                                
+                                      gameObject.SetActive(false);
+                                if(rateMode == StrawSO.RateMode.Ultimate)
+                                  PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][1].Enqueue(gameObject);
+                                else
+                                { 
+                                    PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][0].Enqueue(gameObject);
+                                }
+                              
+                                  trajectories = new List<Vector3>();
+                              
+                                  pointsForBezierCurve = new List<PointsForBezierCurve>();
+                              
+                               
+                                  currentListWaypoint = new List<Vector3>();
+                             
+                                  
+                             
+                                  }
+                                  else
+                                  {
+                                         
+                                                              currentStepPoint++;
+                                                              currentDirection = new Vector3(currentListWaypoint[currentStepPoint].x - currentListWaypoint[currentStepPoint - 1].x,
+                                                                  currentListWaypoint[currentStepPoint].y - currentListWaypoint[currentStepPoint - 1].y,
+                                                                  currentListWaypoint[currentStepPoint].z - currentListWaypoint[currentStepPoint - 1].z).normalized;
+                                                           
+                                  }
+                              
+                               
+                              }
+                             
+                          
+                              }
+                             
+                           
+                }
       }
+   
     
   
   }
 
   private void FixedUpdate()
   {
-      if (isCurve)
+      if (!isBounce)
       {
-           rb.velocity = (currentDirection)* speed;
+           if (isCurve )
+                {
+                     rb.velocity = (currentDirection)* speed;
+                }
       }
+     
      
   }
 }

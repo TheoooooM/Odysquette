@@ -378,7 +378,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceEnemy: 1
-  range: 5.83
+  range: 20
   speed: 1.75
   freezeModifier: 0.5
   freezeTime: 0
@@ -1635,7 +1635,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1063981874
 Transform:
   m_ObjectHideFlags: 0
@@ -2722,17 +2722,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angle: 0
-  _firstEffect: 4
+  _firstEffect: 1
   _secondEffect: 0
   actualStraw: 0
   strawsClass:
-  - StrawName: Basic Straw
+  - StrawName: Height Straw
     StrawType: 0
     StrawParent: {fileID: 1063981873}
-    strawSO: {fileID: 11400000, guid: c6a5e905b2398d442b4ecaa31bd69658, type: 2}
-    ultimateStrawSO: {fileID: 11400000, guid: ca60bda0eb4fbb4499b5a1b68826f7be, type: 2}
+    strawSO: {fileID: 11400000, guid: 008d91e3744ea94428924d6db8232b1e, type: 2}
+    sizeUltimatePool: 15
+    ultimateStrawSO: {fileID: 11400000, guid: 3e530475a2eead848986f12e54fbaf25, type: 2}
     spawnerTransform: {fileID: 1373875980}
-    sizePool: 10
+    sizeShootPool: 5
   shootCooldown: 0
   ShootRate: 0
   Player: {fileID: 0}
@@ -2742,9 +2743,10 @@ MonoBehaviour:
     StrawType: 0
     StrawParent: {fileID: 0}
     strawSO: {fileID: 0}
+    sizeUltimatePool: 0
     ultimateStrawSO: {fileID: 0}
     spawnerTransform: {fileID: 0}
-    sizePool: 0
+    sizeShootPool: 0
 --- !u!4 &2137677117
 Transform:
   m_ObjectHideFlags: 0
