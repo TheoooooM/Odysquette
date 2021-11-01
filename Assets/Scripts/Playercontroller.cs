@@ -8,16 +8,19 @@ public class Playercontroller : MonoBehaviour
     [SerializeField] float MouvementSpeed = 0.01f;
     public GameObject gun;
     private Rigidbody2D rb;
-
+    private int a = 3;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+       
     }
 
 
     // Update is called once per frame
     void FixedUpdate()
     {
+       
         if (Input.GetKey(KeyCode.D))
         {
             rb.position += new Vector2(MouvementSpeed*0.2f, 0);
@@ -40,4 +43,6 @@ public class Playercontroller : MonoBehaviour
         }
 
     }
+
+
 }
