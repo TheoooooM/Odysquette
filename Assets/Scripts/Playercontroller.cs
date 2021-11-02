@@ -2,19 +2,26 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Playercontroller : MonoBehaviour
 {
     [SerializeField] float MouvementSpeed = 0.01f;
     public GameObject gun;
     private Rigidbody2D rb;
+    private PlayerInput playerInput;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerInput = GetComponent<PlayerInput>();
+        playerInput.onActionTriggered += OnButtonPress;
     }
 
-
+    void OnButtonPress(InputAction.CallbackContext context)
+    {
+        Debug.Log(context.control.name);
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
