@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
     public Straw actualStraw;
     public List<StrawClass> strawsClass; //Liste de toute les pailles
 
+    public bool shooting;
     private int countShootRate ;
    
     private float shootLoading;
@@ -62,6 +63,10 @@ public class GameManager : MonoBehaviour
 
 
     public float shootCooldown;
+    
+    //Input
+    public bool isMouse = true;
+    public Vector2 ViewPad;
 
     
     //Bullet
@@ -113,7 +118,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (Input.GetKey(KeyCode.Mouse0)) 
+        if (shooting) 
         {
             switch (actualStrawClass.strawSO.rateMode)
             {
@@ -133,10 +138,7 @@ public class GameManager : MonoBehaviour
                            {
                                                                                                             
                                actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
-                               shootLoading =0; 
-                                                                          
-                            
-                                                                                                            
+                               shootLoading =0;                                                      
                            }
                     
                
@@ -200,9 +202,16 @@ public class GameManager : MonoBehaviour
    
         
         //---------------- Oriente la paille ------------------------
-        Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x, actualStrawClass.StrawParent.transform.position.y);
-        _lookDir = new Vector2(mousepos.x, mousepos.y) - Position ;
-        angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
+        if (isMouse)
+        {
+            Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x, actualStrawClass.StrawParent.transform.position.y);
+            _lookDir = new Vector2(mousepos.x, mousepos.y) - Position ;
+            angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
+        }
+        else
+        {
+            angle = Mathf.Atan2(ViewPad.y, ViewPad.x) * Mathf.Rad2Deg;
+        }
         actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
         //--------------------------------------------------------------
     }
