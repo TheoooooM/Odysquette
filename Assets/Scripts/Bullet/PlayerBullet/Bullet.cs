@@ -101,7 +101,7 @@ public class Bullet : MonoBehaviour
                 {
                     
       //  Debug.Log(distance/rb.velocity.magnitude +"   " +  _poisonCooldown + "   " + Time.deltaTime + "  = " + (_poisonCooldown + Time.deltaTime));
-        Debug.Log(rb.velocity.magnitude);
+        
         
                     if (_poisonCooldown < distance / rb.velocity.magnitude) 
                     {
