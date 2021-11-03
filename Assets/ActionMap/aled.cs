@@ -145,7 +145,7 @@ public class @Aled : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4855738d-2aed-4ea0-8e39-20ad65421aea"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
