@@ -40,7 +40,7 @@ public class enemy : MonoBehaviour
         agent.SetDestination(target.position);
         if (agent.velocity == Vector3.zero)
         {
-            Debug.Log("shoot");
+           // Debug.Log("shoot");
         }
 
         if (freezeTime > 0)

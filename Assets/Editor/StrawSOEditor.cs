@@ -139,7 +139,7 @@ SceneView.duringSceneGui -= OnPosVectorGizmos;
                        {
                            case 0:
                            {
-                               EditorGUILayout.PropertyField(serializedObject.FindProperty("timeValue"),
+                              EditorGUILayout.PropertyField(serializedObject.FindProperty("timeValue"),
                                    new GUIContent("Ultimate Time"));
                                break;
                            }
@@ -212,33 +212,57 @@ SceneView.duringSceneGui -= OnPosVectorGizmos;
                EditorGUILayout.Space(4f);
                using (new GUILayout.VerticalScope(EditorStyles.helpBox))
                {
-                   GUILayout.Label("Other Stats", myStyle);
+                   GUILayout.Label("Delay Stats", myStyle);
                    EditorGUILayout.Space(2f);
 
                    using (new GUILayout.HorizontalScope())
                    {
-                       serializedObject.FindProperty("isDelay").boolValue =
-                           EditorGUILayout.Toggle("Is Delay",
-                               serializedObject.FindProperty("isDelay").boolValue
+                       serializedObject.FindProperty("isDelayBetweenShoot").boolValue =
+                           EditorGUILayout.Toggle("Delay Shoot",
+                               serializedObject.FindProperty("isDelayBetweenShoot").boolValue
                            );
-                       if (serializedObject.FindProperty("isDelay").boolValue == true)
+                       if (serializedObject.FindProperty("isDelayBetweenShoot").boolValue == true)
                        {
                            GUILayout.FlexibleSpace();
                            EditorGUILayout.Space(2f);
-                           EditorGUILayout.PropertyField(serializedObject.FindProperty("delay"));
+                           EditorGUILayout.PropertyField(serializedObject.FindProperty("delayBetweenShoot"),new GUIContent("Delay Shoot"));
                        }
-
-
+                   }
+                   EditorGUILayout.Space(2f);
+                   
+                       
+                       serializedObject.FindProperty("isDelayBetweenWaveShoot").boolValue =
+                           EditorGUILayout.Toggle("Delay Wave Shoot",
+                               serializedObject.FindProperty("isDelayBetweenWaveShoot").boolValue
+                           );
+                       if (serializedObject.FindProperty("isDelayBetweenWaveShoot").boolValue == true)
+                       {
+                           GUILayout.FlexibleSpace();
+                           EditorGUILayout.Space(2f);
+                           using (new GUILayout.HorizontalScope())
+                           {
+                                 EditorGUILayout.PropertyField(serializedObject.FindProperty("delayBetweenWaveShoot"),new GUIContent("Delay Wave Shoot"));
+                                                          EditorGUILayout.PropertyField(serializedObject.FindProperty("numberWaveShoot"),new GUIContent("Number Wave Shoot"));
+                           }
+                         
+                       
 
 
                    }
+}
+                  
+                   EditorGUILayout.Space(4f);
+                   using (new GUILayout.VerticalScope(EditorStyles.helpBox))
+                   {
+                       GUILayout.Label("Other Stats", myStyle);
+                       EditorGUILayout.Space(2f);
+                       EditorGUILayout.PropertyField(serializedObject.FindProperty("dragRB"),
+                           new GUIContent("Drag")); EditorGUILayout.Space(2f);
+                   }
 
-                   EditorGUILayout.Space(2f);
-                   EditorGUILayout.PropertyField(serializedObject.FindProperty("dragRB"),
-                       new GUIContent("Drag"));
-                   EditorGUILayout.Space(2f);
+                  
 
-               }
+               
 
                EditorGUILayout.Space(4f);
                GUI.backgroundColor = new Color(0f, 2f, 2f, 0.25f);
@@ -264,7 +288,7 @@ SceneView.duringSceneGui -= OnPosVectorGizmos;
                            serializedObject.FindProperty("rateMainParameter").boolValue);
                    if (serializedObject.FindProperty("rateMainParameter").boolValue == true)
                    {
-                       if (serializedObject.FindProperty("rateMode").enumValueIndex == 2)
+                       if (serializedObject.FindProperty("rateMode").enumValueIndex == 1 )
                        {
                            EditorGUILayout.PropertyField(
                                serializedObject.FindProperty("effectAllNumberShoot"),
@@ -332,8 +356,9 @@ SceneView.duringSceneGui -= OnPosVectorGizmos;
 
    public void OnPosVectorGizmos(SceneView sceneView)
    {
-       Ray ray  = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition); 
-       if (Physics.Raycast(ray, out RaycastHit hit))
+       Ray ray  = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+       RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+       if (hit.collider !=null)
        {EmptyGizmos = hit.point;
            
            Handles.DrawWireDisc(EmptyGizmos, Vector3.forward, 1f);
