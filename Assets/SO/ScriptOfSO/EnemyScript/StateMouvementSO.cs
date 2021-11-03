@@ -19,12 +19,12 @@ public class StateMouvementSO : StateEnemySO
             (EnemyMovement) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyMovement];
         Rigidbody2D rbPlayer = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyPlayer];
       
-        Transform spawnerTransform =
-            (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.Spawner];
+       
         bool _endstep = false;
         enemyMovement.speed = moveSpeed;
         if (isMovementToSpawn)
-        {  Rigidbody2D rbEnemy = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyEnemy];
+        {  Transform spawnerTransform =
+                      (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.Spawner]; Rigidbody2D rbEnemy = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyEnemy];
             enemyMovement.enabled = true;
             enemyMovement.destination = spawnerTransform.position;
             if (Vector2.Distance(rbEnemy.position, spawnerTransform.position)<0.1f)

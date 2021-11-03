@@ -46,19 +46,11 @@ public class EnemyStateManager : MonoBehaviour
 
     private void Start()
     {
-      
-    
-       
-    
-     
-     spawnPosition = transform.position;
- 
+        spawnPosition = transform.position;
     }
 
     private void Update()
     {
-      
-             ;
         #region CheckStates
   if (!IsCurrentStatePlayed && !IsCurrentStartPlayed)
         {
@@ -267,7 +259,7 @@ public class EnemyStateManager : MonoBehaviour
         foreach (ExtensionMethods.ObjectInStateManager objectInStateManager in stateEnemySo.objectInStateManagers)
             {  if (!objectDictionary.ContainsKey(objectInStateManager))
                                  {
-                                     for (int i = 0; i < stateEnemySo.objectInStateManagers.Count; i++)
+                                     for (int i = 0; i < baseObjectList.Count; i++)
                                      {
                                                        
                                          if (baseObjectList[i].objectInStateManager == objectInStateManager)

@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
    
     public StrawSO.RateMode rateMode;
      public Vector3 oldPositionPoison;
-   private BulletStat Scriptable;
+   
 
     public Rigidbody2D rb;
     private Vector3 lastVelocity;
@@ -29,7 +29,6 @@ public class Bullet : MonoBehaviour
 
     public float poisonCooldown = 5;
     float _poisonCooldown = 0;
-    public float BulletSpeed;
     public bool isEnable;
     public bool isDesactive = false;
 
@@ -44,8 +43,7 @@ public class Bullet : MonoBehaviour
         if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
         else _bounceCount = 0;
         
-       // rb.velocity = Vector2.zero;
-        //rb.AddForce((GameManager.Instance._lookDir).normalized * BulletSpeed, ForceMode2D.Impulse); // met une force sur la paille
+   
 
     }
 
@@ -207,7 +205,7 @@ public class Bullet : MonoBehaviour
         if (isDesactive == false)
         {
             gameObject.SetActive(false); 
-                  //Debug.Log("enqufds" + name);
+                
                   if (rateMode == StrawSO.RateMode.Ultimate)
                   {
                       PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][1].Enqueue(gameObject);
@@ -216,7 +214,7 @@ public class Bullet : MonoBehaviour
                   {
                       PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][0].Enqueue(gameObject);
                   }
-                    
+                  
                     isDesactive = true;
         }
         

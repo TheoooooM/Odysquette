@@ -18,9 +18,13 @@ public static class ExtensionMethods
 
    public enum ObjectInStateManager
    {
-       TransformPlayer, RigidBodyEnemy, RigidBodyPlayer, Spawner, EnemyMovement
+       TransformPlayer, RigidBodyEnemy, RigidBodyPlayer, Spawner, EnemyMovement, TransformShoot, EnemyStateManager
    }
 
+   public enum EnemyTypeShoot
+   {
+       TestType
+   }
    
 
 //elelment 0 soit la base position poru qu'on rajoute deux pont par deux point a chaque fois 
