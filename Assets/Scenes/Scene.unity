@@ -866,8 +866,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f470034fb1adc5e4e84b11a47c54f725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MouvementSpeed: 0.5
+  MouvementSpeed: 3
   gun: {fileID: 1063981873}
+  CurrentController: 
 --- !u!50 &541801659
 Rigidbody2D:
   serializedVersion: 4
@@ -2887,7 +2888,10 @@ MonoBehaviour:
     ultimateStrawSO: {fileID: 11400000, guid: 3e530475a2eead848986f12e54fbaf25, type: 2}
     spawnerTransform: {fileID: 1373875980}
     sizeShootPool: 5
+  shooting: 0
   shootCooldown: 0
+  isMouse: 1
+  ViewPad: {x: 0, y: 0}
   ShootRate: 0
   Player: {fileID: 0}
   _lookDir: {x: 0, y: 0}
