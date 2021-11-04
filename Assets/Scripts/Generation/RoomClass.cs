@@ -1,44 +1,76 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RoomClass : MonoBehaviour
 {
-    [Header("----------GÈnÈrration ProcÈdurale---------")]
-    public int x;
-    public int y;
-
-    [SerializeField] bool _OpenTop; //Est ce que la salle est ouverte en haut
-    public bool OpenTop => _OpenTop;
-
-    [SerializeField] bool _OpenBottom; //Est ce que la salle est ouverte en bas
-    public bool OpenBottom => _OpenBottom;
-
-    [SerializeField] bool _OpenLeft; //Est ce que la salle est ouverte ‡ gauche
-    public bool OpenLeft => _OpenLeft;
-
-    [SerializeField] bool _OpenRight; //Est ce que la salle est ouverte ‡ droite
-    public bool OpenRight => _OpenRight;
-
-    [SerializeField] GameObject _GenTop;
-    public GameObject GenTop => _GenTop;
-
-    [SerializeField] GameObject _GenBot;
-    public GameObject GenBot => _GenBot;
-
-    [SerializeField] GameObject _GenLeft;
-    public GameObject GenLeft => _GenLeft;
-
-    [SerializeField] GameObject _GenRight;
-    public GameObject GenRight => _GenRight;
-
-    [SerializeField] bool _Closing; //Est e que la salle a 1 issue et ferme le niveau
-    public bool Closing => _Closing;
-
-    [SerializeField] int _NbrExit; //Nombre de sortie de la piËce
-    public int NbrExit => _NbrExit;
-
     [Header("----------------IN GAME------------------")]
-    [SerializeField] bool IsClosed; //Est ce que la salle est fermÈ
+    [SerializeField] bool IsClosed; //Est ce que la salle est ferm√©
+    
+    
+    [HideInInspector] public bool OpenTop; //Est ce que la salle est ouverte en haut
+    [HideInInspector] public bool OpenBottom; //Est ce que la salle est ouverte √† bas
+    [HideInInspector] public bool OpenLeft;  //Est ce que la salle est ouverte en gauche
+    [HideInInspector] public bool OpenRight; //Est ce que la salle est ouverte √† droite
 
+    [HideInInspector] public GameObject GenTop;
+    [HideInInspector] public GameObject GenBot;
+    [HideInInspector] public GameObject GenLeft;
+    [HideInInspector] public GameObject GenRight;
+
+    [Header("----------G√©n√©rration Proc√©durale---------")]
+    public NewRoomManager.open[] ExitArray;
+    
+    
+    [HideInInspector] public int NbrExit; //Ancienne version de la gen a pas enlever
+    [HideInInspector] public bool Closing; //Ancienne version de la gen a pas enlever
 }
+#if UNITY_EDITOR
+[CustomEditor(typeof(RoomClass))]
+public class RoomClass_Editor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        serializedObject.Update();
+        
+        DrawDefaultInspector(); // for other non-HideInInspector fields
+ 
+        RoomClass script = (RoomClass)target;
+        
+        script.OpenLeft = EditorGUILayout.Toggle("Open Left", script.OpenLeft);
+        script.OpenRight = EditorGUILayout.Toggle("Open Right", script.OpenRight);
+        script.OpenTop = EditorGUILayout.Toggle("Open Top", script.OpenTop);
+        script.OpenBottom = EditorGUILayout.Toggle("Open Bot", script.OpenBottom);
+
+        if (script.OpenLeft)
+        {
+            //script.GenLeft = EditorGUILayout.ObjectField("GenLeft", script.GenLeft, typeof(GameObject), true) as GameObject;
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("GenLeft"));
+        }
+        
+        if (script.OpenRight)
+        {
+            //script.GenRight = EditorGUILayout.ObjectField("GenRight", script.GenRight, typeof(GameObject), true) as GameObject;
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("GenRight"));
+        }
+        
+        if (script.OpenTop)
+        {
+            //script.GenTop = EditorGUILayout.ObjectField("GenTop", script.GenTop, typeof(GameObject), true) as GameObject;
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("GenTop"));
+        }
+        
+        if (script.OpenBottom)
+        {
+            //script.GenBot = EditorGUILayout.ObjectField("GenBot", script.GenBot, typeof(GameObject), true) as GameObject;
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("GenBot"));
+        }
+
+        serializedObject.ApplyModifiedProperties();
+
+    }
+}
+#endif

@@ -8,9 +8,9 @@ public class RoomManager : MonoBehaviour
 
     [SerializeField] GameObject[] OpenTop; //Toute les sallles ouverte en haut
     [SerializeField] GameObject[] OpenBot; //Toute les sallles ouverte en bas
-    [SerializeField] GameObject[] OpenLeft; //Toute les sallles ouverte à gauche
-    [SerializeField] GameObject[] OpenRight; //Toute les sallles ouverte à droite
-    [SerializeField] GameObject[] Close; //Toute les salles à 1 issue
+    [SerializeField] GameObject[] OpenLeft; //Toute les sallles ouverte Ã  gauche
+    [SerializeField] GameObject[] OpenRight; //Toute les sallles ouverte Ã  droite
+    [SerializeField] GameObject[] Close; //Toute les salles Ã  1 issue
 
     [SerializeField] GameObject SpawnRoom;
     [SerializeField] GameObject SpawningPoint;
@@ -23,7 +23,7 @@ public class RoomManager : MonoBehaviour
     [SerializeField] GameObject RoomSlot;
 
     int RoomLeft;
-    GameObject CurrentRoom; //Pièce en train d'ête génré 
+    GameObject CurrentRoom; //PiÃ¨ce en train d'Ãªte gÃ©nrÃ© 
     List<GameObject> ToGenerate = new List<GameObject>();
     int x;
     int y;
@@ -32,16 +32,12 @@ public class RoomManager : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    /*void Start()
     {
         GenerateStage(10, 40);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
     void SetRoom(int DimOne, int DimTwo,GameObject Room ,GameObject Gen)
     {
@@ -239,7 +235,7 @@ public class RoomManager : MonoBehaviour
     public void GenerateStage(int dimension, int MaxRoom)
     {
         #region Variables
-        bool FirstRoom = true; //Est ce que c'est la premère salle
+        bool FirstRoom = true; //Est ce que c'est la premÃ¨re salle
         bool IsGood = false;
         RoomLeft = MaxRoom; //Le nombre de salle possible restantes
         int CurrentExit;// Nombrede sorties restantes dnas la CurrentRoom
@@ -326,5 +322,6 @@ public class RoomManager : MonoBehaviour
             }
         }
 
-    }
+    }*/
+    
 }
