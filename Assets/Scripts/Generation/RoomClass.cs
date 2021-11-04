@@ -31,12 +31,12 @@ public class RoomClass : MonoBehaviour
     [HideInInspector] public int NbrExit; //Ancienne version de la gen a pas enlever
     [HideInInspector] public bool Closing; //Ancienne version de la gen a pas enlever
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (!spawned)
         {
             Debug.Log("destroy Room");
-            NewRoomManager.instance.hasSpawn = false;
+            NewRoomManager.instance.reset = true;
             Destroy(gameObject);
         }
     }

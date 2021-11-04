@@ -23,7 +23,7 @@ public class NewRoomManager : MonoBehaviour
         none, left, right, top, bot
     }
 
-    public bool hasSpawn = true;
+    public bool reset = false;
     
     [SerializeField] private GameObject[] roomArray;
     [SerializeField] private GameObject[] firstRoom;
@@ -38,21 +38,25 @@ public class NewRoomManager : MonoBehaviour
 
     private void Start()
     {
-        GenerateSegment(4);
+        GenerateSegment(3);
     }
+
+    
+
+  
 
     void GenerateSegment(int roomAmount)
     {
         RoomClass generateRoom = null;
         int antiwhile = 0;
-        for (int i = 1; i < roomAmount; i++)
+        for (int i = 1; i <= roomAmount; i++)
         {
             Debug.Log("start createRoom n°" + i);
             
             if (i > 1)
             {
                 
-                if (hasSpawn && generateRoom != null)
+                if (!reset && generateRoom != null)
                 {
                     spawnPoint = newSpawnPoint;
                     createRoomList.Add(generateRoom.gameObject);
@@ -60,8 +64,8 @@ public class NewRoomManager : MonoBehaviour
                 else
                 {
                     i--;
-                    hasSpawn = true;
-                Debug.Log("less 1 = " + i);
+                    reset = false;
+                Debug.Log("i - 1 = " + i);
                 }
             
             }
@@ -73,11 +77,12 @@ public class NewRoomManager : MonoBehaviour
                 generateRoom =  Instantiate(firstRoom[num]).GetComponent<RoomClass>();
                 switch (generateRoom.GetComponent<RoomClass>().ExitArray[0])
                 {
-                    case open.bot : spawnPoint = generateRoom.GetComponent<RoomClass>().GenBot.transform; break;
-                    case open.top : spawnPoint = generateRoom.GetComponent<RoomClass>().GenTop.transform; break;
-                    case open.left : spawnPoint = generateRoom.GetComponent<RoomClass>().GenLeft.transform; break;
-                    case open.right : spawnPoint = generateRoom.GetComponent<RoomClass>().GenRight.transform; break; 
+                    case open.bot : newSpawnPoint = generateRoom.GetComponent<RoomClass>().GenBot.transform; needOpen = open.top; break;
+                    case open.top : newSpawnPoint = generateRoom.GetComponent<RoomClass>().GenTop.transform; needOpen = open.bot; break;
+                    case open.left : newSpawnPoint = generateRoom.GetComponent<RoomClass>().GenLeft.transform; needOpen = open.right; break;
+                    case open.right : newSpawnPoint = generateRoom.GetComponent<RoomClass>().GenRight.transform; needOpen = open.left; break; 
                 } 
+                
                 
 
             }
@@ -88,19 +93,19 @@ public class NewRoomManager : MonoBehaviour
                 if (generateRoom != null)
                 {
                     newSpawnPoint = GetGen(generateRoom.GetComponent<RoomClass>()).transform;
-                    Vector2 posSpawn = spawnPoint.position - newSpawnPoint.position;
+                    Vector2 posSpawn = spawnPoint.position+ newSpawnPoint.position + new Vector3(50,0);
                     Instantiate(generateRoom, posSpawn, quaternion.identity);
                 }
-                else i--;
+                else reset = true;
             }
             else
             {
-                Debug.Log("Room");
+                Debug.Log("NormalRoom");
                 generateRoom = AvailableRoom();
                 if (generateRoom != null)
                 {
                     newSpawnPoint = GetGen(generateRoom.GetComponent<RoomClass>()).transform;
-                    Vector2 posSpawn = spawnPoint.position - newSpawnPoint.position;
+                    Vector2 posSpawn = spawnPoint.position + newSpawnPoint.position+ new Vector3(50,0);
                     Instantiate(generateRoom, posSpawn, quaternion.identity);
 
 
@@ -112,11 +117,8 @@ public class NewRoomManager : MonoBehaviour
                             break;
                         }
                     }
-                        
-                    
-                
                 }
-                else i--;
+                else reset=true;
                 
                 
             }
@@ -137,14 +139,24 @@ public class NewRoomManager : MonoBehaviour
     {
         RoomClass room;
         int counter = 0;
-        int num = Random.Range(0, firstRoom.Length);
-        if (multiExit) room = multiExitRoom[num].GetComponent<RoomClass>();
-        else room = roomArray[num].GetComponent<RoomClass>();
+        if (multiExit)
+        {
+            int num = Random.Range(0, multiExitRoom.Length);
+            room = multiExitRoom[num].GetComponent<RoomClass>();
+            
+        }
+        else
+        {
+            int num = Random.Range(0, roomArray.Length);
+            room = roomArray[num].GetComponent<RoomClass>();
+        }
+        Debug.Log(room.name + needOpen);
         
 
         if (!room.ExitArray.Contains(needOpen))
         {
             room = null;
+            Debug.Log("Dont' contain open");
         }
         
         
@@ -165,17 +177,17 @@ public class NewRoomManager : MonoBehaviour
 
     Transform GetGen(RoomClass room)
     {
-        GameObject gen = null;
+        Transform gen = null;
             switch (needOpen)
             {
                 case open.none : break;
                     
-                case open.bot : gen = room.GenBot; break;
-                case open.top : gen = room.GenTop; break;
-                case open.left : gen = room.GenLeft; break;
-                case open.right : gen = room.GenRight; break;
+                case open.bot : gen = room.GenBot.transform; break;
+                case open.top : gen = room.GenTop.transform; break;
+                case open.left : gen = room.GenLeft.transform; break;
+                case open.right : gen = room.GenRight.transform; break;
             }
         
-        return gen.transform;
+        return gen;
     }
 }
