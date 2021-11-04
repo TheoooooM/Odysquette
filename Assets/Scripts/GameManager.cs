@@ -119,6 +119,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+
         mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (shooting) 
         {

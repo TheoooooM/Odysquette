@@ -12,10 +12,10 @@ public class Bullet : MonoBehaviour
     public float range;
     public Color colorBang;
      Vector3 basePosition;
-   
+     public float knockUpValue;
     public StrawSO.RateMode rateMode;
      public Vector3 oldPositionPoison;
-   
+    
 
     public Rigidbody2D rb;
     private Vector3 lastVelocity;
@@ -147,14 +147,16 @@ public class Bullet : MonoBehaviour
         if (_pierceCount > 0 && other.CompareTag("Enemy"))
         {
             _pierceCount--;
-            Debug.Log("les degats olalala : " + damage);
+        
+            other.GetComponent<EnemyStateManager>().TakeDamage(damage, other, knockUpValue);
         }
 
         else if (!other.CompareTag("Walls"))
-
-        { 
+        {
+            other.GetComponent<EnemyStateManager>().TakeDamage(damage, other, knockUpValue);
             DesactiveBullet();
         }
+  
     }
 
     private void OnCollisionEnter2D(Collision2D other)

@@ -22,7 +22,7 @@ public class StrawSO : ScriptableObject
    public float dragRB = 0;
    public float range = 1;
    public RateMode rateMode;
-  
+   public float knockUp;
    public bool rateMainParameter = false;
        public bool rateSecondParameter = false;
        public float damageParameter = 0;
@@ -86,10 +86,12 @@ public class StrawSO : ScriptableObject
            scriptBullet.damage = damage;
            scriptBullet.hasRange = hasRange;
            scriptBullet.range = range;
-         
+           
            scriptBullet.rb.drag = dragRB;
            scriptBullet.rateMode = rateMode;
        }
+
+      scriptBullet.knockUpValue =  knockUp;
 
 
    }

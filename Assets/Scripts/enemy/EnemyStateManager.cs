@@ -17,9 +17,9 @@ public class EnemyStateManager : MonoBehaviour
     //Main Stat
     [SerializeField] private Transform playerTransform;
     
-    public int  health;
-    
-
+    public float  health;
+[SerializeField]
+    private bool isKnockup;
     public Vector3 spawnPosition;
     //State and Stat Condition
     public List<StateEnemySO> stateEnnemList = new List<StateEnemySO>();
@@ -41,12 +41,13 @@ public class EnemyStateManager : MonoBehaviour
     public List<float> timerCondition = new List<float>();
     private float timerCurrentStartState;
     private float timerCurrentState;
-  
+    private Rigidbody2D rb;
     
 
     private void Start()
     {
         spawnPosition = transform.position;
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -145,6 +146,9 @@ public class EnemyStateManager : MonoBehaviour
         
         ApplyState();
     }
+
+  
+
     private void FixedUpdate()
     {     
        ApplyState();
@@ -281,8 +285,38 @@ public class EnemyStateManager : MonoBehaviour
       public Object _object;
 
   }
-  
-  
 
- 
+  public void OnDeath()
+  {
+      Destroy(gameObject);
+  }
+
+  public void TakeDamage(float damage, Collider2D other, float knockUpValue)
+  {
+      if (health - damage <= 0)
+      {
+          OnDeath();
+      }
+      else
+      {
+          Knockup( other, knockUpValue);
+          health -= damage;
+      }
+  }
+
+      void Knockup(Collider2D other, float knockUpValue)
+      {
+          if (isKnockup)
+          {
+              Vector2 direction;
+              direction = (rb.position - other.attachedRigidbody.position).normalized;
+              rb.velocity +=(Mathf.Pow(rb.mass, 2))/2 *(direction*knockUpValue);
+          }
+      }
+
+      private void OnCollisionEnter2D(Collision2D other)
+      {
+          if(other.gameObject.CompareTag("Player"))
+          HealthPlayer.Instance.TakeDamagePlayer(1);
+      }
 }

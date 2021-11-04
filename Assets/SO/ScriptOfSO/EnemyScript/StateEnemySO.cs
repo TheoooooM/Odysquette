@@ -7,6 +7,7 @@ using Object = UnityEngine.Object;
 
 public class StateEnemySO : ScriptableObject
 {
+    
  
     public List<ExtensionMethods.ObjectInStateManager> objectInStateManagers = new List<ExtensionMethods.ObjectInStateManager>();
     public float startTime;
@@ -14,6 +15,7 @@ public class StateEnemySO : ScriptableObject
     public bool isFixedUpdate;
     public bool haveStartState;
     private float timeForTimerState;
+    public bool isKnockUp;
     public virtual bool CheckCondition (Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary)
     {
         return true;

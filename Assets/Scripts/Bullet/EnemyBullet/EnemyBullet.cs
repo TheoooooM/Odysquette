@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyBullet : MonoBehaviour
 {
     public bool hasRange;
-    public float damage;
+    public int damage;
     public float range;
     public Rigidbody2D rb;
     public Vector3 basePosition;
@@ -59,5 +59,20 @@ public class EnemyBullet : MonoBehaviour
             isDesactive = true;
         }
         
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            HealthPlayer.Instance.TakeDamagePlayer(damage);
+        }
+
+        else if (!other.CompareTag("Walls"))
+
+        {
+           
+            DesactiveBullet();
+        }
     }
 }

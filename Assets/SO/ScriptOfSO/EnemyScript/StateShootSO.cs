@@ -10,7 +10,7 @@ public class StateShootSO : StateEnemySO
 
     public float rangeForBullet;
 
-    public float damage;
+    public int damage;
 
     public float speedBullet;
 
