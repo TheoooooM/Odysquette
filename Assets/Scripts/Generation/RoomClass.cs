@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,13 @@ using UnityEngine.UI;
 
 public class RoomClass : MonoBehaviour
 {
-    [Header("----------------IN GAME------------------")]
-    [SerializeField] bool IsClosed; //Est ce que la salle est fermé
-    
-    
+    [Header("----------------IN GAME------------------")] [SerializeField]
+    bool IsClosed; //Est ce que la salle est fermé
+
+
     [HideInInspector] public bool OpenTop; //Est ce que la salle est ouverte en haut
     [HideInInspector] public bool OpenBottom; //Est ce que la salle est ouverte à bas
-    [HideInInspector] public bool OpenLeft;  //Est ce que la salle est ouverte en gauche
+    [HideInInspector] public bool OpenLeft; //Est ce que la salle est ouverte en gauche
     [HideInInspector] public bool OpenRight; //Est ce que la salle est ouverte à droite
 
     [HideInInspector] public GameObject GenTop;
@@ -23,11 +24,28 @@ public class RoomClass : MonoBehaviour
 
     [Header("----------Générration Procédurale---------")]
     public NewRoomManager.open[] ExitArray;
-    
-    
+
+    public bool spawned = false;
+
+
     [HideInInspector] public int NbrExit; //Ancienne version de la gen a pas enlever
     [HideInInspector] public bool Closing; //Ancienne version de la gen a pas enlever
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (!spawned)
+        {
+            Debug.Log("destroy Room");
+            NewRoomManager.instance.hasSpawn = false;
+            Destroy(gameObject);
+        }
+    }
 }
+
+
+
+
+
 #if UNITY_EDITOR
 [CustomEditor(typeof(RoomClass))]
 public class RoomClass_Editor : Editor

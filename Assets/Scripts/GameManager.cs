@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     public List<StrawClass> strawsClass; //Liste de toute les pailles
 
     public bool shooting;
+    public bool utlimate;
     private int countShootRate ;
    
     private float shootLoading;
@@ -170,16 +171,17 @@ public class GameManager : MonoBehaviour
               
             }
 
-          
            
         }
-       if (actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && Input.GetKeyDown(KeyCode.Mouse1))
+       if (actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate)
        {
            if (ultimateTimeValue >= actualStrawClass.ultimateStrawSO.timeValue)
            {
                actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
                ultimateTimeValue = 0;
            }
+
+           utlimate = false;
        }
 
         if (Input.GetKeyUp(KeyCode.Mouse0))

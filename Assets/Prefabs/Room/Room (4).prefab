@@ -956,6 +956,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8189889945393606354}
   - component: {fileID: 4691965587838760058}
+  - component: {fileID: -5154436362961584029}
   m_Layer: 0
   m_Name: Room (4)
   m_TagString: Untagged
@@ -1002,6 +1003,33 @@ MonoBehaviour:
   GenBot: {fileID: 0}
   GenLeft: {fileID: 0}
   GenRight: {fileID: 1427026314842412041}
-  ExitArray: 0100000002000000
+  ExitArray: 0300000002000000
+  spawned: 0
   NbrExit: 0
   Closing: 0
+--- !u!61 &-5154436362961584029
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8189889945393606355}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0000009536743, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 17.004202, y: 9.002101}
+  m_EdgeRadius: 0

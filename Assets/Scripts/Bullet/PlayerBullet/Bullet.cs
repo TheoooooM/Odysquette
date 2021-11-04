@@ -165,7 +165,7 @@ public class Bullet : MonoBehaviour
            
             _bounceCount--;
             var speed = lastVelocity.magnitude;
-            Debug.Log(lastVelocity);
+            //Debug.Log(lastVelocity);
            
             var direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
             rb.velocity = direction * Mathf.Max(speed, 0f);

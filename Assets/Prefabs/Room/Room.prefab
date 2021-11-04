@@ -633,7 +633,7 @@ SpriteRenderer:
   m_Size: {x: 3.2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1103862740845633403
@@ -646,6 +646,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1103862740845633402}
   - component: {fileID: 4604038935811868114}
+  - component: {fileID: -2807702362130598124}
   m_Layer: 0
   m_Name: Room
   m_TagString: Untagged
@@ -684,8 +685,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsClosed: 0
-  x: 0
-  y: 0
   OpenTop: 1
   OpenBottom: 1
   OpenLeft: 0
@@ -694,8 +693,36 @@ MonoBehaviour:
   GenBot: {fileID: 4795492294285290290}
   GenLeft: {fileID: 0}
   GenRight: {fileID: 0}
+  ExitArray: 0300000004000000
+  spawned: 0
   NbrExit: 0
   Closing: 0
+--- !u!61 &-2807702362130598124
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1103862740845633403}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.09150219, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 17.378798, y: 9.2809}
+  m_EdgeRadius: 0
 --- !u!1 &1517994853081605725
 GameObject:
   m_ObjectHideFlags: 0

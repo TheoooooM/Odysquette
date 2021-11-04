@@ -23,6 +23,18 @@ public class Playercontroller : MonoBehaviour
         playerInput.Player.Shoot.canceled += ShootOncanceled;
         playerInput.Player.ShootGamepad.performed += ShootGamepadOnperformed;
         playerInput.Player.ShootGamepad.canceled += ShootGamepadOncanceled;
+        playerInput.Player.SpecialShoot.performed += SpecialShootOnperformed;
+        playerInput.Player.SpecialShootGamepad.performed += SpecialShootGamepadOnperformed;
+    }
+
+    private void SpecialShootGamepadOnperformed(InputAction.CallbackContext obj)
+    {
+        GameManager.Instance.utlimate = true;
+    }
+
+    private void SpecialShootOnperformed(InputAction.CallbackContext obj)
+    {
+        GameManager.Instance.utlimate = true;
     }
 
 
@@ -75,7 +87,7 @@ public class Playercontroller : MonoBehaviour
         }
         
         
-        Debug.Log(GameManager.Instance.isMouse);
+        //Debug.Log(GameManager.Instance.isMouse);
 
         #region OldMovement
 

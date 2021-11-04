@@ -179,7 +179,7 @@ public class EnemyStateManager : MonoBehaviour
                 if (stateEnnemList[indexCurrentState].isFixedUpdate)
                 {
                       CurrentFixedState( objectDictionary,out bool endStep); _endstep = endStep;
-                      Debug.Log(_endstep);
+                      //Debug.Log(_endstep);
                 }
                   
                 else 
