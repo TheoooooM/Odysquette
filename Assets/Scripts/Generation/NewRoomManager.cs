@@ -32,13 +32,13 @@ public class NewRoomManager : MonoBehaviour
     private List<GameObject> createRoomList = new List<GameObject>();
 
     private open needOpen = open.none;
-    private Transform spawnPoint;
+    [SerializeField] private Transform spawnPoint;
     private Transform newSpawnPoint;
 
 
     private void Start()
     {
-        GenerateSegment(3);
+        GenerateSegment(10);
     }
 
     
@@ -93,8 +93,11 @@ public class NewRoomManager : MonoBehaviour
                 if (generateRoom != null)
                 {
                     newSpawnPoint = GetGen(generateRoom.GetComponent<RoomClass>()).transform;
-                    Vector2 posSpawn = spawnPoint.position+ newSpawnPoint.position + new Vector3(50,0);
-                    Instantiate(generateRoom, posSpawn, quaternion.identity);
+                    Vector2 posSpawn = spawnPoint.position - newSpawnPoint.position;
+                    Debug.Log("generate " + generateRoom.name + " from " + spawnPoint.name + " to " + newSpawnPoint);
+                    generateRoom = Instantiate(generateRoom, posSpawn, quaternion.identity);
+                    newSpawnPoint = GetGen(generateRoom.GetComponent<RoomClass>()).transform;
+                    
                 }
                 else reset = true;
             }
@@ -104,9 +107,10 @@ public class NewRoomManager : MonoBehaviour
                 generateRoom = AvailableRoom();
                 if (generateRoom != null)
                 {
-                    newSpawnPoint = GetGen(generateRoom.GetComponent<RoomClass>()).transform;
-                    Vector2 posSpawn = spawnPoint.position + newSpawnPoint.position+ new Vector3(50,0);
-                    Instantiate(generateRoom, posSpawn, quaternion.identity);
+                    newSpawnPoint = GetGen(generateRoom.GetComponent<RoomClass>());
+                    Vector2 posSpawn = spawnPoint.position - newSpawnPoint.position;
+                    Debug.Log("generate " + generateRoom.name + " from " + spawnPoint.name + " to " + newSpawnPoint);
+                    generateRoom = Instantiate(generateRoom, posSpawn, quaternion.identity);
 
 
                     foreach (open op in generateRoom.GetComponent<RoomClass>().ExitArray)
@@ -114,8 +118,17 @@ public class NewRoomManager : MonoBehaviour
                         if (op != needOpen)
                         {
                             needOpen = op;
+                            newSpawnPoint = GetGen(generateRoom.GetComponent<RoomClass>());
                             break;
                         }
+                    }
+
+                    switch (needOpen)
+                    {
+                        case open.bot : needOpen = open.top; break;
+                        case open.top : needOpen = open.bot; break;
+                        case open.right : needOpen = open.left; break;
+                        case open.left : needOpen = open.right; break;
                     }
                 }
                 else reset=true;
