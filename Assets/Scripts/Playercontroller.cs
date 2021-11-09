@@ -16,7 +16,7 @@ public class Playercontroller : MonoBehaviour
     Vector2 windDirection;
     private float windSpeed;
     private Vector2 moveVector;
-    
+    public bool isInFlash;
     [SerializeField]
     private AnimationCurve dashSpeedCurve;
     [SerializeField]
@@ -170,14 +170,6 @@ if(timerBetweenDash<= timeBetweenDash)
             dashDirection = Vector2.zero;
         }
 
-    
-        
-    
-             
-        
-    
-  
-       
         if (!GameManager.Instance.isMouse)
         {
             GameManager.Instance.ViewPad = playerInput.Player.ViewPad.ReadValue<Vector2>();
@@ -221,11 +213,24 @@ if(timerBetweenDash<= timeBetweenDash)
             windSpeed = stateWind.speedWind;
             isInWind = true;
         }
+
+        if (other.CompareTag("Flash"))
+        {
+            isInFlash = false;
+        }
     }
 
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        isInWind = false;
+        if (other.CompareTag("Wind"))
+        {
+             isInWind = false;
+        }
+        if (other.CompareTag("Flash"))
+        {
+            isInFlash = true;
+        }
+       
     }
 }
