@@ -9,10 +9,19 @@ public class StateShootBasic : StateShootSO
     [NamedArray("float", true)]
     public float[] directions = Array.Empty<float>();
 
+    public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
+    {
+        Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
+        enemyTransform.GetComponent<SpriteRenderer>().color = Color.magenta;
+        base.StartState(objectDictionary, out endStep);
+    }
+
     public override void PlayState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
     {
         
-    
+        Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
+        enemyTransform.GetComponent<SpriteRenderer>().color = Color.red;
+  
         Transform parentBulletTF =
             (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformShoot];
         EnemyStateManager enemyStateManager = (EnemyStateManager) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyStateManager];
@@ -83,7 +92,7 @@ public class StateShootBasic : StateShootSO
         {
              for (int i = 0; i < directions.Length; i++)
                     {
-                        Debug.Log("dfqsjdsmljidfqsjdfqsdfqs");
+                  
                   
                         GameObject bullet = PoolManager.Instance.SpawnEnnemyShoot(enemyTypeShoot, prefabBullet, parentBulletTF);
                         bullet.SetActive(true);  
@@ -110,7 +119,7 @@ public class StateShootBasic : StateShootSO
                         yield return new WaitForSeconds(delayBetweenShoot);
                     }
             if(isDelayBetweenWaveShoot)
-                    yield return new WaitForSeconds(delayBetweenShoot);
+                    yield return new WaitForSeconds(delayBetweenWaveShoot);
         }
        
     }

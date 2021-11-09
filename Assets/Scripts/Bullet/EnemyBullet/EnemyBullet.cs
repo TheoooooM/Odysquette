@@ -51,6 +51,7 @@ public class EnemyBullet : MonoBehaviour
 
     void DesactiveBullet()
     {
+       
         if (isDesactive == false)
         {
             gameObject.SetActive(false); 
@@ -66,9 +67,10 @@ public class EnemyBullet : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             HealthPlayer.Instance.TakeDamagePlayer(damage);
+            DesactiveBullet();
         }
 
-        else if (!other.CompareTag("Walls"))
+        else if (other.CompareTag("Walls"))
 
         {
            

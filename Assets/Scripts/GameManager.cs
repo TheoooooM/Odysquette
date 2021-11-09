@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviour
            utlimate = false;
        }
 
-        if (Input.GetKeyUp(KeyCode.Mouse0))
+        if (!shooting)
         {
             if (EndLoading)
             {

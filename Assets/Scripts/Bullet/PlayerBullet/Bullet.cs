@@ -15,8 +15,8 @@ public class Bullet : MonoBehaviour
      public float knockUpValue;
     public StrawSO.RateMode rateMode;
      public Vector3 oldPositionPoison;
-    
 
+     private bool isColliding;
     public Rigidbody2D rb;
     private Vector3 lastVelocity;
 
@@ -42,8 +42,8 @@ public class Bullet : MonoBehaviour
         
         if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
         else _bounceCount = 0;
-        
-   
+
+
 
     }
 
@@ -118,13 +118,18 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-    
+        
+        if(isColliding) return;
+        isColliding = true;
+        // Rest of the code
+        StartCoroutine(Reset());
       //  Debug.Log("collid" + other.name);
         switch (GameManager.Instance.firstEffect)
         {
             
             case GameManager.Effect.explosion :
                 Explosion();
+                DesactiveBullet();
                 break;
             
             
@@ -144,16 +149,24 @@ public class Bullet : MonoBehaviour
                 break;
         }
 
-        if (_pierceCount > 0 && other.CompareTag("Enemy"))
-        {
-            _pierceCount--;
-        
-            other.GetComponent<EnemyStateManager>().TakeDamage(damage, other, knockUpValue);
+        if (other.CompareTag("Enemy"))
+        { 
+            Debug.Log("bonsoir");
+                     other.GetComponent<EnemyStateManager>().TakeDamage(damage, rb.position, knockUpValue, true);
+            if (_pierceCount > 0)
+            {
+                     _pierceCount--;
+            }
+            else
+            {
+                DesactiveBullet();
+            }
+          
         }
 
         else if (!other.CompareTag("Walls"))
         {
-            other.GetComponent<EnemyStateManager>().TakeDamage(damage, other, knockUpValue);
+            Debug.Log("test");
             DesactiveBullet();
         }
   
@@ -161,8 +174,9 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-       
-        if (_bounceCount > 0)
+        
+        
+        if (_bounceCount > 0 && other.gameObject.CompareTag("Walls"))
         {Debug.Log(_bounceCount);
            
             _bounceCount--;
@@ -179,14 +193,14 @@ public class Bullet : MonoBehaviour
         }
         else
         {
-           
+         
             DesactiveBullet();
         }
     }
 
     void Explosion()
     {
-        Debug.Log("explosion");
+        
         PoolManager.Instance.SpawnExplosionPool(transform);
     }
 
@@ -220,5 +234,12 @@ public class Bullet : MonoBehaviour
                     isDesactive = true;
         }
         
+    }
+    
+    
+    IEnumerator Reset()
+    {
+        yield return new WaitForEndOfFrame();
+        isColliding = false;
     }
 }

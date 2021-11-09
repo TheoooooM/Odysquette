@@ -10,28 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da6f6442f0a418540bfe9bb95188f7c9, type: 3}
-  m_Name: TestStateShootBasic
+  m_Name: TPTestStateShootBasic
   m_EditorClassIdentifier: 
-  isKnockUpInState: 1
+  isKnockUpInState: 0
   objectInStateManagers: 000000000500000006000000020000000100000008000000
-  startTime: 0
+  startTime: 1
   playStateTime: 0
   isFixedUpdate: 1
-  haveStartState: 0
+  haveStartState: 1
   duringDefaultState: 0
   rangeForShoot: 15
-  rangeForBullet: 15
+  rangeForBullet: 4
   damage: 1
-  speedBullet: 138.32
-  dragRB: 0
-  hasRange: 0
+  speedBullet: 265.2
+  dragRB: 1.1
+  hasRange: 1
   enemyTypeShoot: 0
   isDelayBetweenShoot: 0
-  isDelayBetweenWaveShoot: 0
+  isDelayBetweenWaveShoot: 1
   delayBetweenShoot: 0
-  delayBetweenWaveShoot: 0
+  delayBetweenWaveShoot: 0.5
   basePosition: []
-  numberWaveShoot: 1
+  numberWaveShoot: 2
   isAimPlayer: 1
   layerMaskRay:
     serializedVersion: 2
@@ -45,3 +45,7 @@ MonoBehaviour:
   extentsRangeDetection: {x: 1, y: 1, z: 0}
   directions:
   - 0
+  - 20
+  - 40
+  - 320
+  - 340

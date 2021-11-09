@@ -35,8 +35,15 @@ public class StateShootSO : StateEnemySO
     public bool isAimPlayer;
 
     public LayerMask layerMaskRay; 
+    public Rect rectExtents;
+    public Vector3 extentsRangeDetection;
+    private void OnValidate()
+    {
+        extentsRangeDetection = new Vector3(rectExtents.width, rectExtents.height);
+    }
     public virtual IEnumerator ShootDelay(GameObject prefabBullet, Transform parentBulletTF, Transform transformPlayer)
     {
+      
         yield return null;
     }
 
@@ -47,10 +54,14 @@ public class StateShootSO : StateEnemySO
         if (Vector2.Distance(rbPlayer.position, rbEnemy.position) <= rangeForShoot)
         {
             
-           Vector2 direction = (rbPlayer.position - rbEnemy.position).normalized;
+         
            
-           RaycastHit2D hit = Physics2D.Raycast(rbEnemy.position, direction, rangeForShoot, layerMaskRay );
-          
+           Vector2 direction = (rbPlayer.position - rbEnemy.position);
+           
+           RaycastHit2D hit = Physics2D.BoxCast(rbEnemy.position, extentsRangeDetection, 0,
+               direction.normalized, direction.magnitude, layerMaskRay);
+           Debug.Log(hit.collider.gameObject.name);
+          ExtDebug.DrawBoxCastBox(rbEnemy.position, extentsRangeDetection/2, Quaternion.identity, direction.normalized, direction.magnitude, Color.red);
            if(hit.collider.gameObject.layer == 9 )
            {
                return true;

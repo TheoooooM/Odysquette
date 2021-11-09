@@ -257,7 +257,10 @@ SceneView.duringSceneGui -= OnPosVectorGizmos;
                        GUILayout.Label("Other Stats", myStyle);
                        EditorGUILayout.Space(2f);
                        EditorGUILayout.PropertyField(serializedObject.FindProperty("dragRB"),
-                           new GUIContent("Drag")); EditorGUILayout.Space(2f);
+                           new GUIContent("Drag"));
+                       EditorGUILayout.Space(2f);
+                       EditorGUILayout.PropertyField(serializedObject.FindProperty("knockUp"));
+                       EditorGUILayout.Space(2f);
                    }
 
                   

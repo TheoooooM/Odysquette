@@ -10,8 +10,31 @@ public class Playercontroller : MonoBehaviour
     public GameObject gun;
     private Rigidbody2D rb;
     private Aled playerInput;
-    [SerializeField] private String CurrentController; 
+    [SerializeField] private String CurrentController;
+    private CapsuleCollider2D capsuleCollider2D;
+    private bool isInWind;
+    Vector2 windDirection;
+    private float windSpeed;
+    private Vector2 moveVector;
+    
+    [SerializeField]
+    private AnimationCurve dashSpeedCurve;
+    [SerializeField]
+    private float maxDashSpeed;
+    [SerializeField]
+    private float timeDash;
+    [SerializeField]
+    private float timeBetweenDash;
+[SerializeField]
+    private Vector2 dashDirection;
+    [SerializeField]
+    private float timerDash;
+    [SerializeField]
+    private float timerBetweenDash;
 
+    public bool InDash;
+    [SerializeField]
+    private bool TryDash;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -25,6 +48,20 @@ public class Playercontroller : MonoBehaviour
         playerInput.Player.ShootGamepad.canceled += ShootGamepadOncanceled;
         playerInput.Player.SpecialShoot.performed += SpecialShootOnperformed;
         playerInput.Player.SpecialShootGamepad.performed += SpecialShootGamepadOnperformed;
+        playerInput.Player.Dash.performed += DashOnperformed;
+        playerInput.Player.DashGamepad.performed += DashGamepadOnperformed;
+        playerInput.Player.Dash.canceled += DashCanceled;
+        playerInput.Player.DashGamepad.canceled += DashCanceledGamepad;
+    }
+
+    private void DashCanceled(InputAction.CallbackContext obj)
+    {
+        TryDash = false;
+    }
+
+    private void DashCanceledGamepad(InputAction.CallbackContext obj)
+    {
+        TryDash = false;
     }
 
     private void SpecialShootGamepadOnperformed(InputAction.CallbackContext obj)
@@ -36,21 +73,32 @@ public class Playercontroller : MonoBehaviour
     {
         GameManager.Instance.utlimate = true;
     }
+    private void DashOnperformed(InputAction.CallbackContext obj)
+    {
+        TryDash = true;
+    }
+    private void DashGamepadOnperformed(InputAction.CallbackContext obj)
+    {
+        TryDash = true;
+    }
 
 
     private void ShootGamepadOnperformed(InputAction.CallbackContext obj)
     {
         GameManager.Instance.isMouse = false;
+        if(!InDash)
         GameManager.Instance.shooting = true;
     }
     private void ShootGamepadOncanceled(InputAction.CallbackContext obj)
     {
+        
         GameManager.Instance.shooting = false;
     }
 
     
     private void ShootOnperformed(InputAction.CallbackContext obj)
     {
+        if(!InDash)
         GameManager.Instance.shooting = true;
         GameManager.Instance.isMouse = true;
     }
@@ -60,27 +108,76 @@ public class Playercontroller : MonoBehaviour
         GameManager.Instance.shooting = false;
     }
 
+    private void Update()
+    {
+        if (InDash)
+        {
+            timerDash += Time.deltaTime;
+        }
+if(timerBetweenDash<= timeBetweenDash)
+{
+    timerBetweenDash += Time.deltaTime;
+}
+    }
 
     void FixedUpdate()
     {
+        moveVector = Vector2.zero;
         if (playerInput.Player.Movement.ReadValue<Vector2>() != Vector2.zero)
         {
-            Vector2 moveVector = playerInput.Player.Movement.ReadValue<Vector2>();
-            rb.velocity = (moveVector*MouvementSpeed);
+          moveVector = playerInput.Player.Movement.ReadValue<Vector2>();
+          if (!InDash&& TryDash && timerBetweenDash >= timeBetweenDash)
+          {
+              InDash = true;
+              timerBetweenDash = 0;
+              dashDirection = moveVector.normalized;
+              rb.velocity = Vector2.zero;
+          }
+           
             GameManager.Instance.isMouse = true;
 
         }
         else if(playerInput.Player.MovementGamepad.ReadValue<Vector2>() != Vector2.zero)
         {
-            Vector2 moveVector = playerInput.Player.MovementGamepad.ReadValue<Vector2>();
-            rb.velocity = (moveVector*MouvementSpeed);
+          moveVector = playerInput.Player.MovementGamepad.ReadValue<Vector2>();
+          if (!InDash&& TryDash && timerBetweenDash >= timeBetweenDash)
+          {
+              InDash = true;
+              timerBetweenDash = 0;
+              dashDirection = moveVector.normalized;
+              rb.velocity = Vector2.zero;
+          }
             GameManager.Instance.isMouse = false;
         }
-        else
+
+        if (!InDash)
         {
-            rb.velocity = Vector2.zero;
+               if (isInWind)
+                        rb.velocity = (moveVector * MouvementSpeed + windDirection * windSpeed);
+                       else
+                    
+                   rb.velocity = (moveVector*MouvementSpeed);
+        }
+        else if(timerDash<= timeDash)
+        {
+           float factorTime = timerDash / timeDash;
+            rb.velocity = dashDirection * dashSpeedCurve.Evaluate(factorTime) * maxDashSpeed;
+        }
+        else if (timerDash > timeDash)
+        {
+            InDash = false;
+            timerDash = 0;
+            dashDirection = Vector2.zero;
         }
 
+    
+        
+    
+             
+        
+    
+  
+       
         if (!GameManager.Instance.isMouse)
         {
             GameManager.Instance.ViewPad = playerInput.Player.ViewPad.ReadValue<Vector2>();
@@ -113,5 +210,22 @@ public class Playercontroller : MonoBehaviour
         }*/
 
         #endregion
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Wind"))
+        {
+            StateWind stateWind = other.GetComponent<WindParticleManager>().StateWind;
+            windDirection = stateWind.direction;
+            windSpeed = stateWind.speedWind;
+            isInWind = true;
+        }
+    }
+
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        isInWind = false;
     }
 }

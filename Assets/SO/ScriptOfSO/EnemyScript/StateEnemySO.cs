@@ -7,15 +7,14 @@ using Object = UnityEngine.Object;
 
 public class StateEnemySO : ScriptableObject
 {
-    
- 
+    public bool isKnockUpInState =true;
     public List<ExtensionMethods.ObjectInStateManager> objectInStateManagers = new List<ExtensionMethods.ObjectInStateManager>();
     public float startTime;
     public float playStateTime;
     public bool isFixedUpdate;
     public bool haveStartState;
     private float timeForTimerState;
-    public bool isKnockUp;
+    public bool duringDefaultState;
     public virtual bool CheckCondition (Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary)
     {
         return true;

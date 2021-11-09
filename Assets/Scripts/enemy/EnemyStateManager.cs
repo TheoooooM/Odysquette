@@ -8,18 +8,25 @@ using Object = UnityEngine.Object;
 
 public class EnemyStateManager : MonoBehaviour
 {
+    public EMainStatsSO EMainStatsSo;
     // Variable for Set Value and Object in States
- 
+    public Vector2 forceApply;
     public List<BaseObject> baseObjectList = new List<BaseObject>();
     private Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary =
-        new Dictionary<ExtensionMethods.ObjectInStateManager, Object>(); 
-    
+        new Dictionary<ExtensionMethods.ObjectInStateManager, Object>();
+    public bool isInWind;
+   public Vector2 windDirection;
+    public float windSpeed;
+    public float health;
+    public bool isDragKnockUp;
+   
+     
     //Main Stat
     [SerializeField] private Transform playerTransform;
-    
-    public float  health;
-[SerializeField]
-    private bool isKnockup;
+    private bool knockUpInState = true;
+ 
+
+   
     public Vector3 spawnPosition;
     //State and Stat Condition
     public List<StateEnemySO> stateEnnemList = new List<StateEnemySO>();
@@ -39,6 +46,7 @@ public class EnemyStateManager : MonoBehaviour
     //Timer
     public List<float> timeCondition = new List<float>();
     public List<float> timerCondition = new List<float>();
+    [SerializeField]
     private float timerCurrentStartState;
     private float timerCurrentState;
     private Rigidbody2D rb;
@@ -48,6 +56,7 @@ public class EnemyStateManager : MonoBehaviour
     {
         spawnPosition = transform.position;
         rb = GetComponent<Rigidbody2D>();
+        health = EMainStatsSo.maxHealth;
     }
 
     private void Update()
@@ -93,6 +102,7 @@ public class EnemyStateManager : MonoBehaviour
                                 
                                 if (stateEnnemList[i].haveStartState)
                                 {
+                                    
                                     CurrentUpdateState += stateEnnemList[i].StartState;
                                     IsCurrentStartPlayed = true;
                                     IsFirstStartPlayed = true;
@@ -118,6 +128,8 @@ public class EnemyStateManager : MonoBehaviour
                                 }
 
                             }
+
+                            knockUpInState = stateEnnemList[i].isKnockUpInState;
                             indexCurrentState = i;
                         }
                         else
@@ -138,8 +150,12 @@ public class EnemyStateManager : MonoBehaviour
                     timerCondition[i] += Time.deltaTime;
                     timerCondition[i] = Mathf.Min(timerCondition[i],timeCondition[i]);
                 }
-          if(IsCurrentStatePlayed && stateEnnemList[indexCurrentState].startTime != 0 ) timerCurrentState += Time.deltaTime;
-          if(IsCurrentStartPlayed && stateEnnemList[indexCurrentState].playStateTime != 0) timerCurrentStartState += Time.deltaTime;
+          if(IsCurrentStatePlayed && stateEnnemList[indexCurrentState].playStateTime != 0 ) timerCurrentState += Time.deltaTime;
+          if (IsCurrentStartPlayed && stateEnnemList[indexCurrentState].startTime != 0)
+          {
+          
+              timerCurrentStartState += Time.deltaTime;
+          }
    
 
         #endregion
@@ -150,16 +166,43 @@ public class EnemyStateManager : MonoBehaviour
   
 
     private void FixedUpdate()
-    {     
+    {
+        
+      
        ApplyState();
 
-       if (!IsCurrentStatePlayed && !IsCurrentStartPlayed)
+       if (defaultState != null)
        {
-           UpdateDictionaries(defaultState);
-           defaultState.PlayState( objectDictionary, out bool endStep);
-           objectDictionary.Clear();
-       
+             if ((! IsCurrentStartPlayed && !IsCurrentStatePlayed )|| ((IsCurrentStartPlayed || IsCurrentStatePlayed) && stateEnnemList[indexCurrentState].duringDefaultState ))
+                  {
+           
+                      UpdateDictionaries(defaultState);
+                      defaultState.PlayState( objectDictionary, out bool endStep);
+                      knockUpInState = defaultState.isKnockUpInState;
+                      objectDictionary.Clear();
+                  
+                  }
        }
+     
+
+
+       if (EMainStatsSo.isKnockUp)
+       {
+           if (isDragKnockUp)
+           {
+               rb.drag =EMainStatsSo.dragforKnockUp;
+         
+               
+                       if (rb.velocity.magnitude <= 0.1f)
+                                                     {
+                                                           isDragKnockUp = false;
+                                                           rb.drag = 0;
+                                                     }
+                       
+               
+           }
+       }
+    
     }
 
     bool CheckTimer(float timer, float time)
@@ -183,7 +226,7 @@ public class EnemyStateManager : MonoBehaviour
                 if (stateEnnemList[indexCurrentState].isFixedUpdate)
                 {
                       CurrentFixedState( objectDictionary,out bool endStep); _endstep = endStep;
-                      //Debug.Log(_endstep);
+                  
                 }
                   
                 else 
@@ -208,7 +251,7 @@ public class EnemyStateManager : MonoBehaviour
                 
                 if (CheckTimer(timerCurrentStartState, stateEnnemList[indexCurrentState].startTime))
                 {  objectDictionary.Clear();
-                   
+             
                     UpdateDictionaries(stateEnnemList[indexCurrentState]);
                     if (stateEnnemList[indexCurrentState].isFixedUpdate) 
                         CurrentFixedState += stateEnnemList[indexCurrentState].PlayState;
@@ -226,6 +269,7 @@ public class EnemyStateManager : MonoBehaviour
 
             else if (IsCurrentStatePlayed)
             {
+               
                 check = stateEnnemList[indexCurrentState].playStateTime == 0
                     ? _endstep
                     : CheckTimer(timerCurrentState, stateEnnemList[indexCurrentState].playStateTime);
@@ -240,14 +284,14 @@ public class EnemyStateManager : MonoBehaviour
 
                     else 
                         CurrentUpdateState -= stateEnnemList[indexCurrentState].PlayState;
-                    if (timerCondition[indexCurrentState] != null)
-                    {
-                        timerCondition[indexCurrentState] = 0;
-                    }
+                    if (timerCondition[indexCurrentState] != 0)
+                                         {
+                                             timerCondition[indexCurrentState] = 0;
+                                         }
 
                 
                     objectDictionary.Clear();
-                  Debug.Log("aa");
+                
                     timerCurrentState = 0;
                     timerCondition[indexCurrentState] = 0;
                     indexCurrentState = 0;
@@ -288,10 +332,19 @@ public class EnemyStateManager : MonoBehaviour
 
   public void OnDeath()
   {
-      Destroy(gameObject);
+      try
+      {
+          Destroy(gameObject.transform.parent.gameObject);
+      }
+      catch (Exception e)
+      {
+          Destroy(gameObject);
+      }
+  
+      
   }
 
-  public void TakeDamage(float damage, Collider2D other, float knockUpValue)
+  public void TakeDamage(float damage, Vector2 position, float knockUpValue, bool knockup)
   {
       if (health - damage <= 0)
       {
@@ -299,24 +352,57 @@ public class EnemyStateManager : MonoBehaviour
       }
       else
       {
-          Knockup( other, knockUpValue);
+          Knockup( position, knockUpValue, knockup);
           health -= damage;
       }
   }
 
-      void Knockup(Collider2D other, float knockUpValue)
+      void Knockup(Vector2 position, float knockUpValue, bool knockUp)
       {
-          if (isKnockup)
+          if (!knockUp)
           {
-              Vector2 direction;
-              direction = (rb.position - other.attachedRigidbody.position).normalized;
-              rb.velocity +=(Mathf.Pow(rb.mass, 2))/2 *(direction*knockUpValue);
+              return;
+          }
+          if (EMainStatsSo.isKnockUp && !isDragKnockUp && knockUpInState && defaultState != null)
+          {
+           
+              Vector2 direction =new Vector2();
+        
+              direction = (rb.position- position).normalized;
+            
+            rb.velocity  +=  direction*knockUpValue;
+
+            
+             isDragKnockUp = true;
+
           }
       }
 
-      private void OnCollisionEnter2D(Collision2D other)
+      private void OnTriggerEnter2D(Collider2D other)
       {
           if(other.gameObject.CompareTag("Player"))
           HealthPlayer.Instance.TakeDamagePlayer(1);
+          if (other.CompareTag("Wind"))
+          {
+                StateWind stateWind = other.GetComponent<WindParticleManager>().StateWind;
+                                       windDirection = stateWind.direction;
+                                       windSpeed = stateWind.speedWind;
+          }
+
+      }
+
+      private void OnTriggerStay2D(Collider2D other)
+      {
+                   if (other.CompareTag("Wind"))
+                    {
+                       
+                        isInWind = true;
+                    }
+      }
+
+
+      private void OnTriggerExit2D(Collider2D other)
+      {
+          isInWind = false;
       }
 }
