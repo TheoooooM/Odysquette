@@ -39,6 +39,7 @@ public class EnemyStateManager : MonoBehaviour
     bool check;
     public bool IsCurrentStartPlayed;
     public bool IsCurrentStatePlayed;
+    [SerializeField]
     private bool IsFirstStartPlayed;
     
     //Delegate
@@ -70,7 +71,6 @@ public class EnemyStateManager : MonoBehaviour
                                 {
                                     for (int j = 0; j < baseObjectListCondition.Count; j++)
                                     {
-                                                                       
                                         if (baseObjectListCondition[j].objectInStateManager == objectInStateManager)
                                         {
                                                                              
@@ -84,7 +84,7 @@ public class EnemyStateManager : MonoBehaviour
             }
             }
 
-     Debug.Log(objectDictionaryCondition.ContainsKey(ExtensionMethods.ObjectInStateManager.RigidBodyEnemy));   
+ 
         UpdateDictionaries(defaultState);
            
     }
@@ -92,7 +92,7 @@ public class EnemyStateManager : MonoBehaviour
     private void Update()
     {
         #region CheckStates
-  if (!IsCurrentStatePlayed && !IsCurrentStartPlayed)
+  if (!IsCurrentStatePlayed && !IsCurrentStartPlayed && stateEnnemList.Count != 0)
         {
                 for (int i = 0; i < stateEnnemList.Count; i++)
                     {
@@ -103,7 +103,7 @@ public class EnemyStateManager : MonoBehaviour
                                                     {
                                                         if (healthCondition[i] > health)
                                                         {
-                                                            Debug.Log(i);
+                                                           
                                                             continue;
                                                         }
                                                     }
@@ -137,6 +137,7 @@ public class EnemyStateManager : MonoBehaviour
                                     IsCurrentStartPlayed = true;
                                     if(stateEnnemList[i].oneStartState)
                                     IsFirstStartPlayed = true;
+                                    Debug.Log(IsCurrentStartPlayed);
                                 }
                                 else
                                 {
@@ -152,6 +153,7 @@ public class EnemyStateManager : MonoBehaviour
                                     IsCurrentStartPlayed = true;
                                     if(stateEnnemList[i].oneStartState)
                                     IsFirstStartPlayed = true;
+                                    Debug.Log(IsCurrentStartPlayed);
                                 }
                                 else
                                 {
@@ -279,10 +281,11 @@ public class EnemyStateManager : MonoBehaviour
                 if (IsFirstStartPlayed)
                               {
                                     if (stateEnnemList[indexCurrentState].isFixedUpdate) 
-                                                      CurrentFixedState -= stateEnnemList[indexCurrentState].StartState;
-                                                  else 
-                                                      CurrentUpdateState -= stateEnnemList[indexCurrentState].StartState;
+                                        CurrentFixedState -= stateEnnemList[indexCurrentState].StartState;
+                                    else 
+                                        CurrentUpdateState -= stateEnnemList[indexCurrentState].StartState;
                                     IsFirstStartPlayed = false;
+                                    ;
                               }
               
                 
@@ -333,7 +336,7 @@ public class EnemyStateManager : MonoBehaviour
                                          {
                                              timerCondition[indexCurrentState] = 0;
                                          }
-Debug.Log("mjldsqflmkj");
+
                 
                     objectDictionaryState.Clear();
                     if(defaultState != null)

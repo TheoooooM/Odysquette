@@ -9,11 +9,20 @@ public class StateShootBasic : StateShootSO
     [NamedArray("float", true)]
     public float[] directions = Array.Empty<float>();
 
+    
     public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
     {
+        Transform transformPlayer = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformPlayer];
+        Transform parentBulletTF =
+            (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformShoot];
         Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
         enemyTransform.GetComponent<SpriteRenderer>().color = Color.magenta;
-        base.StartState(objectDictionary, out endStep);
+        Vector3 direction =  (transformPlayer.position-enemyTransform.position).normalized;
+        parentBulletTF.transform.position = enemyTransform.position + direction * offSetDistance;
+       
+   
+        
+        endStep = false;
     }
 
     public override void PlayState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)

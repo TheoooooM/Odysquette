@@ -900,8 +900,8 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: 0, y: -2, z: 0}
-    m_Rotation: {x: 0, y: 0, z: 0}
+    m_Position: {x: 3.17, y: -0.59, z: 0}
+    m_Rotation: {x: 0, y: 0, z: 210}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 2
     m_MeshMaterialIndex: 0
@@ -4998,9 +4998,9 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 2.5, y: -2.16}
-      - {x: 0.02, y: 2.18}
-      - {x: -2.61, y: -2.25}
+    - - {x: 4.27, y: 4.51}
+      - {x: 0, y: 2}
+      - {x: 4.32, y: -0.53}
 --- !u!1 &138010070
 GameObject:
   m_ObjectHideFlags: 0
@@ -5245,7 +5245,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.2166, y: 1.2475, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 286185089}
   m_Father: {fileID: 1336783326}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5291,18 +5292,20 @@ MonoBehaviour:
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
   - objectInStateManager: 1
-    _object: {fileID: 0}
+    _object: {fileID: 191158723}
   - objectInStateManager: 2
-    _object: {fileID: 0}
+    _object: {fileID: 541801659}
+  - objectInStateManager: 7
+    _object: {fileID: 321477207}
   baseObjectListState:
   - objectInStateManager: 7
-    _object: {fileID: 0}
+    _object: {fileID: 321477207}
   - objectInStateManager: 4
-    _object: {fileID: 0}
+    _object: {fileID: 191158724}
   - objectInStateManager: 2
-    _object: {fileID: 0}
+    _object: {fileID: 541801659}
   - objectInStateManager: 1
-    _object: {fileID: 0}
+    _object: {fileID: 191158723}
   isInWind: 0
   windDirection: {x: 0, y: 0}
   windSpeed: 0
@@ -5317,6 +5320,7 @@ MonoBehaviour:
   healthCondition: 
   IsCurrentStartPlayed: 0
   IsCurrentStatePlayed: 0
+  IsFirstStartPlayed: 0
   timeCondition:
   - 3
   timerCondition:
@@ -5556,12 +5560,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 286185088}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.82196283, y: 0.80160326, z: 1}
   m_Children: []
-  m_Father: {fileID: 1336783326}
-  m_RootOrder: 2
+  m_Father: {fileID: 191158719}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &286185090
 BoxCollider2D:
@@ -6162,6 +6166,7 @@ Transform:
   m_LocalScale: {x: 1.2166, y: 1.2475, z: 1}
   m_Children:
   - {fileID: 1428449395}
+  - {fileID: 1210898646}
   m_Father: {fileID: 703188292}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6271,20 +6276,22 @@ MonoBehaviour:
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
   - objectInStateManager: 1
-    _object: {fileID: 0}
+    _object: {fileID: 591330581}
   - objectInStateManager: 2
-    _object: {fileID: 0}
+    _object: {fileID: 541801659}
   baseObjectListState:
   - objectInStateManager: 10
-    _object: {fileID: 0}
+    _object: {fileID: 1822139297}
   - objectInStateManager: 11
-    _object: {fileID: 0}
+    _object: {fileID: 1712156580}
   - objectInStateManager: 8
-    _object: {fileID: 0}
+    _object: {fileID: 591330577}
   - objectInStateManager: 6
-    _object: {fileID: 0}
+    _object: {fileID: 591330582}
   - objectInStateManager: 5
-    _object: {fileID: 0}
+    _object: {fileID: 1428449395}
+  - objectInStateManager: 0
+    _object: {fileID: 541801657}
   isInWind: 0
   windDirection: {x: 0, y: 0}
   windSpeed: 0
@@ -6300,9 +6307,10 @@ MonoBehaviour:
   healthCondition: 
   IsCurrentStartPlayed: 0
   IsCurrentStatePlayed: 0
+  IsFirstStartPlayed: 0
   timeCondition:
   - 7
-  - 2
+  - 3.5
   timerCondition:
   - 0
   - 0
@@ -6383,11 +6391,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 612227290}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.10685605, y: -0.016032431, z: 0}
+  m_LocalScale: {x: 0.82196283, y: 0.80160326, z: 1}
   m_Children: []
-  m_Father: {fileID: 1355884572}
-  m_RootOrder: 2
+  m_Father: {fileID: 1376733632}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &612227292
 BoxCollider2D:
@@ -6446,7 +6454,6 @@ Transform:
   - {fileID: 1712156580}
   - {fileID: 591330577}
   - {fileID: 1106121712}
-  - {fileID: 1210898646}
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6616,7 +6623,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 879582066}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -6836,8 +6843,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.5900002, y: 0.020000458, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1458360461}
+  m_Children: []
   m_Father: {fileID: 1355884572}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12521,11 +12527,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1210898645}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.2737846, y: -3.9530144, z: 3.6735082}
-  m_LocalScale: {x: 1.2166, y: 1.2475, z: 1}
+  m_LocalPosition: {x: 0.02, y: -0.05, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 703188292}
-  m_RootOrder: 4
+  m_Father: {fileID: 591330577}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1210898647
 BoxCollider2D:
@@ -12834,7 +12840,6 @@ Transform:
   m_Children:
   - {fileID: 321477207}
   - {fileID: 191158719}
-  - {fileID: 286185089}
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12862,12 +12867,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1355884571}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -49.4, y: 24.95, z: 0}
+  m_LocalPosition: {x: -49.4, y: 21.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 970588923}
+  - {fileID: 1458360461}
   - {fileID: 1376733632}
-  - {fileID: 612227291}
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13142,7 +13147,7 @@ MonoBehaviour:
   baseObjectListCondition: []
   baseObjectListState:
   - objectInStateManager: 9
-    _object: {fileID: 0}
+    _object: {fileID: 970588924}
   isInWind: 0
   windDirection: {x: 0, y: 0}
   windSpeed: 0
@@ -13156,6 +13161,7 @@ MonoBehaviour:
   healthCondition: 
   IsCurrentStartPlayed: 0
   IsCurrentStatePlayed: 0
+  IsFirstStartPlayed: 0
   timeCondition: []
   timerCondition: []
   timerCurrentStartState: 0
@@ -13220,9 +13226,10 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.13000107, y: 0.020000458, z: 0}
   m_LocalScale: {x: 1.2166, y: 1.2475, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 612227291}
   m_Father: {fileID: 1355884572}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1428449394
 GameObject:
@@ -13278,12 +13285,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1458360460}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.884, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.473999, y: 0.020000458, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 970588923}
-  m_RootOrder: 0
+  m_Father: {fileID: 1355884572}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1458360462
 BoxCollider2D:
@@ -13486,7 +13493,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1598660058
 Transform:
   m_ObjectHideFlags: 0
@@ -14019,7 +14026,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!61 &1886626979
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14126,16 +14133,24 @@ MonoBehaviour:
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
   - objectInStateManager: 1
-    _object: {fileID: 0}
+    _object: {fileID: 1886626982}
   - objectInStateManager: 2
-    _object: {fileID: 0}
+    _object: {fileID: 541801659}
   baseObjectListState:
   - objectInStateManager: 1
-    _object: {fileID: 0}
+    _object: {fileID: 1886626982}
   - objectInStateManager: 5
-    _object: {fileID: 0}
+    _object: {fileID: 879582067}
   - objectInStateManager: 6
-    _object: {fileID: 0}
+    _object: {fileID: 1886626983}
+  - objectInStateManager: 8
+    _object: {fileID: 1886626985}
+  - objectInStateManager: 0
+    _object: {fileID: 541801657}
+  - objectInStateManager: 4
+    _object: {fileID: 1886626981}
+  - objectInStateManager: 2
+    _object: {fileID: 541801659}
   isInWind: 0
   windDirection: {x: 0, y: 0}
   windSpeed: 0
@@ -14150,6 +14165,7 @@ MonoBehaviour:
   healthCondition: 
   IsCurrentStartPlayed: 0
   IsCurrentStatePlayed: 0
+  IsFirstStartPlayed: 0
   timeCondition:
   - 3
   timerCondition:
@@ -14833,6 +14849,7 @@ MonoBehaviour:
   healthCondition: 
   IsCurrentStartPlayed: 0
   IsCurrentStatePlayed: 0
+  IsFirstStartPlayed: 0
   timeCondition:
   - 6
   timerCondition:
@@ -15124,6 +15141,14 @@ PrefabInstance:
     - target: {fileID: 6254517144727061817, guid: 999ccc69983d56f4c978fd73c60cd5b3, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6254517144727061817, guid: 999ccc69983d56f4c978fd73c60cd5b3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6254517144727061817, guid: 999ccc69983d56f4c978fd73c60cd5b3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6254517144727061817, guid: 999ccc69983d56f4c978fd73c60cd5b3, type: 3}
       propertyPath: m_LocalPosition.x

@@ -33,7 +33,7 @@ public class StateShootSO : StateEnemySO
     public int numberWaveShoot = 1;
 
     public bool isAimPlayer;
-
+    public float offSetDistance;
     public LayerMask layerMaskRay; 
     public Rect rectExtents;
     public Vector3 extentsRangeDetection;

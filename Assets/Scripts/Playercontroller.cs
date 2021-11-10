@@ -124,7 +124,7 @@ public class Playercontroller : MonoBehaviour
             else
             {
                 timerInEffectFlash = 0;
-                isInEffectFlash = true;
+                isInEffectFlash = false;
                 MouvementSpeed = defaultSpeed;
             }
         }
@@ -230,7 +230,7 @@ if(timerBetweenDash<= timeBetweenDash)
 
         if (other.CompareTag("Flash"))
         {
-            isInFlash = false;
+            isInFlash = true;
         }
     }
 

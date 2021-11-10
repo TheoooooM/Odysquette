@@ -34,13 +34,14 @@ public class StateDash : StateEnemySO
                    Vector2 direction = (rbPlayer.position - rb.position);
                    RaycastHit2D hit = Physics2D.BoxCast(rb.position, extentsRangeDetection, 0,
                        direction.normalized, direction.magnitude);
+               
                    if(hit.collider.gameObject.layer == 9 )
                          {
-                                  
+                                    Debug.Log("suis je la");   
                              Transform target = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.AimDash];
                              target.position  = rbPlayer.position; 
                              target.gameObject.SetActive(true);
-                                               
+                                          
                                                 
                              Debug.DrawRay(rb.position, direction*rangeDetection);
                              return true;

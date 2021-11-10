@@ -12,6 +12,7 @@ public class StateFlash : StateEnemySO
     public float timeEffectFlash;
     public float lowSpeed;
     public float offSetDistance;
+   
     private void OnValidate()
     {
         extentsRangeDetection = new Vector3(rectExtents.width, rectExtents.height);
@@ -45,12 +46,12 @@ public class StateFlash : StateEnemySO
         Vector3 direction =  (transformPlayer.position-transformEnemy.position).normalized;
   
         flashObject.transform.position = transformEnemy.position + direction * offSetDistance;
-        float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
-    
-        flashObject.transform.rotation = Quaternion.Euler(0,0,angle);
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+   
+       flashObject.transform.rotation = Quaternion.Euler(0,0,angle);
         flashObject.SetActive(true);
      
-        endStep = false;
+        endStep = true;
     }
 
     public override void PlayState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
