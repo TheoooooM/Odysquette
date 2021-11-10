@@ -18,7 +18,9 @@ public static class ExtensionMethods
 
    public enum ObjectInStateManager
    {
-       TransformPlayer, RigidBodyEnemy, RigidBodyPlayer, Spawner, EnemyMovement, TransformShoot, EnemyStateManager, AimDash, TransformEnemy, WindParticleManager, FirstTransmitter, SecondTransmitter
+       TransformPlayer, RigidBodyEnemy, RigidBodyPlayer,
+       Spawner, EnemyMovement, TransformShoot, EnemyStateManager, AimDash, TransformEnemy, WindParticleManager,
+       FirstTransmitter, SecondTransmitter, FlashObject, PlayerController
    }
 
    public enum EnemyTypeShoot

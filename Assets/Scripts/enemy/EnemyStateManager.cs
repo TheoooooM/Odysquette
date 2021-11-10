@@ -11,8 +11,11 @@ public class EnemyStateManager : MonoBehaviour
     public EMainStatsSO EMainStatsSo;
     // Variable for Set Value and Object in States
     public Vector2 forceApply;
-    public List<BaseObject> baseObjectList = new List<BaseObject>();
-    private Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary =
+    public List<BaseObject> baseObjectListCondition = new List<BaseObject>();
+    public List<BaseObject> baseObjectListState = new List<BaseObject>();
+    private Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionaryCondition =
+        new Dictionary<ExtensionMethods.ObjectInStateManager, Object>();
+    private Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionaryState =
         new Dictionary<ExtensionMethods.ObjectInStateManager, Object>();
     public bool isInWind;
    public Vector2 windDirection;
@@ -30,7 +33,7 @@ public class EnemyStateManager : MonoBehaviour
     public Vector3 spawnPosition;
     //State and Stat Condition
     public List<StateEnemySO> stateEnnemList = new List<StateEnemySO>();
-    private int indexCurrentState;
+    public int indexCurrentState;
    public StateEnemySO defaultState;
     public List<int> healthCondition = new List<int>();
     bool check;
@@ -57,6 +60,33 @@ public class EnemyStateManager : MonoBehaviour
         spawnPosition = transform.position;
         rb = GetComponent<Rigidbody2D>();
         health = EMainStatsSo.maxHealth;
+        
+        for (int i = 0; i < stateEnnemList.Count; i++)
+        {
+            if (stateEnnemList[i].objectInStateManagersCondition.Count > 0)
+            {
+                 foreach (ExtensionMethods.ObjectInStateManager objectInStateManager in stateEnnemList[i].objectInStateManagersCondition)
+                            {  if (!objectDictionaryCondition.ContainsKey(objectInStateManager))
+                                {
+                                    for (int j = 0; j < baseObjectListCondition.Count; j++)
+                                    {
+                                                                       
+                                        if (baseObjectListCondition[j].objectInStateManager == objectInStateManager)
+                                        {
+                                                                             
+                                            objectDictionaryCondition.Add(objectInStateManager, baseObjectListCondition[j]._object ); 
+                                        }
+                                    }
+                                }
+                                
+                             
+                            }
+            }
+            }
+
+     Debug.Log(objectDictionaryCondition.ContainsKey(ExtensionMethods.ObjectInStateManager.RigidBodyEnemy));   
+        UpdateDictionaries(defaultState);
+           
     }
 
     private void Update()
@@ -92,8 +122,8 @@ public class EnemyStateManager : MonoBehaviour
                             }
                         }
                        
-                        UpdateDictionaries(stateEnnemList[i]);
-                        if (stateEnnemList[i].CheckCondition(objectDictionary ))
+                   
+                        if (stateEnnemList[i].CheckCondition(objectDictionaryCondition ))
                         {
                            
                            
@@ -105,6 +135,7 @@ public class EnemyStateManager : MonoBehaviour
                                     
                                     CurrentUpdateState += stateEnnemList[i].StartState;
                                     IsCurrentStartPlayed = true;
+                                    if(stateEnnemList[i].oneStartState)
                                     IsFirstStartPlayed = true;
                                 }
                                 else
@@ -119,6 +150,7 @@ public class EnemyStateManager : MonoBehaviour
                                 {
                                     CurrentFixedState += stateEnnemList[i].StartState;
                                     IsCurrentStartPlayed = true;
+                                    if(stateEnnemList[i].oneStartState)
                                     IsFirstStartPlayed = true;
                                 }
                                 else
@@ -128,15 +160,14 @@ public class EnemyStateManager : MonoBehaviour
                                 }
 
                             }
-
+                            objectDictionaryState.Clear();
+                                    ;
+                                  
                             knockUpInState = stateEnnemList[i].isKnockUpInState;
-                            indexCurrentState = i;
+                            indexCurrentState = i; 
+                            UpdateDictionaries(stateEnnemList[indexCurrentState]);
                         }
-                        else
-                        {
-                            objectDictionary.Clear();
-                            
-                        }
+                      
                     }
         }
         
@@ -173,15 +204,22 @@ public class EnemyStateManager : MonoBehaviour
 
        if (defaultState != null)
        {
-             if ((! IsCurrentStartPlayed && !IsCurrentStatePlayed )|| ((IsCurrentStartPlayed || IsCurrentStatePlayed) && stateEnnemList[indexCurrentState].duringDefaultState ))
-                  {
+             if (! IsCurrentStartPlayed && !IsCurrentStatePlayed )
+             {
            
-                      UpdateDictionaries(defaultState);
-                      defaultState.PlayState( objectDictionary, out bool endStep);
+                    
+                      defaultState.PlayState( objectDictionaryState, out bool endStep);
                       knockUpInState = defaultState.isKnockUpInState;
-                      objectDictionary.Clear();
+                   
                   
                   }
+             else if (((IsCurrentStartPlayed || IsCurrentStatePlayed) && stateEnnemList[indexCurrentState].duringDefaultState ))
+
+             {
+                 UpdateDictionaries(defaultState);
+                 defaultState.PlayState( objectDictionaryState, out bool endStep);
+                 knockUpInState = defaultState.isKnockUpInState;
+             }
        }
      
 
@@ -225,13 +263,13 @@ public class EnemyStateManager : MonoBehaviour
                
                 if (stateEnnemList[indexCurrentState].isFixedUpdate)
                 {
-                      CurrentFixedState( objectDictionary,out bool endStep); _endstep = endStep;
+                      CurrentFixedState( objectDictionaryState,out bool endStep); _endstep = endStep;
                   
                 }
                   
                 else 
                 {
-                    CurrentUpdateState( objectDictionary,out bool endStep); _endstep = endStep;
+                    CurrentUpdateState(objectDictionaryState,out bool endStep); _endstep = endStep;
                 }
                
             }
@@ -250,15 +288,22 @@ public class EnemyStateManager : MonoBehaviour
                 
                 
                 if (CheckTimer(timerCurrentStartState, stateEnnemList[indexCurrentState].startTime))
-                {  objectDictionary.Clear();
-             
-                    UpdateDictionaries(stateEnnemList[indexCurrentState]);
-                    if (stateEnnemList[indexCurrentState].isFixedUpdate) 
-                        CurrentFixedState += stateEnnemList[indexCurrentState].PlayState;
-                    
-                  
-                    else 
-                        CurrentUpdateState += stateEnnemList[indexCurrentState].PlayState;
+                {
+
+
+                    if (stateEnnemList[indexCurrentState].isFixedUpdate)
+                    {
+                        if(!stateEnnemList[indexCurrentState].oneStartState)
+                            CurrentFixedState -= stateEnnemList[indexCurrentState].StartState;
+                         CurrentFixedState += stateEnnemList[indexCurrentState].PlayState;
+                    }
+                    else
+                    {
+                        if(!stateEnnemList[indexCurrentState].oneStartState)
+                            CurrentUpdateState -= stateEnnemList[indexCurrentState].StartState;
+                        CurrentUpdateState += stateEnnemList[indexCurrentState].PlayState; 
+                    }
+                       
                     
                   
                     IsCurrentStartPlayed = false;
@@ -288,10 +333,11 @@ public class EnemyStateManager : MonoBehaviour
                                          {
                                              timerCondition[indexCurrentState] = 0;
                                          }
-
+Debug.Log("mjldsqflmkj");
                 
-                    objectDictionary.Clear();
-                
+                    objectDictionaryState.Clear();
+                    if(defaultState != null)
+                    UpdateDictionaries(defaultState);
                     timerCurrentState = 0;
                     timerCondition[indexCurrentState] = 0;
                     indexCurrentState = 0;
@@ -303,17 +349,18 @@ public class EnemyStateManager : MonoBehaviour
     }
 
     void UpdateDictionaries(StateEnemySO stateEnemySo)
+    
     {
-        foreach (ExtensionMethods.ObjectInStateManager objectInStateManager in stateEnemySo.objectInStateManagers)
-            {  if (!objectDictionary.ContainsKey(objectInStateManager))
+        foreach (ExtensionMethods.ObjectInStateManager objectInStateManager in stateEnemySo.objectInStateManagersState)
+            {  if (!objectDictionaryState.ContainsKey(objectInStateManager))
                                  {
-                                     for (int i = 0; i < baseObjectList.Count; i++)
+                                     for (int i = 0; i < baseObjectListState.Count; i++)
                                      {
                                                        
-                                         if (baseObjectList[i].objectInStateManager == objectInStateManager)
+                                         if (baseObjectListState[i].objectInStateManager == objectInStateManager)
                                          {
                                                              
-                                             objectDictionary.Add(objectInStateManager, baseObjectList[i]._object ); 
+                                             objectDictionaryState.Add(objectInStateManager, baseObjectListState[i]._object ); 
                                          }
                                      }
                                  }

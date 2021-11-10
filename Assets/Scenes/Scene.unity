@@ -186,7 +186,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &75013269
 Transform:
   m_ObjectHideFlags: 0
@@ -194,11 +194,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 75013268}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.43, y: -1.73, z: 0}
-  m_LocalScale: {x: 0.82196283, y: 0.80160326, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.03, y: -0.77, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2129185637}
+  m_Father: {fileID: 1598660058}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &75013270
@@ -350,7 +350,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 15.62
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -519,7 +519,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.38
+      scalar: 0.3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -900,7 +900,7 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: 0, y: 0, z: 0}
+    m_Position: {x: 0, y: -2, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 2
@@ -1100,7 +1100,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5.84
+      scalar: 100
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4986,7 +4986,7 @@ PolygonCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -2}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -4998,9 +4998,9 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 2.11, y: -1.76}
-      - {x: 0.02, y: 1.8}
-      - {x: -2.04, y: -1.71}
+    - - {x: 2.5, y: -2.16}
+      - {x: 0.02, y: 2.18}
+      - {x: -2.61, y: -2.25}
 --- !u!1 &138010070
 GameObject:
   m_ObjectHideFlags: 0
@@ -5289,17 +5289,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EMainStatsSo: {fileID: 11400000, guid: 64c2554929073ff4a85f85e8fd573678, type: 2}
   forceApply: {x: 0, y: 0}
-  baseObjectList:
-  - objectInStateManager: 7
-    _object: {fileID: 321477207}
-  - objectInStateManager: 2
-    _object: {fileID: 541801659}
-  - objectInStateManager: 8
-    _object: {fileID: 191158719}
+  baseObjectListCondition:
   - objectInStateManager: 1
-    _object: {fileID: 191158723}
+    _object: {fileID: 0}
+  - objectInStateManager: 2
+    _object: {fileID: 0}
+  baseObjectListState:
+  - objectInStateManager: 7
+    _object: {fileID: 0}
   - objectInStateManager: 4
-    _object: {fileID: 191158724}
+    _object: {fileID: 0}
+  - objectInStateManager: 2
+    _object: {fileID: 0}
+  - objectInStateManager: 1
+    _object: {fileID: 0}
   isInWind: 0
   windDirection: {x: 0, y: 0}
   windSpeed: 0
@@ -5309,6 +5312,7 @@ MonoBehaviour:
   spawnPosition: {x: 0, y: 0, z: 0}
   stateEnnemList:
   - {fileID: 11400000, guid: 8184120db1720f740881065a1a21e42a, type: 2}
+  indexCurrentState: 0
   defaultState: {fileID: 11400000, guid: 59ff7d0cd2b409e44b6d7bb2381c2051, type: 2}
   healthCondition: 
   IsCurrentStartPlayed: 0
@@ -6265,25 +6269,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EMainStatsSo: {fileID: 11400000, guid: 474d4ce9d49b1ee428f94f8965de8e55, type: 2}
   forceApply: {x: 0, y: 0}
-  baseObjectList:
-  - objectInStateManager: 0
-    _object: {fileID: 541801657}
-  - objectInStateManager: 4
-    _object: {fileID: 591330580}
-  - objectInStateManager: 6
-    _object: {fileID: 591330582}
-  - objectInStateManager: 2
-    _object: {fileID: 541801659}
+  baseObjectListCondition:
   - objectInStateManager: 1
-    _object: {fileID: 591330581}
-  - objectInStateManager: 5
-    _object: {fileID: 1428449395}
-  - objectInStateManager: 8
-    _object: {fileID: 591330577}
+    _object: {fileID: 0}
+  - objectInStateManager: 2
+    _object: {fileID: 0}
+  baseObjectListState:
   - objectInStateManager: 10
-    _object: {fileID: 1822139297}
+    _object: {fileID: 0}
   - objectInStateManager: 11
-    _object: {fileID: 1712156580}
+    _object: {fileID: 0}
+  - objectInStateManager: 8
+    _object: {fileID: 0}
+  - objectInStateManager: 6
+    _object: {fileID: 0}
+  - objectInStateManager: 5
+    _object: {fileID: 0}
   isInWind: 0
   windDirection: {x: 0, y: 0}
   windSpeed: 0
@@ -6294,6 +6295,7 @@ MonoBehaviour:
   stateEnnemList:
   - {fileID: 11400000, guid: 1417c0556fa8a4c4891f98365cad8266, type: 2}
   - {fileID: 11400000, guid: f3fcbe1e5219fdd428eb34589bd47c2d, type: 2}
+  indexCurrentState: 0
   defaultState: {fileID: 0}
   healthCondition: 
   IsCurrentStartPlayed: 0
@@ -12463,9 +12465,9 @@ Transform:
   m_GameObject: {fileID: 1210399561}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.82196283, y: 0.80160326, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2129185637}
+  m_Father: {fileID: 1598660058}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1210399563
@@ -13137,7 +13139,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EMainStatsSo: {fileID: 11400000, guid: 64c2554929073ff4a85f85e8fd573678, type: 2}
   forceApply: {x: 0, y: 0}
-  baseObjectList:
+  baseObjectListCondition: []
+  baseObjectListState:
   - objectInStateManager: 9
     _object: {fileID: 0}
   isInWind: 0
@@ -13148,6 +13151,7 @@ MonoBehaviour:
   playerTransform: {fileID: 541801657}
   spawnPosition: {x: 0, y: 0, z: 0}
   stateEnnemList: []
+  indexCurrentState: 0
   defaultState: {fileID: 11400000, guid: e340c195bcdf6cf47917153a50678fb3, type: 2}
   healthCondition: 
   IsCurrentStartPlayed: 0
@@ -13477,12 +13481,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1598660058}
   m_Layer: 0
-  m_Name: EnnemyDash (1)
+  m_Name: EnnemyFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1598660058
 Transform:
   m_ObjectHideFlags: 0
@@ -13494,6 +13498,8 @@ Transform:
   m_LocalPosition: {x: -40.78, y: 23.97, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1210399562}
+  - {fileID: 75013269}
   - {fileID: 2129185637}
   m_Father: {fileID: 0}
   m_RootOrder: 17
@@ -14118,19 +14124,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EMainStatsSo: {fileID: 11400000, guid: 474d4ce9d49b1ee428f94f8965de8e55, type: 2}
   forceApply: {x: 0, y: 0}
-  baseObjectList:
-  - objectInStateManager: 0
-    _object: {fileID: 541801657}
-  - objectInStateManager: 4
-    _object: {fileID: 1886626981}
-  - objectInStateManager: 6
-    _object: {fileID: 1886626983}
-  - objectInStateManager: 2
-    _object: {fileID: 541801659}
+  baseObjectListCondition:
   - objectInStateManager: 1
-    _object: {fileID: 1886626982}
+    _object: {fileID: 0}
+  - objectInStateManager: 2
+    _object: {fileID: 0}
+  baseObjectListState:
+  - objectInStateManager: 1
+    _object: {fileID: 0}
   - objectInStateManager: 5
-    _object: {fileID: 879582067}
+    _object: {fileID: 0}
+  - objectInStateManager: 6
+    _object: {fileID: 0}
   isInWind: 0
   windDirection: {x: 0, y: 0}
   windSpeed: 0
@@ -14140,6 +14145,7 @@ MonoBehaviour:
   spawnPosition: {x: 0, y: 0, z: 0}
   stateEnnemList:
   - {fileID: 11400000, guid: 6538e7a798e46244ca31daa980212652, type: 2}
+  indexCurrentState: 0
   defaultState: {fileID: 11400000, guid: 59ff7d0cd2b409e44b6d7bb2381c2051, type: 2}
   healthCondition: 
   IsCurrentStartPlayed: 0
@@ -14671,12 +14677,12 @@ GameObject:
   - component: {fileID: 2129185639}
   - component: {fileID: 2129185638}
   m_Layer: 8
-  m_Name: EnnemiMove
+  m_Name: EnnemiFlash
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2129185637
 Transform:
   m_ObjectHideFlags: 0
@@ -14687,11 +14693,9 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.2166, y: 1.2475, z: 1}
-  m_Children:
-  - {fileID: 1210399562}
-  - {fileID: 75013269}
+  m_Children: []
   m_Father: {fileID: 1598660058}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2129185638
 BoxCollider2D:
@@ -14797,17 +14801,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EMainStatsSo: {fileID: 11400000, guid: 64c2554929073ff4a85f85e8fd573678, type: 2}
   forceApply: {x: 0, y: 0}
-  baseObjectList:
-  - objectInStateManager: 7
-    _object: {fileID: 0}
-  - objectInStateManager: 2
-    _object: {fileID: 541801659}
-  - objectInStateManager: 8
-    _object: {fileID: 2129185637}
+  baseObjectListCondition:
   - objectInStateManager: 1
     _object: {fileID: 2129185641}
+  - objectInStateManager: 2
+    _object: {fileID: 541801659}
+  baseObjectListState:
+  - objectInStateManager: 0
+    _object: {fileID: 541801657}
+  - objectInStateManager: 12
+    _object: {fileID: 75013268}
+  - objectInStateManager: 13
+    _object: {fileID: 541801658}
   - objectInStateManager: 4
     _object: {fileID: 2129185640}
+  - objectInStateManager: 8
+    _object: {fileID: 2129185637}
+  - objectInStateManager: 2
+    _object: {fileID: 541801659}
   isInWind: 0
   windDirection: {x: 0, y: 0}
   windSpeed: 0
@@ -14816,13 +14827,14 @@ MonoBehaviour:
   playerTransform: {fileID: 541801657}
   spawnPosition: {x: 0, y: 0, z: 0}
   stateEnnemList:
-  - {fileID: 11400000, guid: 8184120db1720f740881065a1a21e42a, type: 2}
+  - {fileID: 11400000, guid: 912283e2f740f074ebeb2eeaed12aa33, type: 2}
+  indexCurrentState: 0
   defaultState: {fileID: 11400000, guid: 59ff7d0cd2b409e44b6d7bb2381c2051, type: 2}
   healthCondition: 
   IsCurrentStartPlayed: 0
   IsCurrentStatePlayed: 0
   timeCondition:
-  - 3
+  - 6
   timerCondition:
   - 0
   timerCurrentStartState: 0

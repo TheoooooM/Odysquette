@@ -7,9 +7,13 @@ using UnityEngine.InputSystem;
 public class Playercontroller : MonoBehaviour
 {
     [SerializeField] float MouvementSpeed = 0.01f;
+    private float defaultSpeed;
     public GameObject gun;
+    private Vector2 lastMoveVector = Vector3.right;
     private Rigidbody2D rb;
     private Aled playerInput;
+    private bool isInEffectFlash;
+    private float timerInEffectFlash;
     [SerializeField] private String CurrentController;
     private CapsuleCollider2D capsuleCollider2D;
     private bool isInWind;
@@ -52,6 +56,7 @@ public class Playercontroller : MonoBehaviour
         playerInput.Player.DashGamepad.performed += DashGamepadOnperformed;
         playerInput.Player.Dash.canceled += DashCanceled;
         playerInput.Player.DashGamepad.canceled += DashCanceledGamepad;
+        defaultSpeed = MouvementSpeed;
     }
 
     private void DashCanceled(InputAction.CallbackContext obj)
@@ -110,6 +115,19 @@ public class Playercontroller : MonoBehaviour
 
     private void Update()
     {
+        if (isInEffectFlash)
+        {
+            if (timerInEffectFlash >= 0)
+            {
+                timerInEffectFlash -= Time.deltaTime;
+            }
+            else
+            {
+                timerInEffectFlash = 0;
+                isInEffectFlash = true;
+                MouvementSpeed = defaultSpeed;
+            }
+        }
         if (InDash)
         {
             timerDash += Time.deltaTime;
@@ -118,6 +136,7 @@ if(timerBetweenDash<= timeBetweenDash)
 {
     timerBetweenDash += Time.deltaTime;
 }
+
     }
 
     void FixedUpdate()
@@ -126,32 +145,27 @@ if(timerBetweenDash<= timeBetweenDash)
         if (playerInput.Player.Movement.ReadValue<Vector2>() != Vector2.zero)
         {
           moveVector = playerInput.Player.Movement.ReadValue<Vector2>();
-          if (!InDash&& TryDash && timerBetweenDash >= timeBetweenDash)
-          {
-              InDash = true;
-              timerBetweenDash = 0;
-              dashDirection = moveVector.normalized;
-              rb.velocity = Vector2.zero;
-          }
-           
+
+          lastMoveVector = moveVector;
             GameManager.Instance.isMouse = true;
 
         }
         else if(playerInput.Player.MovementGamepad.ReadValue<Vector2>() != Vector2.zero)
         {
           moveVector = playerInput.Player.MovementGamepad.ReadValue<Vector2>();
-          if (!InDash&& TryDash && timerBetweenDash >= timeBetweenDash)
-          {
-              InDash = true;
-              timerBetweenDash = 0;
-              dashDirection = moveVector.normalized;
-              rb.velocity = Vector2.zero;
-          }
+          lastMoveVector = moveVector;
             GameManager.Instance.isMouse = false;
         }
-
+ 
         if (!InDash)
         {
+            if (TryDash && timerBetweenDash >= timeBetweenDash && !isInEffectFlash)
+                   {
+                       InDash = true;
+                       timerBetweenDash = 0;
+                       dashDirection = lastMoveVector.normalized;
+                       rb.velocity = Vector2.zero;
+                   }
                if (isInWind)
                         rb.velocity = (moveVector * MouvementSpeed + windDirection * windSpeed);
                        else
@@ -229,8 +243,17 @@ if(timerBetweenDash<= timeBetweenDash)
         }
         if (other.CompareTag("Flash"))
         {
-            isInFlash = true;
+            isInFlash = false;
         }
        
+    }
+
+    public void SetEffectFlash(float timeFlash, float lowSpeed)
+    {
+        isInEffectFlash = true;
+        timerInEffectFlash += timeFlash;
+        MouvementSpeed = lowSpeed;
+
+
     }
 }

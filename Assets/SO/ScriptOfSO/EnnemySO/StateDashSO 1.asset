@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: StateDashSO 1
   m_EditorClassIdentifier: 
   isKnockUpInState: 0
-  objectInStateManagers: 0000000008000000020000000100000007000000
+  objectInStateManagersCondition: 0100000002000000
+  objectInStateManagersState: 0100000007000000
+  oneStartState: 0
   startTime: 3
   playStateTime: 0
   isFixedUpdate: 1
   haveStartState: 1
+  duringDefaultState: 0
   animationCurve:
     serializedVersion: 2
     m_Curve:
@@ -53,9 +56,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   maxspeed: 15
   rangeDetection: 6
-  layerMaskRay:
-    serializedVersion: 2
-    m_Bits: 1791
   rectExtents:
     serializedVersion: 2
     x: 0

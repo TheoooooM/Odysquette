@@ -8,7 +8,9 @@ using Object = UnityEngine.Object;
 public class StateEnemySO : ScriptableObject
 {
     public bool isKnockUpInState =true;
-    public List<ExtensionMethods.ObjectInStateManager> objectInStateManagers = new List<ExtensionMethods.ObjectInStateManager>();
+    public List<ExtensionMethods.ObjectInStateManager> objectInStateManagersCondition = new List<ExtensionMethods.ObjectInStateManager>();
+    public List<ExtensionMethods.ObjectInStateManager> objectInStateManagersState = new List<ExtensionMethods.ObjectInStateManager>();
+    public bool oneStartState;
     public float startTime;
     public float playStateTime;
     public bool isFixedUpdate;

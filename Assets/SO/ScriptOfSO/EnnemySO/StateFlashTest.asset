@@ -9,35 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da6f6442f0a418540bfe9bb95188f7c9, type: 3}
-  m_Name: TPTestStateShootBasic
+  m_Script: {fileID: 11500000, guid: 1de7018c2d1f0db4a9e1fe1d5fa8977c, type: 3}
+  m_Name: StateFlashTest
   m_EditorClassIdentifier: 
   isKnockUpInState: 0
   objectInStateManagersCondition: 0100000002000000
-  objectInStateManagersState: 080000000500000006000000
+  objectInStateManagersState: 000000000c0000000d00000008000000
   oneStartState: 0
-  startTime: 1
+  startTime: 4
   playStateTime: 0
-  isFixedUpdate: 1
+  isFixedUpdate: 0
   haveStartState: 1
-  duringDefaultState: 0
-  rangeForShoot: 15
-  rangeForBullet: 4
-  damage: 1
-  speedBullet: 265.2
-  dragRB: 1.1
-  hasRange: 1
-  enemyTypeShoot: 0
-  isDelayBetweenShoot: 0
-  isDelayBetweenWaveShoot: 1
-  delayBetweenShoot: 0
-  delayBetweenWaveShoot: 0.5
-  basePosition: []
-  numberWaveShoot: 2
-  isAimPlayer: 1
+  duringDefaultState: 1
+  rangeForShoot: 5
   layerMaskRay:
     serializedVersion: 2
-    m_Bits: 1791
+    m_Bits: 7871
   rectExtents:
     serializedVersion: 2
     x: 0
@@ -45,9 +32,6 @@ MonoBehaviour:
     width: 1
     height: 1
   extentsRangeDetection: {x: 1, y: 1, z: 0}
-  directions:
-  - 0
-  - 20
-  - 40
-  - 320
-  - 340
+  timeEffectFlash: 2
+  lowSpeed: 1
+  offSetDistance: 1.5

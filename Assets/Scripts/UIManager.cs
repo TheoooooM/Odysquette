@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public Plane Planeg = new Plane(Vector3.zero, new Vector3(1,0), new Vector3(-1,0));
+ 
 
     public GameObject viewFinder;
     public GameObject[] HeartsLife;
@@ -22,8 +22,5 @@ public class UIManager : MonoBehaviour
  
 
     // Update is called once per frame
-    private void Update()
-    {
-       Debug.Log( Planeg.GetSide(new Vector3(0.5f,0)));
-    }
+
 }

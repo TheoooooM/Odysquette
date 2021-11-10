@@ -92,8 +92,6 @@ public class StateShootBasic : StateShootSO
         {
              for (int i = 0; i < directions.Length; i++)
                     {
-                  
-                  
                         GameObject bullet = PoolManager.Instance.SpawnEnnemyShoot(enemyTypeShoot, prefabBullet, parentBulletTF);
                         bullet.SetActive(true);  
                         if (basePosition.Length != 0)
