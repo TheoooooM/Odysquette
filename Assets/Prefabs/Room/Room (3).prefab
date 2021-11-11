@@ -27,8 +27,8 @@ Transform:
   m_LocalPosition: {x: -9.2, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7693364858235074862}
-  m_RootOrder: 4
+  m_Father: {fileID: 1093980719521029494}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1006420443332152687
 GameObject:
@@ -529,7 +529,6 @@ Transform:
   - {fileID: 7693364858538474719}
   - {fileID: 7693364858966634524}
   - {fileID: 1093980719521029494}
-  - {fileID: 1047452151251178818}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -550,10 +549,14 @@ MonoBehaviour:
   OpenBottom: 1
   OpenLeft: 1
   OpenRight: 0
-  GenTop: {fileID: 0}
-  GenBot: {fileID: 2817253450537553254}
-  GenLeft: {fileID: 181627910024988136}
-  GenRight: {fileID: 0}
+  GenTop:
+  - {fileID: 0}
+  GenBot:
+  - {fileID: 2817253450537553254}
+  GenLeft:
+  - {fileID: 181627910024988136}
+  GenRight:
+  - {fileID: 0}
   ExitArray: 0100000004000000
   spawned: 0
   NbrExit: 0
@@ -1030,6 +1033,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6678065267231307017}
+  - {fileID: 1047452151251178818}
   m_Father: {fileID: 7693364858235074862}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

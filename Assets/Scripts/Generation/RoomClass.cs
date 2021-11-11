@@ -17,10 +17,10 @@ public class RoomClass : MonoBehaviour
     [HideInInspector] public bool OpenLeft; //Est ce que la salle est ouverte en gauche
     [HideInInspector] public bool OpenRight; //Est ce que la salle est ouverte à droite
 
-    [HideInInspector] public GameObject GenTop;
-    [HideInInspector] public GameObject GenBot;
-    [HideInInspector] public GameObject GenLeft;
-    [HideInInspector] public GameObject GenRight;
+    [HideInInspector] public GameObject[] GenTop;
+    [HideInInspector] public GameObject[] GenBot;
+    [HideInInspector] public GameObject[] GenLeft;
+    [HideInInspector] public GameObject[] GenRight;
 
     [Header("----------Générration Procédurale---------")]
     public NewRoomManager.open[] ExitArray;
@@ -31,11 +31,11 @@ public class RoomClass : MonoBehaviour
     [HideInInspector] public int NbrExit; //Ancienne version de la gen a pas enlever
     [HideInInspector] public bool Closing; //Ancienne version de la gen a pas enlever
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
+            Debug.Log("destroy Room");
         if (!spawned)
         {
-            Debug.Log("destroy Room");
             NewRoomManager.instance.reset = true;
             Destroy(gameObject);
         }
