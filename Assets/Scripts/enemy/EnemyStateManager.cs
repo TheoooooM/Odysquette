@@ -390,6 +390,9 @@ public class EnemyStateManager : MonoBehaviour
       {
           Destroy(gameObject);
       }
+      
+        GameManager.Instance.ultimateValue += EMainStatsSo.giverUltimateStrawPoints;
+        Debug.Log(GameManager.Instance.ultimateValue);
   
       
   }

@@ -9,5 +9,6 @@ public class EMainStatsSO : ScriptableObject
    public float dragforKnockUp;
    public bool isKnockUp;
    public SpriteRenderer spriteRenderer;
+    public float giverUltimateStrawPoints;
 
 }
