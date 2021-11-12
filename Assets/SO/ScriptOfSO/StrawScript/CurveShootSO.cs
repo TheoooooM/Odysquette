@@ -9,8 +9,8 @@ using UnityEngine.UIElements;
 [CreateAssetMenu(fileName = "CurveShootSO", menuName = "ShootMode/CurveShootSO", order = 2)]
 public class CurveShootSO : StrawSO
 {
-   
 
+  
     public List<PointsForBezierCurve> trajectories = new List<PointsForBezierCurve>();
     [NamedArray("int", true)]
     public int[] stepOfCurve;

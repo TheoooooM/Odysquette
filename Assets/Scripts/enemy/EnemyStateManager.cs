@@ -54,7 +54,12 @@ public class EnemyStateManager : MonoBehaviour
     private float timerCurrentStartState;
     private float timerCurrentState;
     private Rigidbody2D rb;
-    
+    private SpriteRenderer spriteRenderer;
+    private void OnValidate()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = EMainStatsSo.sprite;
+    }
 
     private void Start()
     {
@@ -230,7 +235,7 @@ public class EnemyStateManager : MonoBehaviour
        {
            if (isDragKnockUp)
            {
-               rb.drag =EMainStatsSo.dragforKnockUp;
+               rb.drag =EMainStatsSo.dragForKnockUp;
          
                
                        if (rb.velocity.magnitude <= 0.1f)

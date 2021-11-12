@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class HealthPlayer : MonoBehaviour
 {
-    [SerializeField]
-    private GameManager gameManager;
+    
 
    
     [SerializeField]
@@ -23,6 +22,7 @@ public class HealthPlayer : MonoBehaviour
     private float timerInvincible;
     // Start is called before the first frame update
     public static HealthPlayer Instance;
+    public Playercontroller playerController;
 
     private void Awake()
     {
@@ -30,6 +30,7 @@ public class HealthPlayer : MonoBehaviour
     }
     void Start()
     {
+        playerController = GetComponent<Playercontroller>();
         spriteRenderer = GetComponent<SpriteRenderer>();
       healthPlayer = maxHealth;
         for (int i = 0; i < healthPlayer; i++)
@@ -66,29 +67,33 @@ public class HealthPlayer : MonoBehaviour
 
   public  void TakeDamagePlayer(int damage)
     {
-        if (!isInvincible)
+        if (!playerController.InDash)
         {
-            Debug.Log("test"); 
-            if (healthPlayer - damage <= 0)
-            {
-                OnDeathPlayer();
-            }
-            healthPlayer -= damage;
-                        for (int i = UIManager.Instance.HeartsLife.Length-1; i > -1; i--)
+             if (!isInvincible)
+                    {
+                        Debug.Log("test"); 
+                        if (healthPlayer - damage <= 0)
                         {
-                            if(i > healthPlayer-1)
-                            {
-                                UIManager.Instance.HeartsLife[i].SetActive(false); 
-                            }
-                            else
-                            {
-                                break;
-                            }
-
-                            isInvincible = true;
+                            OnDeathPlayer();
                         }
-       
+                        healthPlayer -= damage;
+                                    for (int i = UIManager.Instance.HeartsLife.Length-1; i > -1; i--)
+                                    {
+                                        if(i > healthPlayer-1)
+                                        {
+                                            UIManager.Instance.HeartsLife[i].SetActive(false); 
+                                        }
+                                        else
+                                        {
+                                            break;
+                                        }
+            
+                                        isInvincible = true;
+                                    }
+                   
+                    }
         }
+       
     }
 
     void TakeHealPlayer(int heal)

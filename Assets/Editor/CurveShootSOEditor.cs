@@ -5,6 +5,7 @@ using PlasticPipe.PlasticProtocol.Client;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEditor;
+using Object = System.Object;
 
 [CustomEditor(typeof(CurveShootSO))]
 public class CurveShootSOEditor : StrawSOEditor
@@ -13,10 +14,16 @@ public class CurveShootSOEditor : StrawSOEditor
     
     public override void OnInspectorGUI()
     {
+        
         base.OnInspectorGUI();
+   
         serializedObject.Update();
        
+
+        
        strawSo = (CurveShootSO) target;
+
+       
         GUIStyle myStyle = new GUIStyle();
         GUIStyle myStylo = new GUIStyle();
         myStylo.fontSize = 13;
@@ -132,6 +139,8 @@ public class CurveShootSOEditor : StrawSOEditor
 
         serializedObject.ApplyModifiedProperties();
     }
+
+
 
     public override void OnEditGizmos(SceneView sceneView)
     {base.OnEditGizmos( sceneView);

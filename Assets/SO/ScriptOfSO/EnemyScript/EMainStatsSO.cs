@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,8 +7,17 @@ public class EMainStatsSO : ScriptableObject
 {
    public string typeName;
    public float maxHealth;
-   public float dragforKnockUp;
+   public float dragForKnockUp;
    public bool isKnockUp;
-   public SpriteRenderer spriteRenderer;
+   public Sprite sprite;
+   public List<StateEnemySO> stateEnnemList = new List<StateEnemySO>(4);
+   public List<FloatWithID> timeCondition;
+   public List<FloatWithID> healthCondition;
 
 }
+       [Serializable]
+   public class FloatWithID
+   {
+       public int id;
+       public float value;
+   }

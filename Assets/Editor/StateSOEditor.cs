@@ -5,5 +5,10 @@ using UnityEngine;
 
 public class StateSOEditor : Editor
 {
-
+    public override void OnInspectorGUI()
+    {
+        
+       
+       
+    }
 }
