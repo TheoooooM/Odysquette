@@ -40,7 +40,26 @@ public class GameManager : MonoBehaviour
     
     Vector3 lastInput;
     #endregion
-     float ultimateTimeValue;
+   
+   public float maxUltimateValue;
+
+    float _ultimateValue;
+    public float ultimateValue
+    {
+        get
+        {
+            return _ultimateValue;
+        }
+        set
+        {
+            
+          _ultimateValue = Mathf.Clamp(value, 0, maxUltimateValue);
+
+            UIManager.Instance.UltSlider.value = _ultimateValue;
+        }
+        
+    }
+        
     //mouse
     [SerializeField]
     private float offsetPadViewFinder;
@@ -123,7 +142,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-
+        Debug.Log(_ultimateValue);
         mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (shooting) 
         {
@@ -180,10 +199,11 @@ public class GameManager : MonoBehaviour
         }
        if (actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate)
        {
-           if (ultimateTimeValue >= actualStrawClass.ultimateStrawSO.timeValue)
+           if (ultimateValue >= actualStrawClass.ultimateStrawSO.timeValue)
            {
                actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
-               ultimateTimeValue = 0;
+              
+                ultimateValue -= actualStrawClass.ultimateStrawSO.timeValue;
            }
 
            utlimate = false;
@@ -205,9 +225,7 @@ public class GameManager : MonoBehaviour
       
         shootCooldown = Mathf.Min(shootCooldown, actualStrawClass.strawSO.timeValue); 
    
-       ultimateTimeValue+= Time.deltaTime; 
-  
-        ultimateTimeValue = Mathf.Min(ultimateTimeValue, actualStrawClass.ultimateStrawSO.timeValue); 
+   
 
    
         
