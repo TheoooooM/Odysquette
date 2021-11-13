@@ -7,10 +7,24 @@ using Object = UnityEngine.Object;
 
 public class StateEnemySO : ScriptableObject
 {
-    
+    // deja utilisé
+ 
+    public bool openBasePanel;
+   
+    public bool openDebugPanel;
+    public bool openSpecPanel;
+   
+    public bool openKnobDebugPanel;
+    public bool useHealthCondition;
+    public bool useTimeCondition;
        public bool isKnockUpInState =true;
+    //debug
     public List<ExtensionMethods.ObjectInStateManager> objectInStateManagersCondition = new List<ExtensionMethods.ObjectInStateManager>();
     public List<ExtensionMethods.ObjectInStateManager> objectInStateManagersState = new List<ExtensionMethods.ObjectInStateManager>();
+    //1
+    //fixed state during default state
+    //start parameter 
+    //play state
     public bool oneStartState;
     public float startTime;
     public float playStateTime;

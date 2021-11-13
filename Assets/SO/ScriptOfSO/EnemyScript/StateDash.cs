@@ -15,13 +15,9 @@ public class StateDash : StateEnemySO
     public float rangeDetection;
    
  
-    public Rect rectExtents;
+  
    public Vector3 extentsRangeDetection;
-
-    private void OnValidate()
-    {
-        extentsRangeDetection = new Vector3(rectExtents.width, rectExtents.height);
-    }
+   
 
     public override bool CheckCondition(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary)
     {
@@ -37,7 +33,7 @@ public class StateDash : StateEnemySO
                
                    if(hit.collider.gameObject.layer == 9 )
                          {
-                                    Debug.Log("suis je la");   
+                                      
                              Transform target = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.AimDash];
                              target.position  = rbPlayer.position; 
                              target.gameObject.SetActive(true);
@@ -48,10 +44,6 @@ public class StateDash : StateEnemySO
                          }
                   }
           
-                
-                   
-               
-
                return false;
     }
     

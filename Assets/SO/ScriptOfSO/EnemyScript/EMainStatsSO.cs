@@ -9,19 +9,14 @@ public class EMainStatsSO : ScriptableObject
    public float maxHealth;
    public float dragForKnockUp;
    public bool isKnockUp;
-
    public Sprite sprite;
    public List<StateEnemySO> stateEnnemList = new List<StateEnemySO>(4);
-   public List<FloatWithID> timeCondition;
-   public List<FloatWithID> healthCondition;
+   public StateEnemySO baseState; 
+   public Dictionary<int, float> timeCondition = new Dictionary<int, float>(1);
+   public Dictionary<int, float> healthCondition = new Dictionary<int, float>(1);
    public SpriteRenderer spriteRenderer;
     public float giverUltimateStrawPoints;
-
+  
 
 }
-       [Serializable]
-   public class FloatWithID
-   {
-       public int id;
-       public float value;
-   }
+    

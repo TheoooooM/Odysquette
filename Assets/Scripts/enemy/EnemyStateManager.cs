@@ -32,10 +32,10 @@ public class EnemyStateManager : MonoBehaviour
    
     public Vector3 spawnPosition;
     //State and Stat Condition
-    public List<StateEnemySO> stateEnnemList = new List<StateEnemySO>();
+   
     public int indexCurrentState;
-   public StateEnemySO defaultState;
-    public List<int> healthCondition = new List<int>();
+  
+   
     bool check;
     public bool IsCurrentStartPlayed;
     public bool IsCurrentStatePlayed;
@@ -48,7 +48,7 @@ public class EnemyStateManager : MonoBehaviour
     private CurrentState CurrentFixedState;
     private CurrentState CurrentUpdateState;
     //Timer
-    public List<float> timeCondition = new List<float>();
+
     public List<float> timerCondition = new List<float>();
     [SerializeField]
     private float timerCurrentStartState;
@@ -67,11 +67,11 @@ public class EnemyStateManager : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         health = EMainStatsSo.maxHealth;
         
-        for (int i = 0; i < stateEnnemList.Count; i++)
+        for (int i = 0; i < EMainStatsSo.stateEnnemList.Count; i++)
         {
-            if (stateEnnemList[i].objectInStateManagersCondition.Count > 0)
+            if (EMainStatsSo.stateEnnemList[i].objectInStateManagersCondition.Count > 0)
             {
-                 foreach (ExtensionMethods.ObjectInStateManager objectInStateManager in stateEnnemList[i].objectInStateManagersCondition)
+                 foreach (ExtensionMethods.ObjectInStateManager objectInStateManager in EMainStatsSo.stateEnnemList[i].objectInStateManagersCondition)
                             {  if (!objectDictionaryCondition.ContainsKey(objectInStateManager))
                                 {
                                     for (int j = 0; j < baseObjectListCondition.Count; j++)
@@ -90,23 +90,23 @@ public class EnemyStateManager : MonoBehaviour
             }
 
  
-        UpdateDictionaries(defaultState);
+        UpdateDictionaries(EMainStatsSo.baseState);
            
     }
 
     private void Update()
     {
         #region CheckStates
-  if (!IsCurrentStatePlayed && !IsCurrentStartPlayed && stateEnnemList.Count != 0)
+  if (!IsCurrentStatePlayed && !IsCurrentStartPlayed && EMainStatsSo.stateEnnemList.Count != 0)
         {
-                for (int i = 0; i < stateEnnemList.Count; i++)
+                for (int i = 0; i < EMainStatsSo.stateEnnemList.Count; i++)
                     {
                        
-                        if (healthCondition.Count != 0)
+                        if (EMainStatsSo.healthCondition.Count != 0)
                         {
-                             if (healthCondition[i] != null)
+                             if (EMainStatsSo.healthCondition[i] != null)
                                                     {
-                                                        if (healthCondition[i] > health)
+                                                        if (EMainStatsSo.healthCondition[i] > health)
                                                         {
                                                            
                                                             continue;
@@ -114,12 +114,12 @@ public class EnemyStateManager : MonoBehaviour
                                                     }
                         }
                       
-                        if (timeCondition.Count != 0 && timerCondition.Count != 0)
+                        if (EMainStatsSo.timeCondition.Count != 0 && timerCondition.Count != 0)
 
                         {
-                            if (timeCondition[i] != null)
+                            if (EMainStatsSo.timeCondition[i] != null)
                             {
-                                if (timeCondition[i] > timerCondition[i])
+                                if (EMainStatsSo.timeCondition[i] > timerCondition[i])
                                 {
                                     
                                     continue;
@@ -128,41 +128,41 @@ public class EnemyStateManager : MonoBehaviour
                         }
                        
                    
-                        if (stateEnnemList[i].CheckCondition(objectDictionaryCondition ))
+                        if (EMainStatsSo.stateEnnemList[i].CheckCondition(objectDictionaryCondition ))
                         {
                            
                            
-                            if (!stateEnnemList[i].isFixedUpdate)
+                            if (!EMainStatsSo.stateEnnemList[i].isFixedUpdate)
                             {
                                 
-                                if (stateEnnemList[i].haveStartState)
+                                if (EMainStatsSo.stateEnnemList[i].haveStartState)
                                 {
                                     
-                                    CurrentUpdateState += stateEnnemList[i].StartState;
+                                    CurrentUpdateState += EMainStatsSo.stateEnnemList[i].StartState;
                                     IsCurrentStartPlayed = true;
-                                    if(stateEnnemList[i].oneStartState)
+                                    if(EMainStatsSo.stateEnnemList[i].oneStartState)
                                     IsFirstStartPlayed = true;
                                     Debug.Log(IsCurrentStartPlayed);
                                 }
                                 else
                                 {
-                                    CurrentUpdateState += stateEnnemList[i].PlayState;
+                                    CurrentUpdateState += EMainStatsSo.stateEnnemList[i].PlayState;
                                     IsCurrentStatePlayed = true;
                                 }
                             }
                             else
                             {
-                                if (stateEnnemList[i].haveStartState)
+                                if (EMainStatsSo.stateEnnemList[i].haveStartState)
                                 {
-                                    CurrentFixedState += stateEnnemList[i].StartState;
+                                    CurrentFixedState += EMainStatsSo.stateEnnemList[i].StartState;
                                     IsCurrentStartPlayed = true;
-                                    if(stateEnnemList[i].oneStartState)
+                                    if(EMainStatsSo.stateEnnemList[i].oneStartState)
                                     IsFirstStartPlayed = true;
                                     Debug.Log(IsCurrentStartPlayed);
                                 }
                                 else
                                 {
-                                    CurrentFixedState += stateEnnemList[i].PlayState;
+                                    CurrentFixedState += EMainStatsSo.stateEnnemList[i].PlayState;
                                     IsCurrentStatePlayed = true;
                                 }
 
@@ -170,9 +170,9 @@ public class EnemyStateManager : MonoBehaviour
                             objectDictionaryState.Clear();
                                     ;
                                   
-                            knockUpInState = stateEnnemList[i].isKnockUpInState;
+                            knockUpInState = EMainStatsSo.stateEnnemList[i].isKnockUpInState;
                             indexCurrentState = i; 
-                            UpdateDictionaries(stateEnnemList[indexCurrentState]);
+                            UpdateDictionaries(EMainStatsSo.stateEnnemList[indexCurrentState]);
                         }
                       
                     }
@@ -186,10 +186,10 @@ public class EnemyStateManager : MonoBehaviour
           for (int i = 0; i < timerCondition.Count; i++)
                 {
                     timerCondition[i] += Time.deltaTime;
-                    timerCondition[i] = Mathf.Min(timerCondition[i],timeCondition[i]);
+                    timerCondition[i] = Mathf.Min(timerCondition[i],EMainStatsSo.timeCondition[i]);
                 }
-          if(IsCurrentStatePlayed && stateEnnemList[indexCurrentState].playStateTime != 0 ) timerCurrentState += Time.deltaTime;
-          if (IsCurrentStartPlayed && stateEnnemList[indexCurrentState].startTime != 0)
+          if(IsCurrentStatePlayed && EMainStatsSo.stateEnnemList[indexCurrentState].playStateTime != 0 ) timerCurrentState += Time.deltaTime;
+          if (IsCurrentStartPlayed && EMainStatsSo.stateEnnemList[indexCurrentState].startTime != 0)
           {
           
               timerCurrentStartState += Time.deltaTime;
@@ -209,23 +209,23 @@ public class EnemyStateManager : MonoBehaviour
       
        ApplyState();
 
-       if (defaultState != null)
+       if (EMainStatsSo.baseState!= null)
        {
              if (! IsCurrentStartPlayed && !IsCurrentStatePlayed )
              {
            
                     
-                      defaultState.PlayState( objectDictionaryState, out bool endStep);
-                      knockUpInState = defaultState.isKnockUpInState;
+                      EMainStatsSo.baseState.PlayState( objectDictionaryState, out bool endStep);
+                      knockUpInState = EMainStatsSo.baseState.isKnockUpInState;
                    
                   
                   }
-             else if (((IsCurrentStartPlayed || IsCurrentStatePlayed) && stateEnnemList[indexCurrentState].duringDefaultState ))
+             else if (((IsCurrentStartPlayed || IsCurrentStatePlayed) && EMainStatsSo.stateEnnemList[indexCurrentState].duringDefaultState ))
 
              {
-                 UpdateDictionaries(defaultState);
-                 defaultState.PlayState( objectDictionaryState, out bool endStep);
-                 knockUpInState = defaultState.isKnockUpInState;
+                 UpdateDictionaries(EMainStatsSo.baseState);
+                 EMainStatsSo.baseState.PlayState( objectDictionaryState, out bool endStep);
+                 knockUpInState = EMainStatsSo.baseState.isKnockUpInState;
              }
        }
      
@@ -268,7 +268,7 @@ public class EnemyStateManager : MonoBehaviour
             if (CurrentUpdateState != null || CurrentFixedState != null)
             {
                
-                if (stateEnnemList[indexCurrentState].isFixedUpdate)
+                if (EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate)
                 {
                       CurrentFixedState( objectDictionaryState,out bool endStep); _endstep = endStep;
                   
@@ -285,31 +285,31 @@ public class EnemyStateManager : MonoBehaviour
             { 
                 if (IsFirstStartPlayed)
                               {
-                                    if (stateEnnemList[indexCurrentState].isFixedUpdate) 
-                                        CurrentFixedState -= stateEnnemList[indexCurrentState].StartState;
+                                    if (EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate) 
+                                        CurrentFixedState -= EMainStatsSo.stateEnnemList[indexCurrentState].StartState;
                                     else 
-                                        CurrentUpdateState -= stateEnnemList[indexCurrentState].StartState;
+                                        CurrentUpdateState -= EMainStatsSo.stateEnnemList[indexCurrentState].StartState;
                                     IsFirstStartPlayed = false;
                                     ;
                               }
               
                 
                 
-                if (CheckTimer(timerCurrentStartState, stateEnnemList[indexCurrentState].startTime))
+                if (CheckTimer(timerCurrentStartState, EMainStatsSo.stateEnnemList[indexCurrentState].startTime))
                 {
 
 
-                    if (stateEnnemList[indexCurrentState].isFixedUpdate)
+                    if (EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate)
                     {
-                        if(!stateEnnemList[indexCurrentState].oneStartState)
-                            CurrentFixedState -= stateEnnemList[indexCurrentState].StartState;
-                         CurrentFixedState += stateEnnemList[indexCurrentState].PlayState;
+                        if(!EMainStatsSo.stateEnnemList[indexCurrentState].oneStartState)
+                            CurrentFixedState -= EMainStatsSo.stateEnnemList[indexCurrentState].StartState;
+                         CurrentFixedState += EMainStatsSo.stateEnnemList[indexCurrentState].PlayState;
                     }
                     else
                     {
-                        if(!stateEnnemList[indexCurrentState].oneStartState)
-                            CurrentUpdateState -= stateEnnemList[indexCurrentState].StartState;
-                        CurrentUpdateState += stateEnnemList[indexCurrentState].PlayState; 
+                        if(!EMainStatsSo.stateEnnemList[indexCurrentState].oneStartState)
+                            CurrentUpdateState -= EMainStatsSo.stateEnnemList[indexCurrentState].StartState;
+                        CurrentUpdateState += EMainStatsSo.stateEnnemList[indexCurrentState].PlayState; 
                     }
                        
                     
@@ -323,20 +323,20 @@ public class EnemyStateManager : MonoBehaviour
             else if (IsCurrentStatePlayed)
             {
                
-                check = stateEnnemList[indexCurrentState].playStateTime == 0
+                check = EMainStatsSo.stateEnnemList[indexCurrentState].playStateTime == 0
                     ? _endstep
-                    : CheckTimer(timerCurrentState, stateEnnemList[indexCurrentState].playStateTime);
+                    : CheckTimer(timerCurrentState, EMainStatsSo.stateEnnemList[indexCurrentState].playStateTime);
                 if (check)
                 {
                     IsCurrentStatePlayed = false;
 
-                    if (stateEnnemList[indexCurrentState].isFixedUpdate)
-                        CurrentFixedState -= stateEnnemList[indexCurrentState].PlayState;
+                    if (EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate)
+                        CurrentFixedState -= EMainStatsSo.stateEnnemList[indexCurrentState].PlayState;
                     
                     
 
                     else 
-                        CurrentUpdateState -= stateEnnemList[indexCurrentState].PlayState;
+                        CurrentUpdateState -= EMainStatsSo.stateEnnemList[indexCurrentState].PlayState;
                     if (timerCondition[indexCurrentState] != 0)
                                          {
                                              timerCondition[indexCurrentState] = 0;
@@ -344,8 +344,8 @@ public class EnemyStateManager : MonoBehaviour
 
                 
                     objectDictionaryState.Clear();
-                    if(defaultState != null)
-                    UpdateDictionaries(defaultState);
+                    if(EMainStatsSo.baseState != null)
+                    UpdateDictionaries(EMainStatsSo.baseState);
                     timerCurrentState = 0;
                     timerCondition[indexCurrentState] = 0;
                     indexCurrentState = 0;
@@ -421,7 +421,7 @@ public class EnemyStateManager : MonoBehaviour
           {
               return;
           }
-          if (EMainStatsSo.isKnockUp && !isDragKnockUp && knockUpInState && defaultState != null)
+          if (EMainStatsSo.isKnockUp && !isDragKnockUp && knockUpInState && EMainStatsSo.baseState != null)
           {
            
               Vector2 direction =new Vector2();

@@ -6,7 +6,7 @@ using Object = UnityEngine.Object;
 [CreateAssetMenu(fileName = "StateShootBasicSO", menuName = "EnnemyState/Shoot/StateShootBasic", order = 0)]
 public class StateShootBasic : StateShootSO
 {
-    [NamedArray("float", true)]
+
     public float[] directions = Array.Empty<float>();
 
     

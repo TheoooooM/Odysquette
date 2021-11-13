@@ -58,7 +58,7 @@ public class EnemyMovement : MonoBehaviour
     private void Update()
     {
         if ((enemyStateManager.IsCurrentStartPlayed || enemyStateManager.IsCurrentStatePlayed) &&
-            enemyStateManager.stateEnnemList[enemyStateManager.indexCurrentState].duringDefaultState)
+            enemyStateManager.EMainStatsSo.stateEnnemList[enemyStateManager.indexCurrentState].duringDefaultState)
         {
             enabled = true;
         }

@@ -7,16 +7,13 @@ public class StateFlash : StateEnemySO
     public float rangeForShoot;
 
     public LayerMask layerMaskRay; 
-    public Rect rectExtents;
+ 
     public Vector3 extentsRangeDetection;
     public float timeEffectFlash;
     public float lowSpeed;
     public float offSetDistance;
    
-    private void OnValidate()
-    {
-        extentsRangeDetection = new Vector3(rectExtents.width, rectExtents.height);
-    }
+ 
 
     public override bool CheckCondition(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary)
     {  Rigidbody2D rbPlayer = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyPlayer];

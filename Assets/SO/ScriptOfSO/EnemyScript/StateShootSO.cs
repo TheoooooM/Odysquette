@@ -6,8 +6,9 @@ using UnityEngine.UIElements;
 
 public class StateShootSO : StateEnemySO
 {
+    //
     public float rangeForShoot;
-
+//
     public float rangeForBullet;
 
     public int damage;
@@ -27,7 +28,7 @@ public class StateShootSO : StateEnemySO
     public float delayBetweenShoot = 0;
     
     public float delayBetweenWaveShoot = 0;
-    
+   
     public Vector3[] basePosition = new Vector3[0];
 
     public int numberWaveShoot = 1;
@@ -35,12 +36,9 @@ public class StateShootSO : StateEnemySO
     public bool isAimPlayer;
     public float offSetDistance;
     public LayerMask layerMaskRay; 
-    public Rect rectExtents;
+   
     public Vector3 extentsRangeDetection;
-    private void OnValidate()
-    {
-        extentsRangeDetection = new Vector3(rectExtents.width, rectExtents.height);
-    }
+ 
     public virtual IEnumerator ShootDelay(GameObject prefabBullet, Transform parentBulletTF, Transform transformPlayer)
     {
       
