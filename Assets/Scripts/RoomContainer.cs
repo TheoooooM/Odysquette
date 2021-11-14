@@ -5,19 +5,27 @@ using UnityEngine;
 
 public class RoomContainer : MonoBehaviour
 {
+
     
-    
-     public bool partTop = false;
-     public bool partLeft = false;
-     public bool partRight = false;
-     public bool partBot = false;
+    public RoomCreator roomRef;
+    public Vector2 roomPos;
+        
+    public RoomContainer partTop;
+    public RoomContainer partLeft;
+    public RoomContainer partRight;
+    public RoomContainer partBot;
     
     [Header("=======================DEBUG=========================")]
     public bool exitTop = true;
     public bool exitLeft = true;
     public bool exitRight = true;
     public bool exitBot = true;
-    
+
+    public Dictionary<int, Generation.open> exitList;
+    public Dictionary<Generation.open, bool> exitBool;
+    [HideInInspector] public int exitAmount = 0;
+
+
     [Header("=======================PAS TOUCHE !!!=========================")]
     [SerializeField] private GameObject closeBot;
     [SerializeField] private GameObject closeLeft;
@@ -28,10 +36,14 @@ public class RoomContainer : MonoBehaviour
     [SerializeField] private GameObject openRight;
     [SerializeField] private GameObject openTop;
     
-    // Start is called before the first frame update
-    void Start()
+    
+    void Awake()
     {
-        
+        exitBool = new Dictionary<Generation.open, bool>();
+        exitBool.Add(Generation.open.top, exitTop);
+        exitBool.Add(Generation.open.left, exitLeft);
+        exitBool.Add(Generation.open.right, exitRight);
+        exitBool.Add(Generation.open.bot, exitBot);
     }
 
     // Update is called once per frame
@@ -42,11 +54,14 @@ public class RoomContainer : MonoBehaviour
 
     public void UpdatePart()
     {
+        exitList = new Dictionary<int, Generation.open>();
+        exitAmount = 0;
         
         if (partTop)
         {
            openTop.SetActive(false); 
            closeTop.SetActive(false);
+           exitTop = false;
         }
         else
         {
@@ -54,6 +69,8 @@ public class RoomContainer : MonoBehaviour
             {
                 openTop.SetActive(true);
                 closeTop.SetActive(false);
+                exitList.Add(exitAmount,Generation.open.top);
+                exitAmount++;
             }
             else
             {
@@ -67,6 +84,7 @@ public class RoomContainer : MonoBehaviour
         {
             openLeft.SetActive(false); 
             closeLeft.SetActive(false);
+            exitLeft = false;
         }
         else
         {
@@ -74,6 +92,8 @@ public class RoomContainer : MonoBehaviour
             {
                 openLeft.SetActive(true);
                 closeLeft.SetActive(false);
+                exitList.Add(exitAmount,Generation.open.left);
+                exitAmount++;
             }
             else
             {
@@ -86,7 +106,8 @@ public class RoomContainer : MonoBehaviour
         if (partRight)
         {
             openRight.SetActive(false); 
-            closeRight.SetActive(false); 
+            closeRight.SetActive(false);
+            exitRight = false;
         }
         else
         {
@@ -94,6 +115,8 @@ public class RoomContainer : MonoBehaviour
             {
                 openRight.SetActive(true);
                 closeRight.SetActive(false);
+                exitList.Add(exitAmount,Generation.open.right);
+                exitAmount++;
             }
             else
             {
@@ -106,7 +129,8 @@ public class RoomContainer : MonoBehaviour
         if (partBot)
         {
             openBot.SetActive(false); 
-            closeBot.SetActive(false); 
+            closeBot.SetActive(false);
+            exitBot = false;
         }
         else
         {
@@ -115,6 +139,8 @@ public class RoomContainer : MonoBehaviour
                 
                 openBot.SetActive(true);
                 closeBot.SetActive(false);
+                exitList.Add(exitAmount,Generation.open.bot);
+                exitAmount++;
             }
             else
             {

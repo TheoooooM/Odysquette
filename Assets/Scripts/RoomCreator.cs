@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -24,20 +25,24 @@ public class Room
 [ExecuteInEditMode]
 public class RoomCreator : MonoBehaviour
 {
-    private bool Exist = false;
+    public bool Exist = false;
     public Room[] partList;
     public GameObject[,] partMap = new GameObject[5,5];
 
     public GameObject roomPref;
 
+    public int danslcu;
     public bool update = false;
-    
-    //public Vector2 arrayPos;
-    //public bool debugMapPos;
 
-    
+    public Dictionary<Generation.open, List<RoomContainer>> exitDicitonnary = new Dictionary<Generation.open, List<RoomContainer>>();
+    [HideInInspector] public List<RoomContainer> topExits;
+    [HideInInspector] public List<RoomContainer> botExits;
+    [HideInInspector] public List<RoomContainer> leftExits;
+    [HideInInspector] public List<RoomContainer> rightExits;
 
-    private void Start()
+
+
+    private void Awake()
     {
         if (!Exist)
         {
@@ -50,70 +55,108 @@ public class RoomCreator : MonoBehaviour
             partMap[2,2] = partList[0].RoomGO.gameObject;
             Exist = true;
         }
+        
     }
 
     private void Update()
     {
+        danslcu = exitDicitonnary.Count;
+        
         if (update)
         {
-            foreach (Room rom in partList)
+            PartUpdate();
+            Debug.Log("Update");
+            update = false;
+        }
+
+        if (exitDicitonnary.Count == 0)
+        {
+            DictionaryUpdate();
+        }
+        
+    }
+
+    public void PartUpdate()
+    {
+        foreach (Room rom in partList)
             {
 
                 if (rom.RoomGO == null)
                 {
                     rom.RoomGO = Instantiate(roomPref, new Vector2((rom.ArrayPosition.x-2)*18.4f , (rom.ArrayPosition.y-2)*10.4f), Quaternion.identity, transform).GetComponent<RoomContainer>();
-                    partMap[(int) rom.ArrayPosition.x, (int) rom.ArrayPosition.y] = rom.RoomGO.gameObject;
-                    
                 }
+                    partMap[(int) rom.ArrayPosition.x, (int) rom.ArrayPosition.y] = rom.RoomGO.gameObject;
+                    rom.RoomGO.roomRef = this;
+                    rom.RoomGO.roomPos = rom.ArrayPosition;
+                    rom.RoomGO.name = rom.ArrayPosition.ToString();
             }
 
             foreach (Room rom in partList)
             {
-                Debug.Log(rom.ArrayPosition);
-                Debug.Log(rom.ArrayPosition.x - 1);
+                //Debug.Log(rom.ArrayPosition);
+                //Debug.Log(rom.ArrayPosition.x - 1);
                 if ((rom.ArrayPosition.x - 1) >= 0)
                 {
-                    Debug.Log(rom.RoomGO.partLeft);
-                    if (partMap[(int) rom.ArrayPosition.x - 1, (int) rom.ArrayPosition.y] != null) rom.RoomGO.partLeft = true;
-                    else rom.RoomGO.partLeft = false;
+                    //Debug.Log(rom.RoomGO.partLeft);
+                    if (partMap[(int) rom.ArrayPosition.x - 1, (int) rom.ArrayPosition.y] != null) rom.RoomGO.partLeft = partMap[(int) rom.ArrayPosition.x - 1, (int) rom.ArrayPosition.y].GetComponent<RoomContainer>();
+                    else rom.RoomGO.partLeft = null;
                 }
-                else rom.RoomGO.partLeft = false;
+                else rom.RoomGO.partLeft = null;
 
                 if (rom.ArrayPosition.x + 1 < partMap.GetLength(0))
                 {
-                    if (partMap[(int) rom.ArrayPosition.x + 1, (int) rom.ArrayPosition.y] != null) rom.RoomGO.partRight = true;
-                    else rom.RoomGO.partRight = false;
+                    if (partMap[(int) rom.ArrayPosition.x + 1, (int) rom.ArrayPosition.y] != null) rom.RoomGO.partRight = partMap[(int) rom.ArrayPosition.x + 1, (int) rom.ArrayPosition.y].GetComponent<RoomContainer>();
+                    else rom.RoomGO.partRight = null;
                 }
-                else rom.RoomGO.partRight = false;
+                else rom.RoomGO.partRight = null;
 
                 if ((rom.ArrayPosition.y - 1) >= 0)
                 {
-                    if (partMap[(int) rom.ArrayPosition.x, (int) rom.ArrayPosition.y - 1] != null) rom.RoomGO.partBot = true;
-                    else rom.RoomGO.partBot = false;
+                    if (partMap[(int) rom.ArrayPosition.x, (int) rom.ArrayPosition.y - 1] != null) rom.RoomGO.partBot = partMap[(int) rom.ArrayPosition.x, (int) rom.ArrayPosition.y - 1].GetComponent<RoomContainer>();
+                    else rom.RoomGO.partBot = null;
                 }
-                else rom.RoomGO.partBot = false;
+                else rom.RoomGO.partBot = null;
 
 
                 if (rom.ArrayPosition.y + 1 < partMap.GetLength(1))
                 {
-                    if (partMap[(int) rom.ArrayPosition.x, (int) rom.ArrayPosition.y + 1] != null) rom.RoomGO.partTop = true;
-                    else rom.RoomGO.partTop = false;
-                    Debug.Log(rom.RoomGO.partTop);
+                    if (partMap[(int) rom.ArrayPosition.x, (int) rom.ArrayPosition.y + 1] != null) rom.RoomGO.partTop = partMap[(int) rom.ArrayPosition.x, (int) rom.ArrayPosition.y + 1].GetComponent<RoomContainer>();
+                    else rom.RoomGO.partTop = null;
+                    //Debug.Log(rom.RoomGO.partTop);
                 }
-                else rom.RoomGO.partTop = false;
+                else rom.RoomGO.partTop = null;
 
                 rom.RoomGO.exitTop = rom.exitTop;
+                if (rom.RoomGO.exitTop) topExits.Add(rom.RoomGO);
+                else if (topExits.Contains(rom.RoomGO)) topExits.Remove(rom.RoomGO);
+                
                 rom.RoomGO.exitLeft = rom.exitLeft;
+                if (rom.RoomGO.exitLeft) leftExits.Add(rom.RoomGO);
+                else if (leftExits.Contains(rom.RoomGO)) leftExits.Remove(rom.RoomGO);
+                
                 rom.RoomGO.exitRight = rom.exitRight;
+                if (rom.RoomGO.exitRight) rightExits.Add(rom.RoomGO);
+                else if (rightExits.Contains(rom.RoomGO)) rightExits.Remove(rom.RoomGO);
+                
                 rom.RoomGO.exitBot = rom.exitBot;
+                if (rom.RoomGO.exitBot) botExits.Add(rom.RoomGO);
+                else if (botExits.Contains(rom.RoomGO)) botExits.Remove(rom.RoomGO);
+                
 
                 rom.RoomGO.UpdatePart();
             }
+    }
 
-            Debug.Log("Update");
-            update = false;
-        }
-
-        
+    public void DictionaryUpdate()
+    {
+        topExits = new List<RoomContainer>();
+        exitDicitonnary.Add(Generation.open.top, topExits);
+        leftExits = new List<RoomContainer>();
+        exitDicitonnary.Add(Generation.open.left, leftExits);
+        rightExits = new List<RoomContainer>();
+        exitDicitonnary.Add(Generation.open.right, rightExits);
+        botExits = new List<RoomContainer>();
+        exitDicitonnary.Add(Generation.open.bot, botExits);
+        Debug.Log("Add dictionary");
     }
 }
