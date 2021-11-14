@@ -50,7 +50,7 @@ public class Explosion : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
       
-            other.GetComponent<EnemyStateManager>().TakeDamage(damage, rb.position, knockUpValue, true);
+            other.GetComponent<EnemyStateManager>().TakeDamage(damage, rb.position, knockUpValue, true, true);
         }
     }
 }

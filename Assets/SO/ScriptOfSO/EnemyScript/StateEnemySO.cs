@@ -8,20 +8,17 @@ using Object = UnityEngine.Object;
 public class StateEnemySO : ScriptableObject
 {
     // deja utilisé
-    private void OnValidate()
-    {
-        Debug.Log(useTimeCondition);
-    }
+ 
 
     public bool openBasePanel;
-   
     public bool openDebugPanel;
     public bool openSpecPanel;
-   
+    public float timeCondition;
+    public float healthCondition;
     public bool openKnobDebugPanel;
     public bool useHealthCondition;
     public bool useTimeCondition;
-       public bool isKnockUpInState =true;
+    public bool isKnockUpInState =true;
     //debug
     public List<ExtensionMethods.ObjectInStateManager> objectInStateManagersCondition = new List<ExtensionMethods.ObjectInStateManager>();
     public List<ExtensionMethods.ObjectInStateManager> objectInStateManagersState = new List<ExtensionMethods.ObjectInStateManager>();

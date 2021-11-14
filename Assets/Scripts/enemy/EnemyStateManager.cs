@@ -8,6 +8,7 @@ using Object = UnityEngine.Object;
 
 public class EnemyStateManager : MonoBehaviour
 {
+  
     public EMainStatsSO EMainStatsSo;
     // Variable for Set Value and Object in States
     public Vector2 forceApply;
@@ -62,17 +63,23 @@ public class EnemyStateManager : MonoBehaviour
     }
 
     private void Start()
-    { Debug.Log(EMainStatsSo.timeCondition.Count);
+    { 
         spawnPosition = transform.position;
         rb = GetComponent<Rigidbody2D>();
         health = EMainStatsSo.maxHealth;
-       
-        foreach (var element in EMainStatsSo.timeCondition)
+
+        for (int i = 0; i < EMainStatsSo.stateEnnemList.Count; i++)
         {
+            if (EMainStatsSo.stateEnnemList[i].useTimeCondition)
+                        { 
+                            timerCondition.Add(i, 0);
+                        }
+                      
+        }
+        
+
             
-            timerCondition.Add(element.Key , 0); 
-            Debug.Log(timerCondition[0]);
-        } 
+        
        
         for (int i = 0; i < EMainStatsSo.stateEnnemList.Count; i++)
         {
@@ -108,36 +115,36 @@ public class EnemyStateManager : MonoBehaviour
         {
                 for (int i = 0; i < EMainStatsSo.stateEnnemList.Count; i++)
                     {
-                       
-                        if (EMainStatsSo.healthCondition.Count != 0)
-                        {
-                             if (EMainStatsSo.healthCondition[i] != null)
-                                                    {
-                                                        if (EMainStatsSo.healthCondition[i] > health)
-                                                        {
-                                                           
-                                                            continue;
-                                                        }
-                                                    }
-                        }
                       
-                        if (EMainStatsSo.timeCondition.Count != 0 && timerCondition.Count != 0)
-
+                        if (EMainStatsSo.stateEnnemList[i].useHealthCondition)
                         {
-                            if (EMainStatsSo.timeCondition[i] != null)
-                            {
-                                if (EMainStatsSo.timeCondition[i] > timerCondition[i])
+                          
+                            
+                                if (EMainStatsSo.stateEnnemList[i].healthCondition > health)
                                 {
-                                    
+                                                           
                                     continue;
                                 }
+                                                    
+                        }
+                      
+                        if (EMainStatsSo.stateEnnemList[i].useTimeCondition)
+
+                        {
+                        
+                           
+                            if (EMainStatsSo.stateEnnemList[i].timeCondition > timerCondition[i])
+                                {
+                                   
+                                    continue;
+                                
                             }
                         }
                        
                    
                         if (EMainStatsSo.stateEnnemList[i].CheckCondition(objectDictionaryCondition ))
                         {
-                           
+                           Debug.Log("aa");
                            
                             if (!EMainStatsSo.stateEnnemList[i].isFixedUpdate)
                             {
@@ -194,11 +201,10 @@ public class EnemyStateManager : MonoBehaviour
                 {
                     if (EMainStatsSo.stateEnnemList[i].useTimeCondition)
                     {
-                        Debug.Log(i);
-                        
-                        Debug.Log(EMainStatsSo.timeCondition[i]);
+                       
                            timerCondition[i] += Time.deltaTime;
-                                            timerCondition[i] = Mathf.Min(timerCondition[i],EMainStatsSo.timeCondition[i]);
+                           timerCondition[i] = Mathf.Min(timerCondition[i],EMainStatsSo.stateEnnemList[i].timeCondition);
+                        
                     }
                  
                 }
@@ -219,7 +225,7 @@ public class EnemyStateManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+      
       
        ApplyState();
 
@@ -256,6 +262,7 @@ public class EnemyStateManager : MonoBehaviour
                                                      {
                                                            isDragKnockUp = false;
                                                            rb.drag = 0;
+                                                           rb.velocity = Vector2.zero;
                                                      }
                        
                
@@ -416,7 +423,7 @@ public class EnemyStateManager : MonoBehaviour
       
   }
 
-  public void TakeDamage(float damage, Vector2 position, float knockUpValue, bool knockup)
+  public void TakeDamage(float damage, Vector2 position, float knockUpValue, bool knockup, bool isExplosion)
   {
       if (health - damage <= 0)
       {
@@ -424,18 +431,18 @@ public class EnemyStateManager : MonoBehaviour
       }
       else
       {
-          Knockup( position, knockUpValue, knockup);
+          Knockup( position, knockUpValue, knockup, isExplosion);
           health -= damage;
       }
   }
 
-      void Knockup(Vector2 position, float knockUpValue, bool knockUp)
+      void Knockup(Vector2 position, float knockUpValue, bool knockUp, bool isExplosion)
       {
           if (!knockUp)
           {
               return;
           }
-          if (EMainStatsSo.isKnockUp && !isDragKnockUp && knockUpInState && EMainStatsSo.baseState != null)
+          if (EMainStatsSo.isKnockUp  && knockUpInState && EMainStatsSo.baseState != null && (!isDragKnockUp||isExplosion))
           {
            
               Vector2 direction =new Vector2();
@@ -452,6 +459,7 @@ public class EnemyStateManager : MonoBehaviour
 
       private void OnTriggerEnter2D(Collider2D other)
       {
+          if(!HealthPlayer.Instance.playerController.InDash)
           if(other.gameObject.CompareTag("Player"))
           HealthPlayer.Instance.TakeDamagePlayer(1);
           if (other.CompareTag("Wind"))

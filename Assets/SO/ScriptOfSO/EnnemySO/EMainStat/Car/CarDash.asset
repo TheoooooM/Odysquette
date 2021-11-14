@@ -15,14 +15,16 @@ MonoBehaviour:
   openBasePanel: 1
   openDebugPanel: 0
   openSpecPanel: 1
+  timeCondition: 3
+  healthCondition: 0
   openKnobDebugPanel: 0
   useHealthCondition: 0
   useTimeCondition: 1
   isKnockUpInState: 0
   objectInStateManagersCondition: 010000000200000007000000
   objectInStateManagersState: 0100000007000000
-  oneStartState: 0
-  startTime: 3
+  oneStartState: 1
+  startTime: 0.5
   playStateTime: 0
   isFixedUpdate: 1
   haveStartState: 1
@@ -60,6 +62,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  maxspeed: 15.11
-  rangeDetection: 20
+  maxspeed: 20
+  rangeDetection: 7
   extentsRangeDetection: {x: 3, y: 3, z: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1536

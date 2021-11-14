@@ -38,7 +38,7 @@ public class Poison : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-             other.GetComponent<EnemyStateManager>().TakeDamage(damage, transform.position, 0, false);
+             other.GetComponent<EnemyStateManager>().TakeDamage(damage, transform.position, 0, false, false);
                     gameObject.SetActive(false);
                     PoolManager.Instance.PoisonQueue.Enqueue(gameObject);
         }

@@ -64,12 +64,15 @@ public class EnemyBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (!HealthPlayer.Instance.playerController.InDash)
         {
-            HealthPlayer.Instance.TakeDamagePlayer(damage);
-            DesactiveBullet();
+             if (other.CompareTag("Player"))
+                    {
+                        HealthPlayer.Instance.TakeDamagePlayer(damage);
+                        DesactiveBullet();
+                    }
         }
-
+        
         else if (other.CompareTag("Walls"))
 
         {

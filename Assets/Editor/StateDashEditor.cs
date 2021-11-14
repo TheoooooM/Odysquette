@@ -33,6 +33,9 @@ public class StateDashEditor : StateSOEditor
                           EditorGUILayout.PropertyField(serializedObject.FindProperty("animationCurve"));
                           EditorGUILayout.Space(4f);
                           EditorGUILayout.PropertyField(serializedObject.FindProperty("extentsRangeDetection"), new GUIContent("Wall Detection Box"));
+                          EditorGUILayout.Space(4f);
+                          EditorGUILayout.PropertyField(serializedObject.FindProperty("layerMask"));
+                          EditorGUILayout.Space(4f);
                       }
                       EditorGUILayout.EndFoldoutHeaderGroup();
          }

@@ -25,7 +25,7 @@ public static class ExtensionMethods
 
    public enum EnemyTypeShoot
    {
-       TestType
+       WalkmanType, HologramType
    }
    
 

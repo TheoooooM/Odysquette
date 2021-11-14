@@ -7,9 +7,9 @@ public class WindStateEditor : StateSOEditor
 {
     public override void OnInspectorGUI()
     {
-     ;
+     ; serializedObject.Update();
         StateWind eStateMouvementSO = (StateWind) target;
-        serializedObject.Update();
+       
         base.OnInspectorGUI();
   
         subSubTitle.fontSize = 13;
@@ -40,5 +40,6 @@ public class WindStateEditor : StateSOEditor
     
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
+        serializedObject.ApplyModifiedProperties();
     }
 }

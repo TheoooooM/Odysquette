@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class Playercontroller : MonoBehaviour
 {
+  
     [SerializeField] float MouvementSpeed = 0.01f;
     private float defaultSpeed;
     public GameObject gun;
@@ -39,9 +40,11 @@ public class Playercontroller : MonoBehaviour
     public bool InDash;
     [SerializeField]
     private bool TryDash;
+    
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        
 
 
         playerInput = new Aled();

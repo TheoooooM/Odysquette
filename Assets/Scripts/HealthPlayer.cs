@@ -67,8 +67,8 @@ public class HealthPlayer : MonoBehaviour
 
   public  void TakeDamagePlayer(int damage)
     {
-        if (!playerController.InDash)
-        {
+
+        
              if (!isInvincible)
                     {
                         Debug.Log("test"); 
@@ -92,7 +92,7 @@ public class HealthPlayer : MonoBehaviour
                                     }
                    
                     }
-        }
+        
        
     }
 

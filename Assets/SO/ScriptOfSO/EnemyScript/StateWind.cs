@@ -15,7 +15,7 @@ public class StateWind : StateEnemySO
         
     public override void PlayState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
     {
-        WindParticleManager windParticleManager = (WindParticleManager) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyPlayer];
+        WindParticleManager windParticleManager = (WindParticleManager) objectDictionary[ExtensionMethods.ObjectInStateManager.WindParticleManager];
         windParticleManager.enabled = true;
         endStep = false;
     }

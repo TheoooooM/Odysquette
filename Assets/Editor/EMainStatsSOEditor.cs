@@ -157,55 +157,45 @@ public class EMainStatsSOEditor : Editor
          GUILayout.Label("Conditions", subTitle);
          EditorGUILayout.Space(6f);
          GUI.backgroundColor = Color.yellow;
-           
-        
-            using (new GUILayout.VerticalScope(EditorStyles.helpBox))
-            {
-               using (new GUILayout.HorizontalScope())
-               {
-                  eMainStatsSo.stateEnnemList[currentTab - 1].useHealthCondition =
-                     EditorGUILayout.Toggle("Health Condition",
-                        eMainStatsSo.stateEnnemList[currentTab - 1].useHealthCondition);
-                  if (eMainStatsSo.stateEnnemList[currentTab - 1].useHealthCondition)
-                  {
-                     if (!eMainStatsSo.healthCondition.ContainsKey(currentTab-1))
-                     {
-                        eMainStatsSo.healthCondition.Add(currentTab-1, 0);
-                     }
-                  
-                     eMainStatsSo.healthCondition[currentTab - 1] =
-                        EditorGUILayout.FloatField("Health for State", eMainStatsSo.healthCondition[currentTab - 1]);
-                  }
-                  else
-                  {
-                   
-                     if ( eMainStatsSo.healthCondition.ContainsKey(currentTab-1))
-                     {
-                        
-                        eMainStatsSo.healthCondition.Remove(currentTab-1);
-                     }
-                  }
-               }
-
-               EditorGUILayout.Space(4f);
-               using (new GUILayout.HorizontalScope())
-               {
-                  eMainStatsSo.stateEnnemList[currentTab - 1].useTimeCondition =
-                     EditorGUILayout.Toggle("Time Condition",
-                        eMainStatsSo.stateEnnemList[currentTab - 1].useTimeCondition);
-                  if (eMainStatsSo.stateEnnemList[currentTab - 1].useTimeCondition)
-                  {
-                     if (!eMainStatsSo.timeCondition.ContainsKey(currentTab-1))
-                     {
-                        eMainStatsSo.timeCondition.Add(currentTab-1, 0);
-                     }
-                     eMainStatsSo.timeCondition[currentTab - 1] =
-                        EditorGUILayout.FloatField("Time for State", eMainStatsSo.timeCondition[currentTab - 1]);
-                     Debug.Log(eMainStatsSo.timeCondition.Count);
-                  }
+         openConditionPanel = EditorGUILayout.BeginFoldoutHeaderGroup(openConditionPanel, "Conditions");
+         if (openConditionPanel)
+         {
+             using (new GUILayout.VerticalScope(EditorStyles.helpBox))
+                        {
+                           using (new GUILayout.HorizontalScope())
+                           {
+                              eMainStatsSo.stateEnnemList[currentTab - 1].useHealthCondition =
+                                 EditorGUILayout.Toggle("Health Condition",
+                                    eMainStatsSo.stateEnnemList[currentTab - 1].useHealthCondition);
+                              if (eMainStatsSo.stateEnnemList[currentTab - 1].useHealthCondition)
+                              {
+                              
+                              
+                                 eMainStatsSo.stateEnnemList[currentTab-1].healthCondition =
+                                    EditorGUILayout.FloatField("Health for State", eMainStatsSo.stateEnnemList[currentTab - 1].healthCondition);
+                              }
+                            
+                           }
             
+                           EditorGUILayout.Space(4f);
+                           using (new GUILayout.HorizontalScope())
+                           {
+                              eMainStatsSo.stateEnnemList[currentTab - 1].useTimeCondition =
+                                 EditorGUILayout.Toggle("Time Condition",
+                                    eMainStatsSo.stateEnnemList[currentTab - 1].useTimeCondition);
+                              if (eMainStatsSo.stateEnnemList[currentTab - 1].useTimeCondition)
+                              {
+                               
+                                 eMainStatsSo.stateEnnemList[currentTab-1].timeCondition =
+                                    EditorGUILayout.FloatField("Time for State", eMainStatsSo.stateEnnemList[currentTab-1].timeCondition);
+                           
+                              }
+                        
+         }
+        
+           
                }
-               Debug.Log(eMainStatsSo.timeCondition.Count);
+           
 
 
             }
@@ -226,19 +216,5 @@ public class EMainStatsSOEditor : Editor
     serializedObject.ApplyModifiedProperties();DestroyImmediate(editor);
    }
 
-   void ReachID(Dictionary<int, float> floatWithId, bool remove)
-   {
-     
-      if (floatWithId.ContainsKey(currentTab-1))
-      {
-         if (remove)
-            floatWithId.Remove(currentTab-1);
-      }
-      else
-      {
-         floatWithId.Add(currentTab-1, 0);
-      }
-         
-      
-   }
+
 }

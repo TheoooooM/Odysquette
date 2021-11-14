@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ebaa6998f892394c9b86bb772de5e15, type: 3}
-  m_Name: Walkman
+  m_Name: Hologram
   m_EditorClassIdentifier: 
-  typeName: Walkman
-  maxHealth: 100
+  typeName: Hologram
+  maxHealth: 600
   dragForKnockUp: 0
   isKnockUp: 0
   sprite: {fileID: 0}
-  stateEnnemList: []
+  stateEnnemList:
+  - {fileID: 11400000, guid: f3fcbe1e5219fdd428eb34589bd47c2d, type: 2}
+  - {fileID: 11400000, guid: 1417c0556fa8a4c4891f98365cad8266, type: 2}
   baseState: {fileID: 0}
   spriteRenderer: {fileID: 0}
-  giverUltimateStrawPoints: 0
+  giverUltimateStrawPoints: 40

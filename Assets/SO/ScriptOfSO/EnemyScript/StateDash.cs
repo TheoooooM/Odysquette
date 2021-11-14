@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Mathematics;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 using Object = UnityEngine.Object;
@@ -17,7 +18,7 @@ public class StateDash : StateEnemySO
  
   
    public Vector3 extentsRangeDetection;
-   
+   public LayerMask layerMask;
 
     public override bool CheckCondition(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary)
     {
@@ -29,11 +30,12 @@ public class StateDash : StateEnemySO
                    
                    Vector2 direction = (rbPlayer.position - rb.position);
                    RaycastHit2D hit = Physics2D.BoxCast(rb.position, extentsRangeDetection, 0,
-                       direction.normalized, direction.magnitude);
-               
+                       direction.normalized, direction.magnitude, layerMask);  
+                   ExtDebug.DrawBoxCastBox(rb.position, extentsRangeDetection/2, Quaternion.identity, direction.normalized, direction.magnitude, Color.red);
+               Debug.Log(hit.collider.gameObject.name);
                    if(hit.collider.gameObject.layer == 9 )
                          {
-                                      
+                                    
                              Transform target = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.AimDash];
                              target.position  = rbPlayer.position; 
                              target.gameObject.SetActive(true);
@@ -61,7 +63,7 @@ public class StateDash : StateEnemySO
     }
     public override void PlayState( Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
     {
-        Debug.Log("test");
+      
         
        Transform transformDash = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.AimDash];
         Rigidbody2D rb =
@@ -76,6 +78,7 @@ public class StateDash : StateEnemySO
         {
            
            transformDash.gameObject.SetActive(false);
+           rb.velocity = Vector2.zero;
             endStep = true;
             return;
         }

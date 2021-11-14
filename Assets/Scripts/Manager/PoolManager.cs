@@ -131,7 +131,7 @@ public class PoolManager : MonoBehaviour
     {
         if (explosionQueue.Count == 0)
         {
-            Debug.Log(bullet.position);
+        
             GameObject obj = Instantiate(explosionPrefab, bullet.position, quaternion.identity);
             //obj.transform.position = bullet.position;
         }
