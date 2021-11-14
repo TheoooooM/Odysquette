@@ -8,7 +8,11 @@ using Object = UnityEngine.Object;
 public class StateEnemySO : ScriptableObject
 {
     // deja utilisé
- 
+    private void OnValidate()
+    {
+        Debug.Log(useTimeCondition);
+    }
+
     public bool openBasePanel;
    
     public bool openDebugPanel;

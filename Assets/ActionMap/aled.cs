@@ -172,7 +172,7 @@ public class @Aled : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4e28b0b7-24c9-4bcb-b8e2-7de550b21445"",
-                    ""path"": ""<XInputController>/buttonWest"",
+                    ""path"": ""<XInputController>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -227,7 +227,7 @@ public class @Aled : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""09543617-a00a-4249-b9e4-d1420d305343"",
-                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""path"": ""<XInputController>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",

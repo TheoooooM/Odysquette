@@ -24,6 +24,7 @@ public class EMainStatsSOEditor : Editor
    {  
       serializedObject.Update();
       EMainStatsSO eMainStatsSo = (EMainStatsSO) target;
+      
       GUI.backgroundColor = backgroundColorBox;
   
       using (new GUILayout.VerticalScope(EditorStyles.helpBox))
@@ -88,15 +89,14 @@ public class EMainStatsSOEditor : Editor
                                 
                                                 EditorGUILayout.PropertyField(serializedObject.FindProperty("typeName"));
                                                 EditorGUILayout.Space(4f);
-                                                using (new GUILayout.HorizontalScope())
-                                                {  EditorGUILayout.PropertyField(serializedObject.FindProperty("maxHealth"));
+                                               EditorGUILayout.PropertyField(serializedObject.FindProperty("maxHealth"));
                                                                                              
-                                                                                             GUILayout.FlexibleSpace();
-                                                                                                 EditorGUILayout.PropertyField(serializedObject.FindProperty("sprite"));
+                                                                                        
+                                                                                                 
                                                                                                 
                                                                                                 
                                                                                                  
-                                                }EditorGUILayout.Space(4f);
+                                                EditorGUILayout.Space(4f);
 
                                               
                                              
@@ -140,6 +140,7 @@ public class EMainStatsSOEditor : Editor
 
                                      editor = CreateEditor(eMainStatsSo.baseState);
                                     DrawFoldoutInspector(eMainStatsSo.baseState, ref editor);
+                                  
                                  }
                               }
 
@@ -157,9 +158,7 @@ public class EMainStatsSOEditor : Editor
          EditorGUILayout.Space(6f);
          GUI.backgroundColor = Color.yellow;
            
-         openConditionPanel = EditorGUILayout.BeginFoldoutHeaderGroup(openConditionPanel, "Conditions");
-         if (openConditionPanel)
-         {
+        
             using (new GUILayout.VerticalScope(EditorStyles.helpBox))
             {
                using (new GUILayout.HorizontalScope())
@@ -169,14 +168,22 @@ public class EMainStatsSOEditor : Editor
                         eMainStatsSo.stateEnnemList[currentTab - 1].useHealthCondition);
                   if (eMainStatsSo.stateEnnemList[currentTab - 1].useHealthCondition)
                   {
-                     ReachID(eMainStatsSo.healthCondition, false);
+                     if (!eMainStatsSo.healthCondition.ContainsKey(currentTab-1))
+                     {
+                        eMainStatsSo.healthCondition.Add(currentTab-1, 0);
+                     }
+                  
                      eMainStatsSo.healthCondition[currentTab - 1] =
                         EditorGUILayout.FloatField("Health for State", eMainStatsSo.healthCondition[currentTab - 1]);
                   }
                   else
                   {
-                     ReachID(eMainStatsSo.healthCondition, true);
-
+                   
+                     if ( eMainStatsSo.healthCondition.ContainsKey(currentTab-1))
+                     {
+                        
+                        eMainStatsSo.healthCondition.Remove(currentTab-1);
+                     }
                   }
                }
 
@@ -188,16 +195,17 @@ public class EMainStatsSOEditor : Editor
                         eMainStatsSo.stateEnnemList[currentTab - 1].useTimeCondition);
                   if (eMainStatsSo.stateEnnemList[currentTab - 1].useTimeCondition)
                   {
-                     ReachID(eMainStatsSo.timeCondition, false);
+                     if (!eMainStatsSo.timeCondition.ContainsKey(currentTab-1))
+                     {
+                        eMainStatsSo.timeCondition.Add(currentTab-1, 0);
+                     }
                      eMainStatsSo.timeCondition[currentTab - 1] =
                         EditorGUILayout.FloatField("Time for State", eMainStatsSo.timeCondition[currentTab - 1]);
+                     Debug.Log(eMainStatsSo.timeCondition.Count);
                   }
-                  else
-                  {
-                     ReachID(eMainStatsSo.timeCondition, true);
-                  }
+            
                }
-
+               Debug.Log(eMainStatsSo.timeCondition.Count);
 
 
             }
@@ -206,17 +214,16 @@ public class EMainStatsSOEditor : Editor
 
          }
 
-         EditorGUILayout.EndFoldoutHeaderGroup();
         
-      }
+      
    }
       }
 
 
 
       
-      serializedObject.ApplyModifiedProperties();
-      DestroyImmediate(editor);
+      
+    serializedObject.ApplyModifiedProperties();DestroyImmediate(editor);
    }
 
    void ReachID(Dictionary<int, float> floatWithId, bool remove)

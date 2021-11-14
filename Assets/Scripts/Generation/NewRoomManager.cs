@@ -47,7 +47,7 @@ public class NewRoomManager : MonoBehaviour
         int antiwhile = 0;
         for (int i = 1; i < roomAmount; i++)
         {
-            Debug.Log("start createRoom n°" + i);
+       
             
             if (i > 1)
             {
@@ -61,14 +61,14 @@ public class NewRoomManager : MonoBehaviour
                 {
                     i--;
                     hasSpawn = true;
-                Debug.Log("less 1 = " + i);
+           
                 }
             
             }
             
             if (i == 1)
             {
-                Debug.Log("firstRoom");
+               
                 int num = Random.Range(0, firstRoom.Length);
                 generateRoom =  Instantiate(firstRoom[num]).GetComponent<RoomClass>();
                 switch (generateRoom.GetComponent<RoomClass>().ExitArray[0])

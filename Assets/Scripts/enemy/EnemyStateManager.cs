@@ -49,7 +49,7 @@ public class EnemyStateManager : MonoBehaviour
     private CurrentState CurrentUpdateState;
     //Timer
 
-    public List<float> timerCondition = new List<float>();
+    public Dictionary<int, float > timerCondition = new Dictionary<int, float>();
     [SerializeField]
     private float timerCurrentStartState;
     private float timerCurrentState;
@@ -57,16 +57,23 @@ public class EnemyStateManager : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private void OnValidate()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = EMainStatsSo.sprite;
+     //   spriteRenderer = GetComponent<SpriteRenderer>();
+       // spriteRenderer.sprite = EMainStatsSo.sprite;
     }
 
     private void Start()
-    {
+    { Debug.Log(EMainStatsSo.timeCondition.Count);
         spawnPosition = transform.position;
         rb = GetComponent<Rigidbody2D>();
         health = EMainStatsSo.maxHealth;
-        
+       
+        foreach (var element in EMainStatsSo.timeCondition)
+        {
+            
+            timerCondition.Add(element.Key , 0); 
+            Debug.Log(timerCondition[0]);
+        } 
+       
         for (int i = 0; i < EMainStatsSo.stateEnnemList.Count; i++)
         {
             if (EMainStatsSo.stateEnnemList[i].objectInStateManagersCondition.Count > 0)
@@ -183,10 +190,17 @@ public class EnemyStateManager : MonoBehaviour
 
         #region UpdateTimer
 
-          for (int i = 0; i < timerCondition.Count; i++)
+          for (int i = 0; i < EMainStatsSo.stateEnnemList.Count; i++)
                 {
-                    timerCondition[i] += Time.deltaTime;
-                    timerCondition[i] = Mathf.Min(timerCondition[i],EMainStatsSo.timeCondition[i]);
+                    if (EMainStatsSo.stateEnnemList[i].useTimeCondition)
+                    {
+                        Debug.Log(i);
+                        
+                        Debug.Log(EMainStatsSo.timeCondition[i]);
+                           timerCondition[i] += Time.deltaTime;
+                                            timerCondition[i] = Mathf.Min(timerCondition[i],EMainStatsSo.timeCondition[i]);
+                    }
+                 
                 }
           if(IsCurrentStatePlayed && EMainStatsSo.stateEnnemList[indexCurrentState].playStateTime != 0 ) timerCurrentState += Time.deltaTime;
           if (IsCurrentStartPlayed && EMainStatsSo.stateEnnemList[indexCurrentState].startTime != 0)
@@ -337,7 +351,7 @@ public class EnemyStateManager : MonoBehaviour
 
                     else 
                         CurrentUpdateState -= EMainStatsSo.stateEnnemList[indexCurrentState].PlayState;
-                    if (timerCondition[indexCurrentState] != 0)
+                    if (timerCondition.ContainsKey(indexCurrentState))
                                          {
                                              timerCondition[indexCurrentState] = 0;
                                          }
