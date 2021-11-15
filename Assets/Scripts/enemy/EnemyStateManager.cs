@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Pathfinding;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -23,6 +24,7 @@ public class EnemyStateManager : MonoBehaviour
     public float windSpeed;
     public float health;
     public bool isDragKnockUp;
+
    
      
     //Main Stat
@@ -103,7 +105,7 @@ public class EnemyStateManager : MonoBehaviour
             }
             }
 
- 
+ if(EMainStatsSo.baseState != null)
         UpdateDictionaries(EMainStatsSo.baseState);
            
     }
@@ -247,6 +249,7 @@ public class EnemyStateManager : MonoBehaviour
                  EMainStatsSo.baseState.PlayState( objectDictionaryState, out bool endStep);
                  knockUpInState = EMainStatsSo.baseState.isKnockUpInState;
              }
+         
        }
      
 
@@ -268,6 +271,7 @@ public class EnemyStateManager : MonoBehaviour
                
            }
        }
+       
     
     }
 
@@ -406,7 +410,7 @@ public class EnemyStateManager : MonoBehaviour
 
   }
 
-  public void OnDeath()
+  public void OnDeath(bool ultimate)
   {
       try
       {
@@ -416,18 +420,18 @@ public class EnemyStateManager : MonoBehaviour
       {
           Destroy(gameObject);
       }
-      
+     if(!ultimate)
         GameManager.Instance.ultimateValue += EMainStatsSo.giverUltimateStrawPoints;
         Debug.Log(GameManager.Instance.ultimateValue);
   
       
   }
 
-  public void TakeDamage(float damage, Vector2 position, float knockUpValue, bool knockup, bool isExplosion)
+  public void TakeDamage(bool ultimate , float damage, Vector2 position, float knockUpValue, bool knockup, bool isExplosion)
   {
       if (health - damage <= 0)
       {
-          OnDeath();
+          OnDeath(ultimate);
       }
       else
       {

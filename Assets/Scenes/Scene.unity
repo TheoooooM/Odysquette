@@ -195,11 +195,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 75013268}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.03, y: -0.77, z: 0}
+  m_LocalPosition: {x: 1.15, y: 0.38, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1598660058}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &75013270
 ParticleSystemRenderer:
@@ -900,9 +900,9 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: 3.17, y: -0.59, z: 0}
-    m_Rotation: {x: 0, y: 0, z: 210}
-    m_Scale: {x: 1, y: 1, z: 1}
+    m_Position: {x: 2.22, y: 0.09, z: 0}
+    m_Rotation: {x: 0, y: 0, z: 90}
+    m_Scale: {x: 1.73, y: 1.73, z: 1}
     placementMode: 2
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -4998,9 +4998,9 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 4.27, y: 4.51}
-      - {x: 0, y: 2}
-      - {x: 4.32, y: -0.53}
+    - - {x: 5.8655276, y: 6.382843}
+      - {x: -1.4672089, y: 2.1029797}
+      - {x: 5.8927464, y: -2.167077}
 --- !u!1 &75304929
 GameObject:
   m_ObjectHideFlags: 0
@@ -5429,6 +5429,8 @@ MonoBehaviour:
     _object: {fileID: 541801659}
   - objectInStateManager: 1
     _object: {fileID: 191158723}
+  - objectInStateManager: 6
+    _object: {fileID: 191158721}
   isInWind: 0
   windDirection: {x: 0, y: 0}
   windSpeed: 0
@@ -6400,7 +6402,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 591330576}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.85, y: -0.87, z: 3.6735082}
+  m_LocalPosition: {x: -8.26, y: -2.4530144, z: 3.6735082}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 1428449395}
@@ -12702,9 +12704,9 @@ Transform:
   m_GameObject: {fileID: 1210399561}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
-  m_Father: {fileID: 1598660058}
+  m_Father: {fileID: 2129185637}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1210399563
@@ -12720,7 +12722,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.043239594, y: 0.027801514}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -12731,7 +12733,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.21, y: 1.23}
+  m_Size: {x: 1.4471893, y: 0.90283585}
   m_EdgeRadius: 0
 --- !u!1 &1210898645
 GameObject:
@@ -13803,7 +13805,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1598660058
 Transform:
   m_ObjectHideFlags: 0
@@ -13812,10 +13814,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1598660057}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.78, y: 23.97, z: 0}
+  m_LocalPosition: {x: -46.78, y: 29.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1210399562}
   - {fileID: 75013269}
   - {fileID: 2129185637}
   m_Father: {fileID: 0}
@@ -13959,7 +13960,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712156579}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.81, y: -1.1930141, z: 3.6735082}
+  m_LocalPosition: {x: 6.78, y: -1.1930141, z: 3.6735082}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 703188292}
@@ -14004,7 +14005,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -2
+  m_SortingOrder: -1
   m_Sprite: {fileID: -8655610312468420977, guid: 51a2682eba3d16f4aac7609f35110071, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -14399,11 +14400,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyShootPools:
-  - enemyTypeShoot: 0
-    bulletPrefab: {fileID: 7925508473566617476, guid: caac48e14a16f7240b3387aff2a4f155, type: 3}
-    sizePool: 5
   - enemyTypeShoot: 1
     bulletPrefab: {fileID: 7925508473566617476, guid: ff3dcf042d6475a428d9a9a5cbba046f, type: 3}
+    sizePool: 5
+  - enemyTypeShoot: 0
+    bulletPrefab: {fileID: 7925508473566617476, guid: caac48e14a16f7240b3387aff2a4f155, type: 3}
     sizePool: 5
 --- !u!1 &1886626978
 GameObject:
@@ -15220,9 +15221,10 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1210399562}
   m_Father: {fileID: 1598660058}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2129185638
 BoxCollider2D:
@@ -15237,7 +15239,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.02285862, y: 0.012610912}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -15248,7 +15250,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.7224026, y: 0.46591473}
   m_EdgeRadius: 0
 --- !u!114 &2129185639
 MonoBehaviour:
@@ -15326,7 +15328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d29982ec27ce94f94b8e5f480cce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EMainStatsSo: {fileID: 0}
+  EMainStatsSo: {fileID: 11400000, guid: 6689daf8a9ea18e46ae692f9e4247477, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
   - objectInStateManager: 1
@@ -15482,7 +15484,7 @@ MonoBehaviour:
     StrawParent: {fileID: 1063981873}
     strawSO: {fileID: 11400000, guid: c6a5e905b2398d442b4ecaa31bd69658, type: 2}
     sizeUltimatePool: 15
-    ultimateStrawSO: {fileID: 11400000, guid: 3e530475a2eead848986f12e54fbaf25, type: 2}
+    ultimateStrawSO: {fileID: 11400000, guid: ca60bda0eb4fbb4499b5a1b68826f7be, type: 2}
     spawnerTransform: {fileID: 1373875980}
     sizeShootPool: 5
   shooting: 0

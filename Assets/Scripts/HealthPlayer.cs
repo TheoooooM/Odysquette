@@ -79,7 +79,7 @@ public class HealthPlayer : MonoBehaviour
                         healthPlayer -= damage;
                                     for (int i = UIManager.Instance.HeartsLife.Length-1; i > -1; i--)
                                     {
-                                        if(i > healthPlayer-1)
+                                        if(i >= healthPlayer)
                                         {
                                             UIManager.Instance.HeartsLife[i].SetActive(false); 
                                         }

@@ -10,14 +10,16 @@ public class StateTP : StateEnemySO
         Transform firstTransmitter = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.FirstTransmitter];
         Transform secondTransmitter = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.SecondTransmitter];
         Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
-        if (enemyTransform.position == firstTransmitter.position)
+        if (Vector3.Distance(enemyTransform.position, firstTransmitter.position)<0.3f)
         {
+            
             secondTransmitter.GetComponent<SpriteRenderer>().color = Color.blue;
         }
-        else
+        else if(Vector3.Distance(enemyTransform.position, secondTransmitter.position)<0.3f)
         {
             firstTransmitter.GetComponent<SpriteRenderer>().color = Color.blue;
         }
+    
     
         
         base.StartState(objectDictionary, out endStep);
@@ -28,17 +30,18 @@ public class StateTP : StateEnemySO
         Transform firstTransmitter = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.FirstTransmitter];
         Transform secondTransmitter = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.SecondTransmitter];
         Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
-
-        if (enemyTransform.position == firstTransmitter.position)
+Debug.Log("bonsoir");
+        if (Vector3.Distance(enemyTransform.position, firstTransmitter.position)<0.3f)
         {
             enemyTransform.position = secondTransmitter.position;
-            secondTransmitter.GetComponent<SpriteRenderer>().color = Color.cyan;
+            secondTransmitter.GetComponent<SpriteRenderer>().color = Color.white;
         }
-        else
+        else if(Vector3.Distance(enemyTransform.position, secondTransmitter.position)<0.3f)
         {
             enemyTransform.position = firstTransmitter.position;
-            firstTransmitter.GetComponent<SpriteRenderer>().color = Color.cyan;
+            firstTransmitter.GetComponent<SpriteRenderer>().color = Color.white;
         }
+        
         endStep = true;
     }
 }

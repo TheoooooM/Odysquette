@@ -199,8 +199,10 @@ public class GameManager : MonoBehaviour
         }
        if (actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate)
        {
+           Debug.Log("testssss");
            if (ultimateValue >= actualStrawClass.ultimateStrawSO.timeValue)
            {
+               Debug.Log("ouhahahahah");
                actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
               
                 ultimateValue -= actualStrawClass.ultimateStrawSO.timeValue;
