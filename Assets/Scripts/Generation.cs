@@ -32,7 +32,7 @@ public class Generation : MonoBehaviour
 
     private void Start()
     {
-        Random.InitState(1);
+        //Random.InitState();
         map = new GameObject[mapSize, mapSize];
         //StartCoroutine("GeneratePath", nbrOfRoom);
     }

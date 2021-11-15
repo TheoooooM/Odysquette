@@ -24,7 +24,8 @@ public class EnemyStateManager : MonoBehaviour
     public float windSpeed;
     public float health;
     public bool isDragKnockUp;
-
+    public bool isConvey;
+    public Vector2 conveyBeltSpeed;
    
      
     //Main Stat
@@ -473,6 +474,12 @@ public class EnemyStateManager : MonoBehaviour
                                        windSpeed = stateWind.speedWind;
           }
 
+          if (other.CompareTag("Convey"))
+          {
+              isConvey = true;
+              conveyBeltSpeed += other.GetComponent<LDConveyorBelt>().direction;
+          }
+
       }
 
       private void OnTriggerStay2D(Collider2D other)
@@ -487,6 +494,17 @@ public class EnemyStateManager : MonoBehaviour
 
       private void OnTriggerExit2D(Collider2D other)
       {
-          isInWind = false;
+          if (other.CompareTag("Convey"))
+          {
+              conveyBeltSpeed -= other.GetComponent<LDConveyorBelt>().direction;
+              isConvey = false;
+          }
+          if (other.CompareTag("Wind"))
+              
+          {
+              isInWind = false;
+          
+          }
+         
       }
 }

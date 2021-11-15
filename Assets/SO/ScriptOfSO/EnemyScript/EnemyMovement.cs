@@ -20,6 +20,8 @@ public class EnemyMovement : MonoBehaviour
     private EnemyStateManager enemyStateManager;
      public Vector3 destination;
     public float speed;
+
+    public bool createPath;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +34,7 @@ public class EnemyMovement : MonoBehaviour
 
     void UpdatePath()
     {
+        createPath = true;
         if(seeker.IsDone())
         seeker.StartPath(rb.position, destination, OnPathComplete);
     }
@@ -48,9 +51,12 @@ public class EnemyMovement : MonoBehaviour
 
     void OnPathComplete(Path p)
     {
+        
         if (!p.error)
         {
+           
             path = p;
+            path.vectorPath[0] = tranform.position;
             currentWaypoint = 0;
         }
     }
@@ -72,6 +78,7 @@ public class EnemyMovement : MonoBehaviour
        
         if (path == null)
             return;
+        Debug.Log("testtatatata");
         if (currentWaypoint >= path.vectorPath.Count)
         {
             reachedEndOfPath = true;
@@ -85,9 +92,9 @@ public class EnemyMovement : MonoBehaviour
         Vector2 direction = ( (Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         if (!enemyStateManager.isDragKnockUp)
         {
-            if (enemyStateManager.isInWind)
+            if (enemyStateManager.isInWind || enemyStateManager.isConvey)
             {
-                 rb.velocity = direction * speed+enemyStateManager.windDirection*enemyStateManager.windSpeed;
+                 rb.velocity = direction * speed+enemyStateManager.windDirection*enemyStateManager.windSpeed+ enemyStateManager.conveyBeltSpeed;
             }
             else
             {

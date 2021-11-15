@@ -37,6 +37,9 @@ public class Playercontroller : MonoBehaviour
     [SerializeField]
     private float timerBetweenDash;
 
+    private bool isConvey;
+    public Vector2 conveyorBeltSpeed;
+
     public bool InDash;
     [SerializeField]
     private bool TryDash;
@@ -169,8 +172,9 @@ if(timerBetweenDash<= timeBetweenDash)
                        dashDirection = lastMoveVector.normalized;
                        rb.velocity = Vector2.zero;
                    }
-               if (isInWind)
-                        rb.velocity = (moveVector * MouvementSpeed + windDirection * windSpeed);
+               if (isInWind|| isConvey)
+                        rb.velocity = (moveVector * MouvementSpeed + windDirection * windSpeed+conveyorBeltSpeed);
+               
                        else
                     
                    rb.velocity = (moveVector*MouvementSpeed);
@@ -221,7 +225,7 @@ if(timerBetweenDash<= timeBetweenDash)
         #endregion
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Wind"))
         {
@@ -235,6 +239,13 @@ if(timerBetweenDash<= timeBetweenDash)
         {
             isInFlash = true;
         }
+
+        if (other.CompareTag("Convey"))
+        {
+            conveyorBeltSpeed += other.GetComponent<LDConveyorBelt>().direction;
+            isConvey = true;
+        }
+        
     }
 
 
@@ -247,6 +258,11 @@ if(timerBetweenDash<= timeBetweenDash)
         if (other.CompareTag("Flash"))
         {
             isInFlash = false;
+        }
+        if (other.CompareTag("Convey"))
+        {
+            isConvey = false;
+            conveyorBeltSpeed -= other.GetComponent<LDConveyorBelt>().direction;
         }
        
     }
