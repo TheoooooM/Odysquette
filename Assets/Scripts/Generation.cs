@@ -16,6 +16,7 @@ public class Generation : MonoBehaviour
     public RoomCreator[] normalRoom;
     public GameObject[] endpathRoom;
 
+
     public Transform roomPool;
     
     private GameObject[,] map;
@@ -33,7 +34,16 @@ public class Generation : MonoBehaviour
     {
         Random.InitState(1);
         map = new GameObject[mapSize, mapSize];
-        StartCoroutine("GeneratePath", nbrOfRoom);
+        //StartCoroutine("GeneratePath", nbrOfRoom);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ResetGen();
+            StartCoroutine("GeneratePath", nbrOfRoom);
+        }
     }
 
     IEnumerator GeneratePath(int size)
@@ -261,9 +271,19 @@ public class Generation : MonoBehaviour
             k++;
             if(k == 10*size)
             {
+                
                 Debug.Log("anti while break at " + i);
+                ResetGen();
+                StartCoroutine("GeneratePath", nbrOfRoom);
                 break;
             }
         }
+    }
+
+    void ResetGen()
+    {
+        Destroy(roomPool.gameObject);
+        roomPool = Instantiate(new GameObject()).transform;
+        roomPool.name = "RoomPool";
     }
 }
