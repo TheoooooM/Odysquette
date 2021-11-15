@@ -12,11 +12,11 @@ public class Bullet : MonoBehaviour
     public float range;
     public Color colorBang;
      Vector3 basePosition;
-   
+     public float knockUpValue;
     public StrawSO.RateMode rateMode;
      public Vector3 oldPositionPoison;
-   
-
+[SerializeField]
+     private bool isColliding;
     public Rigidbody2D rb;
     private Vector3 lastVelocity;
 
@@ -31,7 +31,7 @@ public class Bullet : MonoBehaviour
     float _poisonCooldown = 0;
     public bool isEnable;
     public bool isDesactive = false;
-
+    
     public float distance;
     private void Start()
     {
@@ -42,13 +42,13 @@ public class Bullet : MonoBehaviour
         
         if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
         else _bounceCount = 0;
-        
-   
+
+
 
     }
 
     public  virtual void OnEnable()
-    {  
+    {   isColliding = false;
         isBounce = false;
         isDesactive = false;
         isEnable = false;
@@ -118,13 +118,19 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-    
+     
+        
+        if(isColliding) return;
+        isColliding = true;
+        // Rest of the code
+        StartCoroutine(Reset());
       //  Debug.Log("collid" + other.name);
         switch (GameManager.Instance.firstEffect)
         {
             
             case GameManager.Effect.explosion :
                 Explosion();
+                DesactiveBullet();
                 break;
             
             
@@ -144,23 +150,35 @@ public class Bullet : MonoBehaviour
                 break;
         }
 
-        if (_pierceCount > 0 && other.CompareTag("Enemy"))
-        {
-            _pierceCount--;
-            Debug.Log("les degats olalala : " + damage);
+        if (other.CompareTag("Enemy"))
+        { 
+           
+                     other.GetComponent<EnemyStateManager>().TakeDamage(damage, rb.position, knockUpValue, true, false);
+            if (_pierceCount > 0)
+            {
+                     _pierceCount--;
+            }
+            else
+            {
+                DesactiveBullet();
+            }
+          
         }
 
         else if (!other.CompareTag("Walls"))
-
-        { 
+        {
+            Debug.Log(other.gameObject.name);
             DesactiveBullet();
         }
+  
     }
+    
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-       
-        if (_bounceCount > 0)
+        
+        
+        if (_bounceCount > 0 && other.gameObject.CompareTag("Walls"))
         {Debug.Log(_bounceCount);
            
             _bounceCount--;
@@ -175,7 +193,7 @@ public class Bullet : MonoBehaviour
  isBounce = true;
           
         }
-        else
+        else 
         {
            
             DesactiveBullet();
@@ -184,7 +202,7 @@ public class Bullet : MonoBehaviour
 
     void Explosion()
     {
-        Debug.Log("explosion");
+        
         PoolManager.Instance.SpawnExplosionPool(transform);
     }
 
@@ -203,7 +221,7 @@ public class Bullet : MonoBehaviour
     void DesactiveBullet()
     {
         if (isDesactive == false)
-        {
+        {StopAllCoroutines();
             gameObject.SetActive(false); 
                 
                   if (rateMode == StrawSO.RateMode.Ultimate)
@@ -214,9 +232,17 @@ public class Bullet : MonoBehaviour
                   {
                       PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][0].Enqueue(gameObject);
                   }
-                  
+                 
                     isDesactive = true;
+                    
         }
         
+    }
+    
+    
+    IEnumerator Reset()
+    {
+        yield return new WaitForEndOfFrame();
+        isColliding = false;
     }
 }

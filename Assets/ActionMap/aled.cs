@@ -73,6 +73,22 @@ public class @Aled : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""cdcd56cd-f237-4bf1-88ca-2519761f3a91"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""DashGamepad"",
+                    ""type"": ""Button"",
+                    ""id"": ""bc83fa15-e69f-4b70-ad64-a64ea95956bb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -156,7 +172,7 @@ public class @Aled : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4e28b0b7-24c9-4bcb-b8e2-7de550b21445"",
-                    ""path"": ""<XInputController>/buttonWest"",
+                    ""path"": ""<XInputController>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -194,6 +210,28 @@ public class @Aled : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ViewPad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c1c17a3c-17f7-48c8-83e3-8732d428fab7"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keybord & Mouse"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""09543617-a00a-4249-b9e4-d1420d305343"",
+                    ""path"": ""<XInputController>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""DashGamepad"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -239,6 +277,8 @@ public class @Aled : IInputActionCollection, IDisposable
         m_Player_ShootGamepad = m_Player.FindAction("ShootGamepad", throwIfNotFound: true);
         m_Player_SpecialShootGamepad = m_Player.FindAction("SpecialShootGamepad", throwIfNotFound: true);
         m_Player_ViewPad = m_Player.FindAction("ViewPad", throwIfNotFound: true);
+        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_DashGamepad = m_Player.FindAction("DashGamepad", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -295,6 +335,8 @@ public class @Aled : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_ShootGamepad;
     private readonly InputAction m_Player_SpecialShootGamepad;
     private readonly InputAction m_Player_ViewPad;
+    private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_DashGamepad;
     public struct PlayerActions
     {
         private @Aled m_Wrapper;
@@ -306,6 +348,8 @@ public class @Aled : IInputActionCollection, IDisposable
         public InputAction @ShootGamepad => m_Wrapper.m_Player_ShootGamepad;
         public InputAction @SpecialShootGamepad => m_Wrapper.m_Player_SpecialShootGamepad;
         public InputAction @ViewPad => m_Wrapper.m_Player_ViewPad;
+        public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @DashGamepad => m_Wrapper.m_Player_DashGamepad;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -336,6 +380,12 @@ public class @Aled : IInputActionCollection, IDisposable
                 @ViewPad.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnViewPad;
                 @ViewPad.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnViewPad;
                 @ViewPad.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnViewPad;
+                @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @DashGamepad.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashGamepad;
+                @DashGamepad.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashGamepad;
+                @DashGamepad.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashGamepad;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -361,6 +411,12 @@ public class @Aled : IInputActionCollection, IDisposable
                 @ViewPad.started += instance.OnViewPad;
                 @ViewPad.performed += instance.OnViewPad;
                 @ViewPad.canceled += instance.OnViewPad;
+                @Dash.started += instance.OnDash;
+                @Dash.performed += instance.OnDash;
+                @Dash.canceled += instance.OnDash;
+                @DashGamepad.started += instance.OnDashGamepad;
+                @DashGamepad.performed += instance.OnDashGamepad;
+                @DashGamepad.canceled += instance.OnDashGamepad;
             }
         }
     }
@@ -392,5 +448,7 @@ public class @Aled : IInputActionCollection, IDisposable
         void OnShootGamepad(InputAction.CallbackContext context);
         void OnSpecialShootGamepad(InputAction.CallbackContext context);
         void OnViewPad(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
+        void OnDashGamepad(InputAction.CallbackContext context);
     }
 }

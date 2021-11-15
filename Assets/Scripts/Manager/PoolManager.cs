@@ -131,7 +131,7 @@ public class PoolManager : MonoBehaviour
     {
         if (explosionQueue.Count == 0)
         {
-            Debug.Log(bullet.position);
+        
             GameObject obj = Instantiate(explosionPrefab, bullet.position, quaternion.identity);
             //obj.transform.position = bullet.position;
         }
@@ -146,10 +146,12 @@ public class PoolManager : MonoBehaviour
 
     public GameObject SpawnEnnemyShoot(ExtensionMethods.EnemyTypeShoot enemyTypeShoot, GameObject prefabBullet, Transform parentBulletTF)
     {
+        Debug.Log(enemyTypeShoot);
         GameObject obj;
         if (enemypoolDictionary[enemyTypeShoot].Count == 0) // Instancie une balle si il n'y en a plus dans la queue
         {
             obj = Instantiate(prefabBullet, parentBulletTF.position, parentBulletTF.rotation);
+            Debug.Log("aaaaaaaaaamdjf");
         }
         else // Sinon active la première balle se trouvant dans la queue
         {

@@ -37,13 +37,37 @@ public class GameManager : MonoBehaviour
       
         public int sizeShootPool; //Taille du nombre de prefabs a instancier au lancement
     }
+    
+    Vector3 lastInput;
     #endregion
-     float ultimateTimeValue;
+
+    public bool isUltimate;
+   public float maxUltimateValue;
+
+    float _ultimateValue;
+    public float ultimateValue
+    {
+        get
+        {
+            return _ultimateValue;
+        }
+        set
+        {
+            
+          _ultimateValue = Mathf.Clamp(value, 0, maxUltimateValue);
+
+            UIManager.Instance.UltSlider.value = _ultimateValue;
+        }
+        
+    }
+        
     //mouse
+    [SerializeField]
+    private float offsetPadViewFinder;
     private Vector2 mousepos; //position de la souris sur l'écran
     public  float angle; //angle pour orienter la paille
-
-   
+    public float viewFinderDistance;
+    [SerializeField] private Camera main;
     //Juices
     [SerializeField] Effect _firstEffect;
     public Effect firstEffect => _firstEffect;
@@ -54,7 +78,7 @@ public class GameManager : MonoBehaviour
     //Straw
     public Straw actualStraw;
     public List<StrawClass> strawsClass; //Liste de toute les pailles
-
+    public float timerUltimate;
     public bool shooting;
     public bool utlimate;
     private int countShootRate ;
@@ -99,7 +123,7 @@ public class GameManager : MonoBehaviour
     {
         
         actualStrawClass = strawsClass[(int) actualStraw];
-        
+        lastInput = Vector3.right*viewFinderDistance;
         foreach (StrawClass str in strawsClass) //active la bonne paille au début
         {
             if (str == actualStrawClass)
@@ -119,8 +143,20 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (isUltimate)
+        {
+            if (actualStrawClass.ultimateStrawSO.ultimateTime > timerUltimate)
+            {
+                timerUltimate += Time.deltaTime;
+            }
+            else
+            {
+                timerUltimate = 0;
+                isUltimate = false;
+            }
+        }
         mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (shooting) 
+        if (shooting  && !isUltimate) 
         {
             switch (actualStrawClass.strawSO.rateMode)
             {
@@ -175,16 +211,19 @@ public class GameManager : MonoBehaviour
         }
        if (actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate)
        {
-           if (ultimateTimeValue >= actualStrawClass.ultimateStrawSO.timeValue)
+           Debug.Log("testssss");
+           if (ultimateValue >= actualStrawClass.ultimateStrawSO.timeValue)
            {
+               Debug.Log("ouhahahahah");
                actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
-               ultimateTimeValue = 0;
+               isUltimate = true;
+                ultimateValue -= actualStrawClass.ultimateStrawSO.timeValue;
            }
 
            utlimate = false;
        }
 
-        if (Input.GetKeyUp(KeyCode.Mouse0))
+        if (!shooting)
         {
             if (EndLoading)
             {
@@ -200,28 +239,53 @@ public class GameManager : MonoBehaviour
       
         shootCooldown = Mathf.Min(shootCooldown, actualStrawClass.strawSO.timeValue); 
    
-       ultimateTimeValue+= Time.deltaTime; 
-  
-        ultimateTimeValue = Mathf.Min(ultimateTimeValue, actualStrawClass.ultimateStrawSO.timeValue); 
+   
 
    
         
-        //---------------- Oriente la paille ------------------------
-        if (isMouse)
-        {
-            Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x, actualStrawClass.StrawParent.transform.position.y);
-            _lookDir = new Vector2(mousepos.x, mousepos.y) - Position ;
-            angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
-        }
-        else
-        {
-            angle = Mathf.Atan2(ViewPad.y, ViewPad.x) * Mathf.Rad2Deg;
-        }
-        actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
-        //--------------------------------------------------------------
+       
     }
 
-  
+    private void FixedUpdate()
+    {
+         //---------------- Oriente la paille ------------------------
+                if (isMouse)
+                {
+                    Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x, actualStrawClass.StrawParent.transform.position.y);
+                    _lookDir = new Vector2(mousepos.x, mousepos.y) - Position ;
+                    angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
+                    UIManager.Instance.viewFinder.transform.position =  main.WorldToScreenPoint(mousepos);
+                    
+        
+                    actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        
+                }
+                else
+                {
+        
+                    if (ViewPad.magnitude > 0.5f)
+                    {
+                          angle = Mathf.Atan2(ViewPad.y, ViewPad.x) * Mathf.Rad2Deg;
+                          
+                                                    lastInput = ViewPad.normalized;
+                                                    
+                                                        Debug.Log("test");
+                                                        
+                                                        UIManager.Instance.viewFinder.transform.position = main.WorldToScreenPoint(actualStrawClass.spawnerTransform.position +(Vector3) ViewPad.normalized*viewFinderDistance);
+                                                        lastInput = ViewPad.normalized; 
+                    }
+                  
+                                        
+                    UIManager.Instance.viewFinder.transform.position = main.WorldToScreenPoint(actualStrawClass.spawnerTransform.position +(Vector3) lastInput.normalized*viewFinderDistance);        
+                             
+                              
+                   
+           
+                }
+                actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+                //--------------------------------------------------------------
+    }
+
 
     void ChangeStraw(Straw straw) //change la paille 
     {

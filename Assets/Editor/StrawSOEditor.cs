@@ -140,7 +140,9 @@ SceneView.duringSceneGui -= OnPosVectorGizmos;
                            case 0:
                            {
                               EditorGUILayout.PropertyField(serializedObject.FindProperty("timeValue"),
-                                   new GUIContent("Ultimate Time"));
+                                   new GUIContent("Ultimate Points"));
+                              GUILayout.FlexibleSpace();
+                              EditorGUILayout.PropertyField(serializedObject.FindProperty("ultimateTime"));
                                break;
                            }
                            case 1:
@@ -257,7 +259,10 @@ SceneView.duringSceneGui -= OnPosVectorGizmos;
                        GUILayout.Label("Other Stats", myStyle);
                        EditorGUILayout.Space(2f);
                        EditorGUILayout.PropertyField(serializedObject.FindProperty("dragRB"),
-                           new GUIContent("Drag")); EditorGUILayout.Space(2f);
+                           new GUIContent("Drag"));
+                       EditorGUILayout.Space(2f);
+                       EditorGUILayout.PropertyField(serializedObject.FindProperty("knockUp"));
+                       EditorGUILayout.Space(2f);
                    }
 
                   

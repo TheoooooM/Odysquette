@@ -17,7 +17,7 @@ public class EnemyMovement : MonoBehaviour
     private Transform tranform; 
     public int currentWaypoint = 0;
     private float nextWaypointDistance = 0.1f;
-    
+    private EnemyStateManager enemyStateManager;
      public Vector3 destination;
     public float speed;
     // Start is called before the first frame update
@@ -26,7 +26,7 @@ public class EnemyMovement : MonoBehaviour
         tranform = gameObject.transform;
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
-      
+        enemyStateManager = GetComponent<EnemyStateManager>();
 
     }
 
@@ -43,6 +43,7 @@ public class EnemyMovement : MonoBehaviour
     private void OnDisable()
     {
         CancelInvoke();
+        rb.velocity = Vector2.zero;
     }
 
     void OnPathComplete(Path p)
@@ -54,7 +55,16 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-
+    private void Update()
+    {
+        if ((enemyStateManager.IsCurrentStartPlayed || enemyStateManager.IsCurrentStatePlayed) &&
+            enemyStateManager.EMainStatsSo.stateEnnemList[enemyStateManager.indexCurrentState].duringDefaultState)
+        {
+            enabled = true;
+        }
+       else if (enemyStateManager.IsCurrentStartPlayed || enemyStateManager.IsCurrentStatePlayed)
+            enabled = false;
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -72,9 +82,21 @@ public class EnemyMovement : MonoBehaviour
             reachedEndOfPath = false;
         }
 
-        Vector2 direction = ( (Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized; 
+        Vector2 direction = ( (Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+        if (!enemyStateManager.isDragKnockUp)
+        {
+            if (enemyStateManager.isInWind)
+            {
+                 rb.velocity = direction * speed+enemyStateManager.windDirection*enemyStateManager.windSpeed;
+            }
+            else
+            {
+                rb.velocity = direction * speed;
+            }
+        }
+   
+       
         
-        rb.velocity = direction * speed;
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
         if (distance < nextWaypointDistance)
         {

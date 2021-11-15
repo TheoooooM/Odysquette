@@ -6,13 +6,31 @@ using Object = UnityEngine.Object;
 [CreateAssetMenu(fileName = "StateShootBasicSO", menuName = "EnnemyState/Shoot/StateShootBasic", order = 0)]
 public class StateShootBasic : StateShootSO
 {
-    [NamedArray("float", true)]
+
     public float[] directions = Array.Empty<float>();
+
+    
+    public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
+    {
+        Transform transformPlayer = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformPlayer];
+        Transform parentBulletTF =
+            (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformShoot];
+        Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
+        enemyTransform.GetComponent<SpriteRenderer>().color = Color.cyan;
+        Vector3 direction =  (transformPlayer.position-enemyTransform.position).normalized;
+        parentBulletTF.transform.position = enemyTransform.position + direction * offSetDistance;
+       
+   
+        
+        endStep = false;
+    }
 
     public override void PlayState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
     {
         
-    
+        Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
+        enemyTransform.GetComponent<SpriteRenderer>().color = Color.white;
+  
         Transform parentBulletTF =
             (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformShoot];
         EnemyStateManager enemyStateManager = (EnemyStateManager) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyStateManager];
@@ -56,6 +74,8 @@ public class StateShootBasic : StateShootSO
                     
                 }
                 rotation = Quaternion.Euler(0, 0, directions[i]) * directionPlayer;
+                float angle = Mathf.Atan2(rotation.y, rotation.x)*Mathf.Rad2Deg;
+                bullet.transform.rotation = Quaternion.Euler(0, 0, angle) ;
                 
               
 
@@ -83,8 +103,6 @@ public class StateShootBasic : StateShootSO
         {
              for (int i = 0; i < directions.Length; i++)
                     {
-                        Debug.Log("dfqsjdsmljidfqsjdfqsdfqs");
-                  
                         GameObject bullet = PoolManager.Instance.SpawnEnnemyShoot(enemyTypeShoot, prefabBullet, parentBulletTF);
                         bullet.SetActive(true);  
                         if (basePosition.Length != 0)
@@ -99,7 +117,8 @@ public class StateShootBasic : StateShootSO
                     
                         }
                         rotation = Quaternion.Euler(0, 0, directions[i]) * directionPlayer;
-
+                        float angle = Mathf.Atan2(rotation.y, rotation.x);
+                        bullet.transform.rotation = Quaternion.Euler(0, 0, angle) ;
             
                         //save pool
                            bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;              
@@ -110,7 +129,7 @@ public class StateShootBasic : StateShootSO
                         yield return new WaitForSeconds(delayBetweenShoot);
                     }
             if(isDelayBetweenWaveShoot)
-                    yield return new WaitForSeconds(delayBetweenShoot);
+                    yield return new WaitForSeconds(delayBetweenWaveShoot);
         }
        
     }

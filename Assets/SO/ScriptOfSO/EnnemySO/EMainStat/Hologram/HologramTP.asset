@@ -9,13 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 542c0a73a3862a4408876b71cde26883, type: 3}
-  m_Name: testmouvspawn
+  m_Script: {fileID: 11500000, guid: 2f225a4e87dad884e8985013a99686a2, type: 3}
+  m_Name: HologramTP
   m_EditorClassIdentifier: 
-  objectInStateManagers: 02000000040000000300000001000000
-  startTime: 0
+  isKnockUpInState: 0
+  objectInStateManagersCondition: 
+  objectInStateManagersState: 080000000a0000000b000000
+  oneStartState: 1
+  startTime: 2
   playStateTime: 0
-  isFixedUpdate: 1
-  haveStartState: 0
-  moveSpeed: 1.81
-  isMovementToSpawn: 1
+  isFixedUpdate: 0
+  haveStartState: 1
+  duringDefaultState: 0

@@ -6,11 +6,12 @@ using UnityEngine.UIElements;
 
 public class StateShootSO : StateEnemySO
 {
+    //
     public float rangeForShoot;
-
+//
     public float rangeForBullet;
 
-    public float damage;
+    public int damage;
 
     public float speedBullet;
 
@@ -27,16 +28,20 @@ public class StateShootSO : StateEnemySO
     public float delayBetweenShoot = 0;
     
     public float delayBetweenWaveShoot = 0;
-    
+   
     public Vector3[] basePosition = new Vector3[0];
 
     public int numberWaveShoot = 1;
 
     public bool isAimPlayer;
-
+    public float offSetDistance;
     public LayerMask layerMaskRay; 
+   
+    public Vector3 extentsRangeDetection;
+ 
     public virtual IEnumerator ShootDelay(GameObject prefabBullet, Transform parentBulletTF, Transform transformPlayer)
     {
+      
         yield return null;
     }
 
@@ -47,10 +52,14 @@ public class StateShootSO : StateEnemySO
         if (Vector2.Distance(rbPlayer.position, rbEnemy.position) <= rangeForShoot)
         {
             
-           Vector2 direction = (rbPlayer.position - rbEnemy.position).normalized;
+         
            
-           RaycastHit2D hit = Physics2D.Raycast(rbEnemy.position, direction, rangeForShoot, layerMaskRay );
-          
+           Vector2 direction = (rbPlayer.position - rbEnemy.position);
+           
+           RaycastHit2D hit = Physics2D.BoxCast(rbEnemy.position, extentsRangeDetection, 0,
+               direction.normalized, direction.magnitude, layerMaskRay);
+           Debug.Log(hit.collider.gameObject.name);
+          ExtDebug.DrawBoxCastBox(rbEnemy.position, extentsRangeDetection/2, Quaternion.identity, direction.normalized, direction.magnitude, Color.red);
            if(hit.collider.gameObject.layer == 9 )
            {
                return true;

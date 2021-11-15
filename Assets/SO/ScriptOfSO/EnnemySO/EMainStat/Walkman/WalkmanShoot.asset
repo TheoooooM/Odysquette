@@ -10,17 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da6f6442f0a418540bfe9bb95188f7c9, type: 3}
-  m_Name: TestStateShootBasic
+  m_Name: WalkmanShoot
   m_EditorClassIdentifier: 
-  objectInStateManagers: 0000000005000000060000000200000001000000
-  startTime: 0
+  openBasePanel: 1
+  openDebugPanel: 0
+  openSpecPanel: 1
+  timeCondition: 3
+  healthCondition: 0
+  openKnobDebugPanel: 0
+  useHealthCondition: 0
+  useTimeCondition: 1
+  isKnockUpInState: 1
+  objectInStateManagersCondition: 0100000002000000
+  objectInStateManagersState: 08000000050000000600000000000000
+  oneStartState: 1
+  startTime: 1
   playStateTime: 0
   isFixedUpdate: 1
-  haveStartState: 0
+  haveStartState: 1
+  duringDefaultState: 0
   rangeForShoot: 15
-  rangeForBullet: 0
-  damage: 0
-  speedBullet: 200
+  rangeForBullet: 15
+  damage: 1
+  speedBullet: 300
   dragRB: 0
   hasRange: 0
   enemyTypeShoot: 0
@@ -31,8 +43,10 @@ MonoBehaviour:
   basePosition: []
   numberWaveShoot: 1
   isAimPlayer: 1
+  offSetDistance: 1
   layerMaskRay:
     serializedVersion: 2
     m_Bits: 1791
+  extentsRangeDetection: {x: 0.5, y: 4, z: 0}
   directions:
   - 0
