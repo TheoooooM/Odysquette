@@ -150,7 +150,7 @@ if(timerBetweenDash<= timeBetweenDash)
           moveVector = playerInput.Player.Movement.ReadValue<Vector2>();
 
           lastMoveVector = moveVector;
-            GameManager.Instance.isMouse = true;
+          GameManager.Instance.isMouse = true;
 
         }
         else if(playerInput.Player.MovementGamepad.ReadValue<Vector2>() != Vector2.zero)

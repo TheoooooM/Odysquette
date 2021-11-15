@@ -6667,7 +6667,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &703188292
 Transform:
   m_ObjectHideFlags: 0
@@ -13067,7 +13067,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1336783326
 Transform:
   m_ObjectHideFlags: 0
@@ -13099,7 +13099,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1355884572
 Transform:
   m_ObjectHideFlags: 0
@@ -13805,7 +13805,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1598660058
 Transform:
   m_ObjectHideFlags: 0
@@ -14427,7 +14427,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1886626979
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -15470,13 +15470,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06127b54c36660a489cdae7e76086074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUltimate: 0
   maxUltimateValue: 100
   offsetPadViewFinder: 0.3
   angle: 0
   viewFinderDistance: 2
   main: {fileID: 196568771}
-  _firstEffect: 3
-  _secondEffect: 2
+  _firstEffect: 0
+  _secondEffect: 0
   actualStraw: 0
   strawsClass:
   - StrawName: Basic Straw
@@ -15484,9 +15485,10 @@ MonoBehaviour:
     StrawParent: {fileID: 1063981873}
     strawSO: {fileID: 11400000, guid: c6a5e905b2398d442b4ecaa31bd69658, type: 2}
     sizeUltimatePool: 15
-    ultimateStrawSO: {fileID: 11400000, guid: ca60bda0eb4fbb4499b5a1b68826f7be, type: 2}
+    ultimateStrawSO: {fileID: 11400000, guid: 0b0f5eef8ae53ed4e92f6921a94e6bd1, type: 2}
     spawnerTransform: {fileID: 1373875980}
     sizeShootPool: 5
+  timerUltimate: 0
   shooting: 0
   utlimate: 0
   shootCooldown: 0

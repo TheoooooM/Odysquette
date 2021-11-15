@@ -40,7 +40,8 @@ public class GameManager : MonoBehaviour
     
     Vector3 lastInput;
     #endregion
-   
+
+    public bool isUltimate;
    public float maxUltimateValue;
 
     float _ultimateValue;
@@ -77,7 +78,7 @@ public class GameManager : MonoBehaviour
     //Straw
     public Straw actualStraw;
     public List<StrawClass> strawsClass; //Liste de toute les pailles
-
+    public float timerUltimate;
     public bool shooting;
     public bool utlimate;
     private int countShootRate ;
@@ -142,9 +143,20 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-    
+        if (isUltimate)
+        {
+            if (actualStrawClass.ultimateStrawSO.ultimateTime > timerUltimate)
+            {
+                timerUltimate += Time.deltaTime;
+            }
+            else
+            {
+                timerUltimate = 0;
+                isUltimate = false;
+            }
+        }
         mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (shooting) 
+        if (shooting  && !isUltimate) 
         {
             switch (actualStrawClass.strawSO.rateMode)
             {
@@ -204,7 +216,7 @@ public class GameManager : MonoBehaviour
            {
                Debug.Log("ouhahahahah");
                actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
-              
+               isUltimate = true;
                 ultimateValue -= actualStrawClass.ultimateStrawSO.timeValue;
            }
 

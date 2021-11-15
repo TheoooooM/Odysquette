@@ -34,7 +34,7 @@ public class StrawSO : ScriptableObject
       public int numberWaveShoot = 1;
       public float delayBetweenShoot = 0;
       public float delayBetweenWaveShoot = 0;
-     
+    public float  ultimateTime;
       public float delayParameter = 0;
       [NamedArray("vector3", true)]
       public Vector3[] basePositionParameter = new Vector3[0]; 
@@ -92,6 +92,7 @@ public class StrawSO : ScriptableObject
        }
 
       scriptBullet.knockUpValue =  knockUp;
+    
 
 
    }

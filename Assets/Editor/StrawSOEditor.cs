@@ -140,7 +140,9 @@ SceneView.duringSceneGui -= OnPosVectorGizmos;
                            case 0:
                            {
                               EditorGUILayout.PropertyField(serializedObject.FindProperty("timeValue"),
-                                   new GUIContent("Ultimate Time"));
+                                   new GUIContent("Ultimate Points"));
+                              GUILayout.FlexibleSpace();
+                              EditorGUILayout.PropertyField(serializedObject.FindProperty("ultimateTime"));
                                break;
                            }
                            case 1:

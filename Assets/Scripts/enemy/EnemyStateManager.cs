@@ -410,7 +410,7 @@ public class EnemyStateManager : MonoBehaviour
 
   }
 
-  public void OnDeath(bool ultimate)
+  public void OnDeath()
   {
       try
       {
@@ -420,18 +420,18 @@ public class EnemyStateManager : MonoBehaviour
       {
           Destroy(gameObject);
       }
-     if(!ultimate)
+  
         GameManager.Instance.ultimateValue += EMainStatsSo.giverUltimateStrawPoints;
-        Debug.Log(GameManager.Instance.ultimateValue);
+   
   
       
   }
 
-  public void TakeDamage(bool ultimate , float damage, Vector2 position, float knockUpValue, bool knockup, bool isExplosion)
+  public void TakeDamage( float damage, Vector2 position, float knockUpValue, bool knockup, bool isExplosion)
   {
       if (health - damage <= 0)
       {
-          OnDeath(ultimate);
+          OnDeath();
       }
       else
       {

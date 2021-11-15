@@ -31,7 +31,7 @@ public class Bullet : MonoBehaviour
     float _poisonCooldown = 0;
     public bool isEnable;
     public bool isDesactive = false;
-
+    
     public float distance;
     private void Start()
     {
@@ -118,6 +118,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+     
         
         if(isColliding) return;
         isColliding = true;
