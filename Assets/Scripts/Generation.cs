@@ -20,18 +20,20 @@ public class Generation : MonoBehaviour
     
     private GameObject[,] map;
     public int mapSize;
+    public int nbrOfRoom = 10;
 
     private GameObject currentRoom;
-    
-    
-    public Vector2 currentPos;
-    public open needOpen;
+
+
+    private Vector2 currentPos;
+    private open needOpen;
     
 
     private void Start()
     {
+        Random.InitState(1);
         map = new GameObject[mapSize, mapSize];
-        StartCoroutine("GeneratePath", 10);
+        StartCoroutine("GeneratePath", nbrOfRoom);
     }
 
     IEnumerator GeneratePath(int size)
@@ -39,6 +41,7 @@ public class Generation : MonoBehaviour
         currentPos = new Vector2(mapSize/2, mapSize/2);
         Debug.Log(" middl: " + currentPos);
         RoomContainer firstRC = Instantiate(StartingRoom, new Vector2(currentPos.x*18.4f, currentPos.y*10.4f), Quaternion.identity , roomPool).GetComponent<RoomCreator>().partList[0].RoomGO;
+        map[(int) currentPos.x, (int) currentPos.y] = firstRC.gameObject;
         
         
         int exit = Random.Range(0, 3);
@@ -76,12 +79,15 @@ public class Generation : MonoBehaviour
         int k = 0;
         for (int i = 1; i <= size; i++)
         {
-            yield return new WaitForSeconds(1f);
             if (reset)
             {
                 i--;
                 Debug.Log("reset");
                 reset = false;
+            }
+            else
+            {
+                yield return new WaitForSeconds(0.05f);
             }
 
             Debug.Log("Create Room n°" + i);
@@ -93,7 +99,7 @@ public class Generation : MonoBehaviour
             else
             {
                 Debug.Log("room with " + needOpen);
-                RoomCreator newRoom = normalRoom[Random.Range(0, normalRoom.Length - 1)];
+                RoomCreator newRoom = normalRoom[Random.Range(0, normalRoom.Length)];
                 if(newRoom.exitDicitonnary.Count == 0) {newRoom.DictionaryUpdate(); newRoom.PartUpdate();}
                 if (newRoom.exitDicitonnary[needOpen].Count != 0)
                 {
@@ -129,7 +135,8 @@ public class Generation : MonoBehaviour
                         while (!ready)
                         {
 
-                            RoomContainer exitPart = newRoom.partList[Random.Range(0, newRoom.partList.Length - 1)].RoomGO;
+                            RoomContainer exitPart = newRoom.partList[Random.Range(0, newRoom.partList.Length)].RoomGO;
+                            
 
                             
                             if (exitPart != enterPart || newRoom.partList.Length == 1)
@@ -167,7 +174,8 @@ public class Generation : MonoBehaviour
                                             //Debug.Log("Instantiate " + RC.name + " at " +" x:"+ (currentPos.x+rom.RoomGO.roomPos.x-enterPart.roomPos.x)*18.4f + " y:"+ (currentPos.y+rom.RoomGO.roomPos.y-enterPart.roomPos.y)*10.4f);
                                             map[(int)(currentPos.x+rom.RoomGO.roomPos.x-enterPart.roomPos.x),(int)(currentPos.y+rom.RoomGO.roomPos.y-enterPart.roomPos.y)] = RC.gameObject;
                                             
-                                            Debug.Log("RC:" +RC + " exiPart:" + exitPart);
+                                            
+                                            /*
                                             if (RC != exitPart && exitSide != open.top)RC.exitTop = false;
                                             else Debug.Log("Top");
                                             
@@ -178,7 +186,32 @@ public class Generation : MonoBehaviour
                                             else Debug.Log("Right");
                                             
                                             if (RC != exitPart && exitSide != open.bot)RC.exitBot = false;
-                                            else Debug.Log("Bot");
+                                            else Debug.Log("Bot");*/
+
+                                            Debug.Log("RC:" +RC.roomPos + " exiPart:" + exitPart.roomPos);
+                                            RC.exitLeft = false;
+                                            RC.exitRight = false;
+                                            RC.exitTop = false;
+                                            RC.exitBot = false;
+                                            
+                                            if(RC.roomPos == exitPart.roomPos)
+                                            {
+                                                Debug.Log("Rc = exitPart & exitSide =" + exitSide);
+                                                if(exitSide == open.top)RC.exitTop = true;
+                                                if(exitSide == open.left)RC.exitLeft = true;
+                                                if(exitSide == open.right)RC.exitRight = true;
+                                                if(exitSide == open.bot)RC.exitBot = true;
+                                            }
+                                            
+                                            if (RC.roomPos == enterPart.roomPos)
+                                            {
+                                                if(needOpen == open.top)RC.exitTop = true;
+                                                if(needOpen == open.left)RC.exitLeft = true;
+                                                if(needOpen == open.right)RC.exitRight = true;
+                                                if(needOpen == open.bot)RC.exitBot = true;
+                                            }
+                                            
+                                            
                                             RC.UpdatePart();
 
                                         }

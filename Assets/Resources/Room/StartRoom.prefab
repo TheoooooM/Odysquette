@@ -665,7 +665,6 @@ Transform:
   - {fileID: 9114748889769625096}
   - {fileID: 3238441228119879233}
   - {fileID: 3238441228036797532}
-  - {fileID: 5267956039815861749}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -687,13 +686,13 @@ MonoBehaviour:
   OpenLeft: 1
   OpenRight: 1
   GenTop:
-  - {fileID: 7706481061988379945}
+  - {fileID: 0}
   GenBot:
-  - {fileID: 7002524189902800357}
+  - {fileID: 0}
   GenLeft:
-  - {fileID: 4949550751918738795}
+  - {fileID: 0}
   GenRight:
-  - {fileID: 5662366684284767094}
+  - {fileID: 0}
   ExitArray: 01000000020000000300000004000000
   spawned: 0
   NbrExit: 0
@@ -736,6 +735,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 147c427969f78714e94d1f7e867068e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomRef: {fileID: 0}
+  roomPos: {x: 0, y: 0}
+  partTop: {fileID: 0}
+  partLeft: {fileID: 0}
+  partRight: {fileID: 0}
+  partBot: {fileID: 0}
+  exitTop: 1
+  exitLeft: 1
+  exitRight: 1
+  exitBot: 1
+  exitAmount: 0
   closeBot: {fileID: 1471147222203740684}
   closeLeft: {fileID: 5287280030474620058}
   closeRight: {fileID: 7587072849758263272}
@@ -744,10 +754,6 @@ MonoBehaviour:
   openLeft: {fileID: 7904110089839785788}
   openRight: {fileID: 732782840078848118}
   openTop: {fileID: 3730199830784228344}
-  exitTop: 1
-  exitLeft: 1
-  exitRight: 1
-  exitBot: 1
 --- !u!1 &3607564401147200252
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,40 +894,6 @@ Transform:
   - {fileID: 7041026334040702208}
   m_Father: {fileID: 9114748889769625096}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3941199659024713866
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5267956039815861749}
-  m_Layer: 0
-  m_Name: Gem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5267956039815861749
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3941199659024713866}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 5241169202810707393}
-  - {fileID: 8676785455273860414}
-  - {fileID: 2410086813068544040}
-  - {fileID: 1916373222623182218}
-  m_Father: {fileID: 3238441228339474861}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3989223545679839824
 GameObject:
@@ -1141,36 +1113,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1 &4949550751918738795
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5241169202810707393}
-  m_Layer: 0
-  m_Name: LeftGem
-  m_TagString: Untagged
-  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5241169202810707393
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4949550751918738795}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.2, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5267956039815861749}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5287280030474620058
 GameObject:
   m_ObjectHideFlags: 0
@@ -1280,36 +1222,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1 &5662366684284767094
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8676785455273860414}
-  m_Layer: 0
-  m_Name: RightGem
-  m_TagString: Untagged
-  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8676785455273860414
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5662366684284767094}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.2, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5267956039815861749}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6035129968879470888
 GameObject:
   m_ObjectHideFlags: 0
@@ -1528,36 +1440,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1 &7002524189902800357
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1916373222623182218}
-  m_Layer: 0
-  m_Name: BotGem
-  m_TagString: Untagged
-  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1916373222623182218
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7002524189902800357}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -5.2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5267956039815861749}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7065107997484602157
 GameObject:
   m_ObjectHideFlags: 0
@@ -1808,36 +1690,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1 &7706481061988379945
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2410086813068544040}
-  m_Layer: 0
-  m_Name: TopGem
-  m_TagString: Untagged
-  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2410086813068544040
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7706481061988379945}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5267956039815861749}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7874757784042545187
 GameObject:
   m_ObjectHideFlags: 0
