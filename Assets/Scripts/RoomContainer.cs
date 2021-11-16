@@ -5,7 +5,11 @@ using UnityEngine;
 
 public class RoomContainer : MonoBehaviour
 {
+    public RoomManager room;
+    public Vector2 roomMapPos;
 
+
+    #region Generation Variables
     
     public RoomCreator roomRef;
     public Vector2 roomPos;
@@ -27,15 +31,15 @@ public class RoomContainer : MonoBehaviour
 
 
     [Header("=======================PAS TOUCHE !!!=========================")]
-    [SerializeField] private GameObject closeBot;
-    [SerializeField] private GameObject closeLeft;
-    [SerializeField] private GameObject closeRight;
-    [SerializeField] private GameObject closeTop;
+    [SerializeField] public GameObject closeBot;
+    [SerializeField] public GameObject closeLeft;
+    [SerializeField] public GameObject closeRight;
+    [SerializeField] public GameObject closeTop;
     [SerializeField] private GameObject openBot;
     [SerializeField] private GameObject openLeft;
     [SerializeField] private GameObject openRight;
     [SerializeField] private GameObject openTop;
-    
+    #endregion
     
     void Awake()
     {
@@ -44,9 +48,11 @@ public class RoomContainer : MonoBehaviour
         exitBool.Add(Generation.open.left, exitLeft);
         exitBool.Add(Generation.open.right, exitRight);
         exitBool.Add(Generation.open.bot, exitBot);
+
+        room = GetComponentInParent<RoomManager>();
     }
 
-    // Update is called once per frame
+   
     void Update()
     {
         
@@ -78,8 +84,6 @@ public class RoomContainer : MonoBehaviour
                 closeTop.SetActive(true);
             }
         }
-        
-        
         if (partLeft)
         {
             openLeft.SetActive(false); 
