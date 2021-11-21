@@ -18,14 +18,15 @@ public class WindParticleManager : MonoBehaviour
     {
         
         BoxCollider2D particleBoxCollider2D = GetComponent<BoxCollider2D>();
-        RaycastHit2D hit =  Physics2D.Raycast(enemyTransform.position, Vector2.right, 
+        RaycastHit2D hit =  Physics2D.Raycast(enemyTransform.position, transform.right, 
             Single.PositiveInfinity, layerMask);
+        
      if (hit != null)
      {
     Debug.Log(hit.collider.gameObject.name);
     float offSetDistance = enemyTransform.lossyScale.x / 2;
     float distance = (hit.distance - offSetDistance) / 2;
-    transform.position = new Vector3(offSetDistance + enemyTransform.position.x + distance, transform.position.y, transform.position.z);
+    transform.position = enemyTransform.position + transform.right * distance;
 
 
         var particleSystemShape = particleSystem.shape;
@@ -44,8 +45,13 @@ public class WindParticleManager : MonoBehaviour
      }
     }
 
-
+    private void Update()
+    {
+        Debug.DrawRay(enemyTransform.position, transform.right, 
+            Color.blue);
+    }
 }
+
 
 public static class ExtDebug
 {

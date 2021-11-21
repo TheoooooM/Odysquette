@@ -469,28 +469,34 @@ public class EnemyStateManager : MonoBehaviour
           HealthPlayer.Instance.TakeDamagePlayer(1);
           if (other.CompareTag("Wind"))
           {
+              Debug.Log("aenter");
                 StateWind stateWind = other.GetComponent<WindParticleManager>().StateWind;
-                                       windDirection = stateWind.direction;
-                                       windSpeed = stateWind.speedWind;
+                                       windDirection += stateWind.direction*stateWind.speedWind ;
+                                     
+                                       isInWind = true;     
+          }
+
+          if (other.CompareTag("Convey"))
+          {
+             
+              conveyBeltSpeed += other.GetComponent<LDConveyorBelt>().direction;
+              isConvey = true;   
+          }
+
+      }
+
+      private void OnTriggerStay(Collider other)
+      {
+          if (other.CompareTag("Wind"))
+          {
+              isInWind = true; 
           }
 
           if (other.CompareTag("Convey"))
           {
               isConvey = true;
-              conveyBeltSpeed += other.GetComponent<LDConveyorBelt>().direction;
           }
-
       }
-
-      private void OnTriggerStay2D(Collider2D other)
-      {
-                   if (other.CompareTag("Wind"))
-                    {
-                       
-                        isInWind = true;
-                    }
-      }
-
 
       private void OnTriggerExit2D(Collider2D other)
       {
@@ -502,6 +508,9 @@ public class EnemyStateManager : MonoBehaviour
           if (other.CompareTag("Wind"))
               
           {
+              Debug.Log("exist");
+              StateWind stateWind = other.GetComponent<WindParticleManager>().StateWind;
+              windDirection -= stateWind.direction*stateWind.speedWind ;
               isInWind = false;
           
           }

@@ -20,8 +20,10 @@ public class EnemyMovement : MonoBehaviour
     private EnemyStateManager enemyStateManager;
      public Vector3 destination;
     public float speed;
-
+    public Vector2 lastVelocity;
     public bool createPath;
+
+    public Vector2 currentWaypointDirection;
     // Start is called before the first frame update
     void Start()
     {
@@ -56,7 +58,7 @@ public class EnemyMovement : MonoBehaviour
         {
            
             path = p;
-            path.vectorPath[0] = tranform.position;
+           path.vectorPath[0] = tranform.position;
             currentWaypoint = 0;
         }
     }
@@ -71,7 +73,7 @@ public class EnemyMovement : MonoBehaviour
        else if (enemyStateManager.IsCurrentStartPlayed || enemyStateManager.IsCurrentStatePlayed)
             enabled = false;
     }
-
+  Vector2 direction = new Vector2();
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -88,17 +90,22 @@ public class EnemyMovement : MonoBehaviour
         {
             reachedEndOfPath = false;
         }
-
-        Vector2 direction = ( (Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+    
+       
+        Debug.Log(direction);
+        if (direction != Vector2.zero)
+        {
+            lastVelocity = direction;
+        }
         if (!enemyStateManager.isDragKnockUp)
         {
             if (enemyStateManager.isInWind || enemyStateManager.isConvey)
             {
-                 rb.velocity = direction * speed+enemyStateManager.windDirection*enemyStateManager.windSpeed+ enemyStateManager.conveyBeltSpeed;
+                 rb.velocity = lastVelocity * speed+enemyStateManager.windDirection+ enemyStateManager.conveyBeltSpeed;
             }
             else
             {
-                rb.velocity = direction * speed;
+                rb.velocity = lastVelocity * speed;
             }
         }
    
@@ -108,7 +115,11 @@ public class EnemyMovement : MonoBehaviour
         if (distance < nextWaypointDistance)
         {
             currentWaypoint++;
+            direction = ( (Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+  
         }
+        
+        
 
    
     }

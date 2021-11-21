@@ -17,7 +17,9 @@ public class Playercontroller : MonoBehaviour
     private float timerInEffectFlash;
     [SerializeField] private String CurrentController;
     private CapsuleCollider2D capsuleCollider2D;
+    [SerializeField]
     private bool isInWind;
+    [SerializeField]
     Vector2 windDirection;
     private float windSpeed;
     private Vector2 moveVector;
@@ -173,7 +175,7 @@ if(timerBetweenDash<= timeBetweenDash)
                        rb.velocity = Vector2.zero;
                    }
                if (isInWind|| isConvey)
-                        rb.velocity = (moveVector * MouvementSpeed + windDirection * windSpeed+conveyorBeltSpeed);
+                        rb.velocity = (moveVector * MouvementSpeed + windDirection+conveyorBeltSpeed);
                
                        else
                     
@@ -230,8 +232,8 @@ if(timerBetweenDash<= timeBetweenDash)
         if (other.CompareTag("Wind"))
         {
             StateWind stateWind = other.GetComponent<WindParticleManager>().StateWind;
-            windDirection = stateWind.direction;
-            windSpeed = stateWind.speedWind;
+            windDirection += stateWind.direction*stateWind.speedWind;
+            
             isInWind = true;
         }
 
@@ -252,7 +254,9 @@ if(timerBetweenDash<= timeBetweenDash)
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Wind"))
-        {
+        {  
+            StateWind stateWind = other.GetComponent<WindParticleManager>().StateWind;
+            windDirection -= stateWind.direction*stateWind.speedWind;
              isInWind = false;
         }
         if (other.CompareTag("Flash"))
