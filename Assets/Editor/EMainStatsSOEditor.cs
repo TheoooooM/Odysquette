@@ -156,12 +156,14 @@ public class EMainStatsSOEditor : Editor
          EditorGUILayout.Space(8f);
          GUILayout.Label("Conditions", subTitle);
          EditorGUILayout.Space(6f);
-         GUI.backgroundColor = Color.yellow;
+         GUI.backgroundColor = Color.yellow; 
+         EditorGUI.BeginChangeCheck();
          openConditionPanel = EditorGUILayout.BeginFoldoutHeaderGroup(openConditionPanel, "Conditions");
          if (openConditionPanel)
          {
              using (new GUILayout.VerticalScope(EditorStyles.helpBox))
                         {
+                           
                            using (new GUILayout.HorizontalScope())
                            {
                               eMainStatsSo.stateEnnemList[currentTab - 1].useHealthCondition =
@@ -190,19 +192,35 @@ public class EMainStatsSOEditor : Editor
                                     EditorGUILayout.FloatField("Time for State", eMainStatsSo.stateEnnemList[currentTab-1].timeCondition);
                            
                               }
-                        
-         }
-        
-           
-               }
-           
 
+
+
+                             
+
+                           }
+
+                           if (EditorGUI.EndChangeCheck())
+                           {
+                                 Undo.RegisterCompleteObjectUndo(eMainStatsSo.stateEnnemList[currentTab - 1], "test");
+                                                                     EditorUtility.SetDirty(eMainStatsSo.stateEnnemList[currentTab - 1]);
+                           }
+                           
+                             
+                           
+       
+
+
+
+                        }
+
+           
+               
 
             }
 
+      
 
-
-         }
+      }
 
         
       

@@ -96,12 +96,12 @@ public class StateSOEditor : Editor
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("objectInStateManagersState"));
                 EditorGUILayout.Space(4f);
              
-              
+             
             }
              
         }  
            
-      
+     
    EditorGUILayout.EndToggleGroup();
         
      

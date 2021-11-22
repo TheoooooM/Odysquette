@@ -7,6 +7,9 @@ public class StateTPEditor : StateSOEditor
 {
     public override void OnInspectorGUI()
     {
+        serializedObject.Update();
         base.OnInspectorGUI();
+        serializedObject.ApplyModifiedProperties();
+        
     }
 }
