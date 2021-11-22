@@ -150,7 +150,7 @@ public class @Aled : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ecde346f-1a96-4eda-bdb9-63dab121235e"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keybord & Mouse"",

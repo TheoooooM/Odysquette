@@ -7,6 +7,13 @@ using Random = UnityEngine.Random;
 
 public class Generation : MonoBehaviour
 {
+    public static Generation Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     public enum open
     {
         None, top, left, right, bot
@@ -19,11 +26,11 @@ public class Generation : MonoBehaviour
 
     public Transform roomPool;
     
-    private GameObject[,] map;
+    public GameObject[,] map;
     public int mapSize;
     public int nbrOfRoom = 10;
 
-    private GameObject currentRoom;
+    private RoomManager currentRoom;
 
 
     private Vector2 currentPos;
@@ -39,7 +46,7 @@ public class Generation : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             ResetGen();
             StartCoroutine("GeneratePath", nbrOfRoom);
@@ -50,7 +57,7 @@ public class Generation : MonoBehaviour
     {
         currentPos = new Vector2(mapSize/2, mapSize/2);
         Debug.Log(" middl: " + currentPos);
-        RoomContainer firstRC = Instantiate(StartingRoom, new Vector2(currentPos.x*18.4f, currentPos.y*10.4f), Quaternion.identity , roomPool).GetComponent<RoomCreator>().partList[0].RoomGO;
+        RoomContainer firstRC = Instantiate(StartingRoom, new Vector2((currentPos.x - mapSize/2)*9.92f, (currentPos.y- mapSize/2)*6.4f), Quaternion.identity , roomPool).GetComponent<RoomCreator>().partList[0].RoomGO;
         map[(int) currentPos.x, (int) currentPos.y] = firstRC.gameObject;
         
         
@@ -87,7 +94,7 @@ public class Generation : MonoBehaviour
         bool reset = false;
 
         int k = 0;
-        for (int i = 1; i <= size; i++)
+        for (int i = 1; i <= nbrOfRoom; i++)
         {
             if (reset)
             {
@@ -173,32 +180,18 @@ public class Generation : MonoBehaviour
                                     if (map[(int)enablePos.x, (int)enablePos.y] == null)
                                     {
 
-                                        currentRoom = Instantiate(new GameObject(), roomPool);
+                                        currentRoom = Instantiate(new GameObject(), roomPool).AddComponent(typeof(RoomManager)) as RoomManager;
+                                        currentRoom.ennemiesList = new List<GameObject>(newRoom.ennemiList);
                                         currentRoom.name = "room " + i;
                                         Debug.Log("Instantiate " + currentRoom);
                                         foreach (Room rom in newRoom.partList)
                                         {
-                                            RoomContainer RC = Instantiate(rom.RoomGO.gameObject, new Vector2((currentPos.x+rom.RoomGO.roomPos.x-enterPart.roomPos.x)*18.4f,(currentPos.y+rom.RoomGO.roomPos.y-enterPart.roomPos.y)*10.4f), Quaternion.identity, currentRoom.transform).GetComponent<RoomContainer>();
-                                            //Debug.Log("currentPos.x:" + currentPos.x + "  partPos.x:" + rom.RoomGO.roomPos.x + "  enterPartPos.x" + enterPart.roomPos.x);
-                                            //Debug.Log("currentPos.y:" + currentPos.y + "  partPos.y:" + rom.RoomGO.roomPos.y + "  enterPartPos.y" + enterPart.roomPos.y);
-                                            //Debug.Log("Instantiate " + RC.name + " at " +" x:"+ (currentPos.x+rom.RoomGO.roomPos.x-enterPart.roomPos.x)*18.4f + " y:"+ (currentPos.y+rom.RoomGO.roomPos.y-enterPart.roomPos.y)*10.4f);
+                                            RoomContainer RC = Instantiate(rom.RoomGO.gameObject, new Vector2((currentPos.x+rom.RoomGO.roomPos.x-enterPart.roomPos.x- mapSize/2)*9.92f,(currentPos.y+rom.RoomGO.roomPos.y-enterPart.roomPos.y- mapSize/2)*6.4f), Quaternion.identity, currentRoom.transform).GetComponent<RoomContainer>();
+                                            RC.roomMapPos = new Vector2((currentPos.x + rom.RoomGO.roomPos.x - enterPart.roomPos.x), (int) (currentPos.y + rom.RoomGO.roomPos.y - enterPart.roomPos.y));
                                             map[(int)(currentPos.x+rom.RoomGO.roomPos.x-enterPart.roomPos.x),(int)(currentPos.y+rom.RoomGO.roomPos.y-enterPart.roomPos.y)] = RC.gameObject;
+                                            RC.room = currentRoom;
                                             
                                             
-                                            /*
-                                            if (RC != exitPart && exitSide != open.top)RC.exitTop = false;
-                                            else Debug.Log("Top");
-                                            
-                                            if (RC != exitPart && exitSide != open.left)RC.exitLeft = false;
-                                            else Debug.Log("Left");
-                                            
-                                            if (RC != exitPart && exitSide != open.right)RC.exitRight = false;
-                                            else Debug.Log("Right");
-                                            
-                                            if (RC != exitPart && exitSide != open.bot)RC.exitBot = false;
-                                            else Debug.Log("Bot");*/
-
-                                            Debug.Log("RC:" +RC.roomPos + " exiPart:" + exitPart.roomPos);
                                             RC.exitLeft = false;
                                             RC.exitRight = false;
                                             RC.exitTop = false;
@@ -206,19 +199,46 @@ public class Generation : MonoBehaviour
                                             
                                             if(RC.roomPos == exitPart.roomPos)
                                             {
-                                                Debug.Log("Rc = exitPart & exitSide =" + exitSide);
-                                                if(exitSide == open.top)RC.exitTop = true;
-                                                if(exitSide == open.left)RC.exitLeft = true;
-                                                if(exitSide == open.right)RC.exitRight = true;
-                                                if(exitSide == open.bot)RC.exitBot = true;
+                                                switch (exitSide)
+                                                {
+                                                    case open.top : 
+                                                        RC.exitTop = true; 
+                                                        RC.room.exitGO = RC.closeTop.gameObject; break;
+                                                    
+                                                    case open.left : 
+                                                        RC.exitLeft = true; 
+                                                        RC.room.exitGO = RC.closeLeft.gameObject; break;
+                                                    
+                                                    case open.right : 
+                                                        RC.exitRight = true; 
+                                                        RC.room.exitGO = RC.closeRight.gameObject; break;
+                                                    
+                                                    case open.bot : 
+                                                        RC.exitBot = true; 
+                                                        RC.room.exitGO = RC.closeBot.gameObject; break;
+                                                }
                                             }
                                             
                                             if (RC.roomPos == enterPart.roomPos)
                                             {
-                                                if(needOpen == open.top)RC.exitTop = true;
-                                                if(needOpen == open.left)RC.exitLeft = true;
-                                                if(needOpen == open.right)RC.exitRight = true;
-                                                if(needOpen == open.bot)RC.exitBot = true;
+                                                switch (needOpen)
+                                                {
+                                                    case open.top : 
+                                                        RC.exitTop = true;
+                                                        RC.room.enterGO = RC.closeTop.gameObject; break;
+                                                    
+                                                    case open.left : 
+                                                        RC.exitLeft = true;
+                                                        RC.room.enterGO = RC.closeLeft.gameObject; break;
+                                                    
+                                                    case open.right : 
+                                                        RC.exitRight = true;
+                                                        RC.room.enterGO = RC.closeRight.gameObject; break;
+                                                    
+                                                    case open.bot : 
+                                                        RC.exitBot = true;
+                                                        RC.room.enterGO = RC.closeBot.gameObject; break;
+                                                }
                                             }
                                             
                                             
@@ -282,7 +302,7 @@ public class Generation : MonoBehaviour
 
     void ResetGen()
     {
-        Destroy(roomPool.gameObject);
+        if(roomPool != null) Destroy(roomPool.gameObject);
         roomPool = Instantiate(new GameObject()).transform;
         roomPool.name = "RoomPool";
     }

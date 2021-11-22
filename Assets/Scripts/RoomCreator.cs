@@ -27,11 +27,15 @@ public class RoomCreator : MonoBehaviour
 {
     public bool Exist = false;
     public Room[] partList;
+
+    [SerializeField] private List<GameObject> _ennemiiList;
+    public List<GameObject> ennemiList => _ennemiiList;
+
+    
     public GameObject[,] partMap = new GameObject[5,5];
 
-    public GameObject roomPref;
+    private GameObject roomPref;
 
-    public int danslcu;
     public bool update = false;
 
     public Dictionary<Generation.open, List<RoomContainer>> exitDicitonnary = new Dictionary<Generation.open, List<RoomContainer>>();
@@ -60,7 +64,6 @@ public class RoomCreator : MonoBehaviour
 
     private void Update()
     {
-        danslcu = exitDicitonnary.Count;
         
         if (update)
         {
@@ -83,7 +86,7 @@ public class RoomCreator : MonoBehaviour
 
                 if (rom.RoomGO == null)
                 {
-                    rom.RoomGO = Instantiate(roomPref, new Vector2((rom.ArrayPosition.x-2)*18.4f , (rom.ArrayPosition.y-2)*10.4f), Quaternion.identity, transform).GetComponent<RoomContainer>();
+                    rom.RoomGO = Instantiate(roomPref, new Vector2((rom.ArrayPosition.x-2)*9.921f , (rom.ArrayPosition.y-2)*6.4f), Quaternion.identity, transform).GetComponent<RoomContainer>();
                 }
                     partMap[(int) rom.ArrayPosition.x, (int) rom.ArrayPosition.y] = rom.RoomGO.gameObject;
                     rom.RoomGO.roomRef = this;
