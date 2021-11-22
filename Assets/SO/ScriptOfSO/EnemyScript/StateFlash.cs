@@ -24,7 +24,7 @@ public class StateFlash : StateEnemySO
                 
                  RaycastHit2D hit = Physics2D.BoxCast(rbEnemy.position, extentsRangeDetection, 0,
                      direction.normalized, direction.magnitude, layerMaskRay);
-                 Debug.Log(hit.collider.gameObject.name);
+               
                  ExtDebug.DrawBoxCastBox(rbEnemy.position, extentsRangeDetection/2, Quaternion.identity, direction.normalized, direction.magnitude, Color.red);
                  if(hit.collider.gameObject.layer == 9 )
                  {

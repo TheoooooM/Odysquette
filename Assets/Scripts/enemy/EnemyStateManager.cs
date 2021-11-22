@@ -156,10 +156,11 @@ public class EnemyStateManager : MonoBehaviour
                                 {
                                     
                                     CurrentUpdateState += EMainStatsSo.stateEnnemList[i].StartState;
+                                    Debug.Log("bonsoir");
                                     IsCurrentStartPlayed = true;
                                     if(EMainStatsSo.stateEnnemList[i].oneStartState)
                                     IsFirstStartPlayed = true;
-                                    Debug.Log(IsCurrentStartPlayed);
+                                 
                                 }
                                 else
                                 {
@@ -175,7 +176,7 @@ public class EnemyStateManager : MonoBehaviour
                                     IsCurrentStartPlayed = true;
                                     if(EMainStatsSo.stateEnnemList[i].oneStartState)
                                     IsFirstStartPlayed = true;
-                                    Debug.Log(IsCurrentStartPlayed);
+                                    Debug.Log("bonsoirle fixed");;
                                 }
                                 else
                                 {
@@ -302,6 +303,7 @@ public class EnemyStateManager : MonoBehaviour
                   
                 else 
                 {
+                    Debug.Log(EMainStatsSo.stateEnnemList[indexCurrentState]);
                     CurrentUpdateState(objectDictionaryState,out bool endStep); _endstep = endStep;
                 }
                

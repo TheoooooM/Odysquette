@@ -80,19 +80,15 @@ public class EnemyMovement : MonoBehaviour
        
         if (path == null)
             return;
-        Debug.Log("testtatatata");
+        
         if (currentWaypoint >= path.vectorPath.Count)
         {
-            reachedEndOfPath = true;
-            return;
+         return;
         }
-        else
-        {
-            reachedEndOfPath = false;
-        }
+   
     
        
-        Debug.Log(direction);
+        
         if (direction != Vector2.zero)
         {
             lastVelocity = direction;
@@ -112,12 +108,17 @@ public class EnemyMovement : MonoBehaviour
        
         
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
-        if (distance < nextWaypointDistance)
+        if (currentWaypoint != path.vectorPath.Count - 1)
         {
-            currentWaypoint++;
-            direction = ( (Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
-  
+               if (distance < nextWaypointDistance)
+                    {
+                        
+                        currentWaypoint++;
+                        direction = ( (Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+              
+                    }
         }
+     
         
         
 
