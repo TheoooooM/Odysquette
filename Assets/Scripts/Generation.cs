@@ -27,7 +27,7 @@ public class Generation : MonoBehaviour
     public Transform roomPool;
     
     public GameObject[,] map;
-    public int mapSize;
+    public int mapSize = 51;
     public int nbrOfRoom = 10;
 
     private RoomManager currentRoom;

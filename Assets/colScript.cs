@@ -8,6 +8,10 @@ public class colScript : MonoBehaviour
     public Generation.open side;
     public RoomContainer part;
 
+    private void Start()
+    {
+        part = GetComponentInParent<RoomContainer>();
+    }
 
     private void Update()
     {
