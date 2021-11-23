@@ -10,6 +10,8 @@ public class RoomContainer : MonoBehaviour
 
 
     #region Generation Variables
+
+    public bool playerInRoom;
     
     public RoomCreator roomRef;
     public Vector2 roomPos;
@@ -152,8 +154,23 @@ public class RoomContainer : MonoBehaviour
                 closeBot.SetActive(true);
             }
         }
-        
-        
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("enter collider with " + other.name);
+        if (other.CompareTag("Player"))
+        {
+            playerInRoom = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRoom = false;
+        }
     }
 }

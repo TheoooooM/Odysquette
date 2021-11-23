@@ -27,16 +27,17 @@ public class colScript : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log("yo");
-        switch (side)
+        if (!part.playerInRoom)
         {
-            case Generation.open.top :Generation.Instance.map[(int)part.roomMapPos.x, (int)part.roomMapPos.y + 1].GetComponent<RoomContainer>().room.runningRoom = true; break;
-            case Generation.open.left :Generation.Instance.map[(int)part.roomMapPos.x-1, (int)part.roomMapPos.y].GetComponent<RoomContainer>().room.runningRoom = true; break;
-            case Generation.open.right :Generation.Instance.map[(int)part.roomMapPos.x+1, (int)part.roomMapPos.y].GetComponent<RoomContainer>().room.runningRoom = true; break;
-            case Generation.open.bot :Generation.Instance.map[(int)part.roomMapPos.x, (int)part.roomMapPos.y - 1].GetComponent<RoomContainer>().room.runningRoom = true; break;
+            Debug.Log("yo");
+            switch (side)
+            {
+                case Generation.open.top :Generation.Instance.map[(int)part.roomMapPos.x, (int)part.roomMapPos.y + 1].GetComponent<RoomContainer>().room.runningRoom = true; break;
+                case Generation.open.left :Generation.Instance.map[(int)part.roomMapPos.x-1, (int)part.roomMapPos.y].GetComponent<RoomContainer>().room.runningRoom = true; break;
+                case Generation.open.right :Generation.Instance.map[(int)part.roomMapPos.x+1, (int)part.roomMapPos.y].GetComponent<RoomContainer>().room.runningRoom = true; break;
+                case Generation.open.bot :Generation.Instance.map[(int)part.roomMapPos.x, (int)part.roomMapPos.y - 1].GetComponent<RoomContainer>().room.runningRoom = true; break;
+            }
+            part.room.runningRoom = false;
         }
-        
-        
-        part.room.runningRoom = false;
     }
 }
