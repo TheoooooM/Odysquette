@@ -23,7 +23,7 @@ public class WindParticleManager : MonoBehaviour
         
      if (hit != null)
      {
-    Debug.Log(hit.collider.gameObject.name);
+   
     float offSetDistance = enemyTransform.lossyScale.x / 2;
     float distance = (hit.distance - offSetDistance) / 2;
     transform.position = enemyTransform.position + transform.right * distance;

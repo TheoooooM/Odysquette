@@ -3,18 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
 
 
 public class CameraControllers : MonoBehaviour
 {
+  
+  public Rect currentRectLimitation;
     public float speed;
  public float maxDistance;
   [SerializeField] private Transform player;
+  [SerializeField]
   private Vector3 offSet;
   [SerializeField]
   private CinemachineVirtualCamera _cinemachineVirtualCamera;
   
+
+  private void OnDrawGizmosSelected()
+  {
+    Handles.DrawSolidRectangleWithOutline(currentRectLimitation,new Color(01,1,1,0.01f), Color.red);
+  }
+
   private void FixedUpdate()
   {
   
@@ -35,6 +45,11 @@ public class CameraControllers : MonoBehaviour
     
 
     }
+Debug.Log(currentRectLimitation.xMin);
+Debug.Log(currentRectLimitation.xMax);
+
+    offSet.x = Mathf.Clamp(offSet.x, currentRectLimitation.xMin+1.77f*_cinemachineVirtualCamera.m_Lens.OrthographicSize, currentRectLimitation.xMax-1.77f*_cinemachineVirtualCamera.m_Lens.OrthographicSize);
+    offSet.y = Mathf.Clamp(offSet.y, currentRectLimitation.yMin+_cinemachineVirtualCamera.m_Lens.OrthographicSize, currentRectLimitation.yMax-_cinemachineVirtualCamera.m_Lens.OrthographicSize);
 
     offSet.z = -0.7f;
     

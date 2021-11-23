@@ -32,7 +32,7 @@ public class StateDash : StateEnemySO
                    RaycastHit2D hit = Physics2D.BoxCast(rb.position, extentsRangeDetection, 0,
                        direction.normalized, direction.magnitude, layerMask);  
                    ExtDebug.DrawBoxCastBox(rb.position, extentsRangeDetection/2, Quaternion.identity, direction.normalized, direction.magnitude, Color.red);
-               Debug.Log(hit.collider.gameObject.name);
+          
                    if(hit.collider.gameObject.layer == 9 )
                          {
                                     
