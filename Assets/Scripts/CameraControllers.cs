@@ -16,8 +16,7 @@ public class CameraControllers : MonoBehaviour
   [SerializeField] private Transform player;
   [SerializeField]
   private Vector3 offSet;
-  [SerializeField]
-  private CinemachineVirtualCamera _cinemachineVirtualCamera;
+  [SerializeField] private CinemachineVirtualCamera _cinemachineVirtualCamera;
   
 
   private void OnDrawGizmosSelected()

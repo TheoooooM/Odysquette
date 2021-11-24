@@ -30,7 +30,6 @@ public class StateTP : StateEnemySO
         Transform firstTransmitter = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.FirstTransmitter];
         Transform secondTransmitter = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.SecondTransmitter];
         Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
-
         if (Vector3.Distance(enemyTransform.position, firstTransmitter.position)<0.3f)
         {
             enemyTransform.position = secondTransmitter.position;

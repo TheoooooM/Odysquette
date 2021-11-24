@@ -27,7 +27,7 @@ public class Generation : MonoBehaviour
     public Transform roomPool;
     
     public GameObject[,] map;
-    public int mapSize;
+    public int mapSize = 51;
     public int nbrOfRoom = 10;
 
     private RoomManager currentRoom;
@@ -99,7 +99,7 @@ public class Generation : MonoBehaviour
             if (reset)
             {
                 i--;
-                Debug.Log("reset");
+                //Debug.Log("reset");
                 reset = false;
             }
             else
@@ -107,7 +107,7 @@ public class Generation : MonoBehaviour
                 yield return new WaitForSeconds(0.05f);
             }
 
-            Debug.Log("Create Room n°" + i);
+            //Debug.Log("Create Room n°" + i);
             
             if (i == size)
             {
@@ -115,14 +115,14 @@ public class Generation : MonoBehaviour
             }
             else
             {
-                Debug.Log("room with " + needOpen);
+                //Debug.Log("room with " + needOpen);
                 RoomCreator newRoom = normalRoom[Random.Range(0, normalRoom.Length)];
                 if(newRoom.exitDicitonnary.Count == 0) {newRoom.DictionaryUpdate(); newRoom.PartUpdate();}
                 if (newRoom.exitDicitonnary[needOpen].Count != 0)
                 {
-                    Debug.Log(newRoom.name + " work");
+                    //debug.Log(newRoom.name + " work");
                     RoomContainer enterPart = newRoom.exitDicitonnary[needOpen][Random.Range(0, newRoom.exitDicitonnary[needOpen].Count - 1)];
-                    Debug.Log("EnterPart :" + enterPart);
+                    //debug.Log("EnterPart :" + enterPart);
                     
 
                     bool canSpawn = true;
@@ -137,13 +137,13 @@ public class Generation : MonoBehaviour
                                     if (map[(int)(rc.roomPos.x-enterPart.roomPos.x + currentPos.x), (int)(rc.roomPos.y-enterPart.roomPos.y + currentPos.y)] != null)
                                     {
                                         canSpawn = false;
-                                        Debug.Log( "Cant Spawn");
+                                        //debug.Log( "Cant Spawn");
                                         break;
                                     }
                                 }
                             }
                         }
-                    Debug.Log("Can Spawn :" + canSpawn);
+                    //debug.Log("Can Spawn :" + canSpawn);
 
                     if (canSpawn)
                     {
@@ -159,7 +159,7 @@ public class Generation : MonoBehaviour
                             if (exitPart != enterPart || newRoom.partList.Length == 1)
                             {
                                 open exitSide = exitPart.exitList[Random.Range(0, exitPart.exitAmount)];
-                                Debug.Log("Exit Part : " + exitPart.roomPos + " ExitSide : " + exitSide);
+                                //debug.Log("Exit Part : " + exitPart.roomPos + " ExitSide : " + exitSide);
                                 
                                 Vector2 movePos = Vector2.zero;
                                 switch (exitSide)
@@ -176,14 +176,14 @@ public class Generation : MonoBehaviour
                                     Vector2 enablePos = new Vector2(
                                         (int) (exitPart.roomPos.x - enterPart.roomPos.x + currentPos.x + movePos.x),
                                         (int) (exitPart.roomPos.y - enterPart.roomPos.y + currentPos.y + movePos.y));
-                                    Debug.Log(enablePos + " pos of " + map[(int)enablePos.x, (int) enablePos.y]);
+                                    //debug.Log(enablePos + " pos of " + map[(int)enablePos.x, (int) enablePos.y]);
                                     if (map[(int)enablePos.x, (int)enablePos.y] == null)
                                     {
 
                                         currentRoom = Instantiate(new GameObject(), roomPool).AddComponent(typeof(RoomManager)) as RoomManager;
                                         currentRoom.ennemiesList = new List<GameObject>(newRoom.ennemiList);
                                         currentRoom.name = "room " + i;
-                                        Debug.Log("Instantiate " + currentRoom);
+                                        //debug.Log("Instantiate " + currentRoom);
                                         foreach (Room rom in newRoom.partList)
                                         {
                                             RoomContainer RC = Instantiate(rom.RoomGO.gameObject, new Vector2((currentPos.x+rom.RoomGO.roomPos.x-enterPart.roomPos.x- mapSize/2)*9.92f,(currentPos.y+rom.RoomGO.roomPos.y-enterPart.roomPos.y- mapSize/2)*6.4f), Quaternion.identity, currentRoom.transform).GetComponent<RoomContainer>();
@@ -258,7 +258,7 @@ public class Generation : MonoBehaviour
                                             new Vector2((int) (exitPart.roomPos.x - enterPart.roomPos.x + currentPos.x + movePos.x),
                                                         (int) (exitPart.roomPos.y - enterPart.roomPos.y + currentPos.y + movePos.y));
                                         
-                                        Debug.Log("Finish");
+                                        //debug.Log("Finish");
                                         ready = true;
                                         break;
                                     }
@@ -269,7 +269,7 @@ public class Generation : MonoBehaviour
                             x++;
                             if(x == 20)
                             {
-                                Debug.Log("anti while break");
+                                //debug.Log("anti while break");
                                 reset = true;
                                 break;
                             } 
@@ -292,7 +292,7 @@ public class Generation : MonoBehaviour
             if(k == 10*size)
             {
                 
-                Debug.Log("anti while break at " + i);
+                //debug.Log("anti while break at " + i);
                 ResetGen();
                 StartCoroutine("GeneratePath", nbrOfRoom);
                 break;
