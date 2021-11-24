@@ -12,8 +12,7 @@ public class CameraControllers : MonoBehaviour
  public float maxDistance;
   [SerializeField] private Transform player;
   private Vector3 offSet;
-  [SerializeField]
-  private CinemachineVirtualCamera _cinemachineVirtualCamera;
+  [SerializeField] private CinemachineVirtualCamera _cinemachineVirtualCamera;
   
   private void FixedUpdate()
   {
