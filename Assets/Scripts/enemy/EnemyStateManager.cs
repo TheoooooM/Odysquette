@@ -36,7 +36,6 @@ public class EnemyStateManager : MonoBehaviour
    
     public Vector3 spawnPosition;
     //State and Stat Condition
-   
     public int indexCurrentState;
   
    
@@ -45,7 +44,8 @@ public class EnemyStateManager : MonoBehaviour
     public bool IsCurrentStatePlayed;
     [SerializeField]
     private bool IsFirstStartPlayed;
-    
+
+    [HideInInspector] public RoomManager roomParent;
     //Delegate
     public delegate void CurrentState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> 
         objectValue, out bool endStep);
@@ -423,9 +423,9 @@ public class EnemyStateManager : MonoBehaviour
       {
           Destroy(gameObject);
       }
-  
+      Debug.Log("Remove from List");
+      roomParent.ennemiesList.Remove(gameObject);
         GameManager.Instance.ultimateValue += EMainStatsSo.giverUltimateStrawPoints;
-   
   
       
   }

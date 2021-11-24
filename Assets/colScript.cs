@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class colScript : MonoBehaviour
@@ -22,6 +23,20 @@ public class colScript : MonoBehaviour
         else
         {
             GetComponent<BoxCollider2D>().enabled = true;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (part.room.cameraRect == CameraControllers.Instance.currentRectLimitation && part.room.roomFinish)
+        {
+            switch (side)
+            {
+                case Generation.open.top : CameraControllers.Instance.currentRectLimitation.y += 3; break;
+                case Generation.open.left : CameraControllers.Instance.currentRectLimitation.x -= 4.5f; break;
+                case Generation.open.right : CameraControllers.Instance.currentRectLimitation.x += 4.5f; break;
+                case Generation.open.bot : CameraControllers.Instance.currentRectLimitation.y -= 3; break;
+            }
         }
     }
 

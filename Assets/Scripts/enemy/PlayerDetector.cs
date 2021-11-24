@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerDetector : MonoBehaviour
 {
     private EnemyStateManager ESM;
-    public float range;
+    public float range = 1;
     
     void Start()
     {
@@ -18,7 +18,7 @@ public class PlayerDetector : MonoBehaviour
     void Update()
     {
         float distance = Vector2.Distance(transform.position, GameManager.Instance.Player.transform.position);
-        Debug.Log(distance);
+        //Debug.Log(distance);
         if (distance <= range)
         {
             ESM.enabled = true;

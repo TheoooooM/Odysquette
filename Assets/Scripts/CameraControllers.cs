@@ -9,7 +9,15 @@ using UnityEngine;
 
 public class CameraControllers : MonoBehaviour
 {
-  
+
+  public static CameraControllers Instance;
+
+  private void Awake()
+  {
+    Instance = this;
+  }
+
+
   public Rect currentRectLimitation;
     public float speed;
  public float maxDistance;
@@ -44,8 +52,8 @@ public class CameraControllers : MonoBehaviour
     
 
     }
-Debug.Log(currentRectLimitation.xMin);
-Debug.Log(currentRectLimitation.xMax);
+//Debug.Log(currentRectLimitation.xMin);
+//Debug.Log(currentRectLimitation.xMax);
 
     offSet.x = Mathf.Clamp(offSet.x, currentRectLimitation.xMin+1.77f*_cinemachineVirtualCamera.m_Lens.OrthographicSize, currentRectLimitation.xMax-1.77f*_cinemachineVirtualCamera.m_Lens.OrthographicSize);
     offSet.y = Mathf.Clamp(offSet.y, currentRectLimitation.yMin+_cinemachineVirtualCamera.m_Lens.OrthographicSize, currentRectLimitation.yMax-_cinemachineVirtualCamera.m_Lens.OrthographicSize);

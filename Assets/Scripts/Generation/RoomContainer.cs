@@ -159,7 +159,7 @@ public class RoomContainer : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("enter collider with " + other.name);
+        //Debug.Log("enter collider with " + other.name);
         if (other.CompareTag("Player"))
         {
             playerInRoom = true;
