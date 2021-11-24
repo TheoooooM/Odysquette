@@ -71,7 +71,7 @@ public class HealthPlayer : MonoBehaviour
         
              if (!isInvincible)
                     {
-                        Debug.Log("test"); 
+                       
                         if (healthPlayer - damage <= 0)
                         {
                             OnDeathPlayer();

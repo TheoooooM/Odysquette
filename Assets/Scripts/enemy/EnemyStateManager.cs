@@ -147,7 +147,7 @@ public class EnemyStateManager : MonoBehaviour
                    
                         if (EMainStatsSo.stateEnnemList[i].CheckCondition(objectDictionaryCondition ))
                         {
-                           Debug.Log("aa");
+                      
                            
                             if (!EMainStatsSo.stateEnnemList[i].isFixedUpdate)
                             {
@@ -156,7 +156,7 @@ public class EnemyStateManager : MonoBehaviour
                                 {
                                     
                                     CurrentUpdateState += EMainStatsSo.stateEnnemList[i].StartState;
-                                    Debug.Log("bonsoir");
+                                 
                                     IsCurrentStartPlayed = true;
                                     if(EMainStatsSo.stateEnnemList[i].oneStartState)
                                     IsFirstStartPlayed = true;
@@ -176,7 +176,7 @@ public class EnemyStateManager : MonoBehaviour
                                     IsCurrentStartPlayed = true;
                                     if(EMainStatsSo.stateEnnemList[i].oneStartState)
                                     IsFirstStartPlayed = true;
-                                    Debug.Log("bonsoirle fixed");;
+                                 
                                 }
                                 else
                                 {
@@ -471,7 +471,7 @@ public class EnemyStateManager : MonoBehaviour
           HealthPlayer.Instance.TakeDamagePlayer(1);
           if (other.CompareTag("Wind"))
           {
-              Debug.Log("aenter");
+            
                 StateWind stateWind = other.GetComponent<WindParticleManager>().StateWind;
                                        windDirection += stateWind.direction*stateWind.speedWind ;
                                      
