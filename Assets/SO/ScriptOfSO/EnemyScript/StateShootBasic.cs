@@ -19,6 +19,11 @@ public class StateShootBasic : StateShootSO
         enemyTransform.GetComponent<SpriteRenderer>().color = Color.cyan;
         Vector3 direction =  (transformPlayer.position-enemyTransform.position).normalized;
         parentBulletTF.transform.position = enemyTransform.position + direction * offSetDistance;
+        if (isFirstAimPlayer)
+        {
+            Transform previousTransformPlayer= (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.PreviousTransformPlayer];
+            previousTransformPlayer.position = transformPlayer.position; 
+        }
        
    
         
@@ -42,6 +47,11 @@ public class StateShootBasic : StateShootSO
             
              transformPlayer = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformPlayer];
             
+        }
+
+        if (isFirstAimPlayer)
+        {
+            transformPlayer = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.PreviousTransformPlayer];
         }
 
             for (int i = 0; i <EnemySpawnerManager.Instance.enemyShootPools.Count ; i++)
@@ -99,8 +109,10 @@ public class StateShootBasic : StateShootSO
      public override IEnumerator ShootDelay(GameObject prefabBullet,Transform parentBulletTF, Transform transformPlayer)
     {
         Vector2 directionPlayer = new Vector2();
+      
         for (int j = 0; j < numberWaveShoot; j++)
         {
+       
              for (int i = 0; i < directions.Length; i++)
                     {
                         GameObject bullet = PoolManager.Instance.SpawnEnnemyShoot(enemyTypeShoot, prefabBullet, parentBulletTF);
@@ -111,7 +123,8 @@ public class StateShootBasic : StateShootSO
                         }
                         Vector3 rotation = new Vector3();
                         directionPlayer = parentBulletTF.position;
-                        if (isAimPlayer)
+                   
+                        if (isAimPlayer || isFirstAimPlayer)
                         {
                             directionPlayer = (transformPlayer.position - bullet.transform.position).normalized;
                     

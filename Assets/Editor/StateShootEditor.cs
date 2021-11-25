@@ -32,9 +32,9 @@ public class StateShootEditor : StateSOEditor
             using (new GUILayout.HorizontalScope())
             {
                EditorGUILayout.PropertyField(serializedObject.FindProperty("damage"));
-               GUILayout.FlexibleSpace();
+     
                EditorGUILayout.PropertyField(serializedObject.FindProperty("speedBullet"));
-               GUILayout.FlexibleSpace();
+              
                EditorGUILayout.PropertyField(serializedObject.FindProperty("dragRB"));
             }
             
@@ -42,8 +42,13 @@ public class StateShootEditor : StateSOEditor
             EditorGUILayout.Space(4f);
             GUILayout.Label("Range", subSubTitle); 
             EditorGUILayout.Space(4f);
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("isAimPlayer"));
-            EditorGUILayout.Space(4f);
+            using (new GUILayout.HorizontalScope())
+            {
+               EditorGUILayout.PropertyField(serializedObject.FindProperty("isAimPlayer"));
+              
+               EditorGUILayout.PropertyField(serializedObject.FindProperty("isFirstAimPlayer"));
+            }
+ EditorGUILayout.Space(4f);
             using (new GUILayout.HorizontalScope())
             {
                EditorGUILayout.PropertyField(serializedObject.FindProperty("rangeForShoot"));

@@ -34,6 +34,7 @@ public class StateShootSO : StateEnemySO
     public int numberWaveShoot = 1;
 
     public bool isAimPlayer;
+    public bool isFirstAimPlayer;
     public float offSetDistance;
     public LayerMask layerMaskRay; 
    

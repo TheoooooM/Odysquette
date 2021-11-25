@@ -70,7 +70,7 @@ public class EnemyMovement : MonoBehaviour
         {
             enabled = true;
         }
-       else if (enemyStateManager.IsCurrentStartPlayed || enemyStateManager.IsCurrentStatePlayed)
+       else if (enemyStateManager.IsCurrentStartPlayed || enemyStateManager.IsCurrentStatePlayed && !enemyStateManager.EMainStatsSo.stateEnnemList[enemyStateManager.indexCurrentState].needEnemyMovement)
             enabled = false;
     }
   Vector2 direction = new Vector2();

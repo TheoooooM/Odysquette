@@ -297,6 +297,7 @@ public class EnemyStateManager : MonoBehaviour
                
                 if (EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate)
                 {
+                    Debug.Log(EMainStatsSo.stateEnnemList[indexCurrentState]);
                       CurrentFixedState( objectDictionaryState,out bool endStep); _endstep = endStep;
                   
                 }

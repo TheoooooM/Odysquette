@@ -20,7 +20,7 @@ public static class ExtensionMethods
    {
        TransformPlayer, RigidBodyEnemy, RigidBodyPlayer,
        Spawner, EnemyMovement, TransformShoot, EnemyStateManager, AimDash, TransformEnemy, WindParticleManager,
-       FirstTransmitter, SecondTransmitter, FlashObject, PlayerController
+       FirstTransmitter, SecondTransmitter, FlashObject, PlayerController, PreviousTransformPlayer
    }
 
    public enum EnemyTypeShoot
