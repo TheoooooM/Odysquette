@@ -69,6 +69,7 @@ public class EnemyStateManager : MonoBehaviour
 
     private void Start()
     { 
+        
         spawnPosition = transform.position;
         rb = GetComponent<Rigidbody2D>();
         health = EMainStatsSo.maxHealth;
@@ -107,6 +108,50 @@ public class EnemyStateManager : MonoBehaviour
                             }
             }
             }
+GameObject player = GameObject.FindWithTag("Player");
+        for (int i = 0; i < baseObjectListCondition.Count; i++)
+        {
+            switch (baseObjectListCondition[i].objectInStateManager)
+            {
+                case ExtensionMethods.ObjectInStateManager.TransformPlayer:
+                {
+                    baseObjectListState[i]._object = player.transform;
+                    break;
+                }
+                case ExtensionMethods.ObjectInStateManager.RigidBodyPlayer:
+                {
+                    baseObjectListState[i]._object = player.GetComponent<Rigidbody2D>();
+                    break;
+                }
+                case ExtensionMethods.ObjectInStateManager.PlayerController:
+                {
+                    baseObjectListState[i]._object = player.GetComponent<Playercontroller>();
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < baseObjectListState.Count; i++)
+        {
+            switch (baseObjectListCondition[i].objectInStateManager)
+            {
+                case ExtensionMethods.ObjectInStateManager.TransformPlayer:
+                {
+                    baseObjectListState[i]._object = player.transform;
+                    break;
+                }
+                case ExtensionMethods.ObjectInStateManager.RigidBodyPlayer:
+                {
+                    baseObjectListState[i]._object = player.GetComponent<Rigidbody2D>();
+                    break;
+                }
+                case ExtensionMethods.ObjectInStateManager.PlayerController:
+                {
+                    baseObjectListState[i]._object = player.GetComponent<Playercontroller>();
+                    break;
+                }
+            }
+        }
 
  if(EMainStatsSo.baseState != null)
         UpdateDictionaries(EMainStatsSo.baseState);
