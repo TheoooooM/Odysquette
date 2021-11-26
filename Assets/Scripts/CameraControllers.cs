@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Cinemachine;
 using Unity.Mathematics;
 using UnityEditor;
@@ -9,7 +10,13 @@ using UnityEngine;
 
 public class CameraControllers : MonoBehaviour
 {
-  
+  public static CameraControllers Instance;
+
+  private void Awake()
+  {
+    Instance = this;
+  }
+
   public Rect currentRectLimitation;
     public float speed;
  public float maxDistance;

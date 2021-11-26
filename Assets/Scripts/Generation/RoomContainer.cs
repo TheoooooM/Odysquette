@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 
 public class RoomContainer : MonoBehaviour
 {
     public RoomManager room;
+    public ABPath nasvMesh;
     public Vector2 roomMapPos;
 
 

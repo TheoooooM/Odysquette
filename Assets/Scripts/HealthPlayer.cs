@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class HealthPlayer : MonoBehaviour
 {
-    
 
-    public Collider waveCollider;
+    public Rigidbody2D rb;
+  
     [SerializeField]
     public int maxHealth;
     [SerializeField]
@@ -53,7 +53,7 @@ public class HealthPlayer : MonoBehaviour
                         timerInvincible = 0;
                         isInvincible = false;
                         spriteRenderer.color = Color.white;
-                        waveCollider.enabled = true;
+                        
                         
                     }
              else
@@ -82,7 +82,7 @@ public class HealthPlayer : MonoBehaviour
                                     {
                                         if(i >= healthPlayer)
                                         {
-                                            waveCollider.enabled = false;
+                                           
                                             UIManager.Instance.HeartsLife[i].SetActive(false); 
                                         }
                                         else

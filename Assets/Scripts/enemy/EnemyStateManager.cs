@@ -94,7 +94,33 @@ public class EnemyStateManager : MonoBehaviour
         
 
             
-        
+    Debug.Log(baseObjectListCondition.Count);
+                for (int i = 0; i < baseObjectListCondition.Count; i++)
+                {
+                    
+                    switch (baseObjectListCondition[i].objectInStateManager)
+                    {
+                        case ExtensionMethods.ObjectInStateManager.TransformPlayer:
+                        {
+
+
+                            baseObjectListCondition[i]._object = HealthPlayer.Instance.transform;
+                            break;
+                        }
+                        case ExtensionMethods.ObjectInStateManager.RigidBodyPlayer:
+                        {  
+                            Debug.Log(HealthPlayer.Instance.rb);
+                            baseObjectListCondition[i]._object = HealthPlayer.Instance.rb;
+                            Debug.Log(   baseObjectListCondition[i]._object);
+                            break;
+                        }
+                        case ExtensionMethods.ObjectInStateManager.PlayerController:
+                        {
+                            baseObjectListState[i]._object = HealthPlayer.Instance.playerController;
+                            break;
+                        }
+                    }
+                }
        
         for (int i = 0; i < EMainStatsSo.stateEnnemList.Count; i++)
         {
@@ -117,46 +143,25 @@ public class EnemyStateManager : MonoBehaviour
                             }
             }
             }
-GameObject player = GameObject.FindWithTag("Player");
-        for (int i = 0; i < baseObjectListCondition.Count; i++)
-        {
-            switch (baseObjectListCondition[i].objectInStateManager)
-            {
-                case ExtensionMethods.ObjectInStateManager.TransformPlayer:
-                {
-                    baseObjectListState[i]._object = player.transform;
-                    break;
-                }
-                case ExtensionMethods.ObjectInStateManager.RigidBodyPlayer:
-                {
-                    baseObjectListState[i]._object = player.GetComponent<Rigidbody2D>();
-                    break;
-                }
-                case ExtensionMethods.ObjectInStateManager.PlayerController:
-                {
-                    baseObjectListState[i]._object = player.GetComponent<Playercontroller>();
-                    break;
-                }
-            }
-        }
+
 
         for (int i = 0; i < baseObjectListState.Count; i++)
         {
-            switch (baseObjectListCondition[i].objectInStateManager)
+            switch (baseObjectListState[i].objectInStateManager)
             {
                 case ExtensionMethods.ObjectInStateManager.TransformPlayer:
                 {
-                    baseObjectListState[i]._object = player.transform;
+                    baseObjectListState[i]._object = HealthPlayer.Instance.transform;
                     break;
                 }
                 case ExtensionMethods.ObjectInStateManager.RigidBodyPlayer:
                 {
-                    baseObjectListState[i]._object = player.GetComponent<Rigidbody2D>();
+                    baseObjectListState[i]._object = HealthPlayer.Instance.rb;
                     break;
                 }
                 case ExtensionMethods.ObjectInStateManager.PlayerController:
                 {
-                    baseObjectListState[i]._object = player.GetComponent<Playercontroller>();
+                    baseObjectListState[i]._object = HealthPlayer.Instance.playerController;
                     break;
                 }
             }
@@ -484,17 +489,20 @@ GameObject player = GameObject.FindWithTag("Player");
   }
 
   public virtual void OnDeath()
-  {
+  { 
+      Debug.Log("Remove from List");
+      
       try
       {
+          roomParent.ennemiesList.Remove(gameObject.transform.parent.gameObject);
           Destroy(gameObject.transform.parent.gameObject);
       }
       catch (Exception e)
       {
+          roomParent.ennemiesList.Remove(gameObject);
           Destroy(gameObject);
       }
-      Debug.Log("Remove from List");
-      roomParent.ennemiesList.Remove(gameObject);
+     
         GameManager.Instance.ultimateValue += EMainStatsSo.giverUltimateStrawPoints;
   
       

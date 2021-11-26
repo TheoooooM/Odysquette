@@ -25,7 +25,7 @@ public class Room
 [ExecuteInEditMode]
 public class RoomCreator : MonoBehaviour
 { 
-    bool Exist = false;
+    public bool Exist = false;
     public Room[] partList;
 
     [SerializeField] private List<GameObject> _ennemiiList;
@@ -35,7 +35,7 @@ public class RoomCreator : MonoBehaviour
     
     public GameObject[,] partMap = new GameObject[5,5];
 
-    private GameObject roomPref;
+    public GameObject roomPref;
 
     public bool update = false;
 

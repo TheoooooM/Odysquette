@@ -11,7 +11,7 @@ public class PlayerColliderWave : MonoBehaviour
     {
         
         ps = GetComponent<ParticleSystem>();
-       ps.trigger.AddCollider(HealthPlayer.Instance.waveCollider); 
+     // ps.trigger.AddCollider(HealthPlayer.Instance.waveCollider); 
       
     }
 
