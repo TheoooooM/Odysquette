@@ -16,9 +16,14 @@ public class StateShootBasic : StateShootSO
         Transform parentBulletTF =
             (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformShoot];
         Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
-        enemyTransform.GetComponent<SpriteRenderer>().color = Color.cyan;
+        enemyTransform.GetComponent<SpriteRenderer>().color += Color.white;
         Vector3 direction =  (transformPlayer.position-enemyTransform.position).normalized;
         parentBulletTF.transform.position = enemyTransform.position + direction * offSetDistance;
+        if (isFirstAimPlayer)
+        {
+            Transform previousTransformPlayer= (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.PreviousTransformPlayer];
+            previousTransformPlayer.position = transformPlayer.position; 
+        }
        
    
         
@@ -29,7 +34,7 @@ public class StateShootBasic : StateShootSO
     {
         
         Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
-        enemyTransform.GetComponent<SpriteRenderer>().color = Color.white;
+        enemyTransform.GetComponent<SpriteRenderer>().color -= Color.white;
   
         Transform parentBulletTF =
             (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformShoot];
@@ -44,6 +49,11 @@ public class StateShootBasic : StateShootSO
             
         }
 
+        if (isFirstAimPlayer)
+        {
+            transformPlayer = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.PreviousTransformPlayer];
+        }
+
             for (int i = 0; i <EnemySpawnerManager.Instance.enemyShootPools.Count ; i++)
         {
             if (enemyTypeShoot == EnemySpawnerManager.Instance.enemyShootPools[i].enemyTypeShoot)
@@ -54,7 +64,7 @@ public class StateShootBasic : StateShootSO
     
       
        
-        if (!isDelayBetweenShoot && !isDelayBetweenWaveShoot)
+        if (!isDelayBetweenShoot && !isDelayBetweenWaveShoot && !IsMultipleDelayBetweenShoot)
         {
             for (int i = 0; i < directions.Length; i++)
             {
@@ -67,7 +77,7 @@ public class StateShootBasic : StateShootSO
                     bullet.transform.position += basePosition[i];
                 }
                 Vector3 rotation = new Vector3();
-                directionPlayer = parentBulletTF.position;
+                directionPlayer = parentBulletTF.right;
                 if (isAimPlayer)
                 {
                     directionPlayer = (transformPlayer.position - bullet.transform.position).normalized;
@@ -99,8 +109,10 @@ public class StateShootBasic : StateShootSO
      public override IEnumerator ShootDelay(GameObject prefabBullet,Transform parentBulletTF, Transform transformPlayer)
     {
         Vector2 directionPlayer = new Vector2();
+      
         for (int j = 0; j < numberWaveShoot; j++)
         {
+       
              for (int i = 0; i < directions.Length; i++)
                     {
                         GameObject bullet = PoolManager.Instance.SpawnEnnemyShoot(enemyTypeShoot, prefabBullet, parentBulletTF);
@@ -110,8 +122,9 @@ public class StateShootBasic : StateShootSO
                             bullet.transform.position += basePosition[i];
                         }
                         Vector3 rotation = new Vector3();
-                        directionPlayer = parentBulletTF.position;
-                        if (isAimPlayer)
+                        directionPlayer = parentBulletTF.right;
+                   
+                        if (isAimPlayer || isFirstAimPlayer)
                         {
                             directionPlayer = (transformPlayer.position - bullet.transform.position).normalized;
                     
@@ -125,6 +138,10 @@ public class StateShootBasic : StateShootSO
                         bullet.GetComponent<Rigidbody2D>().AddForce(rotation*speedBullet, ForceMode2D.Force );
                    
                         SetParameter(bullet);
+                        if (IsMultipleDelayBetweenShoot)
+                        {
+                            yield return new WaitForSeconds(delayBetweenShootList[i]);
+                        }
                         if(isDelayBetweenShoot)
                         yield return new WaitForSeconds(delayBetweenShoot);
                     }

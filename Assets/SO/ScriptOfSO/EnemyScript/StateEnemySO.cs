@@ -8,8 +8,8 @@ using Object = UnityEngine.Object;
 public class StateEnemySO : ScriptableObject
 {
     // deja utilisé
- 
 
+    public bool needEnemyMovement;
     public bool openBasePanel;
     public bool openDebugPanel;
     public bool openSpecPanel;

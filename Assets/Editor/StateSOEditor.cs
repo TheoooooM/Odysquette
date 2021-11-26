@@ -25,7 +25,7 @@ public class StateSOEditor : Editor
         subSubTitle.fontSize = 13;
          
         subSubTitle.fontStyle = FontStyle.Italic; 
-        EditorGUIUtility.labelWidth = 125;
+        EditorGUIUtility.labelWidth = 135;
         GUILayout.Label("Main Stats State", subTitle);
         EditorGUILayout.Space(6f);
 
@@ -45,6 +45,7 @@ public class StateSOEditor : Editor
                                         {
                                              EditorGUILayout.PropertyField(serializedObject.FindProperty("isKnockUpInState"));
                                              EditorGUILayout.PropertyField(serializedObject.FindProperty("duringDefaultState"));
+                                             EditorGUILayout.PropertyField(serializedObject.FindProperty("needEnemyMovement"));
                                         }
                                         EditorGUILayout.Space(4f);
                                         GUILayout.Label("Start State", subSubTitle);

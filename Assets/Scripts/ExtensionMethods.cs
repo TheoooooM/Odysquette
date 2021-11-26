@@ -20,14 +20,23 @@ public static class ExtensionMethods
    {
        TransformPlayer, RigidBodyEnemy, RigidBodyPlayer,
        Spawner, EnemyMovement, TransformShoot, EnemyStateManager, AimDash, TransformEnemy, WindParticleManager,
-       FirstTransmitter, SecondTransmitter, FlashObject, PlayerController
+       FirstTransmitter, SecondTransmitter, FlashObject, PlayerController, PreviousTransformPlayer
    }
 
    public enum EnemyTypeShoot
    {
-       WalkmanType, HologramType
+       WalkmanType, HologramType, BossBullet, BossWave, BossTurret
    }
-   
+
+   public enum PhaseBoss
+   {
+       Begin,
+       First,
+       Second,
+       Third,
+       Four,
+
+   }
 
 //elelment 0 soit la base position poru qu'on rajoute deux pont par deux point a chaque fois 
 }

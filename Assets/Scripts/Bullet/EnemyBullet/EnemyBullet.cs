@@ -64,6 +64,7 @@ public class EnemyBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log(other.name);
         if (!HealthPlayer.Instance.playerController.InDash)
         {
              if (other.CompareTag("Player"))
@@ -73,7 +74,7 @@ public class EnemyBullet : MonoBehaviour
                     }
         }
         
-        else if (other.CompareTag("Walls"))
+         if (other.CompareTag("Walls"))
 
         {
            
