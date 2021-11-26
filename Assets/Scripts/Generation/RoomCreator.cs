@@ -24,13 +24,14 @@ public class Room
 
 [ExecuteInEditMode]
 public class RoomCreator : MonoBehaviour
-{
-    public bool Exist = false;
+{ 
+    bool Exist = false;
     public Room[] partList;
 
     [SerializeField] private List<GameObject> _ennemiiList;
     public List<GameObject> ennemiList => _ennemiiList;
 
+    public Transform exit;
     
     public GameObject[,] partMap = new GameObject[5,5];
 
@@ -148,6 +149,8 @@ public class RoomCreator : MonoBehaviour
 
                 rom.RoomGO.UpdatePart();
             }
+
+            if (exit != null) ;
     }
 
     public void DictionaryUpdate()

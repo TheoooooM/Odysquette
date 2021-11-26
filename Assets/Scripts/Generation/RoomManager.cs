@@ -15,7 +15,15 @@ public class RoomManager : MonoBehaviour
     public GameObject exitGO;
     public GameObject enterGO;
 
+    public Transform exit;
+    
     private bool done = false;
+
+    private void Start()
+    {
+        if(exit != null) exit.gameObject.SetActive(false);
+    }
+
     private void Update()
     {
         
@@ -35,6 +43,7 @@ public class RoomManager : MonoBehaviour
                 //Debug.Log("finish Room");
                 roomFinish = true;
                 if(exitGO != null)exitGO.SetActive(false);
+                if(exit != null) exit.gameObject.SetActive(true);
                 //exitClose.SetActive(false);
             }
 
