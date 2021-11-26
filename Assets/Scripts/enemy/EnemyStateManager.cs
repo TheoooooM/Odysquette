@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using Pathfinding;
 using UnityEngine;
@@ -15,7 +16,7 @@ public class EnemyStateManager : MonoBehaviour
     public Vector2 forceApply;
     public List<BaseObject> baseObjectListCondition = new List<BaseObject>();
     public List<BaseObject> baseObjectListState = new List<BaseObject>();
-    private Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionaryCondition =
+    public Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionaryCondition =
         new Dictionary<ExtensionMethods.ObjectInStateManager, Object>();
     private Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionaryState =
         new Dictionary<ExtensionMethods.ObjectInStateManager, Object>();
@@ -57,16 +58,17 @@ public class EnemyStateManager : MonoBehaviour
     [SerializeField]
     private float timerCurrentStartState;
     private float timerCurrentState;
-    private Rigidbody2D rb;
-    private SpriteRenderer spriteRenderer;
+   public Rigidbody2D rb;
+    public SpriteRenderer spriteRenderer;
+    public Dictionary<int, bool> healthUse = new Dictionary<int, bool>();
     private void OnValidate()
     {
-     //   spriteRenderer = GetComponent<SpriteRenderer>();
+     //   
        // spriteRenderer.sprite = EMainStatsSo.sprite;
     }
 
-    private void Start()
-    { 
+    public virtual void Start()
+    { spriteRenderer = GetComponent<SpriteRenderer>();
         spawnPosition = transform.position;
         rb = GetComponent<Rigidbody2D>();
         health = EMainStatsSo.maxHealth;
@@ -75,8 +77,15 @@ public class EnemyStateManager : MonoBehaviour
         {
             if (EMainStatsSo.stateEnnemList[i].useTimeCondition)
                         { 
+                            Debug.Log("test");
+                            Debug.Log(gameObject.name + timerCondition.Count);
                             timerCondition.Add(i, 0);
                         }
+
+            if (EMainStatsSo.stateEnnemList[i].useHealthCondition)
+            {
+                healthUse.Add(i, false);
+            }
                       
         }
         
@@ -119,18 +128,18 @@ public class EnemyStateManager : MonoBehaviour
                 for (int i = 0; i < EMainStatsSo.stateEnnemList.Count; i++)
                     {
                       
-                        if (EMainStatsSo.stateEnnemList[i].useHealthCondition)
+                        if (EMainStatsSo.stateEnnemList[i].useHealthCondition )
                         {
-                          
-                            
-                                if (EMainStatsSo.stateEnnemList[i].healthCondition > health)
+                      
+                                if (EMainStatsSo.stateEnnemList[i].healthCondition <=  health || healthUse[i] == true)
                                 {
-                                                           
+                                    Debug.Log("rszzz");
+                                   
                                     continue;
                                 }
                                                     
                         }
-                      
+                    
                         if (EMainStatsSo.stateEnnemList[i].useTimeCondition)
 
                         {
@@ -148,7 +157,7 @@ public class EnemyStateManager : MonoBehaviour
                         if (EMainStatsSo.stateEnnemList[i].CheckCondition(objectDictionaryCondition ))
                         {
                       
-                           
+                          
                             if (!EMainStatsSo.stateEnnemList[i].isFixedUpdate)
                             {
                                 
@@ -189,7 +198,11 @@ public class EnemyStateManager : MonoBehaviour
                                     ;
                                   
                             knockUpInState = EMainStatsSo.stateEnnemList[i].isKnockUpInState;
-                            indexCurrentState = i; 
+                            indexCurrentState = i;
+                            if (EMainStatsSo.stateEnnemList[i].useHealthCondition)
+                            {
+                                healthUse[i] = true;
+                            }
                             UpdateDictionaries(EMainStatsSo.stateEnnemList[indexCurrentState]);
                         }
                       
@@ -297,14 +310,14 @@ public class EnemyStateManager : MonoBehaviour
                
                 if (EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate)
                 {
-                    Debug.Log(EMainStatsSo.stateEnnemList[indexCurrentState]);
+                   
                       CurrentFixedState( objectDictionaryState,out bool endStep); _endstep = endStep;
                   
                 }
                   
                 else 
                 {
-                    Debug.Log(EMainStatsSo.stateEnnemList[indexCurrentState]);
+                    
                     CurrentUpdateState(objectDictionaryState,out bool endStep); _endstep = endStep;
                 }
                
@@ -385,7 +398,7 @@ public class EnemyStateManager : MonoBehaviour
        
     }
 
-    void UpdateDictionaries(StateEnemySO stateEnemySo)
+   public void UpdateDictionaries(StateEnemySO stateEnemySo)
     
     {
         foreach (ExtensionMethods.ObjectInStateManager objectInStateManager in stateEnemySo.objectInStateManagersState)
@@ -414,7 +427,7 @@ public class EnemyStateManager : MonoBehaviour
 
   }
 
-  public void OnDeath()
+  public virtual void OnDeath()
   {
       try
       {

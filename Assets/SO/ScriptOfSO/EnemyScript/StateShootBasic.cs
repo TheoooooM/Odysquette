@@ -16,7 +16,7 @@ public class StateShootBasic : StateShootSO
         Transform parentBulletTF =
             (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformShoot];
         Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
-        enemyTransform.GetComponent<SpriteRenderer>().color = Color.cyan;
+        enemyTransform.GetComponent<SpriteRenderer>().color += Color.white;
         Vector3 direction =  (transformPlayer.position-enemyTransform.position).normalized;
         parentBulletTF.transform.position = enemyTransform.position + direction * offSetDistance;
         if (isFirstAimPlayer)
@@ -34,7 +34,7 @@ public class StateShootBasic : StateShootSO
     {
         
         Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
-        enemyTransform.GetComponent<SpriteRenderer>().color = Color.white;
+        enemyTransform.GetComponent<SpriteRenderer>().color -= Color.white;
   
         Transform parentBulletTF =
             (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformShoot];
@@ -64,7 +64,7 @@ public class StateShootBasic : StateShootSO
     
       
        
-        if (!isDelayBetweenShoot && !isDelayBetweenWaveShoot)
+        if (!isDelayBetweenShoot && !isDelayBetweenWaveShoot && !IsMultipleDelayBetweenShoot)
         {
             for (int i = 0; i < directions.Length; i++)
             {
@@ -77,7 +77,7 @@ public class StateShootBasic : StateShootSO
                     bullet.transform.position += basePosition[i];
                 }
                 Vector3 rotation = new Vector3();
-                directionPlayer = parentBulletTF.position;
+                directionPlayer = parentBulletTF.right;
                 if (isAimPlayer)
                 {
                     directionPlayer = (transformPlayer.position - bullet.transform.position).normalized;
@@ -122,7 +122,7 @@ public class StateShootBasic : StateShootSO
                             bullet.transform.position += basePosition[i];
                         }
                         Vector3 rotation = new Vector3();
-                        directionPlayer = parentBulletTF.position;
+                        directionPlayer = parentBulletTF.right;
                    
                         if (isAimPlayer || isFirstAimPlayer)
                         {
@@ -138,6 +138,10 @@ public class StateShootBasic : StateShootSO
                         bullet.GetComponent<Rigidbody2D>().AddForce(rotation*speedBullet, ForceMode2D.Force );
                    
                         SetParameter(bullet);
+                        if (IsMultipleDelayBetweenShoot)
+                        {
+                            yield return new WaitForSeconds(delayBetweenShootList[i]);
+                        }
                         if(isDelayBetweenShoot)
                         yield return new WaitForSeconds(delayBetweenShoot);
                     }

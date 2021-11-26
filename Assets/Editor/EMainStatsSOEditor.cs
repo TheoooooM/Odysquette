@@ -23,6 +23,7 @@ public class EMainStatsSOEditor : Editor
    public override void OnInspectorGUI()
    {  
       serializedObject.Update();
+      
       EMainStatsSO eMainStatsSo = (EMainStatsSO) target;
       
       GUI.backgroundColor = backgroundColorBox;

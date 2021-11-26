@@ -83,14 +83,14 @@ public class StateShootEditor : StateSOEditor
             EditorGUILayout.Space(4f);
             GUILayout.Label("Delay", subSubTitle);
             EditorGUILayout.Space(4f);
-            eStateShootSO.isDelayBetweenShoot = EditorGUILayout.Toggle("Is Delay Between Shoot",eStateShootSO.isDelayBetweenShoot );
+            eStateShootSO.isDelayBetweenShoot = EditorGUILayout.Toggle("Delay Shoot",eStateShootSO.isDelayBetweenShoot );
             if (eStateShootSO.isDelayBetweenShoot)
             {
                 EditorGUILayout.Space(4f);
                EditorGUILayout.PropertyField(serializedObject.FindProperty("delayBetweenShoot"));
             }
             EditorGUILayout.Space(4f);
-            eStateShootSO.isDelayBetweenWaveShoot= EditorGUILayout.Toggle("Is Delay Between Wave Shoot",eStateShootSO.isDelayBetweenWaveShoot );
+            eStateShootSO.isDelayBetweenWaveShoot= EditorGUILayout.Toggle("Delay Wave Shoot",eStateShootSO.isDelayBetweenWaveShoot );
          
             if (eStateShootSO.isDelayBetweenWaveShoot)
             {
@@ -113,6 +113,12 @@ public class StateShootEditor : StateSOEditor
       EditorGUILayout.PropertyField(serializedObject.FindProperty("directions"));
       EditorGUILayout.Space(4f);
       EditorGUILayout.PropertyField(serializedObject.FindProperty("basePosition"), new GUIContent("OffSet Position"));
+      EditorGUILayout.Space(4f);
+      eStateShootSO.IsMultipleDelayBetweenShoot= EditorGUILayout.Toggle("Multiple Delay Shoot",eStateShootSO.IsMultipleDelayBetweenShoot );
+      if (eStateShootSO.IsMultipleDelayBetweenShoot)
+      {
+         EditorGUILayout.PropertyField(serializedObject.FindProperty("delayBetweenShootList"));
+      }
       EditorGUILayout.Space(6f);
 
       serializedObject.ApplyModifiedProperties();

@@ -24,7 +24,8 @@ public class StateShootSO : StateEnemySO
     public bool isDelayBetweenShoot;
     
     public bool isDelayBetweenWaveShoot;
-    
+    public bool IsMultipleDelayBetweenShoot;
+    public List<float> delayBetweenShootList = new List<float>();
     public float delayBetweenShoot = 0;
     
     public float delayBetweenWaveShoot = 0;

@@ -45,8 +45,7 @@ public class CameraControllers : MonoBehaviour
     
 
     }
-Debug.Log(currentRectLimitation.xMin);
-Debug.Log(currentRectLimitation.xMax);
+
 
     offSet.x = Mathf.Clamp(offSet.x, currentRectLimitation.xMin+1.77f*_cinemachineVirtualCamera.m_Lens.OrthographicSize, currentRectLimitation.xMax-1.77f*_cinemachineVirtualCamera.m_Lens.OrthographicSize);
     offSet.y = Mathf.Clamp(offSet.y, currentRectLimitation.yMin+_cinemachineVirtualCamera.m_Lens.OrthographicSize, currentRectLimitation.yMax-_cinemachineVirtualCamera.m_Lens.OrthographicSize);

@@ -27,7 +27,16 @@ public static class ExtensionMethods
    {
        WalkmanType, HologramType, BossBullet, BossWave, BossTurret
    }
-   
+
+   public enum PhaseBoss
+   {
+       Begin,
+       First,
+       Second,
+       Third,
+       Four,
+
+   }
 
 //elelment 0 soit la base position poru qu'on rajoute deux pont par deux point a chaque fois 
 }
