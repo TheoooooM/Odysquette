@@ -1059,57 +1059,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1 &4607742472429785532
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 935801731862802433}
-  - component: {fileID: 7011436393016079522}
-  m_Layer: 0
-  m_Name: Ennemi1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &935801731862802433
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4607742472429785532}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.39, y: -1.13, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 3015476945599044481}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7011436393016079522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4607742472429785532}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba880795a6a4aa418b555962ac3f62f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SpawnerList:
-  - ennemy: {fileID: 2259390504700047936, guid: 79b72f954259d614e849de2bd1d776d4, type: 3}
-    spawnRate: 20
-  - ennemy: {fileID: 6353946706901043108, guid: dae56589b257cab4a997d404328d3da4, type: 3}
-    spawnRate: 30
-  - ennemy: {fileID: 243450507811954010, guid: e896c3ce3a7d2aa4fb392bb217e6ef62, type: 3}
-    spawnRate: 0
-  part: {fileID: 0}
 --- !u!1 &4934924939570381969
 GameObject:
   m_ObjectHideFlags: 0
@@ -1565,14 +1514,10 @@ MonoBehaviour:
   _ennemiiList:
   - {fileID: 0}
   update: 0
-  topExits:
-  - {fileID: 4832266220011720214}
-  botExits:
-  - {fileID: 4832266220011720214}
-  leftExits:
-  - {fileID: 4832266220011720214}
-  rightExits:
-  - {fileID: 4832266220011720214}
+  topExits: []
+  botExits: []
+  leftExits: []
+  rightExits: []
 --- !u!1 &7378253037971360850
 GameObject:
   m_ObjectHideFlags: 0
@@ -1822,7 +1767,6 @@ Transform:
   m_Children:
   - {fileID: 8894716711966392891}
   - {fileID: 2408704454925132967}
-  - {fileID: 935801731862802433}
   m_Father: {fileID: 8570314288944682779}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

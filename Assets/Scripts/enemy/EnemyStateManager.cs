@@ -153,8 +153,7 @@ GameObject player = GameObject.FindWithTag("Player");
             }
         }
 
- if(EMainStatsSo.baseState != null)
-        UpdateDictionaries(EMainStatsSo.baseState);
+        if(EMainStatsSo.baseState != null)UpdateDictionaries(EMainStatsSo.baseState);
            
     }
 
