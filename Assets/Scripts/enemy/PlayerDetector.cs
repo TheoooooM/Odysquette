@@ -11,7 +11,6 @@ public class PlayerDetector : MonoBehaviour
     void Start()
     {
         ESM = GetComponent<EnemyStateManager>();
-        ESM.enabled = false;
     }
 
     // Update is called once per frame
@@ -21,7 +20,7 @@ public class PlayerDetector : MonoBehaviour
         //Debug.Log(distance);
         if (distance <= range)
         {
-            ESM.enabled = true;
+            ESM.isActivate = true;
         }
     }
 
