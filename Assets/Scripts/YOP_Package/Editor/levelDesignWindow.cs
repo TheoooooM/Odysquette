@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class levelDesignWindow : EditorWindow {
     private static GameObject newPrefab;
-    private static GameObject sceneObj;
+    private static List<GameObject> sceneObj = new List<GameObject>();
     private bool openFoldoutSelection;
     
     /// <summary>
@@ -77,19 +77,29 @@ public class levelDesignWindow : EditorWindow {
     /// </summary>
     private void DrawActivationGamBox() {
         using (new GUILayout.VerticalScope(EditorStyles.helpBox)) {
+            if(sceneObj.Count == 0) sceneObj.Add(null);
+            
             //Draw the title of the Box
             GUI.skin.label.fontSize = 10;
             GUILayout.Label("Change Selection by Prefab :");
             GUI.skin.label.fontSize = 12;
 
-            using (new GUILayout.HorizontalScope()) {
-                GUILayout.Label("Scene Gam : ");
-                sceneObj = (GameObject) EditorGUILayout.ObjectField(sceneObj, typeof(GameObject), true);
+            using (new GUILayout.VerticalScope()) {
+                for (int i = 0; i < sceneObj.Count; i++) {
+                    using (new GUILayout.HorizontalScope()) {
+                        GUILayout.Label($"Scene Gam {i} : ");
+                        sceneObj[i] = (GameObject) EditorGUILayout.ObjectField(sceneObj[i], typeof(GameObject), true);
+                    }
+                }
             }
             
-            if (GUILayout.Button("Change Object State (LShift + R)")) {
-                ChangeObjectSceneState();
+            using (new GUILayout.HorizontalScope()) {
+                if (GUILayout.Button("-", GUILayout.Width(25))) sceneObj.RemoveAt(sceneObj.Count - 1);
+                if (GUILayout.Button("+", GUILayout.Width(25))) sceneObj.Add(null);
+                if (GUILayout.Button("Change Object State (LShift + R)")) ChangeObjectSceneState();
             }
+            
+            
         }
     }
 
@@ -152,13 +162,13 @@ public class levelDesignWindow : EditorWindow {
     #region Activation Gameobject
     [MenuItem("Tools/Level Design/Change SceneObject State #R")]
     private static void ChangeObjectSceneState() {
-        if (sceneObj == null) {
+        if (sceneObj.Count == 0) {
             EditorUtility.DisplayDialog("Error when changing Object State", "You have to put a GameObject in the editor Window to change the state.", "continue");
             if(GetWindow<levelDesignWindow>() == null) Init();
             return;
         }
-        
-        sceneObj.SetActive(!sceneObj.activeSelf);
+
+        foreach (GameObject gam in sceneObj) { if(gam != null) gam.SetActive(!gam.activeSelf); }
     }
     #endregion Activation Gameobject
     

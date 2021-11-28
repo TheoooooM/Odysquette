@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: neons
-  m_Shader: {fileID: -6465566751694194690, guid: 1d320b0f26bb013438c7494e84513e8f, type: 3}
+  m_Name: ShinyLvel_Red
+  m_Shader: {fileID: -6465566751694194690, guid: c58374625b9bd014db82dee5e109ab87, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,12 +19,24 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Emission:
-        m_Texture: {fileID: 2800000, guid: 8439869b956e18f46b3521d161d75d3a, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 6564fe9b16add5546a8944116e9e9d61, type: 3}
+        m_Texture: {fileID: 2800000, guid: cd00a621c8489f242a6e927c3d95be22, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -40,8 +52,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _FlickerAmount: 1.59
-    - _StrengthAmount: 10.33
+    - Vector1_224a60cce283472984077e6f933e3612: 0.85
+    - _EnableExternalAlpha: 0
+    - _StrengthAmount: 2
     m_Colors:
-    - _Color: {r: 0, g: 0.7137255, b: 2, a: 1}
+    - _Color: {r: 2.1185474, g: 0.044367485, b: 0, a: 1}
+    - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
