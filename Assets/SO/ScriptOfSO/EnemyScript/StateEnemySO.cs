@@ -68,47 +68,9 @@ public class StateEnemySO : ScriptableObject
         endStep = false;
     }
 
-    public virtual void PlayShader(EnemyStateManager enemyStateManager)
-    {
-        if (enemyStateManager != null)
-        {
-            if (!enemyStateManager.currentShaderState)
-            {
-                return;
-            }
 
-            enemyStateManager.currentShaderState = true;
-        }
-       
-    }
 
-    public void PlayAnimation(Animator animator, string animationName)
-    {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName(animationName))
-            return;
-        animator.Play(animationName);
-    }
 
-    public void PlaySound(AudioClip audioClip)
-    {
-        //PlayAudioClip 
-    }
-
-    public void PlayFX(GameObject fx, Vector3 position, EnemyStateManager enemyStateManager)
-    {
-        if (enemyStateManager != null)
-        {
-            if (!enemyStateManager.currentFxState)
-            {
-                return;
-            }
-
-            enemyStateManager.currentFxState = true;
-        }
-            
-          
-            Instantiate(fx, position, Quaternion.identity);
-    }
         
 
  
