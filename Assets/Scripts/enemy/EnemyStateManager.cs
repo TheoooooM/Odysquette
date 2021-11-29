@@ -384,6 +384,10 @@ Debug.Log(EMainStatsSo.baseState);
                 }
                
             }
+            if (EMainStatsSo.stateEnnemList[indexCurrentState].useHealthCondition)
+            {
+                healthUse[indexCurrentState] = true;
+            }
          
             if (IsCurrentStartPlayed)
             { 
@@ -395,6 +399,7 @@ Debug.Log(EMainStatsSo.baseState);
                                         CurrentUpdateState -= EMainStatsSo.stateEnnemList[indexCurrentState].StartState;
                                     IsFirstStartPlayed = false;
                                     ;
+                                    
                               }
               
                 
@@ -417,6 +422,7 @@ Debug.Log(EMainStatsSo.baseState);
                     }
                        
                     Debug.Log(indexCurrentState);
+                    
                   
                     IsCurrentStartPlayed = false;
                     IsCurrentStatePlayed = true;
