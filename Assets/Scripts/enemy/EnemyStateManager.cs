@@ -80,8 +80,7 @@ public class EnemyStateManager : MonoBehaviour
         {
             if (EMainStatsSo.stateEnnemList[i].useTimeCondition)
                         { 
-                            Debug.Log("test");
-                            Debug.Log(gameObject.name + timerCondition.Count);
+                          
                             timerCondition.Add(i, 0);
                         }
 
@@ -260,6 +259,7 @@ public class EnemyStateManager : MonoBehaviour
 						
                         knockUpInState = EMainStatsSo.stateEnnemList[i].isKnockUpInState;
                         indexCurrentState = i; 
+                        Debug.Log(i);
                         UpdateDictionaries(EMainStatsSo.stateEnnemList[indexCurrentState]);
                     }
                       
@@ -305,15 +305,16 @@ public class EnemyStateManager : MonoBehaviour
 
 
             ApplyState();
-
+Debug.Log(EMainStatsSo.baseState);
             if (EMainStatsSo.baseState!= null)
-            {
+            {   Debug.Log("teaast");
                 if (! IsCurrentStartPlayed && !IsCurrentStatePlayed )
                 {
            
-                    
+                    Debug.Log("test");
                     EMainStatsSo.baseState.PlayState( objectDictionaryState, out bool endStep);
                     knockUpInState = EMainStatsSo.baseState.isKnockUpInState;
+                    
                    
                   
                 }
@@ -415,7 +416,7 @@ public class EnemyStateManager : MonoBehaviour
                         CurrentUpdateState += EMainStatsSo.stateEnnemList[indexCurrentState].PlayState; 
                     }
                        
-                    
+                    Debug.Log(indexCurrentState);
                   
                     IsCurrentStartPlayed = false;
                     IsCurrentStatePlayed = true;

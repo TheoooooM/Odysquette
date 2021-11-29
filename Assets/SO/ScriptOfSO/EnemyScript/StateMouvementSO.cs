@@ -12,9 +12,18 @@ public class StateMouvementSO : StateEnemySO
     public float moveSpeed;
     public bool isMovementToSpawn;
 
+    public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
+    {
+        EnemyMovement enemyMovement =
+            (EnemyMovement) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyMovement];
+        enemyMovement.enabled = true;
+     
+        endStep = true;
+    }
 
     public override void PlayState( Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
     {
+        Debug.Log("test");
         EnemyMovement enemyMovement =
             (EnemyMovement) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyMovement];
         Rigidbody2D rbPlayer = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyPlayer];

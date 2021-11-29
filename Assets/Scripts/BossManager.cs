@@ -66,6 +66,7 @@ private int currentMaxEnabledTurret;
     if (phaseBoss == ExtensionMethods.PhaseBoss.Begin)
     {
          enemyStateManager.enabled = true;
+         
          bossParticleSystem.gameObject.SetActive(false);
          beginBoss = false;
 
@@ -75,18 +76,18 @@ private int currentMaxEnabledTurret;
 
    else
    {
-     Debug.Log(phaseBoss);
+    
      currentMaxEnabledTurret =(int) phaseBoss;
      currentIndexEnabledTurret = 0;
      for (int i = 0; i < currentMaxEnabledTurret; i++)
      {
        
        
-       Debug.Log( baseturrets[i].gameObject.name + baseturrets[i].GetComponent<TurretStateManager>().timerCondition.Count);
+   
        baseturrets[i].GetComponent<TurretStateManager>().timerCondition.Remove(0);
        baseturrets[i].GetComponent<TurretStateManager>().timerCondition[0] =
          turret.stateEnnemList[0].timeCondition - timeOffset- timeBetweenShootTurret * i;
-       Debug.Log( baseturrets[i].gameObject.name +baseturrets[i].GetComponent<TurretStateManager>().timerCondition.Count);
+      
 baseturrets[i].enabled = true;
 baseturrets[i].boxCollider2D.enabled = true;
        if (i != 0)

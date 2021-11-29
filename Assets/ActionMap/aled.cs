@@ -43,30 +43,6 @@ public class @Aled : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""MovementGamepad"",
-                    ""type"": ""Value"",
-                    ""id"": ""52fa242d-93ec-4a6a-8b93-5625c4553cec"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""ShootGamepad"",
-                    ""type"": ""Button"",
-                    ""id"": ""33146830-b4d3-43ce-92c9-e35e7c5b77df"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""SpecialShootGamepad"",
-                    ""type"": ""Button"",
-                    ""id"": ""cf39609b-ff4f-4308-b988-13407a39752f"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""ViewPad"",
                     ""type"": ""Value"",
                     ""id"": ""8cdb07c4-76a6-4fd7-beb1-a0b1909f7a58"",
@@ -83,12 +59,44 @@ public class @Aled : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""ShootGamepad"",
+                    ""type"": ""Button"",
+                    ""id"": ""33146830-b4d3-43ce-92c9-e35e7c5b77df"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""MovementGamepad"",
+                    ""type"": ""Value"",
+                    ""id"": ""52fa242d-93ec-4a6a-8b93-5625c4553cec"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SpecialShootGamepad"",
+                    ""type"": ""Button"",
+                    ""id"": ""cf39609b-ff4f-4308-b988-13407a39752f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""DashGamepad"",
                     ""type"": ""Button"",
                     ""id"": ""bc83fa15-e69f-4b70-ad64-a64ea95956bb"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Button"",
+                    ""type"": ""Value"",
+                    ""id"": ""dba39d8c-5b06-40df-b53f-108ef7625d56"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -160,39 +168,6 @@ public class @Aled : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4855738d-2aed-4ea0-8e39-20ad65421aea"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""ShootGamepad"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4e28b0b7-24c9-4bcb-b8e2-7de550b21445"",
-                    ""path"": ""<XInputController>/rightShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""SpecialShootGamepad"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9c73ab0c-2ac0-470f-8b75-55264889c9d7"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""MovementGamepad"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""ebf991b8-2d8e-4d3e-ae89-111fad77dbfc"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
@@ -234,6 +209,61 @@ public class @Aled : IInputActionCollection, IDisposable
                     ""action"": ""DashGamepad"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e28b0b7-24c9-4bcb-b8e2-7de550b21445"",
+                    ""path"": ""<XInputController>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SpecialShootGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c73ab0c-2ac0-470f-8b75-55264889c9d7"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MovementGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4855738d-2aed-4ea0-8e39-20ad65421aea"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ShootGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b462059c-8586-4ff0-812f-da4af360f583"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Button"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""37181e9b-aadc-4bb4-97e5-d1ba031c7e7a"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Button"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -273,12 +303,13 @@ public class @Aled : IInputActionCollection, IDisposable
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_SpecialShoot = m_Player.FindAction("SpecialShoot", throwIfNotFound: true);
-        m_Player_MovementGamepad = m_Player.FindAction("MovementGamepad", throwIfNotFound: true);
-        m_Player_ShootGamepad = m_Player.FindAction("ShootGamepad", throwIfNotFound: true);
-        m_Player_SpecialShootGamepad = m_Player.FindAction("SpecialShootGamepad", throwIfNotFound: true);
         m_Player_ViewPad = m_Player.FindAction("ViewPad", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_ShootGamepad = m_Player.FindAction("ShootGamepad", throwIfNotFound: true);
+        m_Player_MovementGamepad = m_Player.FindAction("MovementGamepad", throwIfNotFound: true);
+        m_Player_SpecialShootGamepad = m_Player.FindAction("SpecialShootGamepad", throwIfNotFound: true);
         m_Player_DashGamepad = m_Player.FindAction("DashGamepad", throwIfNotFound: true);
+        m_Player_Button = m_Player.FindAction("Button", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -331,12 +362,13 @@ public class @Aled : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_SpecialShoot;
-    private readonly InputAction m_Player_MovementGamepad;
-    private readonly InputAction m_Player_ShootGamepad;
-    private readonly InputAction m_Player_SpecialShootGamepad;
     private readonly InputAction m_Player_ViewPad;
     private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_ShootGamepad;
+    private readonly InputAction m_Player_MovementGamepad;
+    private readonly InputAction m_Player_SpecialShootGamepad;
     private readonly InputAction m_Player_DashGamepad;
+    private readonly InputAction m_Player_Button;
     public struct PlayerActions
     {
         private @Aled m_Wrapper;
@@ -344,12 +376,13 @@ public class @Aled : IInputActionCollection, IDisposable
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @SpecialShoot => m_Wrapper.m_Player_SpecialShoot;
-        public InputAction @MovementGamepad => m_Wrapper.m_Player_MovementGamepad;
-        public InputAction @ShootGamepad => m_Wrapper.m_Player_ShootGamepad;
-        public InputAction @SpecialShootGamepad => m_Wrapper.m_Player_SpecialShootGamepad;
         public InputAction @ViewPad => m_Wrapper.m_Player_ViewPad;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @ShootGamepad => m_Wrapper.m_Player_ShootGamepad;
+        public InputAction @MovementGamepad => m_Wrapper.m_Player_MovementGamepad;
+        public InputAction @SpecialShootGamepad => m_Wrapper.m_Player_SpecialShootGamepad;
         public InputAction @DashGamepad => m_Wrapper.m_Player_DashGamepad;
+        public InputAction @Button => m_Wrapper.m_Player_Button;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -368,24 +401,27 @@ public class @Aled : IInputActionCollection, IDisposable
                 @SpecialShoot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialShoot;
                 @SpecialShoot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialShoot;
                 @SpecialShoot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialShoot;
-                @MovementGamepad.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovementGamepad;
-                @MovementGamepad.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovementGamepad;
-                @MovementGamepad.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovementGamepad;
-                @ShootGamepad.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShootGamepad;
-                @ShootGamepad.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShootGamepad;
-                @ShootGamepad.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShootGamepad;
-                @SpecialShootGamepad.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialShootGamepad;
-                @SpecialShootGamepad.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialShootGamepad;
-                @SpecialShootGamepad.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialShootGamepad;
                 @ViewPad.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnViewPad;
                 @ViewPad.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnViewPad;
                 @ViewPad.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnViewPad;
                 @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @ShootGamepad.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShootGamepad;
+                @ShootGamepad.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShootGamepad;
+                @ShootGamepad.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShootGamepad;
+                @MovementGamepad.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovementGamepad;
+                @MovementGamepad.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovementGamepad;
+                @MovementGamepad.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovementGamepad;
+                @SpecialShootGamepad.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialShootGamepad;
+                @SpecialShootGamepad.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialShootGamepad;
+                @SpecialShootGamepad.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialShootGamepad;
                 @DashGamepad.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashGamepad;
                 @DashGamepad.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashGamepad;
                 @DashGamepad.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashGamepad;
+                @Button.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButton;
+                @Button.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButton;
+                @Button.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButton;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -399,24 +435,27 @@ public class @Aled : IInputActionCollection, IDisposable
                 @SpecialShoot.started += instance.OnSpecialShoot;
                 @SpecialShoot.performed += instance.OnSpecialShoot;
                 @SpecialShoot.canceled += instance.OnSpecialShoot;
-                @MovementGamepad.started += instance.OnMovementGamepad;
-                @MovementGamepad.performed += instance.OnMovementGamepad;
-                @MovementGamepad.canceled += instance.OnMovementGamepad;
-                @ShootGamepad.started += instance.OnShootGamepad;
-                @ShootGamepad.performed += instance.OnShootGamepad;
-                @ShootGamepad.canceled += instance.OnShootGamepad;
-                @SpecialShootGamepad.started += instance.OnSpecialShootGamepad;
-                @SpecialShootGamepad.performed += instance.OnSpecialShootGamepad;
-                @SpecialShootGamepad.canceled += instance.OnSpecialShootGamepad;
                 @ViewPad.started += instance.OnViewPad;
                 @ViewPad.performed += instance.OnViewPad;
                 @ViewPad.canceled += instance.OnViewPad;
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
+                @ShootGamepad.started += instance.OnShootGamepad;
+                @ShootGamepad.performed += instance.OnShootGamepad;
+                @ShootGamepad.canceled += instance.OnShootGamepad;
+                @MovementGamepad.started += instance.OnMovementGamepad;
+                @MovementGamepad.performed += instance.OnMovementGamepad;
+                @MovementGamepad.canceled += instance.OnMovementGamepad;
+                @SpecialShootGamepad.started += instance.OnSpecialShootGamepad;
+                @SpecialShootGamepad.performed += instance.OnSpecialShootGamepad;
+                @SpecialShootGamepad.canceled += instance.OnSpecialShootGamepad;
                 @DashGamepad.started += instance.OnDashGamepad;
                 @DashGamepad.performed += instance.OnDashGamepad;
                 @DashGamepad.canceled += instance.OnDashGamepad;
+                @Button.started += instance.OnButton;
+                @Button.performed += instance.OnButton;
+                @Button.canceled += instance.OnButton;
             }
         }
     }
@@ -444,11 +483,12 @@ public class @Aled : IInputActionCollection, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnSpecialShoot(InputAction.CallbackContext context);
-        void OnMovementGamepad(InputAction.CallbackContext context);
-        void OnShootGamepad(InputAction.CallbackContext context);
-        void OnSpecialShootGamepad(InputAction.CallbackContext context);
         void OnViewPad(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnShootGamepad(InputAction.CallbackContext context);
+        void OnMovementGamepad(InputAction.CallbackContext context);
+        void OnSpecialShootGamepad(InputAction.CallbackContext context);
         void OnDashGamepad(InputAction.CallbackContext context);
+        void OnButton(InputAction.CallbackContext context);
     }
 }
