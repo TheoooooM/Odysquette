@@ -14,6 +14,7 @@ public class PlayerDetectionEvent : MonoBehaviour {
     /// </summary>
     private void OnValidate() {
         GetComponent<CircleCollider2D>().radius = radiusDetection;
+        GetComponent<CircleCollider2D>().isTrigger = true;
     }
     #endregion Variables
 

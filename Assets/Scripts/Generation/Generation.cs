@@ -8,7 +8,6 @@ using Random = UnityEngine.Random;
 public class Generation : MonoBehaviour
 {
     public static Generation Instance;
-
     private void Awake()
     {
         Instance = this;
@@ -25,7 +24,7 @@ public class Generation : MonoBehaviour
     [Header("======================================")]
 
 
-    public Transform roomPool;
+    [HideInInspector] public Transform roomPool;
     
     public GameObject[,] map;
     public int mapSize = 51;
@@ -60,13 +59,18 @@ public class Generation : MonoBehaviour
     {
         currentPos = new Vector2(mapSize/2, mapSize/2);
         //Debug.Log(" middl: " + currentPos);
-        currentRoom = Instantiate(new GameObject(), roomPool).AddComponent<RoomManager>();
+        GameObject nR = new GameObject();
+        nR.AddComponent(typeof(RoomManager));
+        nR.transform.parent = roomPool;
+        currentRoom = nR.GetComponent<RoomManager>();
+        
         currentRoom.name = "First Room";
         currentRoom.runningRoom = true;
         currentRoom.cameraRect = BasicRect;
         currentRoom.cameraRect.x = -BasicRect.x / 2;
         currentRoom.cameraRect.y = -BasicRect.y / 2;
-        RoomContainer firstRC = Instantiate(StartingRoom, new Vector2((currentPos.x - mapSize/2)*9.92f, (currentPos.y- mapSize/2)*6.4f), Quaternion.identity , currentRoom.transform).GetComponent<RoomCreator>().partList[0].RoomGO;
+        
+        RoomContainer firstRC = Instantiate(StartingRoom, new Vector2((currentPos.x - mapSize/2)*62, (currentPos.y- mapSize/2)*40), Quaternion.identity , currentRoom.transform).GetComponent<RoomCreator>().partList[0].RoomGO;
         firstRC.room = currentRoom;
         firstRC.roomMapPos = currentPos;
         map[(int) currentPos.x, (int) currentPos.y] = firstRC.gameObject;
@@ -203,7 +207,11 @@ public class Generation : MonoBehaviour
                                     //debug.Log(enablePos + " pos of " + map[(int)enablePos.x, (int) enablePos.y]);
                                     if (map[(int)enablePos.x, (int)enablePos.y] == null)
                                     {
-                                        currentRoom = Instantiate(new GameObject(), roomPool).AddComponent(typeof(RoomManager)) as RoomManager;
+                                        nR = new GameObject();
+                                        nR.AddComponent(typeof(RoomManager));
+                                        nR.transform.parent = roomPool;
+                                        currentRoom = nR.GetComponent<RoomManager>();
+                                        
                                         currentRoom.ennemiesList = new List<GameObject>(newRoom.ennemiList);
                                         currentRoom.name = "room " + i;
                                         Rect roomRect = BasicRect;
@@ -228,8 +236,7 @@ public class Generation : MonoBehaviour
                                                 roomRect.x -= BasicRect.x;
                                                 roomRect.width += BasicRect.width;
                                             }
-
-                                            RoomContainer RC = Instantiate(rom.RoomGO.gameObject, new Vector2((currentPos.x+rom.RoomGO.roomPos.x-enterPart.roomPos.x- mapSize/2)*9.92f,(currentPos.y+rom.RoomGO.roomPos.y-enterPart.roomPos.y- mapSize/2)*6.4f), Quaternion.identity, currentRoom.transform).GetComponent<RoomContainer>();
+                                            RoomContainer RC = Instantiate(rom.RoomGO.gameObject, new Vector2((currentPos.x+rom.RoomGO.roomPos.x-enterPart.roomPos.x- mapSize/2)*62,(currentPos.y+rom.RoomGO.roomPos.y-enterPart.roomPos.y- mapSize/2)*40), Quaternion.identity, currentRoom.transform).GetComponent<RoomContainer>();
                                             RC.roomMapPos = new Vector2((currentPos.x + rom.RoomGO.roomPos.x - enterPart.roomPos.x), (int) (currentPos.y + rom.RoomGO.roomPos.y - enterPart.roomPos.y));
                                             map[(int)(currentPos.x+rom.RoomGO.roomPos.x-enterPart.roomPos.x),(int)(currentPos.y+rom.RoomGO.roomPos.y-enterPart.roomPos.y)] = RC.gameObject;
                                             RC.room = currentRoom;
@@ -344,10 +351,13 @@ public class Generation : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Reset the generation by destroying the default rommPool and creating a new one
+    /// </summary>
     void ResetGen()
     {
         if(roomPool != null) Destroy(roomPool.gameObject);
-        roomPool = Instantiate(new GameObject()).transform;
+        roomPool = Instantiate(new GameObject(), transform).transform;
         roomPool.name = "RoomPool";
     }
 }
