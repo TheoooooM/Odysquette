@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 56341371781382452}
   - component: {fileID: 56341371781382451}
   - component: {fileID: -7392804278422358539}
+  - component: {fileID: 2961347317913795151}
   m_Layer: 8
   m_Name: WalkMan
   m_TagString: Enemy
@@ -132,6 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d29982ec27ce94f94b8e5f480cce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: a7e88a471dfa89348b289eaf2783e076, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -169,6 +171,8 @@ MonoBehaviour:
   IsFirstStartPlayed: 0
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
+  rb: {fileID: 0}
+  spriteRenderer: {fileID: 0}
 --- !u!50 &56341371781382454
 Rigidbody2D:
   serializedVersion: 4
@@ -249,7 +253,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0013542175, y: 0.0364995}
+  m_Offset: {x: 0.000166893, y: -0.00024570525}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -260,7 +264,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8464165, y: 0.69738483}
+  m_Size: {x: 0.2868092, y: 0.2742392}
   m_EdgeRadius: 0
 --- !u!114 &-7392804278422358539
 MonoBehaviour:
@@ -275,6 +279,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 1
+--- !u!95 &2961347317913795151
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56341371781382450}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5a81277312bf1974b81131a3631c671e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &56341372014807550
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,7 +342,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.003967285, y: 0.017315388}
+  m_Offset: {x: -0.004862517, y: 0.005286012}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -330,5 +353,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.85081863, y: 0.6589937}
+  m_Size: {x: 0.27453035, y: 0.22285664}
   m_EdgeRadius: 0

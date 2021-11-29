@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 
 public class Playercontroller : MonoBehaviour
 {
-  
+    [SerializeField]
+    private Animator playerAnimator;
     [SerializeField] float MouvementSpeed = 0.01f;
     private float defaultSpeed;
     public GameObject gun;
