@@ -326,6 +326,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f470034fb1adc5e4e84b11a47c54f725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAnimator: {fileID: 2451847003553320754}
+  currentAngleAnimation:
+    angleMin: 0
+    angleMax: 0
+    move: {fileID: 0}
+    idle: {fileID: 0}
   MouvementSpeed: 2
   gun: {fileID: 1464324220352250866}
   CurrentController: 
@@ -390,6 +396,31 @@ MonoBehaviour:
   timerDash: 0
   timerBetweenDash: 0
   conveyorBeltSpeed: {x: 0, y: 0}
+  baseAngleAnimation:
+  - angleMin: 61
+    angleMax: 120
+    move: {fileID: 7400000, guid: 5660fadbee155c141bee240aed04cce7, type: 2}
+    idle: {fileID: 7400000, guid: 40bad26f85a650c4b89a25752134f844, type: 2}
+  - angleMin: -170
+    angleMax: 121
+    move: {fileID: 7400000, guid: 89d940c14f2c1834bb9b52dfa8d0926a, type: 2}
+    idle: {fileID: 7400000, guid: b5e5c94ecdb89f345be7eb9d486b6c4c, type: 2}
+  - angleMin: -10
+    angleMax: 60
+    move: {fileID: 7400000, guid: 123627ba43dcae3469c8c6e53d7a3ddd, type: 2}
+    idle: {fileID: 7400000, guid: 2504637292586b241acc3496b8d6687a, type: 2}
+  - angleMin: -120
+    angleMax: -60
+    move: {fileID: 7400000, guid: 34e55c68ea30cb648a4676a26947a376, type: 2}
+    idle: {fileID: 7400000, guid: 34e55c68ea30cb648a4676a26947a376, type: 2}
+  - angleMin: -171
+    angleMax: -121
+    move: {fileID: 7400000, guid: 906b6f2d696c30e4694729f7238455ac, type: 2}
+    idle: {fileID: 7400000, guid: 1912162580b3da34c9b562a922959b56, type: 2}
+  - angleMin: -61
+    angleMax: -11
+    move: {fileID: 7400000, guid: aaae985e8d8be7742ad542d9fd207589, type: 2}
+    idle: {fileID: 7400000, guid: c1408b9e5050f0048a20df02b07ebbeb, type: 2}
   InDash: 0
   TryDash: 0
 --- !u!114 &1464324219867819125

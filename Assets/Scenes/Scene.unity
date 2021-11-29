@@ -10322,7 +10322,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.75, y: 0.75}
+    oldSize: {x: 0.24, y: 0.24}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -10343,6 +10343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d29982ec27ce94f94b8e5f480cce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: 1a24df601862f71498b186675b986f13, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -10376,6 +10377,7 @@ MonoBehaviour:
   IsCurrentStartPlayed: 0
   IsCurrentStatePlayed: 0
   IsFirstStartPlayed: 0
+  roomParent: {fileID: 0}
   timerCurrentStartState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
@@ -10851,6 +10853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee24b64328372438bf89022919dcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -10880,6 +10883,7 @@ MonoBehaviour:
   IsCurrentStartPlayed: 0
   IsCurrentStatePlayed: 0
   IsFirstStartPlayed: 0
+  roomParent: {fileID: 0}
   timerCurrentStartState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
@@ -16292,7 +16296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4318103def3c12a469dde9280f81574f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveCollider: {fileID: 92956650}
+  rb: {fileID: 0}
   maxHealth: 6
   healthPlayer: 0
   timeInvincible: 2
@@ -16401,6 +16405,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f470034fb1adc5e4e84b11a47c54f725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAnimator: {fileID: 0}
+  currentAngleAnimation:
+    angleMin: 0
+    angleMax: 0
+    move: {fileID: 0}
+    idle: {fileID: 0}
   MouvementSpeed: 4
   gun: {fileID: 1063981873}
   CurrentController: 
@@ -16465,6 +16475,7 @@ MonoBehaviour:
   timerDash: 0
   timerBetweenDash: 0
   conveyorBeltSpeed: {x: 0, y: 0}
+  baseAngleAnimation: []
   InDash: 0
   TryDash: 0
 --- !u!50 &541801659
@@ -21431,7 +21442,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.75, y: 0.75}
+    oldSize: {x: 0.24, y: 0.24}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -21519,6 +21530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d29982ec27ce94f94b8e5f480cce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: f71f57096822c694d946a961d0d623a6, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -21552,6 +21564,7 @@ MonoBehaviour:
   IsCurrentStartPlayed: 0
   IsCurrentStatePlayed: 0
   IsFirstStartPlayed: 0
+  roomParent: {fileID: 0}
   timerCurrentStartState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
@@ -21771,6 +21784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee24b64328372438bf89022919dcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -21800,6 +21814,7 @@ MonoBehaviour:
   IsCurrentStartPlayed: 0
   IsCurrentStatePlayed: 0
   IsFirstStartPlayed: 0
+  roomParent: {fileID: 0}
   timerCurrentStartState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
@@ -38312,7 +38327,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.32, y: 0.32}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -38400,6 +38415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d29982ec27ce94f94b8e5f480cce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: 6e577028f6a06a240abdb63ad556c46b, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition: []
@@ -38419,6 +38435,7 @@ MonoBehaviour:
   IsCurrentStartPlayed: 0
   IsCurrentStatePlayed: 0
   IsFirstStartPlayed: 0
+  roomParent: {fileID: 0}
   timerCurrentStartState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
@@ -38613,6 +38630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee24b64328372438bf89022919dcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -38642,6 +38660,7 @@ MonoBehaviour:
   IsCurrentStartPlayed: 0
   IsCurrentStatePlayed: 0
   IsFirstStartPlayed: 0
+  roomParent: {fileID: 0}
   timerCurrentStartState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
@@ -38902,6 +38921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d29982ec27ce94f94b8e5f480cce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: e6a387d1bac6de3428663017dbf73ccd, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -38937,6 +38957,7 @@ MonoBehaviour:
   IsCurrentStartPlayed: 0
   IsCurrentStatePlayed: 0
   IsFirstStartPlayed: 0
+  roomParent: {fileID: 0}
   timerCurrentStartState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
@@ -39092,7 +39113,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.75, y: 0.75}
+    oldSize: {x: 0.24, y: 0.24}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -40188,7 +40209,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.75, y: 0.75}
+    oldSize: {x: 0.24, y: 0.24}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -40276,6 +40297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d29982ec27ce94f94b8e5f480cce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: a7e88a471dfa89348b289eaf2783e076, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -40311,6 +40333,7 @@ MonoBehaviour:
   IsCurrentStartPlayed: 0
   IsCurrentStatePlayed: 0
   IsFirstStartPlayed: 0
+  roomParent: {fileID: 0}
   timerCurrentStartState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
@@ -40624,6 +40647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee24b64328372438bf89022919dcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -40653,6 +40677,7 @@ MonoBehaviour:
   IsCurrentStartPlayed: 0
   IsCurrentStatePlayed: 0
   IsFirstStartPlayed: 0
+  roomParent: {fileID: 0}
   timerCurrentStartState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
@@ -41203,7 +41228,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.75, y: 0.75}
+    oldSize: {x: 0.24, y: 0.24}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -41291,6 +41316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d29982ec27ce94f94b8e5f480cce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: 6689daf8a9ea18e46ae692f9e4247477, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -41324,6 +41350,7 @@ MonoBehaviour:
   IsCurrentStartPlayed: 0
   IsCurrentStatePlayed: 0
   IsFirstStartPlayed: 0
+  roomParent: {fileID: 0}
   timerCurrentStartState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
