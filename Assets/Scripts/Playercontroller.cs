@@ -1,12 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Playercontroller : MonoBehaviour
 {
-  
+    [SerializeField]
+    private Animator playerAnimator;
+
+    [SerializeField] private AngleAnimation currentAngleAnimation;
     [SerializeField] float MouvementSpeed = 0.01f;
     private float defaultSpeed;
     public GameObject gun;
@@ -41,10 +45,11 @@ public class Playercontroller : MonoBehaviour
 
     private bool isConvey;
     public Vector2 conveyorBeltSpeed;
-
+    public AngleAnimation[] baseAngleAnimation;
     public bool InDash;
     [SerializeField]
     private bool TryDash;
+
     
     private void Awake()
     {
@@ -89,6 +94,7 @@ public class Playercontroller : MonoBehaviour
     private void DashOnperformed(InputAction.CallbackContext obj)
     {
         TryDash = true;
+        
     }
     private void DashGamepadOnperformed(InputAction.CallbackContext obj)
     {
@@ -121,8 +127,40 @@ public class Playercontroller : MonoBehaviour
         GameManager.Instance.shooting = false;
     }
 
-    private void Update()
+    private void Start()
     {
+        currentAngleAnimation = baseAngleAnimation[0];
+        lastMoveVector = Vector2.right;
+       
+    }
+
+    private void Update()
+    {moveVector = Vector2.zero;
+          
+                 moveVector = playerInput.Player.Movement.ReadValue<Vector2>();
+             
+               GameManager.Instance.isMouse = true;
+               if (playerInput.Player.Movement.ReadValue<Vector2>() != Vector2.zero)
+                         {
+                             lastMoveVector = moveVector;
+                          CheckForPlayAnimation(moveVector, true);
+                         }
+             else if(playerInput.Player.MovementGamepad.ReadValue<Vector2>() != Vector2.zero)
+             {
+               moveVector = playerInput.Player.MovementGamepad.ReadValue<Vector2>();
+               lastMoveVector = moveVector;
+               GameManager.Instance.isMouse = false;
+               CheckForPlayAnimation(moveVector, true);
+               
+             }
+               else if (InDash)
+               {
+                   CheckForPlayAnimation(lastMoveVector.normalized, true);
+               }
+               else
+               {
+                  CheckForPlayAnimation(lastMoveVector.normalized, false);
+               }
         if (isInEffectFlash)
         {
             if (timerInEffectFlash >= 0)
@@ -149,22 +187,7 @@ if(timerBetweenDash<= timeBetweenDash)
 
     void FixedUpdate()
     {
-        moveVector = Vector2.zero;
-        if (playerInput.Player.Movement.ReadValue<Vector2>() != Vector2.zero)
-        {
-          moveVector = playerInput.Player.Movement.ReadValue<Vector2>();
-
-          lastMoveVector = moveVector;
-          GameManager.Instance.isMouse = true;
-
-        }
-        else if(playerInput.Player.MovementGamepad.ReadValue<Vector2>() != Vector2.zero)
-        {
-          moveVector = playerInput.Player.MovementGamepad.ReadValue<Vector2>();
-          lastMoveVector = moveVector;
-            GameManager.Instance.isMouse = false;
-        }
- 
+        
         if (!InDash)
         {
             if (TryDash && timerBetweenDash >= timeBetweenDash && !isInEffectFlash)
@@ -279,4 +302,62 @@ if(timerBetweenDash<= timeBetweenDash)
 
 
     }
+[Serializable]
+    public class AngleAnimation
+    {
+        public float angleMin;
+        public float angleMax;
+        public string move;
+        public string idle;
+
+
+    }
+        public AngleAnimation SetAngleAnimation(AngleAnimation newAngleAnimation)
+        {
+            AngleAnimation angleAnimation = new AngleAnimation();
+            angleAnimation.angleMax = newAngleAnimation.angleMax;
+            angleAnimation.angleMin = newAngleAnimation.angleMin;
+            angleAnimation.idle = newAngleAnimation.idle;
+            angleAnimation.move = newAngleAnimation.move;
+            return angleAnimation;
+        }
+    public void PlayAnimation(AngleAnimation angleAnimation, bool move)
+    {
+        if (move)
+        {
+             if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName(angleAnimation.move))
+                        return; 
+             playerAnimator.Play(currentAngleAnimation.move);
+             currentAngleAnimation = SetAngleAnimation(angleAnimation);
+        }
+        else
+        {
+            if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName(angleAnimation.idle))
+                return;
+            playerAnimator.Play(currentAngleAnimation.idle);
+            currentAngleAnimation = SetAngleAnimation(angleAnimation);
+        }
+       
+    }
+
+    void CheckForPlayAnimation(Vector3 input, bool move)
+    {
+        float currentInputAngle =  Mathf.Atan2(input.y, input.x)*Mathf.Rad2Deg;
+        if (Mathf.Sign(currentInputAngle) == -1)
+        {
+            currentInputAngle = 360 + currentInputAngle;
+        }
+        for (int i = 0; i < baseAngleAnimation.Length; i++)
+        {
+
+            if (currentInputAngle >= baseAngleAnimation[i].angleMin &&
+                currentInputAngle <= baseAngleAnimation[i].angleMax)
+            {
+                          
+                PlayAnimation(baseAngleAnimation[i], move);
+                
+            }
+        } 
+    }
+    
 }

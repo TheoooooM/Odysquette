@@ -3,12 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
+using UnityEditor.Timeline.Actions;
 using Object = UnityEngine.Object;
 
 public class StateEnemySO : ScriptableObject
 {
     // deja utilisé
-
+    public bool haveAnimationStartState;
+    public bool haveFxStartState;
+    public bool haveSoundStartState;
+    public bool haveAnimationPlayState;
+    public bool haveFxPlayState;
+    public bool haveSoundPlayState;
+    public bool haveShaderPlayState;
+    public bool haveShaderStartState;
+    public AnimationClip animationPlayState;
+    public AnimationClip animationStartState;
+    public AudioClip audioStartState;
+    public AudioClip audioPlayState;
+    public GameObject fxStartState;
+    public GameObject fxPlayState;
+    
+    
     public bool needEnemyMovement;
     public bool openBasePanel;
     public bool openDebugPanel;
@@ -35,11 +51,15 @@ public class StateEnemySO : ScriptableObject
     public bool duringDefaultState;
     public virtual bool CheckCondition (Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary)
     {
+        Animator animator = new Animator();
+        AnimationClip animationClip = null;
+        animator.Play(animationClip.name);
         return true;
     }
 
     public virtual void StartState( Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary,  out bool endStep)
     {
+        
         endStep = false;
     }
         
@@ -47,4 +67,13 @@ public class StateEnemySO : ScriptableObject
     {
         endStep = false;
     }
+
+
+
+
+        
+
+ 
+
+   
 }

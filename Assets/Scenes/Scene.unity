@@ -186,7 +186,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &39464026
 Transform:
   m_ObjectHideFlags: 0
@@ -214,7 +214,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.015329778, y: -0.018484667}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -225,7 +225,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5281417, y: 0.45141348}
+  m_Size: {x: 1.89, y: 1.79}
   m_EdgeRadius: 0
 --- !u!199 &39464028
 ParticleSystemRenderer:
@@ -9956,7 +9956,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00000009685755, y: -0.008713022}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -9967,7 +9967,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.26113892, y: 0.27856442}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &92956648
 GameObject:
@@ -10853,7 +10853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee24b64328372438bf89022919dcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActivate: 1
+  isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -10886,7 +10886,7 @@ MonoBehaviour:
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
   rb: {fileID: 0}
-  spriteRenderer: {fileID: 260057808}
+  spriteRenderer: {fileID: 0}
   boxCollider2D: {fileID: 0}
   FxColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!212 &260057808
@@ -16296,7 +16296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4318103def3c12a469dde9280f81574f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 541801659}
+  rb: {fileID: 0}
   maxHealth: 6
   healthPlayer: 0
   timeInvincible: 2
@@ -16317,8 +16317,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.03}
-  m_Size: {x: 0.15, y: 0.25}
+  m_Offset: {x: 0, y: -0.1}
+  m_Size: {x: 0.54, y: 0.0001}
   m_Direction: 0
 --- !u!212 &541801656
 SpriteRenderer:
@@ -16379,8 +16379,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 541801653}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -51.5408, y: 19.9622, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 0}
+  m_LocalPosition: {x: -51.95, y: 19.553, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 0}
   m_Children:
   - {fileID: 1063981874}
   - {fileID: 1827252492}
@@ -16405,6 +16405,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f470034fb1adc5e4e84b11a47c54f725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAnimator: {fileID: 0}
+  currentAngleAnimation:
+    angleMin: 0
+    angleMax: 0
+    move: {fileID: 0}
+    idle: {fileID: 0}
   MouvementSpeed: 4
   gun: {fileID: 1063981873}
   CurrentController: 
@@ -16469,6 +16475,7 @@ MonoBehaviour:
   timerDash: 0
   timerBetweenDash: 0
   conveyorBeltSpeed: {x: 0, y: 0}
+  baseAngleAnimation: []
   InDash: 0
   TryDash: 0
 --- !u!50 &541801659
@@ -21777,7 +21784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee24b64328372438bf89022919dcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActivate: 1
+  isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -21810,7 +21817,7 @@ MonoBehaviour:
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
   rb: {fileID: 0}
-  spriteRenderer: {fileID: 614955136}
+  spriteRenderer: {fileID: 0}
   boxCollider2D: {fileID: 0}
   FxColor: {r: 0.088113785, g: 1, b: 0, a: 1}
 --- !u!212 &614955136
@@ -31735,7 +31742,7 @@ GameObject:
   m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &840688291
 Transform:
   m_ObjectHideFlags: 0
@@ -37154,8 +37161,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1063981873}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.01, y: 0.1332, z: 0}
-  m_LocalScale: {x: 0.09849668, y: 0.09849668, z: 0}
+  m_LocalPosition: {x: 0.082, y: 0.378, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.9492775}
   m_Children:
   - {fileID: 1373875980}
   m_Father: {fileID: 541801657}
@@ -38623,7 +38630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee24b64328372438bf89022919dcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActivate: 1
+  isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -38656,7 +38663,7 @@ MonoBehaviour:
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
   rb: {fileID: 0}
-  spriteRenderer: {fileID: 1406908154}
+  spriteRenderer: {fileID: 0}
   boxCollider2D: {fileID: 0}
   FxColor: {r: 0, g: 0.30689335, b: 1, a: 1}
 --- !u!212 &1406908154
@@ -38914,7 +38921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d29982ec27ce94f94b8e5f480cce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActivate: 1
+  isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: e6a387d1bac6de3428663017dbf73ccd, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -39014,7 +39021,7 @@ Transform:
   m_GameObject: {fileID: 1481445072}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.3842659, y: -1.1426411, z: 8.937716}
-  m_LocalScale: {x: 6, y: 6, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 746901717}
   - {fileID: 78418220}
@@ -39102,7 +39109,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0017425716, y: -0.008712836}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -39113,7 +39120,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.25068283, y: 0.27159405}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &1481445080
 MonoBehaviour:
@@ -40640,7 +40647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee24b64328372438bf89022919dcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActivate: 1
+  isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -40673,7 +40680,7 @@ MonoBehaviour:
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
   rb: {fileID: 0}
-  spriteRenderer: {fileID: 1900271710}
+  spriteRenderer: {fileID: 0}
   boxCollider2D: {fileID: 0}
   FxColor: {r: 1, g: 0.59751904, b: 0, a: 1}
 --- !u!212 &1900271710
@@ -41463,8 +41470,8 @@ MonoBehaviour:
   angle: 0
   viewFinderDistance: 2
   main: {fileID: 196568771}
-  firstEffect: 0
-  secondEffect: 0
+  _firstEffect: 0
+  _secondEffect: 0
   actualStraw: 0
   strawsClass:
   - StrawName: Basic Straw

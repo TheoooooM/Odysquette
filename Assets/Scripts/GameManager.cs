@@ -109,15 +109,12 @@ public class GameManager : MonoBehaviour
 
     private void OnValidate()
     {
-    
-   
         foreach (StrawClass str in strawsClass)
         {
             
             if(str.strawSO != null)
              str.StrawName = str.strawSO.strawName;
         }
-       
     }
 
     private void Start()
@@ -138,6 +135,7 @@ public class GameManager : MonoBehaviour
 
      
         }
+        
     }
 
     
