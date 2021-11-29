@@ -397,7 +397,10 @@ Debug.Log(EMainStatsSo.baseState);
                                     ;
                               }
               
-                
+                   if (EMainStatsSo.stateEnnemList[indexCurrentState].useHealthCondition)
+                            {
+                                healthUse[indexCurrentState] = true;
+                            }
                 
                 if (CheckTimer(timerCurrentStartState, EMainStatsSo.stateEnnemList[indexCurrentState].startTime))
                 {
@@ -495,12 +498,12 @@ Debug.Log(EMainStatsSo.baseState);
       
       try
       {
-          roomParent.ennemiesList.Remove(gameObject.transform.parent.gameObject);
+        //  roomParent.ennemiesList.Remove(gameObject.transform.parent.gameObject);
           Destroy(gameObject.transform.parent.gameObject);
       }
       catch (Exception e)
       {
-          roomParent.ennemiesList.Remove(gameObject);
+         // roomParent.ennemiesList.Remove(gameObject);
           Destroy(gameObject);
       }
      
