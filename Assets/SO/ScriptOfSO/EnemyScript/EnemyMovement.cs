@@ -31,6 +31,7 @@ public class EnemyMovement : MonoBehaviour
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         enemyStateManager = GetComponent<EnemyStateManager>();
+        destination = tranform.position;
 
     }
 
@@ -65,6 +66,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
+       
         if ((enemyStateManager.IsCurrentStartPlayed || enemyStateManager.IsCurrentStatePlayed) &&
             enemyStateManager.EMainStatsSo.stateEnnemList[enemyStateManager.indexCurrentState].duringDefaultState)
         {

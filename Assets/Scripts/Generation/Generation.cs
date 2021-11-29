@@ -17,10 +17,11 @@ public class Generation : MonoBehaviour
     {
         None, top, left, right, bot
     }
-    
+    [Header("===================Rooms===================")]
     public GameObject StartingRoom;
     public RoomCreator[] normalRoom;
-    public GameObject[] endpathRoom;
+    public GameObject endpathRoom;
+    [Header("======================================")]
 
 
     [HideInInspector] public Transform roomPool;
@@ -126,6 +127,22 @@ public class Generation : MonoBehaviour
             if (i == size)
             {
                 //dernière salle
+                //RoomManager RM = Instantiate(new GameObject(), roomPool).AddComponent<RoomManager>();
+                //RM.transform.name = "LastRoom";
+                RoomContainer RC = Instantiate(endpathRoom.GetComponent<RoomCreator>().partList[0].RoomGO, new Vector2((currentPos.x- mapSize/2)*9.92f,(currentPos.y - mapSize/2)*6.4f), Quaternion.identity, roomPool).GetComponent<RoomContainer>();
+                
+                RC.exitLeft = false;
+                RC.exitRight = false;
+                RC.exitTop = false;
+                RC.exitBot = false;
+                switch (needOpen)
+                {
+                    case open.right : RC.exitRight = true; break;
+                    case open.left : RC.exitLeft = true; break;
+                    case open.bot : RC.exitBot = true; break;
+                    case open.top : RC.exitTop = true; break;
+                }
+                RC.UpdatePart();
             }
             else
             {

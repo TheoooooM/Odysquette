@@ -8,18 +8,16 @@ public class StateInvincible : StateEnemySO
     
     public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
     {
-    Debug.Log("try");
+ 
         BossManager.instance.SetPhase(phaseBoss);
-       
-            endStep = true;
-            
-            
-        
-            
+      endStep =  true;
+      Debug.Log("aatest");
+
     }
 
     public override void PlayState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
     {
+       
         endStep = true;
     }
 }

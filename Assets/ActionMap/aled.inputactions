@@ -30,30 +30,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "MovementGamepad",
-                    "type": "Value",
-                    "id": "52fa242d-93ec-4a6a-8b93-5625c4553cec",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "ShootGamepad",
-                    "type": "Button",
-                    "id": "33146830-b4d3-43ce-92c9-e35e7c5b77df",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "SpecialShootGamepad",
-                    "type": "Button",
-                    "id": "cf39609b-ff4f-4308-b988-13407a39752f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "ViewPad",
                     "type": "Value",
                     "id": "8cdb07c4-76a6-4fd7-beb1-a0b1909f7a58",
@@ -70,12 +46,44 @@
                     "interactions": ""
                 },
                 {
+                    "name": "ShootGamepad",
+                    "type": "Button",
+                    "id": "33146830-b4d3-43ce-92c9-e35e7c5b77df",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MovementGamepad",
+                    "type": "Value",
+                    "id": "52fa242d-93ec-4a6a-8b93-5625c4553cec",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SpecialShootGamepad",
+                    "type": "Button",
+                    "id": "cf39609b-ff4f-4308-b988-13407a39752f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "DashGamepad",
                     "type": "Button",
                     "id": "bc83fa15-e69f-4b70-ad64-a64ea95956bb",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Button",
+                    "type": "Value",
+                    "id": "dba39d8c-5b06-40df-b53f-108ef7625d56",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -147,39 +155,6 @@
                 },
                 {
                     "name": "",
-                    "id": "4855738d-2aed-4ea0-8e39-20ad65421aea",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "ShootGamepad",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4e28b0b7-24c9-4bcb-b8e2-7de550b21445",
-                    "path": "<XInputController>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "SpecialShootGamepad",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9c73ab0c-2ac0-470f-8b75-55264889c9d7",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "MovementGamepad",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "ebf991b8-2d8e-4d3e-ae89-111fad77dbfc",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
@@ -219,6 +194,61 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "DashGamepad",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4e28b0b7-24c9-4bcb-b8e2-7de550b21445",
+                    "path": "<XInputController>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SpecialShootGamepad",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9c73ab0c-2ac0-470f-8b75-55264889c9d7",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "MovementGamepad",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4855738d-2aed-4ea0-8e39-20ad65421aea",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ShootGamepad",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b462059c-8586-4ff0-812f-da4af360f583",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "37181e9b-aadc-4bb4-97e5-d1ba031c7e7a",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Button",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

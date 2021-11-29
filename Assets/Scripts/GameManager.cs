@@ -61,21 +61,20 @@ public class GameManager : MonoBehaviour
         
     }
         
-    //mouse
+    [Header("mouse")]
     [SerializeField]
     private float offsetPadViewFinder;
     private Vector2 mousepos; //position de la souris sur l'écran
     public  float angle; //angle pour orienter la paille
     public float viewFinderDistance;
     [SerializeField] private Camera main;
-    //Juices
-    [SerializeField] Effect _firstEffect;
-    public Effect firstEffect => _firstEffect;
     
-    [SerializeField] Effect _secondEffect;
-    public Effect secondEffect => _secondEffect;
+    [Header("Juices")]
+    [SerializeField]public Effect firstEffect;
     
-    //Straw
+    [SerializeField]public Effect secondEffect;
+    
+    [Header("Straw")]
     public Straw actualStraw;
     public List<StrawClass> strawsClass; //Liste de toute les pailles
     public float timerUltimate;
@@ -90,17 +89,19 @@ public class GameManager : MonoBehaviour
 
     public float shootCooldown;
     
-    //Input
+    [Header("Input")]
     public bool isMouse = true;
     public Vector2 ViewPad;
 
     
-    //Bullet
+  //Bullet
     [Header("Settings")]
     [SerializeField] int ShootRate;
+    [SerializeField] 
     
-    //Player
+    [Header("Player")]
     public GameObject Player;
+    
     
     [Header("----------------DEBUG---------------")]
     public Vector2 _lookDir;

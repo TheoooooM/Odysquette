@@ -14,7 +14,7 @@ public class Exit : MonoBehaviour
     StartCoroutine("OpenDelay");
   }
 
-  private void OnTriggerEnter(Collider other)
+  private void OnTriggerEnter2D(Collider2D other)
   {
     if (other.CompareTag("Player")) UnityEngine.SceneManagement.SceneManager.LoadScene("Shop");
   }
