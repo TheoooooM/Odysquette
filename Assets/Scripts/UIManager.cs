@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
 {
  
 
-    public GameObject viewFinder;
+    public GameObject cursor;
     public GameObject[] HeartsLife;
     public Slider UltSlider;
     // Start is called before the first frame update

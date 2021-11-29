@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -55,7 +56,11 @@ public class RoomCreator : MonoBehaviour
             partList = new Room[2];
             partList[0] = new Room();
             roomPref = Resources.Load<GameObject>("Room/StartRoom");
-            partList[0].RoomGO = Instantiate(roomPref, transform).GetComponent<RoomContainer>();
+
+            partList[0].RoomGO = ((GameObject)PrefabUtility.InstantiatePrefab(roomPref, transform)).GetComponent<RoomContainer>();
+            partList[0].RoomGO.transform.position = new Vector2((partList[0].ArrayPosition.x - 2) * 62, (partList[0].ArrayPosition.y - 2) * 40);
+            partList[0].RoomGO.transform.rotation = Quaternion.identity;
+            
             partList[0].ArrayPosition = new Vector2(2,2);
             partMap[2,2] = partList[0].RoomGO.gameObject;
             Exist = true;
@@ -83,11 +88,12 @@ public class RoomCreator : MonoBehaviour
     public void PartUpdate()
     {
         foreach (Room rom in partList)
-            {
-
+        {
                 if (rom.RoomGO == null)
                 {
-                    rom.RoomGO = Instantiate(roomPref, new Vector2((rom.ArrayPosition.x-2)*9.921f , (rom.ArrayPosition.y-2)*6.4f), Quaternion.identity, transform).GetComponent<RoomContainer>();
+                    rom.RoomGO = ((GameObject)PrefabUtility.InstantiatePrefab(roomPref, transform)).GetComponent<RoomContainer>();
+                    rom.RoomGO.transform.position = new Vector2((rom.ArrayPosition.x - 2) * 9.921f, (rom.ArrayPosition.y - 2) * 6.4f);
+                    rom.RoomGO.transform.rotation = Quaternion.identity;
                 }
                     partMap[(int) rom.ArrayPosition.x, (int) rom.ArrayPosition.y] = rom.RoomGO.gameObject;
                     rom.RoomGO.roomRef = this;

@@ -254,7 +254,7 @@ public class GameManager : MonoBehaviour
                     Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x, actualStrawClass.StrawParent.transform.position.y);
                     _lookDir = new Vector2(mousepos.x, mousepos.y) - Position ;
                     angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
-                    UIManager.Instance.viewFinder.transform.position =  main.WorldToScreenPoint(mousepos);
+                    UIManager.Instance.cursor.transform.position =  main.WorldToScreenPoint(mousepos);
                     
         
                     actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
@@ -271,12 +271,12 @@ public class GameManager : MonoBehaviour
                                                     
                                                         Debug.Log("test");
                                                         
-                                                        UIManager.Instance.viewFinder.transform.position = main.WorldToScreenPoint(actualStrawClass.spawnerTransform.position +(Vector3) ViewPad.normalized*viewFinderDistance);
+                                                        UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(actualStrawClass.spawnerTransform.position +(Vector3) ViewPad.normalized*viewFinderDistance);
                                                         lastInput = ViewPad.normalized; 
                     }
                   
                                         
-                    UIManager.Instance.viewFinder.transform.position = main.WorldToScreenPoint(actualStrawClass.spawnerTransform.position +(Vector3) lastInput.normalized*viewFinderDistance);        
+                    UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(actualStrawClass.spawnerTransform.position +(Vector3) lastInput.normalized*viewFinderDistance);        
                              
                               
                    
