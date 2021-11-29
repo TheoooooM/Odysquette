@@ -12,6 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2e650a614057d0458379c9030ad10a5, type: 3}
   m_Name: Invincible4
   m_EditorClassIdentifier: 
+  haveAnimationStartState: 0
+  haveFxStartState: 0
+  haveSoundStartState: 0
+  haveAnimationPlayState: 0
+  haveFxPlayState: 0
+  haveSoundPlayState: 0
+  haveShaderPlayState: 0
+  haveShaderStartState: 0
+  animationPlayState: {fileID: 0}
+  animationStartState: {fileID: 0}
+  audioStartState: {fileID: 0}
+  audioPlayState: {fileID: 0}
+  fxStartState: {fileID: 0}
+  fxPlayState: {fileID: 0}
   needEnemyMovement: 1
   openBasePanel: 0
   openDebugPanel: 0
@@ -25,7 +39,7 @@ MonoBehaviour:
   objectInStateManagersCondition: 
   objectInStateManagersState: 
   oneStartState: 1
-  startTime: 0
+  startTime: 2
   playStateTime: 0
   isFixedUpdate: 0
   haveStartState: 1

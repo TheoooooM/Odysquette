@@ -4847,9 +4847,9 @@ GameObject:
   - component: {fileID: 243450507285515242}
   - component: {fileID: 243450507285515243}
   - component: {fileID: 243450507285515236}
-  - component: {fileID: 243450507285515237}
   - component: {fileID: 6508484783867570375}
   - component: {fileID: 5148572880405207474}
+  - component: {fileID: 2713407146858367784}
   m_Layer: 8
   m_Name: KodakEnemy
   m_TagString: Enemy
@@ -4909,8 +4909,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1990800739
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -7752432477202452925, guid: f56327580bac54445842a124f1786e3e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5040,32 +5040,6 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
---- !u!61 &243450507285515237
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 243450507285515239}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.0034959316, y: -0.0052393824}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.64}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.27315903, y: 0.23148182}
-  m_EdgeRadius: 0
 --- !u!114 &6508484783867570375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5078,7 +5052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eb8f267594d2034f82913ef06ed7131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 1
+  range: 20
 --- !u!95 &5148572880405207474
 Animator:
   serializedVersion: 3
@@ -5098,6 +5072,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!61 &2713407146858367784
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243450507285515239}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.028674543, y: -0.049156427}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4, y: 4}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.3953329, y: 0.8783963}
+  m_EdgeRadius: 0
 --- !u!1 &243450507811954010
 GameObject:
   m_ObjectHideFlags: 0

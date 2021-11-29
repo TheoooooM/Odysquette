@@ -22,7 +22,11 @@ public class EnnemySpawn : MonoBehaviour
     
     void Start()
     {
-        rate =Random.Range(0, 100);
+        int randomMax = 0;
+        for (int i = 0; i < SpawnerList.Length; i++) {
+            randomMax += (int) SpawnerList[i].spawnRate;
+        }
+        rate =Random.Range(0, randomMax);
         //Debug.Log("rate : " + rate);
         while (rate>=0)
         {
@@ -36,7 +40,6 @@ public class EnnemySpawn : MonoBehaviour
             }
         }
 
-        part = GetComponentInParent<RoomContainer>();
         //Debug.Log(index-1);
         GameObject GO = Instantiate(MobToSpawn, transform.position, Quaternion.identity, part.transform);
         part.room.ennemiesList.Add(GO);

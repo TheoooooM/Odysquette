@@ -279,15 +279,15 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1990800739
+  m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6730086746868623763, guid: 487ad3cb2a7f7ab4aaadf9e4d0fe021a, type: 3}
+  m_Sprite: {fileID: -4441306532414225104, guid: a21b59d39138b9145a7b730a3457e6af, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.55, y: 5.89}
+  m_Size: {x: 4, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -330,9 +330,9 @@ MonoBehaviour:
   currentAngleAnimation:
     angleMin: 0
     angleMax: 0
-    move: {fileID: 0}
-    idle: {fileID: 0}
-  MouvementSpeed: 2
+    move: 
+    idle: 
+  MouvementSpeed: 10
   gun: {fileID: 1464324220352250866}
   CurrentController: 
   isInWind: 0
@@ -399,28 +399,28 @@ MonoBehaviour:
   baseAngleAnimation:
   - angleMin: 61
     angleMax: 120
-    move: {fileID: 7400000, guid: 5660fadbee155c141bee240aed04cce7, type: 2}
-    idle: {fileID: 7400000, guid: 40bad26f85a650c4b89a25752134f844, type: 2}
-  - angleMin: -170
-    angleMax: 121
-    move: {fileID: 7400000, guid: 89d940c14f2c1834bb9b52dfa8d0926a, type: 2}
-    idle: {fileID: 7400000, guid: b5e5c94ecdb89f345be7eb9d486b6c4c, type: 2}
-  - angleMin: -10
+    move: MoveBack
+    idle: IdleBack
+  - angleMin: 121
+    angleMax: 180
+    move: MoveBackLeft
+    idle: PL_IdleBackLeft
+  - angleMin: 0
     angleMax: 60
-    move: {fileID: 7400000, guid: 123627ba43dcae3469c8c6e53d7a3ddd, type: 2}
-    idle: {fileID: 7400000, guid: 2504637292586b241acc3496b8d6687a, type: 2}
-  - angleMin: -120
-    angleMax: -60
-    move: {fileID: 7400000, guid: 34e55c68ea30cb648a4676a26947a376, type: 2}
-    idle: {fileID: 7400000, guid: 34e55c68ea30cb648a4676a26947a376, type: 2}
-  - angleMin: -171
-    angleMax: -121
-    move: {fileID: 7400000, guid: 906b6f2d696c30e4694729f7238455ac, type: 2}
-    idle: {fileID: 7400000, guid: 1912162580b3da34c9b562a922959b56, type: 2}
-  - angleMin: -61
-    angleMax: -11
-    move: {fileID: 7400000, guid: aaae985e8d8be7742ad542d9fd207589, type: 2}
-    idle: {fileID: 7400000, guid: c1408b9e5050f0048a20df02b07ebbeb, type: 2}
+    move: MoveBackRight
+    idle: PL_IdleBackRight
+  - angleMin: 240
+    angleMax: 300
+    move: MoveFront
+    idle: IdleTop
+  - angleMin: 181
+    angleMax: 239
+    move: MoveFrontLeft
+    idle: IdleTopLeft
+  - angleMin: 299
+    angleMax: 359
+    move: MoveFrontRight
+    idle: IdleTopRight
   InDash: 0
   TryDash: 0
 --- !u!114 &1464324219867819125
@@ -456,8 +456,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.2, y: 0.25}
+  m_Offset: {x: -0.008857697, y: -0.2435863}
+  m_Size: {x: 0.9971916, y: 1.2319202}
   m_Direction: 0
 --- !u!95 &2451847003553320754
 Animator:

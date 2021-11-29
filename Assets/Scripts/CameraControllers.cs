@@ -24,10 +24,10 @@ public class CameraControllers : MonoBehaviour
   private CinemachineVirtualCamera _cinemachineVirtualCamera;
   
 
-  private void OnDrawGizmosSelected()
+  /*private void OnDrawGizmosSelected()
   {
     Handles.DrawSolidRectangleWithOutline(currentRectLimitation,new Color(01,1,1,0.01f), Color.red);
-  }
+  }*/
 
   
   private void FixedUpdate()
@@ -45,6 +45,6 @@ public class CameraControllers : MonoBehaviour
     //offSet.x = Mathf.Clamp(offSet.x, currentRectLimitation.xMin+1.77f*_cinemachineVirtualCamera.m_Lens.OrthographicSize, currentRectLimitation.xMax-1.77f*_cinemachineVirtualCamera.m_Lens.OrthographicSize);
     //offSet.y = Mathf.Clamp(offSet.y, currentRectLimitation.yMin+_cinemachineVirtualCamera.m_Lens.OrthographicSize, currentRectLimitation.yMax-_cinemachineVirtualCamera.m_Lens.OrthographicSize);
     //offSet.z = -0.7f;
-    _cinemachineVirtualCamera.ForceCameraPosition( Vector3.MoveTowards(new Vector3(transform.position.x, transform.position.y, -0.7f), offSet, speed*Time.deltaTime), Quaternion.identity);  
+    _cinemachineVirtualCamera.ForceCameraPosition( Vector3.MoveTowards(new Vector3(transform.position.x, transform.position.y, -10), offSet, speed*Time.deltaTime), Quaternion.identity);  
   }
 }

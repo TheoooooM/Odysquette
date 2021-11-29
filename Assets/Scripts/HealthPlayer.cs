@@ -23,7 +23,7 @@ public class HealthPlayer : MonoBehaviour
     // Start is called before the first frame update
     public static HealthPlayer Instance;
     public Playercontroller playerController;
-
+    
     private void Awake()
     {
         Instance = this;
@@ -35,12 +35,11 @@ public class HealthPlayer : MonoBehaviour
       healthPlayer = maxHealth;
         for (int i = 0; i < healthPlayer; i++)
         {
-             UIManager.Instance.HeartsLife[i].SetActive(true); }
-
-    
-
-
-
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.HeartsLife[i].SetActive(true); 
+            }
+        }
     }
 
     private void Update()
