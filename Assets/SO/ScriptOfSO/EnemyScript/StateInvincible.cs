@@ -10,7 +10,7 @@ public class StateInvincible : StateEnemySO
     {
  
         BossManager.instance.SetPhase(phaseBoss);
-      endStep =  false;
+      endStep =  true;
       Debug.Log("aatest");
 
     }
