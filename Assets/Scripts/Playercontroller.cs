@@ -12,7 +12,7 @@ public class Playercontroller : MonoBehaviour
     public GameObject gun;
     private Vector2 lastMoveVector = Vector3.right;
     private Rigidbody2D rb;
-    private Aled playerInput;
+    private PlayerMapping playerInput;
     private bool isInEffectFlash;
     private float timerInEffectFlash;
     [SerializeField] private String CurrentController;
@@ -52,7 +52,7 @@ public class Playercontroller : MonoBehaviour
         
 
 
-        playerInput = new Aled();
+        playerInput = new PlayerMapping();
         playerInput.Player.Enable();
         playerInput.Player.Shoot.performed += ShootOnperformed;
         playerInput.Player.Shoot.canceled += ShootOncanceled;

@@ -8,7 +8,7 @@ public class Chest : MonoBehaviour
 {
     private bool canOpen;
     
-    [SerializeField] private EnnemySpawn.Spawn[] Drops;
+    [SerializeField] private ChestDrop[] Drops;
     private float rate;
     private int index;
     private GameObject finalItem;
@@ -20,7 +20,7 @@ public class Chest : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
+    /*private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && canOpen) Generate();
     }
@@ -45,7 +45,7 @@ public class Chest : MonoBehaviour
         Destroy(gameObject);
         
     }
-    
+    */
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -64,4 +64,9 @@ public class Chest : MonoBehaviour
             sprite.color = Color.white;
         }
     }
+}
+
+[System.Serializable]
+public class ChestDrop {
+    [SerializeField] private List<Items> itemsToDrop = new List<Items>();
 }

@@ -264,14 +264,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62e7e20db85401545b4ec4555c2d70b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  seed: 0
   StartingRoom: {fileID: 3641982145188308712, guid: 261d244cbdebe6f41ad70f4bda25f336, type: 3}
   normalRoom:
   - {fileID: 8683414427540445995, guid: 7312b35d7f9c24245a1f23ca24dc6994, type: 3}
   - {fileID: 8683414427540445995, guid: 8afedaff843f50e449ab0b85472ba2ee, type: 3}
-  endpathRoom: []
-  roomPool: {fileID: 0}
+  endpathRoom: {fileID: 0}
   mapSize: 51
   nbrOfRoom: 10
+  roomPool: {fileID: 0}
   BasicRect:
     serializedVersion: 2
     x: 60
@@ -795,8 +796,8 @@ MonoBehaviour:
   angle: 0
   viewFinderDistance: 2
   main: {fileID: 1651115807}
-  _firstEffect: 0
-  _secondEffect: 0
+  firstEffect: 0
+  secondEffect: 0
   actualStraw: 0
   strawsClass:
   - StrawName: Basic Straw

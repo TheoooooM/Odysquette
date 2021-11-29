@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class Generation : MonoBehaviour
 {
+    #region VARIABLES
     public static Generation Instance;
     private void Awake()
     {
@@ -17,45 +18,52 @@ public class Generation : MonoBehaviour
     {
         None, top, left, right, bot
     }
-    [Header("===================Rooms===================")]
+    [Header("--- GENERATION")]
+    [SerializeField] private int seed = 0;
+    
+    [Header("--- ROOMS")]
     public GameObject StartingRoom;
     public RoomCreator[] normalRoom;
     public GameObject endpathRoom;
-    [Header("======================================")]
-
-
-    [HideInInspector] public Transform roomPool;
-    
-    public GameObject[,] map;
+    [Space]
     public int mapSize = 51;
     public int nbrOfRoom = 10;
 
+    [HideInInspector] public Transform roomPool;
+    public GameObject[,] map;
     private RoomManager currentRoom;
 
 
     private Vector2 currentPos;
     private open needOpen;
 
-    [Header("====================Camera====================")]
+    [Header("---- CAMERA")]
     public Rect BasicRect;
-
+    #endregion VARIABLES
+    
     private void Start()
     {
-        //Random.InitState();
         map = new GameObject[mapSize, mapSize];
-        //StartCoroutine("GeneratePath", nbrOfRoom);
+        GenerateLevel();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            ResetGen();
-            StartCoroutine("GeneratePath", nbrOfRoom);
-        }
-    }
+    private void Update() { if(Input.GetKeyDown(KeyCode.P)) GenerateLevel(); }
 
-    IEnumerator GeneratePath(int size)
+    /// <summary>
+    /// Generate the level
+    /// </summary>
+    private void GenerateLevel() {
+        Random.InitState(seed);
+        ResetGen();
+        StartCoroutine("GeneratePath", nbrOfRoom);
+    }
+    
+    /// <summary>
+    /// Generate the rooms
+    /// </summary>
+    /// <param name="size"></param>
+    /// <returns></returns>
+    private IEnumerator GeneratePath(int size)
     {
         currentPos = new Vector2(mapSize/2, mapSize/2);
         //Debug.Log(" middl: " + currentPos);
@@ -354,7 +362,7 @@ public class Generation : MonoBehaviour
     /// <summary>
     /// Reset the generation by destroying the default rommPool and creating a new one
     /// </summary>
-    void ResetGen()
+    private void ResetGen()
     {
         if(roomPool != null) Destroy(roomPool.gameObject);
         roomPool = Instantiate(new GameObject(), transform).transform;
