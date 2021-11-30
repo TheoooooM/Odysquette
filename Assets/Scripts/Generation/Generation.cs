@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Pathfinding;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -154,6 +155,8 @@ public class Generation : MonoBehaviour
                     }
                     RC.UpdatePart();
                 }
+
+                ReGeneratePath();
             }
             else
             {
@@ -360,6 +363,13 @@ public class Generation : MonoBehaviour
                 break;
             }
         }
+    }
+
+    /// <summary>
+    /// Regenerate NavMesh
+    /// </summary>
+    private void ReGeneratePath() {
+        AstarPath.active.Scan();
     }
 
     /// <summary>
