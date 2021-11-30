@@ -118,8 +118,9 @@ public class HealthPlayer : MonoBehaviour
     void OnDeathPlayer()
     {
         GameManager.Instance.enabled = false;
-        Destroy(gameObject);
-    
+       
+        UIManager.Instance.GameOver();
+
 
     }
 
