@@ -17,13 +17,7 @@ public class StateEnemySO : ScriptableObject
     public bool haveSoundPlayState;
     public bool haveShaderPlayState;
     public bool haveShaderStartState;
-    public AnimationClip animationPlayState;
-    public AnimationClip animationStartState;
-    public AudioClip audioStartState;
-    public AudioClip audioPlayState;
-    public GameObject fxStartState;
-    public GameObject fxPlayState;
-    
+
     
     public bool needEnemyMovement;
     public bool openBasePanel;
@@ -51,9 +45,7 @@ public class StateEnemySO : ScriptableObject
     public bool duringDefaultState;
     public virtual bool CheckCondition (Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary)
     {
-        Animator animator = new Animator();
-        AnimationClip animationClip = null;
-        animator.Play(animationClip.name);
+      
         return true;
     }
 

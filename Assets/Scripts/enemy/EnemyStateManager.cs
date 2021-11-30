@@ -305,13 +305,13 @@ public class EnemyStateManager : MonoBehaviour
 
 
             ApplyState();
-Debug.Log(EMainStatsSo.baseState);
+
             if (EMainStatsSo.baseState!= null)
-            {   Debug.Log("teaast");
+            {   
                 if (! IsCurrentStartPlayed && !IsCurrentStatePlayed )
                 {
            
-                    Debug.Log("test");
+                   
                     EMainStatsSo.baseState.PlayState( objectDictionaryState, out bool endStep);
                     knockUpInState = EMainStatsSo.baseState.isKnockUpInState;
                     
