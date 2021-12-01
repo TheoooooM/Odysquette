@@ -6,34 +6,41 @@ using Random = UnityEngine.Random;
 
 public class Chest : MonoBehaviour
 {
-    private bool canOpen;
-    
+    [SerializeField] public itemSO SO;
     [SerializeField] private ChestDrop[] Drops;
+    
+    
+    
+    private bool canOpen;
     private float rate;
     private int index;
-    private GameObject finalItem;
+    private Items.type finalItem;
 
     private SpriteRenderer sprite;
 
-    private void Start()
+    public virtual void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
     }
 
-    /*private void Update()
+    public virtual void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && canOpen) Generate();
     }
 
-    void Generate()
+    virtual public void Generate()
     {
-        rate =Random.Range(0, 100);
-        //Debug.Log("rate : " + rate);
+        Debug.Log("generate");
+        float totalProb = 0;
+        foreach (ChestDrop CD in Drops)
+        {
+            totalProb += CD.dropRate;
+        }
+        rate =Random.Range(0, totalProb);
         while (rate>=0)
         {
-            //Debug.Log("index : " +index);
-            finalItem = Drops[index].ennemy;
-            rate -= Drops[index].spawnRate;
+            finalItem = Drops[index].item;
+            rate -= Drops[index].dropRate;
             index++;
             if (index == Drops.Length)
             {
@@ -41,11 +48,105 @@ public class Chest : MonoBehaviour
             }
         }
 
-        Instantiate(finalItem, transform.position, Quaternion.identity);
+        switch (finalItem)
+        {
+            case Items.type.straw:
+                RdmStraw();
+                break;
+            
+            case Items.type.juice:
+                RdmJuice();
+                break;
+            
+            case Items.type.life:
+                InstantiateItem(SO.life);
+                break;
+            
+            case Items.type.doubleLife :
+                InstantiateItem(SO.doubleLife);
+                break;
+            
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
         Destroy(gameObject);
         
     }
-    */
+    
+
+    virtual public void RdmStraw()
+    {
+        GameObject item = null;
+        
+        int index = Random.Range(1, 6);
+        switch (index)
+        {
+            case 0 :
+                item = SO.basicStraw;
+                break;
+            
+            case 1 :
+                item = SO.bounceJuice;
+                break;
+
+            case 2 :
+                item = SO.bubbleStraw;
+                break;
+
+            case 3 :
+                item = SO.snipStraw;
+                break;
+
+            case 4 :
+                item = SO.eightStraw;
+                break;
+
+            case 5 :
+                item = SO.triStraw;
+                break;
+            
+            case 6 :
+                item = SO.mitraStraw;
+                break;
+        }
+
+        InstantiateItem(item);
+    }
+    
+    virtual public void RdmJuice()
+    {
+        GameObject item = null;
+        
+        int index = Random.Range(0, 3);
+        switch (index)
+        {
+            case 0 :
+                item = SO.bounceJuice;
+                break;
+            
+            case 1 :
+                item = SO.pierceJuice;
+                break;
+
+            case 2 :
+                item = SO.explosionJuice;
+                break;
+
+            case 3 :
+                item = SO.poisonJuice;
+                break;
+        }
+        InstantiateItem(item);
+    }
+    
+    public void InstantiateItem(GameObject GO)
+    {
+        Instantiate(GO, transform.position, Quaternion.identity, transform.parent);
+        //gameObject.name = GO.name;
+    }
+
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -55,7 +156,6 @@ public class Chest : MonoBehaviour
         }
         
     }
-
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -67,6 +167,8 @@ public class Chest : MonoBehaviour
 }
 
 [System.Serializable]
-public class ChestDrop {
-    [SerializeField] private List<Items> itemsToDrop = new List<Items>();
+public class ChestDrop
+{
+    public Items.type item;
+    public float dropRate;
 }

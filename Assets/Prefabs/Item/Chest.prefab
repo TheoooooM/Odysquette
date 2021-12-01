@@ -96,7 +96,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de842e892c6cd5644af9abba49161fe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Drops: []
+  SO: {fileID: 11400000, guid: 6472c9a8e1e955347bad23cde88c865e, type: 2}
+  Drops:
+  - item: 1
+    dropRate: 0
+  - item: 0
+    dropRate: 0
 --- !u!58 &5850391509669167420
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -107,7 +112,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

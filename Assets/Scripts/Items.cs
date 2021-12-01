@@ -6,7 +6,7 @@ public class Items : MonoBehaviour
 
    public enum type
    {
-      straw, juice, life
+      straw, juice, life, doubleLife
    }
    
    private PlayerMapping playerInput;
@@ -29,14 +29,12 @@ public class Items : MonoBehaviour
 
    private void ButtonOnperformed(InputAction.CallbackContext obj) {
       Debug.Log(obj.control.displayName);
-      UseItem(obj.control.displayName);
+      if(inRange) UseItem(obj.control.displayName);
    }
 
-   private void UseItem(string buttonPress = "e") {
-      bool destroy = true;
-      
-       switch (buttonPress) {
-          case "e":
+   private void UseItem(string buttonPress = "E") {
+      switch (buttonPress) {
+          case "E":
              switch (itemType) {
                 case type.straw :
                    GameManager.Instance.actualStraw = straw;
@@ -49,25 +47,23 @@ public class Items : MonoBehaviour
                 case type.life : 
                    //Add life;
                    break;
+                case type.doubleLife :
+                   
+                   //Add double life;
+                   break;
+                
              }
              break;
           
-          case "a":
+          case "A":
              GameManager.Instance.firstEffect = effect;
              break;
           
-          case "f":
+          case "F":
              //Add Ressources
              break;
-          
-          default:
-             destroy = false;
-             break;
        }
-
-       if (destroy) {
-          Destroy(gameObject);
-       }
+      Destroy(gameObject);
    }
    
    
