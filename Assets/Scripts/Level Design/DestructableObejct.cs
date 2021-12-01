@@ -9,6 +9,8 @@ public class DestructableObejct : MonoBehaviour {
     [SerializeField] private List<GameObject> gamToDesactivate = new List<GameObject>();
     [SerializeField] private BoxCollider2D col = null;
     [SerializeField] private GameObject particleToSpawn = null;
+    [SerializeField] private Transform particlePos = null;
+    private bool hasSpawn = false;
     
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Bullet")) DisableObjects();
@@ -23,6 +25,7 @@ public class DestructableObejct : MonoBehaviour {
         }
 
         if (col != null) col.enabled = false;
-        if (particleToSpawn != null) Instantiate(particleToSpawn, transform.position, Quaternion.identity, transform);
+        if (particleToSpawn != null && !hasSpawn) Instantiate(particleToSpawn, particlePos.position, Quaternion.identity, transform);
+        hasSpawn = true;
     }
 }
