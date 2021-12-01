@@ -11,6 +11,7 @@ public class RoomContainer : MonoBehaviour
     public ABPath nasvMesh;
     public Vector2 roomMapPos;
     public bool neighbor = false;
+    private bool playerIn = false;
 
 
     #region Generation Variables
@@ -61,7 +62,7 @@ public class RoomContainer : MonoBehaviour
    
     void Update()
     {
-        if (!neighbor && !room.runningRoom)
+        if (!neighbor && !room.runningRoom && Generator.endGeneration && !playerIn)
         {
             gameObject.SetActive(false);
         }
@@ -166,15 +167,11 @@ public class RoomContainer : MonoBehaviour
 
     void ActivateNeighbor(bool active)
     {
-        Debug.Log(Generator.map[(int)roomMapPos.x-1,(int)roomMapPos.y  ]);
        if(Generator.map[(int)roomMapPos.x-1,(int)roomMapPos.y] != null) Generator.map[(int)roomMapPos.x-1,(int)roomMapPos.y  ].neighbor = active;
-        Debug.Log("Ca marche toujours");
        if(Generator.map[(int)roomMapPos.x+1,(int)roomMapPos.y  ] != null) Generator.map[(int)roomMapPos.x+1,(int)roomMapPos.y  ].neighbor = active;
-        Debug.Log("Ca marche toujours");
        if(Generator.map[(int)roomMapPos.x  ,(int)roomMapPos.y-1] != null) Generator.map[(int)roomMapPos.x  ,(int)roomMapPos.y-1].neighbor = active;
-        Debug.Log("Ca marche toujours");
        if(Generator.map[(int)roomMapPos.x  ,(int)roomMapPos.y+1] != null) Generator.map[(int)roomMapPos.x  ,(int)roomMapPos.y+1].neighbor = active;
-        Debug.Log("Ca marche toujours");
+       
 
        if (active)
        {
@@ -190,6 +187,7 @@ public class RoomContainer : MonoBehaviour
         //Debug.Log("enter collider with " + other.name);
         if (other.CompareTag("Player"))
         {
+            playerIn = true;
             neighbor = true;
             playerInRoom = true;
             Debug.Log("Activate");
@@ -201,6 +199,7 @@ public class RoomContainer : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            playerIn = false;
             playerInRoom = false;
             Debug.Log("Desactivate");
             ActivateNeighbor(false);
