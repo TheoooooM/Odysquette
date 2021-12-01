@@ -33,7 +33,9 @@ public static class ExtensionMethods
         SecondTransmitter,
         FlashObject,
         PlayerController,
-        PreviousTransformPlayer
+        PreviousTransformPlayer,
+    
+        EnemyDashCollision
     }
 
     public enum EnemyTypeShoot
@@ -61,6 +63,14 @@ public static class ExtensionMethods
         EndStartState,
         BeginPlayState,
         EndPlayState,
+        DuringStartState,
+        DuringPlayState,
+        FirstPosition,
+        SecondPosition,
+        StartFirstPosition,
+        StartSecondPosition,
+        CollideDuringPlayState
+        
     }
 
 

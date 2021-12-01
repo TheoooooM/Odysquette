@@ -169,6 +169,6 @@ public class RoomCreator : MonoBehaviour
         exitDicitonnary.Add(Generation.open.right, rightExits);
         botExits = new List<RoomContainer>();
         exitDicitonnary.Add(Generation.open.bot, botExits);
-        Debug.Log("Add dictionary");
+        
     }
 }

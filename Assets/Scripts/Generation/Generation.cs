@@ -131,7 +131,7 @@ public class Generation : MonoBehaviour
                 yield return new WaitForSeconds(0.05f);
             }
 
-            Debug.Log("Create Room n°" + i);
+    
             
             if (i == size)
             {

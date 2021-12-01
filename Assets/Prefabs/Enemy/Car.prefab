@@ -74,6 +74,9 @@ GameObject:
   - component: {fileID: 395387781591660138}
   - component: {fileID: 4215050213622555486}
   - component: {fileID: 3386575673484559676}
+  - component: {fileID: 5256377246055126209}
+  - component: {fileID: 2495411095172775283}
+  - component: {fileID: 3178265529716777088}
   m_Layer: 8
   m_Name: CarsEnemi
   m_TagString: Enemy
@@ -180,6 +183,8 @@ MonoBehaviour:
     _object: {fileID: 2259390503688608350}
   - objectInStateManager: 6
     _object: {fileID: 2259390503688608348}
+  - objectInStateManager: 15
+    _object: {fileID: 3178265529716777088}
   isInWind: 0
   windDirection: {x: 0, y: 0}
   windSpeed: 0
@@ -312,6 +317,175 @@ CapsuleCollider2D:
   m_Offset: {x: -0.28, y: 0.12}
   m_Size: {x: 1.6835115, y: 1.6835115}
   m_Direction: 0
+--- !u!114 &5256377246055126209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259390503688608288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c677380bcc9251418967693b69ec7e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  feedBackEvent:
+  - stateEnemySo: CarDash
+    feedBackEventClassList:
+    - typeFeedBackEvent: 4
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 2495411095172775283}
+            m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
+            m_MethodName: UpdatePositionOnTime
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 1
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - typeFeedBackEvent: 2
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 2495411095172775283}
+            m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
+            m_MethodName: UpdatePositionOnTime
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - typeFeedBackEvent: 3
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 2495411095172775283}
+            m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
+            m_MethodName: CancelBoolOneTime
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  - stateEnemySo: CarMove
+    feedBackEventClassList:
+    - typeFeedBackEvent: 5
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 2495411095172775283}
+            m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
+            m_MethodName: UpdatePosition
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  stateDeathName: Death
+--- !u!114 &2495411095172775283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259390503688608288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87e011968b9e03f409f5a57d17753f7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimationStatesList:
+  - currentStatePlayed: 
+    angleAnimation:
+    - angleMin: 90
+      angleMax: 180
+      stateName: MoveBackLeft
+    - angleMin: 0
+      angleMax: 89
+      stateName: MoveBackRight
+    - angleMin: 181
+      angleMax: 270
+      stateName: MoveFrontLeft
+    - angleMin: 271
+      angleMax: 359
+      stateName: MoveFrontRight
+  AnimationStatesListOneTime:
+  - ApplyState: 0
+    destination: {fileID: 2259390503282645450}
+    angleAnimation:
+    - angleMin: 90
+      angleMax: 180
+      stateName: MoveBackLeft
+    - angleMin: 0
+      angleMax: 89
+      stateName: MoveBackRight
+    - angleMin: 181
+      angleMax: 270
+      stateName: MoveFrontLeft
+    - angleMin: 271
+      angleMax: 359
+      stateName: MoveFrontRight
+  - ApplyState: 0
+    destination: {fileID: 2259390503282645450}
+    angleAnimation:
+    - angleMin: 298
+      angleMax: 350
+      stateName: AttackFrontRight
+    - angleMin: 206
+      angleMax: 251
+      stateName: AttackFrontLeft
+    - angleMin: 252
+      angleMax: 297
+      stateName: AttackFront
+    - angleMin: 160
+      angleMax: 205
+      stateName: AttackLeft
+    - angleMin: 1
+      angleMax: 22.5
+      stateName: AttackRight
+    - angleMin: 69
+      angleMax: 113
+      stateName: AttackBack
+    - angleMin: 23
+      angleMax: 68
+      stateName: AttackBackRight
+    - angleMin: 114
+      angleMax: 159
+      stateName: AttackBackLeft
+    - angleMin: 337.5
+      angleMax: 360
+      stateName: AttackRight
+--- !u!114 &3178265529716777088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259390503688608288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ad11f947656db45830491066893b9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inDash: 0
+  isTrigger: 0
 --- !u!1 &2259390504700047936
 GameObject:
   m_ObjectHideFlags: 0

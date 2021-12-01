@@ -8,22 +8,13 @@ using Object = UnityEngine.Object;
 
 public class StateEnemySO : ScriptableObject
 {
-    // deja utilisé
-    public bool haveAnimationStartState;
-    public bool haveFxStartState;
-    public bool haveSoundStartState;
-    public bool haveAnimationPlayState;
-    public bool haveFxPlayState;
-    public bool haveSoundPlayState;
-    public bool haveShaderPlayState;
-    public bool haveShaderStartState;
-
-    
+    public ExtensionMethods.EventFeedBackEnum[] eventFeedBackInState = new ExtensionMethods.EventFeedBackEnum[2]; 
     public bool needEnemyMovement;
     public bool openBasePanel;
     public bool openDebugPanel;
     public bool openSpecPanel;
     public float timeCondition;
+    public bool editFeedBackList;
     public float healthCondition;
     public bool openKnobDebugPanel;
     public bool useHealthCondition;
@@ -49,17 +40,40 @@ public class StateEnemySO : ScriptableObject
         return true;
     }
 
-    public virtual void StartState( Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary,  out bool endStep)
+    public virtual void StartState( Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary,  out bool endStep, EnemyFeedBack enemyFeedBack)
     {
         
         endStep = false;
     }
         
-    public virtual void PlayState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
+    public virtual void PlayState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
     {
         endStep = false;
     }
 
+    public void CheckFeedBackEvent(EnemyFeedBack enemyFeedBack, ExtensionMethods.EventFeedBackEnum feedBackEnum)
+    {
+        if (enemyFeedBack != null)
+        {
+             EnemyFeedBack.FeedBackEventClassListClass[] feedBackEventClassListClass = enemyFeedBack.feedBackEvent;
+                    for (int i = 0; i < feedBackEventClassListClass.Length; i++)
+                    {
+                        if (feedBackEventClassListClass[i].stateEnemySo == this.name)
+                        {
+                            EnemyFeedBack.FeedBackEventClass[] feedBackEventClass = feedBackEventClassListClass[i].feedBackEventClassList;
+                            for (int j = 0; j < feedBackEventClass.Length; j++)
+                            {
+                                if(feedBackEventClass[j].typeFeedBackEvent == feedBackEnum)
+                                    feedBackEventClass[j].feedBackEvent.Invoke();
+                            }
+                        }
+                    }
+        }
+
+        }
+
+       
+    
 
 
 

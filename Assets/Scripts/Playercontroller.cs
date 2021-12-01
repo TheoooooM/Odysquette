@@ -10,6 +10,7 @@ public class Playercontroller : MonoBehaviour
     [SerializeField]
     private Animator playerAnimator;
 
+   
     [SerializeField] private AngleAnimationPlayer currentAngleAnimation;
     [SerializeField] float MouvementSpeed = 0.01f;
     private float defaultSpeed;
@@ -269,6 +270,10 @@ if(timerBetweenDash<= timeBetweenDash)
         {
             conveyorBeltSpeed += other.GetComponent<LDConveyorBelt>().direction;
             isConvey = true;
+        }
+        else
+        {
+            
         }
         
     }

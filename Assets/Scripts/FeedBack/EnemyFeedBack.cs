@@ -4,12 +4,17 @@ using System.Collections.Generic;
 using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.Events;
-
+[RequireComponent(typeof(EnemyStateManager))]
 public class EnemyFeedBack : MonoBehaviour
 {
+
     public FeedBackEventClassListClass[] feedBackEvent;
     private Animator animator;
     public string stateDeathName;
+
+  
+
+
     private void Start()
     {
       animator =  GetComponent<Animator>();
@@ -17,6 +22,8 @@ public class EnemyFeedBack : MonoBehaviour
 
     public void LaunchAnimation(string stateName)
     {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(stateName))
+            return;
         animator.Play(stateName);
     }
     

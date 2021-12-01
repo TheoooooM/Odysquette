@@ -22,6 +22,8 @@ public class EnemyStateManager : MonoBehaviour
         new Dictionary<ExtensionMethods.ObjectInStateManager, Object>();
     private Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionaryState =
         new Dictionary<ExtensionMethods.ObjectInStateManager, Object>();
+
+
     public bool isInWind;
    public Vector2 windDirection;
     public float windSpeed;
@@ -51,7 +53,7 @@ public class EnemyStateManager : MonoBehaviour
     [HideInInspector] public RoomManager roomParent;
     //Delegate
     public delegate void CurrentState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> 
-        objectValue, out bool endStep);
+        objectValue, out bool endStep, EnemyFeedBack enemyFeedBack);
     private CurrentState CurrentFixedState;
     private CurrentState CurrentUpdateState;
     //Timer
@@ -94,7 +96,7 @@ public class EnemyStateManager : MonoBehaviour
         
 
             
-    Debug.Log(baseObjectListCondition.Count);
+
                 for (int i = 0; i < baseObjectListCondition.Count; i++)
                 {
                     
@@ -109,9 +111,9 @@ public class EnemyStateManager : MonoBehaviour
                         }
                         case ExtensionMethods.ObjectInStateManager.RigidBodyPlayer:
                         {  
-                            Debug.Log(HealthPlayer.Instance.rb);
+                           
                             baseObjectListCondition[i]._object = HealthPlayer.Instance.rb;
-                            Debug.Log(   baseObjectListCondition[i]._object);
+                            
                             break;
                         }
                         case ExtensionMethods.ObjectInStateManager.PlayerController:
@@ -312,8 +314,8 @@ public class EnemyStateManager : MonoBehaviour
                 if (! IsCurrentStartPlayed && !IsCurrentStatePlayed )
                 {
            
-                   
-                    EMainStatsSo.baseState.PlayState( objectDictionaryState, out bool endStep);
+                    enemyFeedBack = GetComponent<EnemyFeedBack>();
+                    EMainStatsSo.baseState.PlayState( objectDictionaryState, out bool endStep, enemyFeedBack);
                     knockUpInState = EMainStatsSo.baseState.isKnockUpInState;
                     
                    
@@ -323,7 +325,9 @@ public class EnemyStateManager : MonoBehaviour
 
                 {
                     UpdateDictionaries(EMainStatsSo.baseState);
-                    EMainStatsSo.baseState.PlayState( objectDictionaryState, out bool endStep);
+                    enemyFeedBack = GetComponent<EnemyFeedBack>();
+                    Debug.Log(enemyFeedBack);
+                    EMainStatsSo.baseState.PlayState( objectDictionaryState, out bool endStep,enemyFeedBack);
                     knockUpInState = EMainStatsSo.baseState.isKnockUpInState;
                 }
          
@@ -374,14 +378,14 @@ public class EnemyStateManager : MonoBehaviour
                 if (EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate)
                 {
                    
-                      CurrentFixedState( objectDictionaryState,out bool endStep); _endstep = endStep;
+                      CurrentFixedState( objectDictionaryState,out bool endStep,enemyFeedBack); _endstep = endStep;
                   
                 }
                   
                 else 
                 {
                     
-                    CurrentUpdateState(objectDictionaryState,out bool endStep); _endstep = endStep;
+                    CurrentUpdateState(objectDictionaryState,out bool endStep,enemyFeedBack); _endstep = endStep;
                 }
                
             }
@@ -497,21 +501,42 @@ public class EnemyStateManager : MonoBehaviour
   { 
       Debug.Log("Remove from List");
         Animator animator =  GetComponent<Animator>();
+        if (TryGetComponent(out EnemyFeedBackDeath eventDeath))
+        {
+            eventDeath.deathEvent.Invoke();
+            return;
+        }
       try
       {
-        //  roomParent.ennemiesList.Remove(gameObject.transform.parent.gameObject);
-        animator.Play(enemyFeedBack.stateDeathName);
-        Destroy(gameObject.transform.parent.gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
-         
+          roomParent.ennemiesList.Remove(gameObject.transform.parent.gameObject);
+          if (enemyFeedBack.stateDeathName != "")
+          {
+              animator.Play(enemyFeedBack.stateDeathName);
+              Destroy(gameObject.transform.parent.gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
+          }
+          else
+          {
+              Destroy(gameObject.transform.parent.gameObject);
+          }
+
+
       }
       catch (Exception e)
       {
-         // roomParent.ennemiesList.Remove(gameObject);
-         animator.Play(enemyFeedBack.stateDeathName);
-          Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
-          this.enabled = false;
-      }
-     
+          roomParent.ennemiesList.Remove(gameObject);
+          if (enemyFeedBack.stateDeathName != "")
+          {  
+              animator.Play(enemyFeedBack.stateDeathName);
+              Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
+          }
+          else
+          {
+              Destroy(gameObject);
+          }
+       
+          
+      }rb.isKinematic = true;
+     this.enabled = false;
         GameManager.Instance.ultimateValue += EMainStatsSo.giverUltimateStrawPoints;
   
       

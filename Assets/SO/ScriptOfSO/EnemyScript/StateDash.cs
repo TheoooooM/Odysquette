@@ -24,7 +24,6 @@ public class StateDash : StateEnemySO
     public override bool CheckCondition(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary)
     {
        
-         
                Rigidbody2D rb =
                      (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyEnemy];
                Rigidbody2D rbPlayer = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyPlayer];
@@ -48,43 +47,53 @@ public class StateDash : StateEnemySO
                              return true;
                          }
                   }
-          
                return false;
     }
     
 
   
-    public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
+    public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
     {
-       
-
        
         Rigidbody2D rb = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyEnemy];
-       
+        
+        CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringStartState);
         rb.velocity = Vector2.zero;
         endStep = false;
+      
     }
-    public override void PlayState( Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
+    public override void PlayState( Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
     {
       
-        
+       
        Transform transformDash = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.AimDash];
         Rigidbody2D rb =
             (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyEnemy]; 
+        EnemyDashCollision enemyDashCollision = (EnemyDashCollision)objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyDashCollision]; 
         Vector2 direction = ((Vector2)transformDash.position - rb.position);
         float factorSpeed =direction.magnitude/ rangeDetection ;
         float speed=  animationCurve.Evaluate(factorSpeed)*maxspeed;
+       
+        CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.BeginPlayState);
 
         rb.velocity = direction.normalized * speed;
-       
+        enemyDashCollision.inDash = true;
+        if (enemyDashCollision.isTrigger)
+        {
+            CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.CollideDuringPlayState);
+        }
         if (Vector2.Distance(rb.position, transformDash.position) < 0.2f)
         {
-           
+            
+            CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.EndPlayState);
+            enemyDashCollision.inDash = false;
            transformDash.gameObject.SetActive(false);
            rb.velocity = Vector2.zero;
             endStep = true;
+            
             return;
         }
+        
         
 
         endStep = false;
