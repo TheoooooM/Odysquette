@@ -10,7 +10,7 @@ using Object = UnityEngine.Object;
 
 public class EnemyStateManager : MonoBehaviour
 {
-
+    private  EnemyFeedBack enemyFeedBack;
     public bool isActivate = false;
     
     public EMainStatsSO EMainStatsSo;
@@ -70,7 +70,8 @@ public class EnemyStateManager : MonoBehaviour
     }
 
     public virtual void Start()
-    { 
+    {
+        enemyFeedBack = GetComponent<EnemyFeedBack>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
         spawnPosition = transform.position;
         rb = GetComponent<Rigidbody2D>();
@@ -495,16 +496,20 @@ public class EnemyStateManager : MonoBehaviour
   public virtual void OnDeath()
   { 
       Debug.Log("Remove from List");
-      
+        Animator animator =  GetComponent<Animator>();
       try
       {
         //  roomParent.ennemiesList.Remove(gameObject.transform.parent.gameObject);
-          Destroy(gameObject.transform.parent.gameObject);
+        animator.Play(enemyFeedBack.stateDeathName);
+        Destroy(gameObject.transform.parent.gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
+         
       }
       catch (Exception e)
       {
          // roomParent.ennemiesList.Remove(gameObject);
-          Destroy(gameObject);
+         animator.Play(enemyFeedBack.stateDeathName);
+          Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
+          this.enabled = false;
       }
      
         GameManager.Instance.ultimateValue += EMainStatsSo.giverUltimateStrawPoints;

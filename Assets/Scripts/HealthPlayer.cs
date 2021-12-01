@@ -23,6 +23,7 @@ public class HealthPlayer : MonoBehaviour
     // Start is called before the first frame update
     public static HealthPlayer Instance;
     public Playercontroller playerController;
+    public bool isGameOver;
     
     private void Awake()
     {
@@ -118,7 +119,7 @@ public class HealthPlayer : MonoBehaviour
     void OnDeathPlayer()
     {
         GameManager.Instance.enabled = false;
-       
+       gameObject.SetActive(false);
         UIManager.Instance.GameOver();
 
 
@@ -128,6 +129,7 @@ public class HealthPlayer : MonoBehaviour
     {
         if (other.CompareTag("ShieldEnemy"))
         {
+            
             TakeDamagePlayer(1);
         }
     }
