@@ -64,7 +64,7 @@ public class EnemyFeedBackMovement : MonoBehaviour
                                     currentInputAngle <=  multipleAnimationList.angleAnimation[i].angleMax)
                                 {
                                               
-                                    PlayAnimation(multipleAnimationList.angleAnimation[i].stateName, index);
+                                    PlayAnimation(multipleAnimationList.angleAnimation[i].stateName, index, true);
                                     AnimationStatesListOneTime[index].ApplyState = true;
                                 }
                             } 
@@ -78,6 +78,7 @@ public class EnemyFeedBackMovement : MonoBehaviour
     }
     public void UpdatePosition(int index)
     {
+        Debug.Log(AnimationStatesList[index]);
         Vector2 direction = (HealthPlayer.Instance.transform.position - transform.position).normalized;
         float currentInputAngle =  Mathf.Atan2(direction.y, direction.x)*Mathf.Rad2Deg;
         if (Mathf.Sign(currentInputAngle) == -1)
@@ -93,19 +94,20 @@ public class EnemyFeedBackMovement : MonoBehaviour
                 currentInputAngle <=  multipleAnimationList.angleAnimation[i].angleMax)
             {
                                   
-                PlayAnimation(multipleAnimationList.angleAnimation[i].stateName, index);
+                PlayAnimation(multipleAnimationList.angleAnimation[i].stateName, index, false);
                 
                         
             }
         } 
     }
 
-    private void PlayAnimation(string stateName, int index)
+    private void PlayAnimation(string stateName, int index, bool animationOneTime)
     {  
         if (animator.GetCurrentAnimatorStateInfo(0).IsName(stateName))
                 return; 
         
             animator.Play(stateName);
+            if(!animationOneTime)
             AnimationStatesList[index].currentStatePlayed = stateName;
     }
 

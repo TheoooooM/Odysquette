@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 3386575673484559676}
   - component: {fileID: 5256377246055126209}
   - component: {fileID: 2495411095172775283}
-  - component: {fileID: 3178265529716777088}
+  - component: {fileID: 5175634095495853138}
   m_Layer: 8
   m_Name: CarsEnemi
   m_TagString: Enemy
@@ -184,7 +184,7 @@ MonoBehaviour:
   - objectInStateManager: 6
     _object: {fileID: 2259390503688608348}
   - objectInStateManager: 15
-    _object: {fileID: 3178265529716777088}
+    _object: {fileID: 5175634095495853138}
   isInWind: 0
   windDirection: {x: 0, y: 0}
   windSpeed: 0
@@ -364,6 +364,18 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+          - m_Target: {fileID: 2495411095172775283}
+            m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
+            m_MethodName: CancelBoolOneTime
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 1
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
     - typeFeedBackEvent: 3
       feedBackEvent:
         m_PersistentCalls:
@@ -472,7 +484,7 @@ MonoBehaviour:
     - angleMin: 337.5
       angleMax: 360
       stateName: AttackRight
---- !u!114 &3178265529716777088
+--- !u!114 &5175634095495853138
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
