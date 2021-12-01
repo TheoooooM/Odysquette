@@ -12,6 +12,7 @@ public class RoomContainer : MonoBehaviour
     public Vector2 roomMapPos;
     public bool neighbor = false;
     private bool playerIn = false;
+    [HideInInspector] public bool firstRoom = false;
 
 
     #region Generation Variables
@@ -59,14 +60,16 @@ public class RoomContainer : MonoBehaviour
         room = GetComponentInParent<RoomManager>();
     }
 
-   
+
     void Update()
     {
         if (!neighbor && !room.runningRoom && Generator.endGeneration && !playerIn)
         {
             gameObject.SetActive(false);
         }
-    }
+
+        if (firstRoom && Generator.endGeneration) {ActivateNeighbor(true); firstRoom = false; }
+}
 
     public void UpdatePart()
     {
