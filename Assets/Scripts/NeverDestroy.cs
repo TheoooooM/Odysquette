@@ -13,4 +13,9 @@ public class NeverDestroy : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public GameManager.Effect firstEffect;
+    public GameManager.Effect secondEffect;
+
+    public GameManager.Straw actualStraw;
+
 }
