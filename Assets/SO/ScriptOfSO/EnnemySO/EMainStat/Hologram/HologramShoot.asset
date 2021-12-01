@@ -12,6 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da6f6442f0a418540bfe9bb95188f7c9, type: 3}
   m_Name: HologramShoot
   m_EditorClassIdentifier: 
+  haveAnimationStartState: 0
+  haveFxStartState: 0
+  haveSoundStartState: 0
+  haveAnimationPlayState: 0
+  haveFxPlayState: 0
+  haveSoundPlayState: 0
+  haveShaderPlayState: 0
+  haveShaderStartState: 0
+  needEnemyMovement: 0
   openBasePanel: 0
   openDebugPanel: 0
   openSpecPanel: 1
@@ -29,7 +38,7 @@ MonoBehaviour:
   isFixedUpdate: 1
   haveStartState: 1
   duringDefaultState: 0
-  rangeForShoot: 15
+  rangeForShoot: 40
   rangeForBullet: 4
   damage: 1
   speedBullet: 265.2
@@ -38,15 +47,18 @@ MonoBehaviour:
   enemyTypeShoot: 1
   isDelayBetweenShoot: 0
   isDelayBetweenWaveShoot: 1
+  IsMultipleDelayBetweenShoot: 0
+  delayBetweenShootList: []
   delayBetweenShoot: 0
   delayBetweenWaveShoot: 0.5
   basePosition: []
   numberWaveShoot: 2
   isAimPlayer: 1
+  isFirstAimPlayer: 0
   offSetDistance: 1
   layerMaskRay:
     serializedVersion: 2
-    m_Bits: 1791
+    m_Bits: 1536
   extentsRangeDetection: {x: 1, y: 1, z: 0}
   directions:
   - 0

@@ -17,6 +17,7 @@ public class StateWind : StateEnemySO
     {
         WindParticleManager windParticleManager = (WindParticleManager) objectDictionary[ExtensionMethods.ObjectInStateManager.WindParticleManager];
         windParticleManager.enabled = true;
+       
         endStep = false;
     }
 }

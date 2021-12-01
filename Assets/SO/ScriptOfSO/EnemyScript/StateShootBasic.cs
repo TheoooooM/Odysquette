@@ -11,7 +11,7 @@ public class StateShootBasic : StateShootSO
 
     
     public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
-    {
+    {  Debug.Log("prepare play shoot"+ this.name);
         Transform transformPlayer = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformPlayer];
         Transform parentBulletTF =
             (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformShoot];
@@ -32,7 +32,7 @@ public class StateShootBasic : StateShootSO
 
     public override void PlayState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
     {
-        
+        Debug.Log("play shoot"+ this.name);
         Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
         enemyTransform.GetComponent<SpriteRenderer>().color -= Color.white;
   
