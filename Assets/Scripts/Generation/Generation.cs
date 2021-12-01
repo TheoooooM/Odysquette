@@ -21,6 +21,8 @@ public class Generation : MonoBehaviour
     }
     [Header("--- GENERATION")]
     [SerializeField] private int seed = 0;
+
+    public bool endGeneration;
     
     [Header("--- ROOMS")]
     public GameObject StartingRoom;
@@ -66,6 +68,7 @@ public class Generation : MonoBehaviour
     /// <returns></returns>
     private IEnumerator GeneratePath(int size)
     {
+        endGeneration = false;
         currentPos = new Vector2(mapSize/2, mapSize/2);
         //Debug.Log(" middl: " + currentPos);
         GameObject nR = new GameObject();
@@ -132,7 +135,7 @@ public class Generation : MonoBehaviour
                 yield return new WaitForSeconds(0.05f);
             }
 
-            Debug.Log("Create Room n°" + i);
+            //Debug.Log("Create Room n°" + i);
             
             if (i == size)
             {
@@ -366,6 +369,8 @@ public class Generation : MonoBehaviour
                 break;
             }
         }
+
+        endGeneration = true;
     }
 
     /// <summary>
