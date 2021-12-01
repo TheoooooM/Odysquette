@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2197312939599659042}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.314, y: 1.2503, z: 0}
+  m_LocalPosition: {x: 0.314, y: 1.9118, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4404348725387566340}
@@ -92,7 +92,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4404348725387566340}
   - component: {fileID: 4404348725387566341}
-  m_Layer: 0
+  - component: {fileID: 1601460373082716122}
+  - component: {fileID: 8445903500984161020}
+  m_Layer: 23
   m_Name: StreetLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +108,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4404348725387566338}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.98, y: -12.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -168,6 +170,48 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!61 &1601460373082716122
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4404348725387566338}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -1.0477071}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.275}
+    oldSize: {x: 1.125, y: 2.9375}
+    newSize: {x: 1.125, y: 2.9375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.25615692, y: 0.84208584}
+  m_EdgeRadius: 0
+--- !u!114 &8445903500984161020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4404348725387566338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98113aeb6103ad4687ff8de422f2231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gamToDesactivate:
+  - {fileID: 8941238365990481569}
+  col: {fileID: 1601460373082716122}
+  particleToSpawn: {fileID: 0}
 --- !u!1 &4790589109423583450
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +237,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4790589109423583450}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.996, z: 0}
+  m_LocalPosition: {x: 0, y: -1.3345001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4404348725387566340}
@@ -275,7 +319,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6235823932993576402}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.3137, y: 1.2503, z: 0}
+  m_LocalPosition: {x: -0.3137, y: 1.9117999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4404348725387566340}
@@ -357,7 +401,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8941238365990481569}
   m_LocalRotation: {x: -0, y: -0, z: -0.9999559, w: 0.009394951}
-  m_LocalPosition: {x: -0.015, y: 1.3759997, z: -0.5}
+  m_LocalPosition: {x: -0.015, y: 2.0374997, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4404348725387566340}
@@ -378,20 +422,20 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.434
-  m_Color: {r: 1, g: 0.9020455, b: 0.5235849, a: 1}
+  m_Color: {r: 1, g: 0.8181219, b: 0.5424528, a: 1}
   m_Intensity: 1
-  m_LightVolumeOpacity: 0.158
-  m_ApplyToSortingLayers: 000000008f2ba8a6c3538c40237556146d183db99dca56894f22bcfbcd457faa
+  m_LightVolumeOpacity: 0.104
+  m_ApplyToSortingLayers: 000000008f2ba8a6c3538c40237556146d183db99dca5689cd457faa4f22bcfb995dc684
   m_LightCookieSprite: {fileID: 0}
   m_UseNormalMap: 0
-  m_LightOrder: 0
+  m_LightOrder: 1
   m_AlphaBlendOnOverlap: 0
   m_ShadowIntensity: 0
   m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 59
-  m_PointLightOuterAngle: 152
+  m_PointLightOuterAngle: 183
   m_PointLightInnerRadius: 0.6573517
-  m_PointLightOuterRadius: 5.796695
+  m_PointLightOuterRadius: 5.22
   m_PointLightDistance: 3
   m_PointLightQuality: 1
   m_ShapeLightParametricSides: 5

@@ -21,6 +21,8 @@ public class Generation : MonoBehaviour
     }
     [Header("--- GENERATION")]
     [SerializeField] private int seed = 0;
+
+    public bool endGeneration;
     
     [Header("--- ROOMS")]
     public GameObject StartingRoom;
@@ -31,7 +33,7 @@ public class Generation : MonoBehaviour
     public int nbrOfRoom = 10;
 
     [HideInInspector] public Transform roomPool;
-    public GameObject[,] map;
+    public RoomContainer[,] map;
     private RoomManager currentRoom;
 
 
@@ -44,7 +46,7 @@ public class Generation : MonoBehaviour
     
     private void Start()
     {
-        map = new GameObject[mapSize, mapSize];
+        map = new RoomContainer[mapSize, mapSize];
         GenerateLevel();
     }
 
@@ -66,6 +68,7 @@ public class Generation : MonoBehaviour
     /// <returns></returns>
     private IEnumerator GeneratePath(int size)
     {
+        endGeneration = false;
         currentPos = new Vector2(mapSize/2, mapSize/2);
         //Debug.Log(" middl: " + currentPos);
         GameObject nR = new GameObject();
@@ -81,8 +84,9 @@ public class Generation : MonoBehaviour
         
         RoomContainer firstRC = Instantiate(StartingRoom, new Vector2((currentPos.x - mapSize/2)*62, (currentPos.y- mapSize/2)*40), Quaternion.identity , currentRoom.transform).GetComponent<RoomCreator>().partList[0].RoomGO;
         firstRC.room = currentRoom;
+        firstRC.Generator = this;
         firstRC.roomMapPos = currentPos;
-        map[(int) currentPos.x, (int) currentPos.y] = firstRC.gameObject;
+        map[(int) currentPos.x, (int) currentPos.y] = firstRC;
         
         
         int exit = Random.Range(0, 3);
@@ -131,7 +135,9 @@ public class Generation : MonoBehaviour
                 yield return new WaitForSeconds(0.05f);
             }
 
-    
+
+            //Debug.Log("Create Room n°" + i);
+
             
             if (i == size)
             {
@@ -252,7 +258,9 @@ public class Generation : MonoBehaviour
                                             }
                                             RoomContainer RC = Instantiate(rom.RoomGO.gameObject, new Vector2((currentPos.x+rom.RoomGO.roomPos.x-enterPart.roomPos.x- mapSize/2)*62,(currentPos.y+rom.RoomGO.roomPos.y-enterPart.roomPos.y- mapSize/2)*40), Quaternion.identity, currentRoom.transform).GetComponent<RoomContainer>();
                                             RC.roomMapPos = new Vector2((currentPos.x + rom.RoomGO.roomPos.x - enterPart.roomPos.x), (int) (currentPos.y + rom.RoomGO.roomPos.y - enterPart.roomPos.y));
-                                            map[(int)(currentPos.x+rom.RoomGO.roomPos.x-enterPart.roomPos.x),(int)(currentPos.y+rom.RoomGO.roomPos.y-enterPart.roomPos.y)] = RC.gameObject;
+                                            RC.Generator = this;
+                                            currentRoom.partList.Add(RC);
+                                            map[(int)(currentPos.x+rom.RoomGO.roomPos.x-enterPart.roomPos.x),(int)(currentPos.y+rom.RoomGO.roomPos.y-enterPart.roomPos.y)] = RC;
                                             RC.room = currentRoom;
                                             
                                             
@@ -363,6 +371,8 @@ public class Generation : MonoBehaviour
                 break;
             }
         }
+
+        endGeneration = true;
     }
 
     /// <summary>

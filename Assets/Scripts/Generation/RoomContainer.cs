@@ -6,9 +6,12 @@ using UnityEngine;
 
 public class RoomContainer : MonoBehaviour
 {
+    public Generation Generator;
     public RoomManager room;
     public ABPath nasvMesh;
     public Vector2 roomMapPos;
+    public bool neighbor = false;
+    private bool playerIn = false;
 
 
     #region Generation Variables
@@ -59,7 +62,10 @@ public class RoomContainer : MonoBehaviour
    
     void Update()
     {
-        
+        if (!neighbor && !room.runningRoom && Generator.endGeneration && !playerIn)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public void UpdatePart()
@@ -159,12 +165,33 @@ public class RoomContainer : MonoBehaviour
 
     }
 
+    void ActivateNeighbor(bool active)
+    {
+       if(Generator.map[(int)roomMapPos.x-1,(int)roomMapPos.y] != null) Generator.map[(int)roomMapPos.x-1,(int)roomMapPos.y  ].neighbor = active;
+       if(Generator.map[(int)roomMapPos.x+1,(int)roomMapPos.y  ] != null) Generator.map[(int)roomMapPos.x+1,(int)roomMapPos.y  ].neighbor = active;
+       if(Generator.map[(int)roomMapPos.x  ,(int)roomMapPos.y-1] != null) Generator.map[(int)roomMapPos.x  ,(int)roomMapPos.y-1].neighbor = active;
+       if(Generator.map[(int)roomMapPos.x  ,(int)roomMapPos.y+1] != null) Generator.map[(int)roomMapPos.x  ,(int)roomMapPos.y+1].neighbor = active;
+       
+
+       if (active)
+       {
+           if(Generator.map[(int)roomMapPos.x-1,(int)roomMapPos.y  ] != null)Generator.map[(int) roomMapPos.x-1,(int)roomMapPos.y  ].gameObject.SetActive(true);
+           if(Generator.map[(int)roomMapPos.x+1,(int)roomMapPos.y  ] != null)Generator.map[(int) roomMapPos.x+1,(int)roomMapPos.y  ].gameObject.SetActive(true);
+           if(Generator.map[(int)roomMapPos.x  ,(int)roomMapPos.y-1] != null)Generator.map[(int) roomMapPos.x  ,(int)roomMapPos.y-1].gameObject.SetActive(true);
+           if(Generator.map[(int)roomMapPos.x  ,(int)roomMapPos.y+1] != null)Generator.map[(int) roomMapPos.x  ,(int)roomMapPos.y+1].gameObject.SetActive(true);
+       }
+    }
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         //Debug.Log("enter collider with " + other.name);
         if (other.CompareTag("Player"))
         {
+            playerIn = true;
+            neighbor = true;
             playerInRoom = true;
+            Debug.Log("Activate");
+            ActivateNeighbor(true);
         }
     }
 
@@ -172,7 +199,10 @@ public class RoomContainer : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            playerIn = false;
             playerInRoom = false;
+            Debug.Log("Desactivate");
+            ActivateNeighbor(false);
         }
     }
 }
