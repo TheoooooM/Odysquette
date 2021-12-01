@@ -10,7 +10,10 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        if (NeverDestroy.Instance == null) Instantiate(Resources.Load<GameObject>("NeverDestroy"));
+        else GetND();
         Instance = this;
+        
     }
     #endregion
 
@@ -119,7 +122,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        
         actualStrawClass = strawsClass[(int) actualStraw];
         lastInput = Vector3.right*viewFinderDistance;
         foreach (StrawClass str in strawsClass) //active la bonne paille au début
@@ -253,7 +255,7 @@ public class GameManager : MonoBehaviour
                     Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x, actualStrawClass.StrawParent.transform.position.y);
                     _lookDir = new Vector2(mousepos.x, mousepos.y) - Position ;
                     angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
-                    UIManager.Instance.cursor.transform.position =  main.WorldToScreenPoint(mousepos);
+                    if(UIManager.Instance != null) UIManager.Instance.cursor.transform.position =  main.WorldToScreenPoint(mousepos);
                     
         
                     actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
@@ -284,8 +286,21 @@ public class GameManager : MonoBehaviour
                 actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
                 //--------------------------------------------------------------
     }
+    
+    public void GetND()
+    {
+        firstEffect = NeverDestroy.Instance.firstEffect;
+        secondEffect = NeverDestroy.Instance.secondEffect;
+        actualStraw = NeverDestroy.Instance.actualStraw;
+    }
 
-
+    public void SetND()
+    {
+        NeverDestroy.Instance.firstEffect = firstEffect;
+        NeverDestroy.Instance.secondEffect = secondEffect;
+        NeverDestroy.Instance.actualStraw = actualStraw;
+    }
+    
     void ChangeStraw(Straw straw) //change la paille 
     {
         //dictionnaire

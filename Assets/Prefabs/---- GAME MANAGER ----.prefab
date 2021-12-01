@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3459671981831475572
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3459671981831475571}
+  - component: {fileID: 3459671981831475570}
+  m_Layer: 0
+  m_Name: ---- GAME MANAGER ----
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3459671981831475571
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3459671981831475572}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3459671981831475570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3459671981831475572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06127b54c36660a489cdae7e76086074, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUltimate: 0
+  maxUltimateValue: 100
+  offsetPadViewFinder: 0.3
+  angle: 0
+  viewFinderDistance: 2
+  main: {fileID: 0}
+  firstEffect: 0
+  secondEffect: 0
+  actualStraw: 0
+  strawsClass:
+  - StrawName: Basic Straw
+    StrawType: 0
+    StrawParent: {fileID: 0}
+    strawSO: {fileID: 11400000, guid: c6a5e905b2398d442b4ecaa31bd69658, type: 2}
+    sizeUltimatePool: 15
+    ultimateStrawSO: {fileID: 11400000, guid: 9a814fca707bd514fb051bf4a037f19f, type: 2}
+    spawnerTransform: {fileID: 0}
+    sizeShootPool: 5
+  timerUltimate: 0
+  shooting: 0
+  utlimate: 0
+  shootCooldown: 0
+  isMouse: 1
+  ViewPad: {x: 0, y: 0}
+  ShootRate: 0
+  Player: {fileID: 0}
+  _lookDir: {x: 0, y: 0}
+  actualStrawClass:
+    StrawName: 
+    StrawType: 0
+    StrawParent: {fileID: 0}
+    strawSO: {fileID: 0}
+    sizeUltimatePool: 0
+    ultimateStrawSO: {fileID: 0}
+    spawnerTransform: {fileID: 0}
+    sizeShootPool: 0

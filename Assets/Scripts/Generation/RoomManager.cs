@@ -7,7 +7,9 @@ public class RoomManager : MonoBehaviour
 {
 
     public Rect cameraRect;
-    
+
+    public List<RoomContainer> partList = new List<RoomContainer>();
+
     public List<GameObject> ennemiesList = new List<GameObject>();
     public bool runningRoom;
     [HideInInspector] public bool roomFinish = false;
@@ -29,6 +31,10 @@ public class RoomManager : MonoBehaviour
         
         if (runningRoom)
         {
+            foreach (RoomContainer RC in partList)
+            {
+                RC.gameObject.SetActive(true);
+            }
             if (!done)
             {
                 CameraControllers.Instance.currentRectLimitation = cameraRect;
