@@ -665,10 +665,14 @@ MonoBehaviour:
   exit: {fileID: 0}
   roomPref: {fileID: 3238441228339474860, guid: 144a6800d63fef042b98f163e820cd92, type: 3}
   update: 0
-  topExits: []
-  botExits: []
-  leftExits: []
-  rightExits: []
+  topExits:
+  - {fileID: 3007198637600520432}
+  botExits:
+  - {fileID: 3007198637600520432}
+  leftExits:
+  - {fileID: 3007198637600520432}
+  rightExits:
+  - {fileID: 3007198637600520432}
 --- !u!1 &7751996240755599846
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,8 +935,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 147c427969f78714e94d1f7e867068e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Generator: {fileID: 0}
   room: {fileID: 0}
   roomMapPos: {x: 0, y: 0}
+  neighbor: 0
   playerInRoom: 0
   roomRef: {fileID: 5936376360525849782}
   roomPos: {x: 2, y: 2}
