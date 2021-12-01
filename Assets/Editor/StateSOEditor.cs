@@ -96,7 +96,7 @@ public class StateSOEditor : Editor
                 EditorGUILayout.Space(4f);
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("objectInStateManagersState"));
                 EditorGUILayout.Space(4f);
-             
+
              
             }
              
@@ -104,10 +104,28 @@ public class StateSOEditor : Editor
            
      
    EditorGUILayout.EndToggleGroup();
-        
-     
-        
-        EditorGUILayout.Space(4f);
+   EditorGUILayout.Space(8f);
+   GUILayout.Label("FeedBacks", subTitle);
+   
+   eStateSO.editFeedBackList = EditorGUILayout.Toggle("Edit FeedBack Event",eStateSO.editFeedBackList ); GUI.contentColor = Color.white;
+   EditorGUILayout.Space(6f);
+   using (new GUILayout.VerticalScope(EditorStyles.helpBox))
+   {
+       if (eStateSO.editFeedBackList)
+       {
+           GUI.enabled = true;
+       }
+       else
+       {
+           GUI.enabled = false;
+       }
+
+       EditorGUILayout.PropertyField(serializedObject.FindProperty("eventFeedBackInState"));
+      
+       GUI.enabled = true;
+   }
+
+   EditorGUILayout.Space(4f);
         
 serializedObject.ApplyModifiedProperties();
         

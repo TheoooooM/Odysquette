@@ -12,22 +12,24 @@ public class StateMouvementSO : StateEnemySO
     public float moveSpeed;
     public bool isMovementToSpawn;
 
-    public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
+    public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
     {
+     
         EnemyMovement enemyMovement =
             (EnemyMovement) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyMovement];
+        CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringStartState);
         enemyMovement.enabled = true;
      
         endStep = true;
     }
 
-    public override void PlayState( Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
+    public override void PlayState( Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
     {
-        Debug.Log("test");
+     
         EnemyMovement enemyMovement =
             (EnemyMovement) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyMovement];
         Rigidbody2D rbPlayer = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyPlayer];
-      
+       Debug.Log(enemyFeedBack);
        
         bool _endstep = false;
         enemyMovement.speed = moveSpeed;
@@ -48,7 +50,8 @@ public class StateMouvementSO : StateEnemySO
         { 
             enemyMovement.enabled = true;
             enemyMovement.destination = rbPlayer.position;
-            _endstep = false;
+            _endstep = false; 
+            CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringPlayState);
         }
 
 

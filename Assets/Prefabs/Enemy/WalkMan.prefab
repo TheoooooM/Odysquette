@@ -47,6 +47,8 @@ GameObject:
   - component: {fileID: 56341371781382451}
   - component: {fileID: -7392804278422358539}
   - component: {fileID: 2961347317913795151}
+  - component: {fileID: 602853029780885927}
+  - component: {fileID: 1335755304931927945}
   m_Layer: 8
   m_Name: WalkMan
   m_TagString: Enemy
@@ -67,6 +69,7 @@ Transform:
   m_Children:
   - {fileID: 56341370774683363}
   - {fileID: 56341372014807551}
+  - {fileID: 2512337488954664126}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -156,6 +159,8 @@ MonoBehaviour:
     _object: {fileID: 56341371781382453}
   - objectInStateManager: 2
     _object: {fileID: 0}
+  - objectInStateManager: 14
+    _object: {fileID: 2512337488954664126}
   isInWind: 0
   windDirection: {x: 0, y: 0}
   windSpeed: 0
@@ -298,6 +303,115 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &602853029780885927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56341371781382450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c677380bcc9251418967693b69ec7e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  feedBackEvent:
+  - stateEnemySo: WalkmanShoot
+    feedBackEventClassList:
+    - typeFeedBackEvent: 4
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 1335755304931927945}
+            m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
+            m_MethodName: UpdatePositionOnTime
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - typeFeedBackEvent: 5
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 1335755304931927945}
+            m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
+            m_MethodName: CancelBoolOneTime
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  - stateEnemySo: WalkmanMove
+    feedBackEventClassList:
+    - typeFeedBackEvent: 5
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 1335755304931927945}
+            m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
+            m_MethodName: UpdatePosition
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  stateDeathName: 
+--- !u!114 &1335755304931927945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56341371781382450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87e011968b9e03f409f5a57d17753f7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimationStatesList:
+  - currentStatePlayed: 
+    angleAnimation:
+    - angleMin: 90
+      angleMax: 180
+      stateName: MoveBackLeft
+    - angleMin: 0
+      angleMax: 89
+      stateName: MoveBackRight
+    - angleMin: 181
+      angleMax: 270
+      stateName: MoveFrontLeft
+    - angleMin: 271
+      angleMax: 359
+      stateName: MoveFrontRight
+  AnimationStatesListOneTime:
+  - ApplyState: 0
+    destination: {fileID: 2512337488954664126}
+    angleAnimation:
+    - angleMin: 90
+      angleMax: 180
+      stateName: AttackBackLeft
+    - angleMin: 0
+      angleMax: 89
+      stateName: AttackBackRight
+    - angleMin: 181
+      angleMax: 270
+      stateName: AttackFrontLeft
+    - angleMin: 271
+      angleMax: 359
+      stateName: AttackFrontRight
 --- !u!1 &56341372014807550
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,3 +469,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.27453035, y: 0.22285664}
   m_EdgeRadius: 0
+--- !u!1 &5898210063061010705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2512337488954664126}
+  m_Layer: 8
+  m_Name: PreviousTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2512337488954664126
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5898210063061010705}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 56341371781382457}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -29,13 +29,14 @@ public class UIManager : MonoBehaviour
     }
 
     public void GameOver()
-    {
+    { GameOverPanel.SetActive(true);
         Time.timeScale = 0;
-        GameOverPanel.SetActive(true);
+       
     }
 
     public void PlayAgain()
     {
+        Time.timeScale = 1 ;
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
     }
 

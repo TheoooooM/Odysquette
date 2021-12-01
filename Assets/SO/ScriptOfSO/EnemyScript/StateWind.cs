@@ -13,8 +13,9 @@ public class StateWind : StateEnemySO
     //public float height;
 
         
-    public override void PlayState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
+    public override void PlayState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
     {
+        
         WindParticleManager windParticleManager = (WindParticleManager) objectDictionary[ExtensionMethods.ObjectInStateManager.WindParticleManager];
         windParticleManager.enabled = true;
        
