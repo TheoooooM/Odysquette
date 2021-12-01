@@ -10,7 +10,8 @@ public class Playercontroller : MonoBehaviour
     [SerializeField]
     private Animator playerAnimator;
 
-    [SerializeField] private AngleAnimation currentAngleAnimation;
+   
+    [SerializeField] private AngleAnimationPlayer currentAngleAnimation;
     [SerializeField] float MouvementSpeed = 0.01f;
     private float defaultSpeed;
     public GameObject gun;
@@ -45,7 +46,7 @@ public class Playercontroller : MonoBehaviour
 
     private bool isConvey;
     public Vector2 conveyorBeltSpeed;
-    public AngleAnimation[] baseAngleAnimation;
+    public AngleAnimationPlayer[] baseAngleAnimation;
     public bool InDash;
     [SerializeField]
     private bool TryDash;
@@ -270,6 +271,10 @@ if(timerBetweenDash<= timeBetweenDash)
             conveyorBeltSpeed += other.GetComponent<LDConveyorBelt>().direction;
             isConvey = true;
         }
+        else
+        {
+            
+        }
         
     }
 
@@ -303,7 +308,7 @@ if(timerBetweenDash<= timeBetweenDash)
 
     }
 [Serializable]
-    public class AngleAnimation
+    public class AngleAnimationPlayer 
     {
         public float angleMin;
         public float angleMax;
@@ -312,16 +317,16 @@ if(timerBetweenDash<= timeBetweenDash)
 
 
     }
-        public AngleAnimation SetAngleAnimation(AngleAnimation newAngleAnimation)
+        public AngleAnimationPlayer SetAngleAnimation(AngleAnimationPlayer newAngleAnimation)
         {
-            AngleAnimation angleAnimation = new AngleAnimation();
+            AngleAnimationPlayer angleAnimation = new AngleAnimationPlayer();
             angleAnimation.angleMax = newAngleAnimation.angleMax;
             angleAnimation.angleMin = newAngleAnimation.angleMin;
             angleAnimation.idle = newAngleAnimation.idle;
             angleAnimation.move = newAngleAnimation.move;
             return angleAnimation;
         }
-    public void PlayAnimation(AngleAnimation angleAnimation, bool move)
+    public void PlayAnimation(AngleAnimationPlayer angleAnimation, bool move)
     {
         if (move)
         {
