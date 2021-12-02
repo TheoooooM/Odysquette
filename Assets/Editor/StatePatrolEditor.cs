@@ -45,27 +45,28 @@ using (new GUILayout.HorizontalScope())
           GUILayout.FlexibleSpace();
           EditorGUILayout.PropertyField(serializedObject.FindProperty("maxDistance"));
                             
-        }  
-     
-              
-        EditorGUILayout.Space(4f);
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("sizeOfDetection"));
-        EditorGUILayout.Space(4f);
-     
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("layerMaskForRay"),new GUIContent("Wall Detection Box") );
-        EditorGUILayout.Space(4f);
-      }
-      EditorGUILayout.EndFoldoutHeaderGroup();
-    }
-;
-  
-      EditorGUILayout.PropertyField(serializedObject.FindProperty("directionPatrol"));
-      EditorGUILayout.Space(4f);
-       if (serializedObject.FindProperty("toThePlayer").boolValue == true ||serializedObject.FindProperty("toTheOppositePlayer").boolValue == true)
-        {
-          EditorGUILayout.PropertyField(serializedObject.FindProperty("addAngleList"));
-         
         }
+      }
+     
+    }
+ EditorGUILayout.EndFoldoutHeaderGroup();
+
+
+    if (serializedObject.FindProperty("toThePlayer").boolValue == true ||
+        serializedObject.FindProperty("toTheOppositePlayer").boolValue == true)
+    {
+      GUI.enabled = true;
+    }
+    else
+    {
+      GUI.enabled = false;
+    }
+
+    EditorGUILayout.PropertyField(serializedObject.FindProperty("addAngleList"));
+    GUI.enabled = true;
+  
+       EditorGUILayout.PropertyField(serializedObject.FindProperty("directionPatrol"));
+               EditorGUILayout.Space(4f);
          EditorGUILayout.Space(4f);
     EditorGUILayout.Space(6f);
          

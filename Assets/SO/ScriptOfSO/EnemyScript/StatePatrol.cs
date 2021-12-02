@@ -11,12 +11,12 @@ public class StatePatrol : StateEnemySO
  public float speed;
  public bool toThePlayer;
  public bool toTheOppositePlayer;
- public LayerMask layerMaskForRay;
+ 
  //si tu a coché un des deux bool
  public int[] addAngleList;
  public float minDistance;
  public float maxDistance;
- public Vector2 sizeOfDetection;
+ 
  public Vector2[] directionPatrol;
 
 
@@ -47,7 +47,7 @@ public class StatePatrol : StateEnemySO
  endStep = false;
  GraphNode node = AstarPath.active.GetNearest(rb.position +destination).node;
 
- ExtDebug.DrawBoxCastBox(rb.position, sizeOfDetection/2, Quaternion.identity, (destination - rb.position).normalized, length, Color.red);
+
     if (node.Walkable)
     {endStep = true;
   ;

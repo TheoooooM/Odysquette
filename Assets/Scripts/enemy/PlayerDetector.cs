@@ -74,7 +74,7 @@ public class PlayerDetector : MonoBehaviour
             GraphNode node = AstarPath.active.GetNearest(rb.position +destination).node;
            
       
-        ExtDebug.DrawBoxCastBox(rb.position,  patrol.sizeOfDetection/2, Quaternion.identity, (destination - rb.position).normalized, length, Color.red);
+        
         if (node.Walkable)
         {
             aimPatrol.position = rb.position + destination; 
