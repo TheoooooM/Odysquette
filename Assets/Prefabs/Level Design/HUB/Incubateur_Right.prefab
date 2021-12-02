@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6425397001246580276}
   - component: {fileID: 6425397001246580279}
   - component: {fileID: 6425397001246580278}
-  - component: {fileID: 629092671}
+  - component: {fileID: 2668795078245825293}
   m_Layer: 0
   m_Name: Incubateur_Right
   m_TagString: Untagged
@@ -103,8 +103,8 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &629092671
-BoxCollider2D:
+--- !u!60 &2668795078245825293
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -116,7 +116,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.7170548, y: 2.6879096}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -126,6 +126,13 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 2.764207, y: 3.0754776}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.8418255, y: 2.3142982}
+      - {x: 0.84480286, y: 1.8615956}
+      - {x: 0.5067415, y: 1.876967}
+      - {x: 0.5045042, y: 0.30011272}
+      - {x: 2.7577267, y: 0.29899502}
+      - {x: 2.7868075, y: 1.3999176}
+      - {x: 2.2337098, y: 1.4125013}
+      - {x: 2.2173095, y: 2.3552418}

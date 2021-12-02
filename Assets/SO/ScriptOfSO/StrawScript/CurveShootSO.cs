@@ -58,6 +58,7 @@ public class CurveShootSO : StrawSO
                           
     }
 
+#if UNITY_EDITOR
     public override void OnValidate()
     {
         base.OnValidate();
@@ -71,6 +72,8 @@ public class CurveShootSO : StrawSO
         } 
         effectAllNumberShoot= Mathf.Max(effectAllNumberShoot, 0);
     }
+#endif
+
     public override IEnumerator ShootDelay( Transform parentBulletTF, float currentTimeValue)
     {
         for (int j = 0; j < numberWaveShoot; j++)
