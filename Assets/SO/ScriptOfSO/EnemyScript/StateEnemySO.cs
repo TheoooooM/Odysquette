@@ -1,9 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-using System;
-using UnityEditor.Timeline.Actions;
 using Object = UnityEngine.Object;
 
 public class StateEnemySO : ScriptableObject
