@@ -66,17 +66,16 @@ public class PlayerDetector : MonoBehaviour
         Vector2 destination;
         aimPatrol.position = rb.position;
         float length = Random.Range(patrol.minDistance, patrol.maxDistance);
-        float xrand = Random.Range(-1f, 1f);
-            float yrand = Random.Range(-1f, 1f);
-            destination = new Vector2(xrand, yrand).normalized * length;
+        int rand = Random.Range(0, patrol.directionPatrol.Length);
+     
+            destination =  patrol.directionPatrol[rand]* length;
             Debug.Log(destination);
 
-            GraphNode node = AstarPath.active.GetNearest(destination).node;
+            GraphNode node = AstarPath.active.GetNearest(rb.position +destination).node;
            
-        RaycastHit2D hit = Physics2D.BoxCast(rb.position, patrol.sizeOfDetection, 0, (destination - rb.position).normalized, length,
-            patrol.layerMaskForRay);
+      
         ExtDebug.DrawBoxCastBox(rb.position,  patrol.sizeOfDetection/2, Quaternion.identity, (destination - rb.position).normalized, length, Color.red);
-        if (!hit.collider)
+        if (node.Walkable)
         {
             aimPatrol.position = rb.position + destination; 
             PlayPatrol();

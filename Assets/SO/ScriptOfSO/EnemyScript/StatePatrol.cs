@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
+using Pathfinding;
 [CreateAssetMenu(fileName = "StatePatrolSO", menuName = "EnnemyState/StatePatrolSO", order = 0)]
 public class StatePatrol : StateEnemySO
 {
@@ -16,6 +17,7 @@ public class StatePatrol : StateEnemySO
  public float minDistance;
  public float maxDistance;
  public Vector2 sizeOfDetection;
+ public Vector2[] directionPatrol;
 
 
  public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
@@ -38,17 +40,15 @@ public class StatePatrol : StateEnemySO
     }
     else
     {
-     float xrand = Random.Range(-1f, 1f);
-     float yrand = Random.Range(-1f, 1f);
-     destination = new Vector2(xrand, yrand).normalized * length;
+     int rand = Random.Range(0, directionPatrol.Length);
+     
+     destination =  directionPatrol[rand]* length;
     }
  endStep = false;
- Debug.DrawRay(rb.position, (destination-rb.position).normalized);
- Debug.DrawRay(rb.position, (rbPlayer.position-rb.position).normalized);
- RaycastHit2D hit = Physics2D.BoxCast(rb.position, sizeOfDetection, 0, (destination - rb.position).normalized, length,
-  layerMaskForRay);
+ GraphNode node = AstarPath.active.GetNearest(rb.position +destination).node;
+
  ExtDebug.DrawBoxCastBox(rb.position, sizeOfDetection/2, Quaternion.identity, (destination - rb.position).normalized, length, Color.red);
-    if (!hit.collider)
+    if (node.Walkable)
     {endStep = true;
   ;
      aimPatrol.position = rb.position + destination;

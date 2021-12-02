@@ -57,12 +57,16 @@ using (new GUILayout.HorizontalScope())
       }
       EditorGUILayout.EndFoldoutHeaderGroup();
     }
-    if (serializedObject.FindProperty("toThePlayer").boolValue == true ||serializedObject.FindProperty("toTheOppositePlayer").boolValue == true)
-    {
-      EditorGUILayout.PropertyField(serializedObject.FindProperty("addAngleList"));
+;
+  
+      EditorGUILayout.PropertyField(serializedObject.FindProperty("directionPatrol"));
       EditorGUILayout.Space(4f);
-    }
-        
+       if (serializedObject.FindProperty("toThePlayer").boolValue == true ||serializedObject.FindProperty("toTheOppositePlayer").boolValue == true)
+        {
+          EditorGUILayout.PropertyField(serializedObject.FindProperty("addAngleList"));
+         
+        }
+         EditorGUILayout.Space(4f);
     EditorGUILayout.Space(6f);
          
     serializedObject.ApplyModifiedProperties();

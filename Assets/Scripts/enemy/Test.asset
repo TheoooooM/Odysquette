@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventFeedBackInState: 0000000000000000
   needEnemyMovement: 1
-  openBasePanel: 0
+  openBasePanel: 1
   openDebugPanel: 0
   openSpecPanel: 1
   timeCondition: 4
@@ -28,7 +28,7 @@ MonoBehaviour:
   objectInStateManagersState: 02000000100000000100000004000000
   oneStartState: 0
   startTime: 0
-  playStateTime: 10
+  playStateTime: 5
   isFixedUpdate: 0
   haveStartState: 1
   duringDefaultState: 0
@@ -40,5 +40,14 @@ MonoBehaviour:
     m_Bits: 1024
   addAngleList: 0a000000f6ffffff14000000ecffffff0f000000f1fffffffbffffff05000000
   minDistance: 1
-  maxDistance: 15
+  maxDistance: 10
   sizeOfDetection: {x: 2, y: 2}
+  directionPatrol:
+  - {x: 1, y: 0}
+  - {x: 0, y: 1}
+  - {x: -1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 0.5, y: 0.5}
+  - {x: 0.5, y: -0.5}
+  - {x: -0.5, y: 0.5}
+  - {x: -0.5, y: -0.5}
