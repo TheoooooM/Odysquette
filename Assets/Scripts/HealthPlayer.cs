@@ -34,6 +34,7 @@ public class HealthPlayer : MonoBehaviour
         playerController = GetComponent<Playercontroller>();
         spriteRenderer = GetComponent<SpriteRenderer>();
       healthPlayer = maxHealth;
+      rb = GetComponent<Rigidbody2D>();
         for (int i = 0; i < healthPlayer; i++)
         {
             if (UIManager.Instance != null)

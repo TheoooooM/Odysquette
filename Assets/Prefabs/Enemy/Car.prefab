@@ -73,10 +73,10 @@ GameObject:
   - component: {fileID: 2259390503688608351}
   - component: {fileID: 395387781591660138}
   - component: {fileID: 4215050213622555486}
-  - component: {fileID: 3386575673484559676}
   - component: {fileID: 5256377246055126209}
   - component: {fileID: 2495411095172775283}
   - component: {fileID: 5175634095495853138}
+  - component: {fileID: 5397051491870573342}
   m_Layer: 8
   m_Name: CarsEnemi
   m_TagString: Enemy
@@ -185,6 +185,8 @@ MonoBehaviour:
     _object: {fileID: 2259390503688608348}
   - objectInStateManager: 15
     _object: {fileID: 5175634095495853138}
+  - objectInStateManager: 16
+    _object: {fileID: 232972612538494193}
   isInWind: 0
   windDirection: {x: 0, y: 0}
   windSpeed: 0
@@ -230,7 +232,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2259390503688608288}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9b5bc17c687b304c9ff5cb0688ae205, type: 3}
   m_Name: 
@@ -255,7 +257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   drawGizmos: 1
-  detailedGizmos: 0
+  detailedGizmos: 1
   startEndModifier:
     addPoints: 0
     exactStartPoint: 1
@@ -281,7 +283,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eb8f267594d2034f82913ef06ed7131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 20
+  range: 5
+  patrol: {fileID: 11400000, guid: 1a5e71f4ee653b244a10f5b078c899b3, type: 2}
+  rb: {fileID: 0}
+  aimPatrol: {fileID: 232972612538494193}
 --- !u!95 &4215050213622555486
 Animator:
   serializedVersion: 3
@@ -301,22 +306,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!70 &3386575673484559676
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2259390503688608288}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.28, y: 0.12}
-  m_Size: {x: 1.6835115, y: 1.6835115}
-  m_Direction: 0
 --- !u!114 &5256377246055126209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,6 +487,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inDash: 0
   isTrigger: 0
+--- !u!61 &5397051491870573342
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259390503688608288}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.40520346, y: 0.14422488}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4, y: 4}
+    newSize: {x: 4, y: 4}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.118209, y: 1.4039521}
+  m_EdgeRadius: 0
 --- !u!1 &2259390504700047936
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,8 +542,39 @@ Transform:
   m_Children:
   - {fileID: 2259390503282645450}
   - {fileID: 2259390503688608290}
+  - {fileID: 232972612538494193}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4401999941342562329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 232972612538494193}
+  m_Layer: 0
+  m_Name: AimPatrol
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &232972612538494193
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4401999941342562329}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2259390504700047939}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5302554828185115891
 PrefabInstance:

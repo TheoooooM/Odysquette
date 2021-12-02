@@ -34,8 +34,10 @@ public static class ExtensionMethods
         FlashObject,
         PlayerController,
         PreviousTransformPlayer,
+        
     
-        EnemyDashCollision
+        EnemyDashCollision,
+        AimPatrol
     }
 
     public enum EnemyTypeShoot

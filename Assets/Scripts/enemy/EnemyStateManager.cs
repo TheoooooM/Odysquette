@@ -25,6 +25,7 @@ public class EnemyStateManager : MonoBehaviour
     private Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionaryState =
         new Dictionary<ExtensionMethods.ObjectInStateManager, Object>();
 
+    private Collider2D collider2D;
 
     public bool isInWind;
    public Vector2 windDirection;
@@ -75,6 +76,7 @@ public class EnemyStateManager : MonoBehaviour
 
     public virtual void Start()
     {
+        collider2D = GetComponent<Collider2D>();
         enemyFeedBack = GetComponent<EnemyFeedBack>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
         spawnPosition = transform.position;
@@ -264,7 +266,7 @@ public class EnemyStateManager : MonoBehaviour
 						
                         knockUpInState = EMainStatsSo.stateEnnemList[i].isKnockUpInState;
                         indexCurrentState = i; 
-                        Debug.Log(i);
+            
                         UpdateDictionaries(EMainStatsSo.stateEnnemList[indexCurrentState]);
                     }
                       
@@ -541,7 +543,8 @@ public class EnemyStateManager : MonoBehaviour
           }
        
           
-      }rb.constraints = RigidbodyConstraints2D.FreezePosition;
+      }rb.constraints = RigidbodyConstraints2D.FreezePosition; 
+      collider2D.enabled = false;
      this.enabled = false;
         GameManager.Instance.ultimateValue += EMainStatsSo.giverUltimateStrawPoints;
   
