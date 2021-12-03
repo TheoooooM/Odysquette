@@ -239,6 +239,7 @@ Transform:
   - {fileID: 1464324219818320263}
   - {fileID: 1464324219466288404}
   - {fileID: 1464324220125187048}
+  - {fileID: 32263115573130017}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -326,18 +327,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f470034fb1adc5e4e84b11a47c54f725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAnimator: {fileID: 2451847003553320754}
-  currentAngleAnimation:
-    angleMin: 0
-    angleMax: 0
-    move: 
-    idle: 
-  MouvementSpeed: 10
-  gun: {fileID: 1464324220352250866}
   CurrentController: 
-  isInWind: 0
-  windDirection: {x: 0, y: 0}
-  isInFlash: 0
+  gun: {fileID: 1464324220352250866}
+  MouvementSpeed: 10
+  InDash: 0
+  TryDash: 0
   dashSpeedCurve:
     serializedVersion: 2
     m_Curve:
@@ -392,10 +386,11 @@ MonoBehaviour:
   maxDashSpeed: 30
   timeDash: 0.3
   timeBetweenDash: 1.5
-  dashDirection: {x: 0, y: 0}
-  timerDash: 0
-  timerBetweenDash: 0
+  isInFlash: 0
+  isInWind: 0
+  windDirection: {x: 0, y: 0}
   conveyorBeltSpeed: {x: 0, y: 0}
+  playerAnimator: {fileID: 2451847003553320754}
   baseAngleAnimation:
   - angleMin: 61
     angleMax: 120
@@ -421,8 +416,11 @@ MonoBehaviour:
     angleMax: 359
     move: MoveFrontRight
     idle: IdleTopRight
-  InDash: 0
-  TryDash: 0
+  currentAngleAnimation:
+    angleMin: 0
+    angleMax: 0
+    move: 
+    idle: 
 --- !u!114 &1464324219867819125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1268,3 +1266,75 @@ Transform:
   m_Father: {fileID: 1464324219466288404}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7823140151884507485
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 32263115573130017}
+  - component: {fileID: 1796823150953172457}
+  - component: {fileID: 7151822514490520238}
+  m_Layer: 9
+  m_Name: Foot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &32263115573130017
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7823140151884507485}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1464324219867819130}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1796823150953172457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7823140151884507485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b375e0f620dfbc84d8c66570cfbe5c57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1464324219867819130}
+  goBackForce: 1
+--- !u!61 &7151822514490520238
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7823140151884507485}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.00521785, y: -0.8792043}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.0730497, y: 0.10775113}
+  m_EdgeRadius: 0
