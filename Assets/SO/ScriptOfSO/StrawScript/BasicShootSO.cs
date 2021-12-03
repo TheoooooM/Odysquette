@@ -1,25 +1,23 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEditor;
+
 [CreateAssetMenu(fileName = "BasicShootSO", menuName = "ShootMode/BasicShootSO", order = 1)]
 public class BasicShootSO : StrawSO
 {
-  
     [NamedArray("float", true)]
     public float[] directions = Array.Empty<float>();
     [NamedArray("float", false)]
     public float[] directionParameter = Array.Empty<float>();
     
-
+#if UNITY_EDITOR
     public override void OnValidate()
     {
         base.OnValidate();
         
     }
-
+#endif
+    
     public override void Shoot(Transform parentBulletTF,MonoBehaviour script, float currentTimeValue = 1 ) 
     {
 

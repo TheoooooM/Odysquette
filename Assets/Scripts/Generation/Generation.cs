@@ -86,6 +86,7 @@ public class Generation : MonoBehaviour
         firstRC.room = currentRoom;
         firstRC.Generator = this;
         firstRC.roomMapPos = currentPos;
+        firstRC.firstRoom = true;
         map[(int) currentPos.x, (int) currentPos.y] = firstRC;
         
         
