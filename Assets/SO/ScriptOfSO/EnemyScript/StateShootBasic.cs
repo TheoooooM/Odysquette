@@ -10,8 +10,10 @@ public class StateShootBasic : StateShootSO
     public float[] directions = Array.Empty<float>();
 
     
-    public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
+    public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
     {  Debug.Log("prepare play shoot"+ this.name);
+    
+        CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringStartState);
         Transform transformPlayer = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformPlayer];
         Transform parentBulletTF =
             (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformShoot];
@@ -30,11 +32,13 @@ public class StateShootBasic : StateShootSO
         endStep = false;
     }
 
-    public override void PlayState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep)
+    public override void PlayState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
     {
         Debug.Log("play shoot"+ this.name);
         Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
         enemyTransform.GetComponent<SpriteRenderer>().color -= Color.white;
+       
+        CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringPlayState);
   
         Transform parentBulletTF =
             (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformShoot];

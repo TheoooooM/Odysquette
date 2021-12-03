@@ -7,14 +7,14 @@ public class TurretStateManager : EnemyStateManager
 {
  public BoxCollider2D boxCollider2D;
  public Color FxColor;
-
+ private  EnemyFeedBack enemyFeedBack;
  private void Awake()
  {
   boxCollider2D = GetComponent<BoxCollider2D>();
  }
 
  public override void Start()
- {
+ {  enemyFeedBack = GetComponent<EnemyFeedBack>();
   spriteRenderer = GetComponent<SpriteRenderer>();
 
   spawnPosition = transform.position;
@@ -72,6 +72,7 @@ public override void OnDeath()
  spriteRenderer.color = FxColor;
   BossManager.instance.UpdateDuringPhase();
   GameManager.Instance.ultimateValue += EMainStatsSo.giverUltimateStrawPoints;
+  GetComponent<Animator>().Play(enemyFeedBack.stateDeathName);
   
  }
 }

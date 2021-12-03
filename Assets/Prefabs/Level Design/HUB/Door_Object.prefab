@@ -85,6 +85,8 @@ GameObject:
   - component: {fileID: 3478282847505842531}
   - component: {fileID: 3478282847505842534}
   - component: {fileID: 3478282847505842530}
+  - component: {fileID: 1230078213}
+  - component: {fileID: 1230078212}
   m_Layer: 0
   m_Name: Door_Object
   m_TagString: Untagged
@@ -261,6 +263,58 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 1.5}
   serializedVersion: 2
   m_Radius: 3
+--- !u!61 &1230078213
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3478282847505842535}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -2.4892747, y: 0.08853078}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.2}
+    oldSize: {x: 5.75, y: 4.625}
+    newSize: {x: 5.75, y: 4.625}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.7714505, y: 1.2368197}
+  m_EdgeRadius: 0
+--- !u!61 &1230078212
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3478282847505842535}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 2.82, y: 0.08853078}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.2}
+    oldSize: {x: 5.75, y: 4.625}
+    newSize: {x: 5.75, y: 4.625}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.7714505, y: 1.2368197}
+  m_EdgeRadius: 0
 --- !u!1 &3478282848123043088
 GameObject:
   m_ObjectHideFlags: 0
