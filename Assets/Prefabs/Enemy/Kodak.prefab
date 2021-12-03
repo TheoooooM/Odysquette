@@ -4872,7 +4872,7 @@ Transform:
   m_Children:
   - {fileID: 243450508003097545}
   m_Father: {fileID: 243450507811954009}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &243450507285515240
 SpriteRenderer:
@@ -5055,6 +5055,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 20
+  patrol: {fileID: 11400000, guid: 1a5e71f4ee653b244a10f5b078c899b3, type: 2}
+  rb: {fileID: 0}
+  aimPatrol: {fileID: 3120177988508136464}
 --- !u!95 &5148572880405207474
 Animator:
   serializedVersion: 3
@@ -5252,6 +5255,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 243450506858732566}
+  - {fileID: 3120177988508136464}
   - {fileID: 243450507285515238}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -5313,3 +5317,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.8469052, y: 1.7669997}
   m_EdgeRadius: 0
+--- !u!1 &616640635404415290
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3120177988508136464}
+  m_Layer: 8
+  m_Name: AimPatrol
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3120177988508136464
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616640635404415290}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 243450507811954009}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

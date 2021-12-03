@@ -78,7 +78,7 @@ public class EnemyFeedBackMovement : MonoBehaviour
     }
     public void UpdatePosition(int index)
     {
-        Debug.Log(AnimationStatesList[index]);
+    
         Vector2 direction = (HealthPlayer.Instance.transform.position - transform.position).normalized;
         float currentInputAngle =  Mathf.Atan2(direction.y, direction.x)*Mathf.Rad2Deg;
         if (Mathf.Sign(currentInputAngle) == -1)
