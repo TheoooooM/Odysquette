@@ -48,6 +48,8 @@ public class RoomContainer : MonoBehaviour
     [SerializeField] private GameObject openRight;
     [SerializeField] private GameObject openTop;
     #endregion
+
+    [Space] public CloseRoomManager closeRoom = null;
     
     void Awake()
     {

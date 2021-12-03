@@ -261,7 +261,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -326,18 +326,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f470034fb1adc5e4e84b11a47c54f725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAnimator: {fileID: 2451847003553320754}
-  currentAngleAnimation:
-    angleMin: 0
-    angleMax: 0
-    move: 
-    idle: 
-  MouvementSpeed: 10
-  gun: {fileID: 1464324220352250866}
   CurrentController: 
-  isInWind: 0
-  windDirection: {x: 0, y: 0}
-  isInFlash: 0
+  gun: {fileID: 1464324220352250866}
+  MouvementSpeed: 10
+  InDash: 0
+  TryDash: 0
   dashSpeedCurve:
     serializedVersion: 2
     m_Curve:
@@ -391,11 +384,12 @@ MonoBehaviour:
     m_RotationOrder: 4
   maxDashSpeed: 30
   timeDash: 0.3
-  timeBetweenDash: 1.5
-  dashDirection: {x: 0, y: 0}
-  timerDash: 0
-  timerBetweenDash: 0
+  timeBetweenDash: 1
+  isInFlash: 0
+  isInWind: 0
+  windDirection: {x: 0, y: 0}
   conveyorBeltSpeed: {x: 0, y: 0}
+  playerAnimator: {fileID: 2451847003553320754}
   baseAngleAnimation:
   - angleMin: 61
     angleMax: 120
@@ -421,8 +415,11 @@ MonoBehaviour:
     angleMax: 359
     move: MoveFrontRight
     idle: IdleTopRight
-  InDash: 0
-  TryDash: 0
+  currentAngleAnimation:
+    angleMin: 0
+    angleMax: 0
+    move: 
+    idle: 
 --- !u!114 &1464324219867819125
 MonoBehaviour:
   m_ObjectHideFlags: 0
