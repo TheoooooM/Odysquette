@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2994860359909427230
 Transform:
   m_ObjectHideFlags: 0
@@ -126,7 +126,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4956483911680367685
 Transform:
   m_ObjectHideFlags: 0
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676c77703c4864e498632ae66201aeba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  side: 4
+  side: 2
   part: {fileID: -299056293822923450}
 --- !u!1 &2671943037257167507
 GameObject:
@@ -381,20 +381,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 147c427969f78714e94d1f7e867068e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Generator: {fileID: 0}
   room: {fileID: 0}
   roomMapPos: {x: 0, y: 0}
+  neighbor: 0
+  firstRoom: 0
   playerInRoom: 0
   roomRef: {fileID: 0}
-  roomPos: {x: 0, y: 0}
+  roomPos: {x: 2, y: 2}
   partTop: {fileID: 0}
   partLeft: {fileID: 0}
   partRight: {fileID: 0}
   partBot: {fileID: 0}
   exitTop: 1
-  exitLeft: 1
+  exitLeft: 0
   exitRight: 1
   exitBot: 1
-  exitAmount: 0
+  exitAmount: 3
   closeBot: {fileID: 1471147222203740684}
   closeLeft: {fileID: 6920193534107395290}
   closeRight: {fileID: 7062634045066786009}
@@ -403,6 +406,7 @@ MonoBehaviour:
   openLeft: {fileID: 1791837928355602486}
   openRight: {fileID: 8743870765067526805}
   openTop: {fileID: 7938318544618779238}
+  closeRoom: {fileID: 0}
 --- !u!61 &5781751229806837872
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -480,7 +484,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2429065779135568023
 Transform:
   m_ObjectHideFlags: 0
@@ -698,7 +702,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &104003139548034244
 Transform:
   m_ObjectHideFlags: 0
@@ -892,7 +896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676c77703c4864e498632ae66201aeba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  side: 4
+  side: 1
   part: {fileID: -299056293822923450}
 --- !u!1 &8178156428621329803
 GameObject:
@@ -998,5 +1002,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676c77703c4864e498632ae66201aeba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  side: 4
+  side: 3
   part: {fileID: -299056293822923450}
