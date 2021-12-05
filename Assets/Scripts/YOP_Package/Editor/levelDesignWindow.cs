@@ -170,6 +170,15 @@ public class levelDesignWindow : EditorWindow {
 
         foreach (GameObject gam in sceneObj) { if(gam != null) gam.SetActive(!gam.activeSelf); }
     }
+    
+    [MenuItem("Tools/Level Design/Change SelectedObject Activation &#R")]
+    private static void ChangeSelectObjActivation() {
+        if (Selection.gameObjects.Length > 0) {
+            foreach (GameObject gam in Selection.gameObjects) {
+                gam.SetActive(!gam.activeSelf);
+            }
+        }
+    }
     #endregion Activation Gameobject
     
     #region Delete Duplicate Name
