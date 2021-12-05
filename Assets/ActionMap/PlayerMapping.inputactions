@@ -1,5 +1,5 @@
 {
-    "name": "aled",
+    "name": "PlayerMapping",
     "maps": [
         {
             "name": "Player",
@@ -11,7 +11,8 @@
                     "id": "54c02ea3-b81f-49fc-aae8-df1dde3026b5",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Shoot",
@@ -19,7 +20,8 @@
                     "id": "017194bf-5eb0-49f8-b482-d32824b4ab14",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "SpecialShoot",
@@ -27,7 +29,8 @@
                     "id": "ca59645c-5917-49c2-b36a-6c1389e66c86",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "ViewPad",
@@ -35,7 +38,8 @@
                     "id": "8cdb07c4-76a6-4fd7-beb1-a0b1909f7a58",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Dash",
@@ -43,7 +47,8 @@
                     "id": "cdcd56cd-f237-4bf1-88ca-2519761f3a91",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "ShootGamepad",
@@ -51,7 +56,8 @@
                     "id": "33146830-b4d3-43ce-92c9-e35e7c5b77df",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "MovementGamepad",
@@ -59,7 +65,8 @@
                     "id": "52fa242d-93ec-4a6a-8b93-5625c4553cec",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "SpecialShootGamepad",
@@ -67,7 +74,8 @@
                     "id": "cf39609b-ff4f-4308-b988-13407a39752f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "DashGamepad",
@@ -75,7 +83,8 @@
                     "id": "bc83fa15-e69f-4b70-ad64-a64ea95956bb",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -181,7 +190,7 @@
                 {
                     "name": "",
                     "id": "09543617-a00a-4249-b9e4-d1420d305343",
-                    "path": "<XInputController>/leftShoulder",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -192,7 +201,7 @@
                 {
                     "name": "",
                     "id": "4e28b0b7-24c9-4bcb-b8e2-7de550b21445",
-                    "path": "<XInputController>/rightShoulder",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -234,7 +243,8 @@
                     "id": "7c92529b-43e9-4f42-ad20-7399e264c6bb",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [

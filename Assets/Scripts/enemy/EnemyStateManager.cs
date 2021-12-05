@@ -1,11 +1,13 @@
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Pathfinding;
 using UnityEngine;
 using Object = UnityEngine.Object;
+
 
 
 public class EnemyStateManager : MonoBehaviour
@@ -23,6 +25,7 @@ public class EnemyStateManager : MonoBehaviour
     private Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionaryState =
         new Dictionary<ExtensionMethods.ObjectInStateManager, Object>();
 
+    private Collider2D collider2D;
 
     public bool isInWind;
    public Vector2 windDirection;
@@ -73,6 +76,7 @@ public class EnemyStateManager : MonoBehaviour
 
     public virtual void Start()
     {
+        collider2D = GetComponent<Collider2D>();
         enemyFeedBack = GetComponent<EnemyFeedBack>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
         spawnPosition = transform.position;
@@ -262,7 +266,7 @@ public class EnemyStateManager : MonoBehaviour
 						
                         knockUpInState = EMainStatsSo.stateEnnemList[i].isKnockUpInState;
                         indexCurrentState = i; 
-                        Debug.Log(i);
+            
                         UpdateDictionaries(EMainStatsSo.stateEnnemList[indexCurrentState]);
                     }
                       
@@ -511,8 +515,12 @@ public class EnemyStateManager : MonoBehaviour
           roomParent.ennemiesList.Remove(gameObject.transform.parent.gameObject);
           if (enemyFeedBack.stateDeathName != "")
           {
+             
               animator.Play(enemyFeedBack.stateDeathName);
-              Destroy(gameObject.transform.parent.gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
+              
+                 
+
+              StartCoroutine(ShowCurrentClipLength(gameObject.transform.parent.gameObject, animator));
           }
           else
           {
@@ -527,7 +535,7 @@ public class EnemyStateManager : MonoBehaviour
           if (enemyFeedBack.stateDeathName != "")
           {  
               animator.Play(enemyFeedBack.stateDeathName);
-              Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
+              StartCoroutine(ShowCurrentClipLength(gameObject, animator));
           }
           else
           {
@@ -535,11 +543,17 @@ public class EnemyStateManager : MonoBehaviour
           }
        
           
-      }rb.isKinematic = true;
+      }rb.constraints = RigidbodyConstraints2D.FreezePosition; 
+      collider2D.enabled = false;
      this.enabled = false;
         GameManager.Instance.ultimateValue += EMainStatsSo.giverUltimateStrawPoints;
   
       
+  }
+  IEnumerator ShowCurrentClipLength(GameObject gameObjectToDestroy, Animator animator)
+  {
+      yield return new WaitForEndOfFrame();
+      Destroy(gameObjectToDestroy, animator.GetCurrentAnimatorStateInfo(0).length);
   }
 
   public void TakeDamage( float damage, Vector2 position, float knockUpValue, bool knockup, bool isExplosion)
@@ -631,4 +645,5 @@ public class EnemyStateManager : MonoBehaviour
           }
          
       }
+
 }
