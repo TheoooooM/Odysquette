@@ -110,6 +110,8 @@ public class StateShootEditor : StateSOEditor
       EditorGUILayout.Space(6f);
       GUILayout.Label("Other Parameters", subTitle);
       EditorGUILayout.Space(6f);
+      EditorGUILayout.PropertyField(serializedObject.FindProperty("dontCollideWithWall"));
+      EditorGUILayout.Space(4f);
       EditorGUILayout.PropertyField(serializedObject.FindProperty("directions"));
       EditorGUILayout.Space(4f);
       EditorGUILayout.PropertyField(serializedObject.FindProperty("basePosition"), new GUIContent("OffSet Position"));

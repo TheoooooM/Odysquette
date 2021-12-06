@@ -20,6 +20,7 @@ public class Playercontroller : MonoBehaviour {
     private Vector2 lastMoveVector = Vector3.right;
     private Rigidbody2D rb;
     private CapsuleCollider2D capsuleCollider2D;
+    public bool falling;
 
     [Header("---- DASH")]
     public bool InDash;
@@ -46,6 +47,7 @@ public class Playercontroller : MonoBehaviour {
 
     [Header("---- ANIMATION")]
     [SerializeField] private Animator playerAnimator;
+    [SerializeField] private Animation fallAnimation;
     public AngleAnimationPlayer[] baseAngleAnimation;
     [SerializeField] private AngleAnimationPlayer currentAngleAnimation;
     #endregion Variables
@@ -77,23 +79,23 @@ public class Playercontroller : MonoBehaviour {
     private void Update() {
         moveVector = Vector2.zero;
 
-        moveVector = playerInput.Player.Movement.ReadValue<Vector2>();
 
         if(GameManager.Instance != null) GameManager.Instance.isMouse = true;
-        if (playerInput.Player.Movement.ReadValue<Vector2>() != Vector2.zero) {
+        if (playerInput.Player.Movement.ReadValue<Vector2>() != Vector2.zero && !falling) {
+            moveVector = playerInput.Player.Movement.ReadValue<Vector2>();
             lastMoveVector = moveVector;
             CheckForPlayAnimation(moveVector, true);
         }
-        else if (playerInput.Player.MovementGamepad.ReadValue<Vector2>() != Vector2.zero) {
+        else if (playerInput.Player.MovementGamepad.ReadValue<Vector2>() != Vector2.zero && !falling) {
             moveVector = playerInput.Player.MovementGamepad.ReadValue<Vector2>();
             lastMoveVector = moveVector;
             if(GameManager.Instance != null) GameManager.Instance.isMouse = false;
             CheckForPlayAnimation(moveVector, true);
         }
-        else if (InDash) {
+        else if (InDash && !falling) {
             CheckForPlayAnimation(lastMoveVector.normalized, true);
         }
-        else {
+        else if(!falling){
             CheckForPlayAnimation(lastMoveVector.normalized, false);
         }
 
@@ -139,6 +141,11 @@ public class Playercontroller : MonoBehaviour {
         }
 
         if (GameManager.Instance != null && !GameManager.Instance.isMouse) GameManager.Instance.ViewPad = playerInput.Player.ViewPad.ReadValue<Vector2>();
+
+        if (falling)
+        {
+            rb.velocity = dir.normalized * 1.5f;
+        }
     }
     
     #endregion Basic Method
@@ -169,6 +176,36 @@ public class Playercontroller : MonoBehaviour {
     private void SpecialShootGamepadOnperformed(InputAction.CallbackContext obj) { if(GameManager.Instance != null) GameManager.Instance.utlimate = true; }
     #endregion Get Inputs
 
+    //FALL
+    private Vector3 dir;
+    private Vector3 dashPos;
+    public void StartFall(bool Indash = false, fallScript fl = null)
+    {
+        Debug.Log("Player fall");
+        dir = rb.velocity;
+        
+        if (Indash) dashPos = fl.dashPos;
+        else        dashPos = Vector3.zero;
+        
+        falling = true;
+        playerAnimator.Play("fall"); 
+    }
+
+    public void EndFall()
+    {
+        //GetComponent<HealthPlayer>().TakeDamagePlayer(1);
+        falling = false;
+        if (dashPos == Vector3.zero)
+        {
+            transform.position -= dir.normalized * 2.5f;
+        }
+        else
+        {
+            transform.position = dashPos;
+        }
+    }
+    
+    
     #region Collision
     /// <summary>
     /// When the player enter in a trigger

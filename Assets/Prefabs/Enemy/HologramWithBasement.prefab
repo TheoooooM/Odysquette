@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1916315120051850183
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3595287002221799005}
+  m_Layer: 8
+  m_Name: SpawnHologram
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3595287002221799005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916315120051850183}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6353946708157474115}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2834569882023728949
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8117334847808954719}
+  m_Layer: 8
+  m_Name: SpawnHologram
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8117334847808954719
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2834569882023728949}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6353946708064069958}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5057163228469890478
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,6 +174,7 @@ GameObject:
   - component: {fileID: 3995892900092999191}
   - component: {fileID: 97846471465379882}
   - component: {fileID: 1871994426267557388}
+  - component: {fileID: 5154981315841071874}
   m_Layer: 8
   m_Name: Hologram
   m_TagString: Enemy
@@ -158,7 +219,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5db8a32519478dc439565313d8a26c19, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -212,9 +273,9 @@ MonoBehaviour:
     _object: {fileID: 0}
   baseObjectListState:
   - objectInStateManager: 10
-    _object: {fileID: 6353946708064069958}
+    _object: {fileID: 8117334847808954719}
   - objectInStateManager: 11
-    _object: {fileID: 6353946708157474115}
+    _object: {fileID: 3595287002221799005}
   - objectInStateManager: 8
     _object: {fileID: 6353946706996803574}
   - objectInStateManager: 6
@@ -346,6 +407,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 10
+  patrol: {fileID: 0}
+  rb: {fileID: 0}
+  aimPatrol: {fileID: 0}
 --- !u!95 &7896108724452965943
 Animator:
   serializedVersion: 3
@@ -410,6 +474,40 @@ MonoBehaviour:
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: HO_Idle
+              m_BoolArgument: 0
+            m_CallState: 2
+  - stateEnemySo: HologramShoot
+    feedBackEventClassList:
+    - typeFeedBackEvent: 4
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 5154981315841071874}
+            m_TargetAssemblyTypeName: EnemyFeedBackShader, Assembly-CSharp
+            m_MethodName: UpdateMaterialProperty
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 1
+              m_FloatArgument: 0
+              m_StringArgument: Attack
+              m_BoolArgument: 0
+            m_CallState: 2
+    - typeFeedBackEvent: 5
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 5154981315841071874}
+            m_TargetAssemblyTypeName: EnemyFeedBackShader, Assembly-CSharp
+            m_MethodName: SetMaterialProperty
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
   stateDeathName: 
@@ -494,6 +592,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   ParentToDestroy: {fileID: 6353946706901043108}
+--- !u!114 &5154981315841071874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6353946706996803575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf2da72a38e2ed74a985dc13f4538243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  propertyNameWithValuesList:
+  - propertyName: angeramount
+    value: 0
+  - propertyName: angeramount
+    value: -0.25
 --- !u!1 &6353946708064069959
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,7 +637,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -7.86, y: 7.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8117334847808954719}
   m_Father: {fileID: 6353946706901043107}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -624,7 +740,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -22.359999, y: 15.860001, z: 3.6735082}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 3595287002221799005}
   m_Father: {fileID: 6353946706901043107}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

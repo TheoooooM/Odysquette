@@ -39,8 +39,7 @@ public class PlayerDetector : MonoBehaviour
     void Update()
     {
         float distance = Vector2.Distance(transform.position, GameManager.Instance.Player.transform.position);
-        //Debug.Log(distance);
-        if (distance <= range)
+        if (distance <= range && ESM.roomParent.runningRoom)
         {
             ESM.isActivate = true;
             enabled = false;
@@ -69,7 +68,7 @@ public class PlayerDetector : MonoBehaviour
         int rand = Random.Range(0, patrol.directionPatrol.Length);
      
             destination =  patrol.directionPatrol[rand]* length;
-            Debug.Log(destination);
+         
 
             GraphNode node = AstarPath.active.GetNearest(rb.position +destination).node;
            
@@ -88,7 +87,7 @@ public class PlayerDetector : MonoBehaviour
 
     void PlayPatrol()
     {
-        Debug.Log("testzz");
+       
         enemyMovement.enabled = true;
         enemyMovement.speed = patrol.speed;
         enemyMovement.destination = aimPatrol.position;

@@ -18,7 +18,7 @@ public class StateShootSO : StateEnemySO
     public float dragRB;
 
     public bool hasRange;
-    
+    public bool dontCollideWithWall;
     public ExtensionMethods.EnemyTypeShoot enemyTypeShoot;
     
     public bool isDelayBetweenShoot;
@@ -51,11 +51,11 @@ public class StateShootSO : StateEnemySO
     {
         Rigidbody2D rbPlayer = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyPlayer];
         Rigidbody2D rbEnemy = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyEnemy];
-        Debug.Log("prepare play shoot"+ this.name);
+ 
         if (Vector2.Distance(rbPlayer.position, rbEnemy.position) <= rangeForShoot)
         {
             
-            Debug.Log("prepare play shoot"+ this.name);
+           
            
            Vector2 direction = (rbPlayer.position - rbEnemy.position);
            
@@ -85,5 +85,6 @@ public class StateShootSO : StateEnemySO
        scriptBullet.hasRange = hasRange;
        scriptBullet.range = rangeForBullet;
        scriptBullet.rb.drag = dragRB;
+       scriptBullet.dontCollideWall = dontCollideWithWall;
     }
 }
