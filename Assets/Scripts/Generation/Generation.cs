@@ -70,6 +70,11 @@ public class Generation : MonoBehaviour
     {
         endGeneration = false;
         currentPos = new Vector2(mapSize/2, mapSize/2);
+        
+        UIManager.Instance.loadingBar.maxValue = nbrOfRoom;
+        UIManager.Instance.loadingBar.value = 0;
+        UIManager.Instance.LoadingScreen.SetActive(true);
+        
         //Debug.Log(" middl: " + currentPos);
         GameObject nR = new GameObject();
         nR.AddComponent(typeof(RoomManager));
@@ -138,8 +143,9 @@ public class Generation : MonoBehaviour
 
 
             //Debug.Log("Create Room n°" + i);
+            UIUpdate(i);
 
-            
+
             if (i == size)
             {
                 if (endpathRoom != null)
@@ -379,8 +385,8 @@ public class Generation : MonoBehaviour
                 break;
             }
         }
-
         endGeneration = true;
+        UIUpdate();
     }
 
     /// <summary>
@@ -398,5 +404,13 @@ public class Generation : MonoBehaviour
         if(roomPool != null) Destroy(roomPool.gameObject);
         roomPool = Instantiate(new GameObject(), transform).transform;
         roomPool.name = "RoomPool";
+    }
+
+    void UIUpdate(int value = 0)
+    {
+        Debug.Log("UIUpdate");
+        UIManager UI = UIManager.Instance;
+        if (value > UI.loadingBar.value) UI.loadingValue = value;
+        if (endGeneration) UI.LoadingScreen.SetActive(false);
     }
 }

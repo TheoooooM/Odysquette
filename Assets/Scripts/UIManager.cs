@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -18,6 +19,14 @@ public class UIManager : MonoBehaviour
     float maxUltSlider = 100f;
     [SerializeField]
     private GameObject GameOverPanel;
+
+    [Header("----Generation----")] 
+    public GameObject LoadingScreen;
+    public Slider loadingBar;
+    public float chargeSpeed = 2.5f;
+    [HideInInspector] public float loadingValue;
+    
+    
     private void Awake()
     {
         
@@ -27,6 +36,16 @@ public class UIManager : MonoBehaviour
     {
         UltSlider.maxValue = GameManager.Instance.maxUltimateValue;
     }
+
+    private void FixedUpdate()
+    {
+        if (loadingBar.value < loadingValue)
+        {
+            Debug.Log("fixedUpdate");
+            loadingBar.value += loadingBar.maxValue * chargeSpeed*0.01f;
+        }
+    }
+
 
     public void GameOver()
     { GameOverPanel.SetActive(true);
