@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour {
         bubble,
         snipaille,
         eightPaille,
-        fourDir,
         tripaille,
         mitra
     }
@@ -121,7 +120,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Start() {
-        actualStrawClass = strawsClass[(int) actualStraw];
+        ChangeStraw(actualStraw);
         lastInput = Vector3.right * viewFinderDistance;
         foreach (StrawClass str in strawsClass) //active la bonne paille au début
         {
@@ -192,7 +191,7 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        if (actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate) {
+        if (actualStrawClass.ultimateStrawSO != null && actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate) {
             Debug.Log("testssss");
             if (ultimateValue >= actualStrawClass.ultimateStrawSO.timeValue) {
                 Debug.Log("ouhahahahah");
@@ -216,6 +215,8 @@ public class GameManager : MonoBehaviour {
         shootCooldown += Time.deltaTime;
 
         shootCooldown = Mathf.Min(shootCooldown, actualStrawClass.strawSO.timeValue);
+        
+        if(actualStrawClass.StrawType != actualStraw) ChangeStraw(actualStraw);
     }
 
     private void FixedUpdate() {
@@ -264,8 +265,10 @@ public class GameManager : MonoBehaviour {
     void ChangeStraw(Straw straw) //change la paille 
     {
         //dictionnaire
-        actualStrawClass.StrawParent.SetActive(false);
-        actualStrawClass = strawsClass[(int) straw];
+        if(actualStrawClass.StrawParent != null) actualStrawClass.StrawParent.SetActive(false);
+        foreach (StrawClass strawC in strawsClass) {
+            if (strawC.StrawType == straw) actualStrawClass = strawC;
+        }
         actualStrawClass.StrawParent.GetComponent<SpriteRenderer>().sprite = actualStrawClass.strawSO.strawRenderer;
         actualStrawClass.StrawParent.SetActive(true);
         for (int i = 0; i < colorEffectsList.Length; i++) {
