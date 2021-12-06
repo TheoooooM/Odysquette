@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &75304930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,7 +259,6 @@ GameObject:
   - component: {fileID: 196568770}
   - component: {fileID: 196568773}
   - component: {fileID: 196568774}
-  - component: {fileID: 196568776}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -376,51 +375,122 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 263cdc71af1b3514f9faddbda757c27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1294315799}
+  _cinemachineVirtualCamera: {fileID: 75304931}
+  cameraMain: {fileID: 196568771}
+  speed: 100
+  distanceCurveX:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.057672806
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.14262661
+      value: 0.015204501
+      inSlope: 0.39641383
+      outSlope: 0.3715978
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.12625797
+      outWeight: 0.26549536
+    - serializedVersion: 3
+      time: 0.24016157
+      value: 0.14575198
+      inSlope: 1.6221776
+      outSlope: 1.6221776
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.2839975
+      outWeight: 0.013472184
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.49682823
+      outSlope: 0.49682823
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.3242886
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  distanceCurveY:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.035
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.105
+      value: 0.015204501
+      inSlope: 0.39641383
+      outSlope: 0.3715978
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.12625797
+      outWeight: 0.26549536
+    - serializedVersion: 3
+      time: 0.24016157
+      value: 0.14575198
+      inSlope: 1.6221776
+      outSlope: 1.6221776
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.2839975
+      outWeight: 0.013472184
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.49682823
+      outSlope: 0.49682823
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.3242886
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  distXMouseToPlayer: 0
+  distYMouseToPlayer: 0
+  maxDistanceX: 4
+  maxDistanceY: 2.75
   currentRectLimitation:
     serializedVersion: 2
     x: -58.65
     y: 11.3
     width: 34.5
     height: 21
-  speed: 100
-  maxDistance: 3
-  player: {fileID: 1294315799}
-  offSet: {x: 0, y: 0, z: 0}
-  _cinemachineVirtualCamera: {fileID: 75304931}
---- !u!114 &196568776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 196568769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShowDebugText: 0
-  m_ShowCameraFrustum: 1
-  m_IgnoreTimeScale: 0
-  m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
-  m_BlendUpdateMethod: 1
-  m_DefaultBlend:
-    m_Style: 1
-    m_Time: 2
-    m_CustomCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  m_CustomBlends: {fileID: 0}
-  m_CameraCutEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_CameraActivatedEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &245381691
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,6 +884,10 @@ PrefabInstance:
     - target: {fileID: 3863667198741390613, guid: d61f14aeae9dc1d4e8a7ff2b4ae20174, type: 3}
       propertyPath: m_Name
       value: LifeImage 02
+      objectReference: {fileID: 0}
+    - target: {fileID: 4292328848911666940, guid: d61f14aeae9dc1d4e8a7ff2b4ae20174, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7134536474907024881, guid: d61f14aeae9dc1d4e8a7ff2b4ae20174, type: 3}
       propertyPath: m_Name
