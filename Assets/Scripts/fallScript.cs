@@ -7,10 +7,12 @@ public class fallScript : MonoBehaviour
 {
     public Playercontroller controller;
     private Rigidbody2D rb;
+
+    private bool triggered;
     
     public float goBackForce = 2;
 
-    private Vector3 dashPos = Vector3.zero;
+    [HideInInspector] public Vector3 dashPos = Vector3.zero;
     
     private void Start()
     {
@@ -27,25 +29,33 @@ public class fallScript : MonoBehaviour
         {
             dashPos = Vector3.zero;
         }
+
+        if (!controller.falling)
+        {
+            triggered = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Hole") && !controller.InDash)
         {
-            Debug.Log("fall");
+            
+            controller.StartFall();
+            triggered = true;
+            /*Debug.Log("fall");
             Vector3 dir = rb.velocity;
-            controller.transform.position -= dir.normalized*goBackForce;
+            controller.transform.position -= dir.normalized*goBackForce;*/
 
         }
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.CompareTag("Hole")  && !controller.InDash)
+        if (other.CompareTag("Hole")  && !controller.InDash && !triggered)
         {
-            controller.transform.position = dashPos;
-            Debug.Log("reset Dash");
+           controller.StartFall(true, this);
+           triggered = true;
         }
     }
 }
