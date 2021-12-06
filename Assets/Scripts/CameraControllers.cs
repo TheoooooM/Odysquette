@@ -1,50 +1,50 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using Cinemachine;
-using Unity.Mathematics;
-using UnityEditor;
 using UnityEngine;
 
 
-public class CameraControllers : MonoBehaviour
-{
-  public static CameraControllers Instance;
-  private void Awake() => Instance = this;
-
-
-  public Rect currentRectLimitation;
-  public float speed;
-  public float maxDistance;
-  [SerializeField] private Transform player;
-  [SerializeField]
-  private Vector3 offSet;
-  [SerializeField]
-  private CinemachineVirtualCamera _cinemachineVirtualCamera;
-  
-
-  /*private void OnDrawGizmosSelected()
-  {
-    Handles.DrawSolidRectangleWithOutline(currentRectLimitation,new Color(01,1,1,0.01f), Color.red);
-  }*/
-
-  
-  private void FixedUpdate()
-  {
-    if (GameManager.Instance.isMouse)
-    {
-      Vector3 lookDir = Vector3.ClampMagnitude(GameManager.Instance._lookDir, maxDistance);
-      offSet = player.position+(Vector3)lookDir;
-    }
-    else
-    {
-      offSet = (player.position+(Vector3)GameManager.Instance.ViewPad*maxDistance);
-    }
+public class CameraControllers : MonoBehaviour {
+    #region Instance
+    public static CameraControllers Instance;
+    private void Awake() => Instance = this;
+    #endregion Instance
     
-    //offSet.x = Mathf.Clamp(offSet.x, currentRectLimitation.xMin+1.77f*_cinemachineVirtualCamera.m_Lens.OrthographicSize, currentRectLimitation.xMax-1.77f*_cinemachineVirtualCamera.m_Lens.OrthographicSize);
-    //offSet.y = Mathf.Clamp(offSet.y, currentRectLimitation.yMin+_cinemachineVirtualCamera.m_Lens.OrthographicSize, currentRectLimitation.yMax-_cinemachineVirtualCamera.m_Lens.OrthographicSize);
-    //offSet.z = -0.7f;
-    _cinemachineVirtualCamera.ForceCameraPosition( Vector3.MoveTowards(new Vector3(transform.position.x, transform.position.y, -10), offSet, speed*Time.deltaTime), Quaternion.identity);  
-  }
+    [Header("MAIN DATA")]
+    [SerializeField] private Transform player;
+    [SerializeField] private CinemachineVirtualCamera _cinemachineVirtualCamera;
+    [SerializeField] private Camera cameraMain = null;
+    [Space]
+    [SerializeField] private float speed = 0;
+    [SerializeField] private AnimationCurve distanceCurveX = null;
+    [SerializeField] private AnimationCurve distanceCurveY = null;
+
+    [Header("DEBUG : Camera Distance To Player")]
+    [SerializeField] private float distXMouseToPlayer = 0;
+    [SerializeField] private float distYMouseToPlayer = 0;
+    [Header("CAMERA MAX DISTANCE")]
+    [SerializeField] private float maxDistanceX = 0;
+    [SerializeField] private float maxDistanceY = 0;
+    
+    [HideInInspector] public Rect currentRectLimitation;
+    private Vector3 offSet;
+    private Vector3 actualPos;
+    
+    private void Update() {
+        float distanceX = ((Input.mousePosition.x - (cameraMain.pixelWidth / 2)) / cameraMain.pixelWidth) * 2;
+        float distanceY = ((Input.mousePosition.y - (cameraMain.pixelHeight / 2)) / cameraMain.pixelHeight) * 2;
+        
+        float camPosX = distanceCurveX.Evaluate(Mathf.Abs(distanceX)) * maxDistanceX * (distanceX < 0 ? -1 : 1);
+        float camPosY = distanceCurveY.Evaluate(Mathf.Abs(distanceY)) * maxDistanceY * (distanceY < 0 ? -1 : 1);
+
+        if (GameManager.Instance == null) return;
+        
+        if (GameManager.Instance.isMouse) offSet = player.position + new Vector3(camPosX, camPosY, -10);
+        else offSet = (player.position + (Vector3) GameManager.Instance.ViewPad * distanceCurveY.Evaluate(1));
+
+        actualPos = new Vector3(transform.position.x, transform.position.y, -10);
+        cameraMain.transform.position = offSet;
+    }
+}
+
+public static class CameraHelper {
+    public static Vector2 MousePos(this Camera cam) => cam.ScreenToWorldPoint(Input.mousePosition);
 }

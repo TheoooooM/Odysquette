@@ -144,8 +144,7 @@ public class Playercontroller : MonoBehaviour {
 
         if (falling)
         {
-            rb.velocity = dir.normalized * 1.5f
-                ;
+            rb.velocity = dir.normalized * 1.5f;
         }
     }
     
@@ -194,7 +193,7 @@ public class Playercontroller : MonoBehaviour {
 
     public void EndFall()
     {
-        GetComponent<HealthPlayer>().TakeDamagePlayer(1);
+        //GetComponent<HealthPlayer>().TakeDamagePlayer(1);
         falling = false;
         if (dashPos == Vector3.zero)
         {
