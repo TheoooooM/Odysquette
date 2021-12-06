@@ -12,15 +12,15 @@ public class StateTP : StateEnemySO
         Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
   
         
-        if (Vector3.Distance(enemyTransform.position, firstTransmitter.position)<0.3f)
+        if (Vector3.Distance(enemyTransform.position, firstTransmitter.position)<1f)
         {
             CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.StartSecondPosition);
-            secondTransmitter.GetComponent<SpriteRenderer>().color = Color.blue;
+           
         }
-        else if(Vector3.Distance(enemyTransform.position, secondTransmitter.position)<0.3f)
+        else if(Vector3.Distance(enemyTransform.position, secondTransmitter.position)<1f)
         {
             CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.StartFirstPosition);
-            firstTransmitter.GetComponent<SpriteRenderer>().color = Color.blue;
+          
         }
     
     
@@ -34,17 +34,17 @@ public class StateTP : StateEnemySO
         Transform secondTransmitter = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.SecondTransmitter];
         Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
 
-        if (Vector3.Distance(enemyTransform.position, firstTransmitter.position)<0.3f)
+        if (Vector3.Distance(enemyTransform.position, firstTransmitter.position)<1f)
         {
             CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.SecondPosition);
             enemyTransform.position = secondTransmitter.position;
-            secondTransmitter.GetComponent<SpriteRenderer>().color = Color.white;
+         
         }
-        else if(Vector3.Distance(enemyTransform.position, secondTransmitter.position)<0.3f)
+        else if(Vector3.Distance(enemyTransform.position, secondTransmitter.position)<1f)
         {
             CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.FirstPosition);
             enemyTransform.position = firstTransmitter.position;
-            firstTransmitter.GetComponent<SpriteRenderer>().color = Color.white;
+            
         }
         
         endStep = true;

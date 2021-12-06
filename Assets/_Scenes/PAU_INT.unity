@@ -1039,8 +1039,8 @@ MonoBehaviour:
   - enemyTypeShoot: 0
     bulletPrefab: {fileID: 6178909618644799911, guid: ed18543c092894c459743a8edae56469, type: 3}
     sizePool: 5
-  - enemyTypeShoot: 0
-    bulletPrefab: {fileID: 6178909618644799911, guid: ed18543c092894c459743a8edae56469, type: 3}
+  - enemyTypeShoot: 5
+    bulletPrefab: {fileID: 6133210502989082248, guid: c8aa11f883ba1944892475c4674572a8, type: 3}
     sizePool: 5
 --- !u!4 &1008797745
 Transform:
@@ -1105,8 +1105,40 @@ MonoBehaviour:
   angle: 0
   viewFinderDistance: 2
   main: {fileID: 196568771}
-  firstEffect: 0
-  secondEffect: 0
+  firstEffect: 1
+  secondEffect: 3
+  colorEffectsList:
+  - firstEffect: 1
+    secondEffect: 0
+    combinaisonColor: {r: 0.39117432, g: 0, b: 1, a: 1}
+  - firstEffect: 2
+    secondEffect: 0
+    combinaisonColor: {r: 1, g: 0.9479667, b: 0, a: 1}
+  - firstEffect: 3
+    secondEffect: 0
+    combinaisonColor: {r: 1, g: 0, b: 0, a: 1}
+  - firstEffect: 4
+    secondEffect: 0
+    combinaisonColor: {r: 0.03127098, g: 1, b: 0, a: 1}
+  - firstEffect: 1
+    secondEffect: 2
+    combinaisonColor: {r: 1, g: 0.6316455, b: 0, a: 1}
+  - firstEffect: 1
+    secondEffect: 3
+    combinaisonColor: {r: 0.80047655, g: 0, b: 1, a: 1}
+  - firstEffect: 1
+    secondEffect: 4
+    combinaisonColor: {r: 0, g: 0.9612417, b: 1, a: 1}
+  - firstEffect: 2
+    secondEffect: 3
+    combinaisonColor: {r: 1, g: 0.3483723, b: 0, a: 1}
+  - firstEffect: 2
+    secondEffect: 4
+    combinaisonColor: {r: 0.6461047, g: 1, b: 0, a: 1}
+  - firstEffect: 3
+    secondEffect: 4
+    combinaisonColor: {r: 0.509434, g: 0.30972174, b: 0.0744927, a: 1}
+  currentColor: {r: 0, g: 0, b: 0, a: 0}
   actualStraw: 0
   strawsClass:
   - StrawName: Basic Straw

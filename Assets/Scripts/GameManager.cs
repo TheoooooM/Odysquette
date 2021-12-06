@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    
     #region Singleton
     public static GameManager Instance;
 
@@ -74,9 +75,11 @@ public class GameManager : MonoBehaviour
     
     [Header("Juices")]
     [SerializeField]public Effect firstEffect;
-    
+
+   
     [SerializeField]public Effect secondEffect;
-    
+    [SerializeField]CombinaisonColorEffect[] colorEffectsList;
+     public Color currentColor;
     [Header("Straw")]
     public Straw actualStraw;
     public List<StrawClass> strawsClass; //Liste de toute les pailles
@@ -122,6 +125,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        
         actualStrawClass = strawsClass[(int) actualStraw];
         lastInput = Vector3.right*viewFinderDistance;
         foreach (StrawClass str in strawsClass) //active la bonne paille au début
@@ -136,6 +140,15 @@ public class GameManager : MonoBehaviour
             }
 
      
+        }
+
+        for (int i = 0; i < colorEffectsList.Length; i++)
+        {
+            if ((colorEffectsList[i].firstEffect == firstEffect && colorEffectsList[i].secondEffect == secondEffect) 
+                ||(colorEffectsList[i].firstEffect == secondEffect && colorEffectsList[i].secondEffect == firstEffect))
+            {
+                currentColor = colorEffectsList[i].combinaisonColor;
+            }
         }
         
     }
@@ -308,7 +321,14 @@ public class GameManager : MonoBehaviour
         actualStrawClass = strawsClass[(int) straw];
         actualStrawClass.StrawParent.GetComponent<SpriteRenderer>().sprite = actualStrawClass.strawSO.strawRenderer;
         actualStrawClass.StrawParent.SetActive(true);
-        
+        for (int i = 0; i < colorEffectsList.Length; i++)
+        {
+            if (colorEffectsList[i].firstEffect == firstEffect && colorEffectsList[i].secondEffect == secondEffect
+                ||colorEffectsList[i].firstEffect == secondEffect && colorEffectsList[i].secondEffect == firstEffect)
+            {
+                currentColor = colorEffectsList[i].combinaisonColor;
+            }
+        }
         
 
 
@@ -317,7 +337,13 @@ public class GameManager : MonoBehaviour
     {
         BasicShoot, CurveShoot,AreaShoot, AngleAreaShoot 
     }
-   
+[Serializable]
+    public class CombinaisonColorEffect
+    {
+        public Effect firstEffect;
+        public Effect secondEffect;
+        public Color combinaisonColor;
+    }
 
     
 }

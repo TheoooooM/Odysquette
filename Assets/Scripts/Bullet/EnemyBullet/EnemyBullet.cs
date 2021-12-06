@@ -11,7 +11,7 @@ public class EnemyBullet : MonoBehaviour
     public Vector3 basePosition;
     public bool isEnable;
     public bool isDesactive = false;
-
+    public bool dontCollideWall;
     public ExtensionMethods.EnemyTypeShoot enemyTypeShoot;
     // Start is called before the first frame update
     void Start()
@@ -25,6 +25,7 @@ public class EnemyBullet : MonoBehaviour
         isEnable = false;
         basePosition = transform.position;
         Invoke(nameof(DelayforDrag),0.5f);
+        GetComponent<SpriteRenderer>().color = GameManager.Instance.currentColor;
     }
 
     // Update is called once per frame
@@ -78,7 +79,7 @@ public class EnemyBullet : MonoBehaviour
                     }
         }
         
-         if (other.CompareTag("Walls"))
+         if (other.CompareTag("Walls") && !dontCollideWall)
 
         {
            

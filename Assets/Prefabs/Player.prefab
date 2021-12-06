@@ -326,18 +326,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f470034fb1adc5e4e84b11a47c54f725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAnimator: {fileID: 2451847003553320754}
-  currentAngleAnimation:
-    angleMin: 0
-    angleMax: 0
-    move: 
-    idle: 
-  MouvementSpeed: 10
-  gun: {fileID: 1464324220352250866}
   CurrentController: 
-  isInWind: 0
-  windDirection: {x: 0, y: 0}
-  isInFlash: 0
+  gun: {fileID: 1464324220352250866}
+  MouvementSpeed: 10
+  InDash: 0
+  TryDash: 0
   dashSpeedCurve:
     serializedVersion: 2
     m_Curve:
@@ -392,20 +385,21 @@ MonoBehaviour:
   maxDashSpeed: 30
   timeDash: 0.3
   timeBetweenDash: 1.5
-  dashDirection: {x: 0, y: 0}
-  timerDash: 0
-  timerBetweenDash: 0
+  isInFlash: 0
+  isInWind: 0
+  windDirection: {x: 0, y: 0}
   conveyorBeltSpeed: {x: 0, y: 0}
+  playerAnimator: {fileID: 2451847003553320754}
   baseAngleAnimation:
   - angleMin: 61
     angleMax: 120
     move: MoveBack
     idle: IdleBack
   - angleMin: 121
-    angleMax: 180
+    angleMax: 179
     move: MoveBackLeft
     idle: PL_IdleBackLeft
-  - angleMin: 0
+  - angleMin: 1
     angleMax: 60
     move: MoveBackRight
     idle: PL_IdleBackRight
@@ -413,16 +407,19 @@ MonoBehaviour:
     angleMax: 300
     move: MoveFront
     idle: IdleTop
-  - angleMin: 181
+  - angleMin: 180
     angleMax: 239
     move: MoveFrontLeft
     idle: IdleTopLeft
   - angleMin: 299
-    angleMax: 359
+    angleMax: 360
     move: MoveFrontRight
     idle: IdleTopRight
-  InDash: 0
-  TryDash: 0
+  currentAngleAnimation:
+    angleMin: 0
+    angleMax: 0
+    move: 
+    idle: 
 --- !u!114 &1464324219867819125
 MonoBehaviour:
   m_ObjectHideFlags: 0

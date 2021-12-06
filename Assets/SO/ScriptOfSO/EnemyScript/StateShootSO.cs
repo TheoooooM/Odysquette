@@ -18,7 +18,7 @@ public class StateShootSO : StateEnemySO
     public float dragRB;
 
     public bool hasRange;
-    
+    public bool dontCollideWithWall;
     public ExtensionMethods.EnemyTypeShoot enemyTypeShoot;
     
     public bool isDelayBetweenShoot;
@@ -85,5 +85,6 @@ public class StateShootSO : StateEnemySO
        scriptBullet.hasRange = hasRange;
        scriptBullet.range = rangeForBullet;
        scriptBullet.rb.drag = dragRB;
+       scriptBullet.dontCollideWall = dontCollideWithWall;
     }
 }
