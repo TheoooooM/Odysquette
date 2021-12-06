@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     #region Enum
 
     public enum Effect {none, bounce, pierce, explosion, poison, ice}
-    public enum Straw {basic, bubble, snipaille, eightPaille, fourDir, tripaille, mitra}
+    public enum Straw {basic, bubble, snipaille, eightPaille, tripaille, mitra}
     
     #endregion
     
