@@ -33,6 +33,7 @@ public class Bullet : MonoBehaviour
     public bool isDesactive = false;
     
     public float distance;
+    private SpriteRenderer bulletSpriteRenderer;
     private void Start()
     {
        
@@ -42,6 +43,9 @@ public class Bullet : MonoBehaviour
         
         if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
         else _bounceCount = 0;
+        bulletSpriteRenderer = GetComponent<SpriteRenderer>();
+        
+        
 
 
 
@@ -55,7 +59,7 @@ public class Bullet : MonoBehaviour
          basePosition = transform.position;
         _pierceCount = pierceCount;
         //canBounce = false; 
-    
+ 
         Invoke(nameof(DelayforDrag),0.5f);
     
                if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce) _pierceCount = pierceCount;
@@ -63,7 +67,7 @@ public class Bullet : MonoBehaviour
                 
                 if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
                 else _bounceCount = 0;
-                
+                GetComponent<SpriteRenderer>().color = GameManager.Instance.currentColor;
     }
 
    public virtual void Update()

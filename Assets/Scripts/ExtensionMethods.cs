@@ -42,11 +42,12 @@ public static class ExtensionMethods
 
     public enum EnemyTypeShoot
     {
-        WalkmanType,
+        WalkmanTypeArc,
         HologramType,
         BossBullet,
         BossWave,
-        BossTurret
+        BossTurret,
+        WalkmanTypeWave
     }
 
     public enum PhaseBoss
