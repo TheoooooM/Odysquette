@@ -51,11 +51,11 @@ public class StateShootSO : StateEnemySO
     {
         Rigidbody2D rbPlayer = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyPlayer];
         Rigidbody2D rbEnemy = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyEnemy];
-        Debug.Log("prepare play shoot"+ this.name);
+ 
         if (Vector2.Distance(rbPlayer.position, rbEnemy.position) <= rangeForShoot)
         {
             
-            Debug.Log("prepare play shoot"+ this.name);
+           
            
            Vector2 direction = (rbPlayer.position - rbEnemy.position);
            

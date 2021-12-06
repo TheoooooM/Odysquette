@@ -38,11 +38,15 @@ public class EnemyBullet : MonoBehaviour
                          
             }
         }
-        if (rb.velocity.magnitude <= 0.1 && rb.drag > 0 && isEnable)
-        {
-            DesactiveBullet();
-         
-        } 
+
+      
+               if (rb.velocity.magnitude <= 0.1 && rb.drag > 0 && isEnable)
+                    {
+                        DesactiveBullet();
+                     
+                    } 
+        
+     
     }
     void DelayforDrag()
     {

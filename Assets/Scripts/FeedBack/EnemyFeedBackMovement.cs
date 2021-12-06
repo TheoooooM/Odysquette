@@ -11,7 +11,7 @@ public class EnemyFeedBackMovement : MonoBehaviour
     public List<MultipleAnimationListOneTime> AnimationStatesListOneTime;
     private Rigidbody2D rb;
     private Animator animator;
- 
+    public List<AnimationForSpecificPosition> animationForSpecificPositionsList;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -42,8 +42,22 @@ public class EnemyFeedBackMovement : MonoBehaviour
         public Transform destination;
         public ExtensionMethods.AngleAnimation[] angleAnimation;
     }
+    [Serializable]
+    public class AnimationForSpecificPosition
+    {
+        public Transform tranformPosition;
+        public string stateName;
+        public float toleranceDistance;
+    }
 
- 
+
+    public void UpdateSpecificPosition(int index)
+    {
+        if (Vector3.Distance(transform.position, animationForSpecificPositionsList[index].tranformPosition.position)<animationForSpecificPositionsList[index].toleranceDistance)
+        {
+         PlayAnimation(animationForSpecificPositionsList[index].stateName, index, true);   
+        };
+    }
     public void UpdatePositionOnTime(int index)
     {
         if (!AnimationStatesListOneTime[index].ApplyState)
@@ -107,6 +121,7 @@ public class EnemyFeedBackMovement : MonoBehaviour
                 return; 
         
             animator.Play(stateName);
+            Debug.Log(stateName);
             if(!animationOneTime)
             AnimationStatesList[index].currentStatePlayed = stateName;
     }

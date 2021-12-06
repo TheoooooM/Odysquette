@@ -13,14 +13,16 @@ public class WindParticleManager : MonoBehaviour
     public StateWind StateWind;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private  Transform collider;
-    
+    private float distance;
+
+    [SerializeField] private Transform spriteWind;
     private void Start()
     {
         
         BoxCollider2D particleBoxCollider2D = GetComponent<BoxCollider2D>();
         RaycastHit2D hit =  Physics2D.Raycast(enemyTransform.position, transform.right, 
             Single.PositiveInfinity, layerMask);
-        
+      
      if (hit != null)
      {
    
@@ -34,9 +36,14 @@ public class WindParticleManager : MonoBehaviour
              
         particleSystemShape.scale = new Vector3( hit.distance-offSetDistance, particleSystemShape.scale.y, particleSystemShape.scale.z);
      particleBoxCollider2D.size = new Vector3( hit.distance-offSetDistance, particleSystemShape.scale.y, particleSystemShape.scale.z);
-     BoxCollider2D boxCollider2D = GetComponent<BoxCollider2D>();
-       collider.transform.position = new Vector3(enemyTransform.position.x+hit.distance+0.05f,   collider.transform.position.y ,  collider.transform.position.z);
+
+    
+       collider.transform.position = enemyTransform.position + transform.right * (hit.distance+0.05f);
        float AnewShape = particleSystemShape.scale.x * particleSystemShape.scale.y;
+      
+    
+       spriteWind.localScale = new Vector3(spriteWind.localScale.x,hit.distance*1.5f, spriteWind.localScale.z );
+   
 
        var particleSystemEmission = particleSystem.emission;
        var rateOverTime = particleSystemEmission.rateOverTime;
@@ -47,7 +54,7 @@ public class WindParticleManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.DrawRay(enemyTransform.position, transform.right, 
+        Debug.DrawRay(enemyTransform.position, transform.right*distance, 
             Color.blue);
     }
 }
