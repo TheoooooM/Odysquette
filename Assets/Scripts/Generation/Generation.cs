@@ -47,6 +47,7 @@ public class Generation : MonoBehaviour
     private void Start()
     {
         map = new RoomContainer[mapSize, mapSize];
+        NeverDestroy.Instance.level++;
         GenerateLevel();
     }
 
@@ -408,6 +409,7 @@ public class Generation : MonoBehaviour
 
     void UIUpdate(int value = 0)
     {
+        if (UIManager.Instance == null) return;
         Debug.Log("UIUpdate");
         UIManager UI = UIManager.Instance;
         if (value > UI.loadingBar.value) UI.loadingValue = value;
