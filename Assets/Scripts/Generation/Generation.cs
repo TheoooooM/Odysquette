@@ -70,6 +70,11 @@ public class Generation : MonoBehaviour
     {
         endGeneration = false;
         currentPos = new Vector2(mapSize/2, mapSize/2);
+        
+        UIManager.Instance.loadingBar.maxValue = nbrOfRoom;
+        UIManager.Instance.loadingBar.value = 0;
+        UIManager.Instance.LoadingScreen.SetActive(true);
+        
         //Debug.Log(" middl: " + currentPos);
         GameObject nR = new GameObject();
         nR.AddComponent(typeof(RoomManager));
@@ -138,8 +143,9 @@ public class Generation : MonoBehaviour
 
 
             //Debug.Log("Create Room n°" + i);
+            UIUpdate(i);
 
-            
+
             if (i == size)
             {
                 if (endpathRoom != null)
@@ -169,7 +175,7 @@ public class Generation : MonoBehaviour
             {
                 //Debug.Log("room with " + needOpen);
                 RoomCreator newRoom = normalRoom[Random.Range(0, normalRoom.Length)];
-                if(newRoom.exitDicitonnary.Count == 0) {newRoom.DictionaryUpdate(); newRoom.PartUpdate();}
+                if(newRoom.exitDicitonnary.Count == 0) { newRoom.DictionaryUpdate(); newRoom.PartUpdate();}
                 if (newRoom.exitDicitonnary[needOpen].Count != 0)
                 {
                     //debug.Log(newRoom.name + " work");
@@ -298,22 +304,29 @@ public class Generation : MonoBehaviour
                                                 {
                                                     case open.top : 
                                                         RC.exitTop = true;
-                                                        RC.room.enterGO = RC.closeTop.gameObject; break;
+                                                        RC.room.enterGO = RC.closeTop.gameObject; 
+                                                        RC.closeRoom.UpdateCloseRoom(true, exitSide == open.right, exitSide == open.bot, exitSide == open.left);
+                                                        break;
                                                     
                                                     case open.left : 
                                                         RC.exitLeft = true;
-                                                        RC.room.enterGO = RC.closeLeft.gameObject; break;
+                                                        RC.room.enterGO = RC.closeLeft.gameObject; 
+                                                        RC.closeRoom.UpdateCloseRoom(exitSide == open.top, exitSide == open.right, exitSide == open.bot, true);
+                                                        break;
                                                     
                                                     case open.right : 
                                                         RC.exitRight = true;
-                                                        RC.room.enterGO = RC.closeRight.gameObject; break;
+                                                        RC.room.enterGO = RC.closeRight.gameObject; 
+                                                        RC.closeRoom.UpdateCloseRoom(exitSide == open.top, true, exitSide == open.bot, exitSide == open.left);
+                                                        break;
                                                     
                                                     case open.bot : 
                                                         RC.exitBot = true;
-                                                        RC.room.enterGO = RC.closeBot.gameObject; break;
+                                                        RC.room.enterGO = RC.closeBot.gameObject;
+                                                        RC.closeRoom.UpdateCloseRoom(exitSide == open.top, exitSide == open.right, true, exitSide == open.left);
+                                                        break;
                                                 }
                                             }
-                                            
                                             
                                             RC.UpdatePart();
 
@@ -372,8 +385,8 @@ public class Generation : MonoBehaviour
                 break;
             }
         }
-
         endGeneration = true;
+        UIUpdate();
     }
 
     /// <summary>
@@ -391,5 +404,13 @@ public class Generation : MonoBehaviour
         if(roomPool != null) Destroy(roomPool.gameObject);
         roomPool = Instantiate(new GameObject(), transform).transform;
         roomPool.name = "RoomPool";
+    }
+
+    void UIUpdate(int value = 0)
+    {
+        Debug.Log("UIUpdate");
+        UIManager UI = UIManager.Instance;
+        if (value > UI.loadingBar.value) UI.loadingValue = value;
+        if (endGeneration) UI.LoadingScreen.SetActive(false);
     }
 }
