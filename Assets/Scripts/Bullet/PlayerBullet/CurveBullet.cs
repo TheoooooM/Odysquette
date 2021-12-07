@@ -10,7 +10,7 @@ public class CurveBullet : Bullet {
 
     private int currentStepPoint;
     public List<Vector3> currentListWaypoint = new List<Vector3>();
-    Vector3 currentDirection = new Vector3();
+
     public float speed;
     public bool isCurve;
     public bool isParameterTrajectories;
@@ -53,14 +53,10 @@ public class CurveBullet : Bullet {
                 pointsForBezierCurve[i].pointsForBezierCurve.Add(StepPoint);
             }
         }
-
         currentWaypoint = 1;
         currentStepPoint = 1;
         currentListWaypoint.AddRange(pointsForBezierCurve[currentWaypoint].pointsForBezierCurve);
 
-        currentDirection = new Vector3(currentListWaypoint[currentStepPoint].x - currentListWaypoint[currentStepPoint - 1].x,
-            currentListWaypoint[currentStepPoint].y - currentListWaypoint[currentStepPoint - 1].y,
-            currentListWaypoint[currentStepPoint].z - currentListWaypoint[currentStepPoint - 1].z).normalized;
 
         isCurve = true;
     }
@@ -101,9 +97,6 @@ public class CurveBullet : Bullet {
                         currentStepPoint = 1;
                         currentListWaypoint.Clear();
                         currentListWaypoint.AddRange(pointsForBezierCurve[currentWaypoint].pointsForBezierCurve);
-                        currentDirection = new Vector3(currentListWaypoint[currentStepPoint].x - currentListWaypoint[currentStepPoint - 1].x,
-                            currentListWaypoint[currentStepPoint].y - currentListWaypoint[currentStepPoint - 1].y,
-                            currentListWaypoint[currentStepPoint].z - currentListWaypoint[currentStepPoint - 1].z).normalized;
                     }
 
                     else {
@@ -126,12 +119,15 @@ public class CurveBullet : Bullet {
                         }
                         else {
                             currentStepPoint++;
-                            currentDirection = new Vector3(currentListWaypoint[currentStepPoint].x - currentListWaypoint[currentStepPoint - 1].x,
-                                currentListWaypoint[currentStepPoint].y - currentListWaypoint[currentStepPoint - 1].y,
-                                currentListWaypoint[currentStepPoint].z - currentListWaypoint[currentStepPoint - 1].z).normalized;
+                            
+                          
+                            Debug.Log("try");
+                         
                         }
                     }
+                   
                 }
+                 rb.position = Vector2.MoveTowards(rb.position, currentListWaypoint[currentStepPoint], speed );
             }
         }
     }
@@ -139,7 +135,7 @@ public class CurveBullet : Bullet {
     private void FixedUpdate() {
         if (!isBounce) {
             if (isCurve) {
-                rb.velocity = (currentDirection) * speed;
+                
             }
         }
     }
