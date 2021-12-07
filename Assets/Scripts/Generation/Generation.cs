@@ -48,6 +48,7 @@ public class Generation : MonoBehaviour {
 
     private void Start() {
         map = new RoomContainer[mapSize, mapSize];
+        NeverDestroy.Instance.level++;
         GenerateLevel();
     }
 
@@ -156,10 +157,15 @@ public class Generation : MonoBehaviour {
             if (i == size) {
                 if (endpathRoom != null) {
                     //dernière salle
-                    //RoomManager RM = Instantiate(new GameObject(), roomPool).AddComponent<RoomManager>();
-                    //RM.transform.name = "LastRoom";
-                    RoomContainer RC = Instantiate(endpathRoom.GetComponent<RoomCreator>().partList[0].RoomGO, new Vector2((currentPos.x - mapSize / 2) * 9.92f, (currentPos.y - mapSize / 2) * 6.4f), Quaternion.identity, roomPool).GetComponent<RoomContainer>();
-
+                    GameObject GO = Instantiate(new GameObject(), roomPool);
+                    GO.transform.name = "LastRoom";
+                    RoomManager RM = GO.AddComponent<RoomManager>();
+                    RoomContainer RC = Instantiate(endpathRoom.GetComponent<RoomCreator>().partList[0].RoomGO, new Vector2((currentPos.x- mapSize/2)*62,(currentPos.y - mapSize/2)*40f), Quaternion.identity, GO.transform).GetComponent<RoomContainer>();
+                    RC.roomMapPos = new Vector2((currentPos.x), (int) (currentPos.y));
+                    RC.Generator = this;
+                    currentRoom.partList.Add(RC);
+                    map[(int)(currentPos.x),(int)(currentPos.y)] = RC;
+                    RC.room = currentRoom;
                     RC.exitLeft = false;
                     RC.exitRight = false;
                     RC.exitTop = false;
@@ -415,7 +421,8 @@ public class Generation : MonoBehaviour {
         roomPool.name = "RoomPool";
     }
 
-    void UIUpdate(int value = 0) {
+    void UIUpdate(int value = 0){
+        if (UIManager.Instance == null) return;
         Debug.Log("UIUpdate");
         UIManager UI = UIManager.Instance;
         if (value > UI.loadingBar.value) UI.loadingValue = value;

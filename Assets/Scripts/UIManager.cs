@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
@@ -17,9 +18,14 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     public static UIManager Instance;
     float maxUltSlider = 100f;
+    
     [SerializeField]
     private GameObject GameOverPanel;
 
+    [Header("----Ressources----")] 
+    public TextMeshProUGUI ressourceText;
+    
+    
     [Header("----Generation----")] 
     public GameObject LoadingScreen;
     public Slider loadingBar;
@@ -41,7 +47,6 @@ public class UIManager : MonoBehaviour
     {
         if (loadingBar.value < loadingValue)
         {
-            Debug.Log("fixedUpdate");
             loadingBar.value += loadingBar.maxValue * chargeSpeed*0.01f;
         }
     }

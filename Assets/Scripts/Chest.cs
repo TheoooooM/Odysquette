@@ -140,7 +140,7 @@ public class Chest : MonoBehaviour
         InstantiateItem(item);
     }
     
-    public void InstantiateItem(GameObject GO)
+    virtual public void InstantiateItem(GameObject GO)
     {
         Instantiate(GO, transform.position, Quaternion.identity, transform.parent);
         //gameObject.name = GO.name;
