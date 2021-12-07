@@ -23,7 +23,7 @@ public class Ressource : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            NeverDestroy.Instance.ressources++;
+            NeverDestroy.Instance.AddRessource();
             Destroy(gameObject);
         }
     }

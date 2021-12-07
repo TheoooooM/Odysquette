@@ -15,9 +15,12 @@ public class Items : MonoBehaviour
    [SerializeField] private type itemType;
    [SerializeField] private GameManager.Effect effect;
    [SerializeField] private GameManager.Straw straw;
-   [SerializeField] private int healthValue;
+   [SerializeField] private int healthValue; 
    [SerializeField] private int ressourceValue;
    [SerializeField] private int cost;
+   [SerializeField] private GameObject canvas;
+   
+   public bool shop;
 
    
    
@@ -25,6 +28,7 @@ public class Items : MonoBehaviour
       playerInput = new PlayerMapping();
       playerInput.Interface.Enable();
       playerInput.Interface.Button.performed += ButtonOnperformed;
+      canvas.SetActive(false);
    }
 
    private void ButtonOnperformed(InputAction.CallbackContext obj) {
@@ -71,11 +75,16 @@ public class Items : MonoBehaviour
       if (other.transform.CompareTag("Player")) {
          GetComponent<SpriteRenderer>().color = Color.yellow;
          inRange = true;
+         canvas.SetActive(true);
       }
    }
    
    private void OnTriggerExit2D(Collider2D other) {
-      if(other.transform.CompareTag("Player")) inRange = false;
+      if (other.transform.CompareTag("Player"))
+      {
+         inRange = false;
          GetComponent<SpriteRenderer>().color = Color.white;
+         canvas.SetActive(false);
+      }
    }
 }

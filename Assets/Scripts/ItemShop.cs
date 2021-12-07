@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ItemShop : Chest
 {
+    [SerializeField] private GameObject itemCanvas; 
+    
     public override void Start()
     {
         base.Start();
