@@ -41,7 +41,6 @@ public class UIManager : MonoBehaviour
     {
         if (loadingBar.value < loadingValue)
         {
-            Debug.Log("fixedUpdate");
             loadingBar.value += loadingBar.maxValue * chargeSpeed*0.01f;
         }
     }

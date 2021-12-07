@@ -13,9 +13,9 @@ public class Exit : MonoBehaviour
 
   private void Start()
   {
-    if (!isShop)
+    if (isShop)
     {
-      if (NeverDestroy.Instance.level == 1) sceneToLoad = "YOP_Basic";
+      if (NeverDestroy.Instance.level == 1) sceneToLoad = "THM_Basic";
       else sceneToLoad = "Boss";
     }
     else sceneToLoad = "Shop";

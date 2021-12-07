@@ -502,10 +502,16 @@ public class EnemyStateManager : MonoBehaviour
   }
 
   public virtual void OnDeath()
-  { 
-      Debug.Log("Remove from List");
-        Animator animator =  GetComponent<Animator>();
-        if (TryGetComponent(out EnemyFeedBackDeath eventDeath))
+  {
+      GameObject GO = Resources.Load<GameObject>("ressource");
+      for (int i = 0; i < 5; i++)
+      {
+          Debug.Log("gen Ressources");
+          Instantiate(GO, transform.position, Quaternion.identity);
+      }
+      
+      Animator animator =  GetComponent<Animator>();
+      if (TryGetComponent(out EnemyFeedBackDeath eventDeath))
         {
             eventDeath.deathEvent.Invoke();
             return;
