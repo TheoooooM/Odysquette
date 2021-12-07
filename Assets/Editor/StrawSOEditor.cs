@@ -20,6 +20,7 @@ public class StrawSOEditor : Editor
     {
         Color.red*2, Color.magenta*2, new Color(1,0.64f,0f, 1f)*2, Color.cyan*2, Color.gray*2, new Color(0.59f,0.32f,0.31f,1)*2, Color.green*2,  Color.white*2   };
 
+   private string buttonText;
 
 
    public override void OnInspectorGUI()
@@ -37,13 +38,15 @@ public class StrawSOEditor : Editor
            GUI.enabled = true;
        }
 
-       if (GUILayout.Button("Edit Stat with Gizmos"))
+       if (GUILayout.Button("On Edit Gizmos"))
        {
-           
+       
            SceneView.duringSceneGui += OnPosVectorGizmos;
            editGizmos = true;
            ActiveEditorTracker.sharedTracker.isLocked = true;
        }
+    
+    
 
    
 
@@ -59,28 +62,7 @@ public class StrawSOEditor : Editor
            GUI.enabled = true;
        }
 
-       if (GUILayout.Button("Stop Edit"))
-       {
 
-           SceneView.duringSceneGui -= OnEditGizmos;
-           try
-           {
-SceneView.duringSceneGui -= OnPosVectorGizmos;
-           }
-           catch (Exception e)
-           {
-               
-           }
-           
-           Selection.objects = new UnityEngine.Object[1]
-           {
-               target
-           };
-      
-           editGizmos = false;
-           ActiveEditorTracker.sharedTracker.isLocked = false;
-
-       }
 
 
 
@@ -357,6 +339,28 @@ SceneView.duringSceneGui -= OnPosVectorGizmos;
    GUI.Window(0, new Rect(5, 20, 250, 75), delegate {
             EmptyGizmos=  EditorGUI.Vector3Field(new Rect(25, 40, 200, 80), GUIContent.none, EmptyGizmos );
         }, "Gizmos Position");  
+   if (Event.current.keyCode == KeyCode.Space)
+   {
+
+       SceneView.duringSceneGui -= OnEditGizmos;
+       try
+       {
+           SceneView.duringSceneGui -= OnPosVectorGizmos;
+       }
+       catch (Exception e)
+       {
+               
+       }
+           
+       Selection.objects = new UnityEngine.Object[1]
+       {
+           target
+       };
+      
+       editGizmos = false;
+       ActiveEditorTracker.sharedTracker.isLocked = false;
+
+   }
     }
 
    public void OnPosVectorGizmos(SceneView sceneView)
@@ -380,6 +384,29 @@ SceneView.duringSceneGui -= OnPosVectorGizmos;
            SceneView.duringSceneGui -= OnPosVectorGizmos;
          
        }
+       if (Event.current.keyCode == KeyCode.Space)
+       {
+
+           SceneView.duringSceneGui -= OnEditGizmos;
+           try
+           {
+               SceneView.duringSceneGui -= OnPosVectorGizmos;
+           }
+           catch (Exception e)
+           {
+               
+           }
+           
+           Selection.objects = new UnityEngine.Object[1]
+           {
+               target
+           };
+      
+           editGizmos = false;
+           ActiveEditorTracker.sharedTracker.isLocked = false;
+
+       }
+       
 
 
 

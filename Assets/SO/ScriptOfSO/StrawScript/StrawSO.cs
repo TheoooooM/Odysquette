@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class StrawSO : ScriptableObject {
     public bool hasRange;
+  
     public string strawName;
     public Sprite strawRenderer;
     public float damage = 1;

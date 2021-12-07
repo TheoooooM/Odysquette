@@ -73,7 +73,7 @@ public class BasicShootSO : StrawSO
         {
              for (int i = 0; i < directions.Length; i++)
                     {
-                        Debug.Log("dfqsjdsmljidfqsjdfqsdfqs");
+                        
                   
                         GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode);
                         bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
