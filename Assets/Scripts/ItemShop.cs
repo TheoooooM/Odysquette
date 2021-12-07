@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemShop : Chest
 {
-    [SerializeField] private GameObject itemCanvas; 
+    [SerializeField] bool shop; 
     
     public override void Start()
     {
@@ -94,5 +94,10 @@ public class ItemShop : Chest
 
         InstantiateItem(item);
     }
-    
+
+    public override void InstantiateItem(GameObject GO)
+    {
+        GameObject Gobj = Instantiate(GO, transform.position, Quaternion.identity, transform.parent);
+        Gobj.GetComponent<Items>().shop = true;
+    }
 }
