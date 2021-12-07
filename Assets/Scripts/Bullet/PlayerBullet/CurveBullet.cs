@@ -17,6 +17,7 @@ public class CurveBullet : Bullet {
 
 
     public override void OnEnable() {
+        return;
         base.OnEnable();
         for (int i = 0; i < trajectories.Count; i++) {
             trajectories[i] += transform.position;
@@ -64,6 +65,7 @@ public class CurveBullet : Bullet {
 
         isCurve = true;
     }
+    
 #if UNITY_EDITOR
     private void OnDrawGizmos() {
         for (int i = 1; i < pointsForBezierCurve[1].pointsForBezierCurve.Count; i++) {
@@ -80,7 +82,7 @@ public class CurveBullet : Bullet {
         Handles.DrawLine(transform.position, new Vector3(transform.position.x + rb.velocity.x, transform.position.y + rb.velocity.y, 0));
     }
 #endif
-    
+
     private void OnDisable() {
         isCurve = false;
         trajectories = new List<Vector3>();
