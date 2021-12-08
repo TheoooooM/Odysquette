@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &54068189741210277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3817811013771376752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fccf4b61209b814595d3a0ac0d6c21b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  part: {fileID: 7130220448509009872}
 --- !u!1 &7130220446766177507
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,14 +1092,38 @@ PrefabInstance:
       propertyPath: part
       value: 
       objectReference: {fileID: 7130220448509009872}
+    - target: {fileID: 54697848636909323, guid: fbcff3dfd559dec4aa84ee17b54a27b5, type: 3}
+      propertyPath: SpawnerList.Array.data[0].ennemy
+      value: 
+      objectReference: {fileID: 243450507811954010, guid: e896c3ce3a7d2aa4fb392bb217e6ef62, type: 3}
+    - target: {fileID: 505202871071105790, guid: fbcff3dfd559dec4aa84ee17b54a27b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 628008889491688709, guid: fbcff3dfd559dec4aa84ee17b54a27b5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 675966076021965673, guid: fbcff3dfd559dec4aa84ee17b54a27b5, type: 3}
       propertyPath: part
       value: 
       objectReference: {fileID: 7130220448509009872}
+    - target: {fileID: 1334088838011499969, guid: fbcff3dfd559dec4aa84ee17b54a27b5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1341446394897972694, guid: fbcff3dfd559dec4aa84ee17b54a27b5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2203856938879648164, guid: fbcff3dfd559dec4aa84ee17b54a27b5, type: 3}
       propertyPath: part
       value: 
       objectReference: {fileID: 7130220448509009872}
+    - target: {fileID: 3524975168569236740, guid: fbcff3dfd559dec4aa84ee17b54a27b5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3557783020739338589, guid: fbcff3dfd559dec4aa84ee17b54a27b5, type: 3}
       propertyPath: part
       value: 
@@ -1138,6 +1175,10 @@ PrefabInstance:
     - target: {fileID: 5125350060402982253, guid: fbcff3dfd559dec4aa84ee17b54a27b5, type: 3}
       propertyPath: m_Name
       value: LD 01
+      objectReference: {fileID: 0}
+    - target: {fileID: 7482297267839388470, guid: fbcff3dfd559dec4aa84ee17b54a27b5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8081742037738152180, guid: fbcff3dfd559dec4aa84ee17b54a27b5, type: 3}
       propertyPath: part
@@ -1231,7 +1272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6353946706996803574, guid: dae56589b257cab4a997d404328d3da4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.73
+      value: 5.13
       objectReference: {fileID: 0}
     - target: {fileID: 6353946706996803574, guid: dae56589b257cab4a997d404328d3da4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1283,3 +1324,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dae56589b257cab4a997d404328d3da4, type: 3}
+--- !u!1 &3817811013771376752 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6353946706996803575, guid: dae56589b257cab4a997d404328d3da4, type: 3}
+  m_PrefabInstance: {fileID: 7842550626056933255}
+  m_PrefabAsset: {fileID: 0}

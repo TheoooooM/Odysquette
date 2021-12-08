@@ -64,7 +64,7 @@ public class StateShootSO : StateEnemySO
            
           ExtDebug.DrawBoxCastBox(rbEnemy.position, extentsRangeDetection/2, Quaternion.identity, direction.normalized, direction.magnitude, Color.red);
            if(hit.collider.gameObject.layer == 9 )
-           {Debug.Log("prepare play shoot"+ this.name);
+           {
                return true;
            }
            

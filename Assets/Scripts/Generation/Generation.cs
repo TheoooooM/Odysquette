@@ -408,7 +408,7 @@ public class Generation : MonoBehaviour
 
     void UIUpdate(int value = 0)
     {
-        Debug.Log("UIUpdate");
+      
         UIManager UI = UIManager.Instance;
         if (value > UI.loadingBar.value) UI.loadingValue = value;
         if (endGeneration) UI.LoadingScreen.SetActive(false);

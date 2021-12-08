@@ -24,7 +24,7 @@ public class StrawSO : ScriptableObject {
     public int numberWaveShoot = 1;
     public float delayBetweenShoot = 0;
     public float delayBetweenWaveShoot = 0;
-    public float ultimateTime;
+    public float ultimatePoints;
     public float delayParameter = 0;
     
     [NamedArray("vector3", true)] public Vector3[] basePositionParameter = new Vector3[0];
@@ -61,11 +61,15 @@ public class StrawSO : ScriptableObject {
             if (hasRange)
                 scriptBullet.range = range + rangeParameter * currentTimeValue;
             scriptBullet.rb.drag = dragRB + dragRBParameter * currentTimeValue;
+            if(rateMode != RateMode.Ultimate)
+                scriptBullet.ammountUltimate = ultimatePoints;
         }
         else if (rateMainParameter == false) {
             scriptBullet.damage = damage;
             scriptBullet.hasRange = hasRange;
             scriptBullet.range = range;
+            if(rateMode != RateMode.Ultimate)
+            scriptBullet.ammountUltimate =  ultimatePoints;
 
             scriptBullet.rb.drag = dragRB;
             scriptBullet.rateMode = rateMode;

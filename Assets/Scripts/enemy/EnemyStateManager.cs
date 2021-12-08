@@ -53,7 +53,7 @@ public class EnemyStateManager : MonoBehaviour
     [SerializeField]
     private bool IsFirstStartPlayed;
 
-    [HideInInspector] public RoomManager roomParent;
+     public RoomManager roomParent;
     //Delegate
     public delegate void CurrentState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> 
         objectValue, out bool endStep, EnemyFeedBack enemyFeedBack);
@@ -428,7 +428,7 @@ public class EnemyStateManager : MonoBehaviour
                         CurrentUpdateState += EMainStatsSo.stateEnnemList[indexCurrentState].PlayState; 
                     }
                        
-                    Debug.Log(indexCurrentState);
+                 
                   
                     IsCurrentStartPlayed = false;
                     IsCurrentStatePlayed = true;
@@ -502,8 +502,12 @@ public class EnemyStateManager : MonoBehaviour
   }
 
   public virtual void OnDeath()
-  { 
+  { collider2D.enabled = false;
       Debug.Log("Remove from List");
+      rb.constraints = RigidbodyConstraints2D.FreezePosition; 
+      roomParent.ennemiesList.Remove(gameObject);                            
+      this.enabled = false;
+   
         Animator animator =  GetComponent<Animator>();
         if (TryGetComponent(out EnemyFeedBackDeath eventDeath))
         {
@@ -543,10 +547,7 @@ public class EnemyStateManager : MonoBehaviour
           }
        
           
-      }rb.constraints = RigidbodyConstraints2D.FreezePosition; 
-      collider2D.enabled = false;
-     this.enabled = false;
-        GameManager.Instance.ultimateValue += EMainStatsSo.giverUltimateStrawPoints;
+      }
   
       
   }
@@ -567,6 +568,7 @@ public class EnemyStateManager : MonoBehaviour
       {
           Knockup( position, knockUpValue, knockup, isExplosion);
           health -= damage;
+        
       }
   }
 

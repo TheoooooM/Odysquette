@@ -97,8 +97,7 @@ public class PlayerDetector : MonoBehaviour
         patrolEvent.Invoke();
         if (Vector2.Distance(rb.position, enemyMovement.destination) < 0.1f)
         {
-
-           BeginPatrol();
+            BeginPatrol();
         }
     }
 

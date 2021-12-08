@@ -122,21 +122,25 @@ public class StrawSOEditor : Editor
                            case 0:
                            {
                               EditorGUILayout.PropertyField(serializedObject.FindProperty("timeValue"),
-                                   new GUIContent("Ultimate Points"));
-                              GUILayout.FlexibleSpace();
-                              EditorGUILayout.PropertyField(serializedObject.FindProperty("ultimateTime"));
+                                   new GUIContent("Ultimate Time"));
+                          
+                             
                                break;
                            }
                            case 1:
                            {
                                EditorGUILayout.PropertyField(serializedObject.FindProperty("timeValue"),
                                    new GUIContent("Fire Rate"));
+                               GUILayout.FlexibleSpace();
+                               EditorGUILayout.PropertyField(serializedObject.FindProperty("ultimatePoints"));
                                break;
                            }
                            case 2:
                            {
                                EditorGUILayout.PropertyField(serializedObject.FindProperty("timeValue"),
                                    new GUIContent("Fire Loading Time"));
+                               GUILayout.FlexibleSpace();
+                               EditorGUILayout.PropertyField(serializedObject.FindProperty("ultimatePoints"));
                                break;
                            }
                        }

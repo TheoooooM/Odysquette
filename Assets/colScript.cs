@@ -44,7 +44,7 @@ public class colScript : MonoBehaviour
     {
         if (!part.playerInRoom)
         {
-            Debug.Log("yo");
+      
             switch (side)
             {
                 case Generation.open.top :Generation.Instance.map[(int)part.roomMapPos.x, (int)part.roomMapPos.y + 1].GetComponent<RoomContainer>().room.runningRoom = true; break;

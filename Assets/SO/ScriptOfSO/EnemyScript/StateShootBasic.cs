@@ -34,7 +34,7 @@ public class StateShootBasic : StateShootSO
 
     public override void PlayState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
     {
-        Debug.Log("play shoot"+ this.name);
+
         Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
         enemyTransform.GetComponent<SpriteRenderer>().color -= Color.white;
        

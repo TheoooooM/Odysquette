@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour {
 
     private void Update() {
         if (isUltimate) {
-            if (actualStrawClass.ultimateStrawSO.ultimateTime > timerUltimate) {
+            if (actualStrawClass.ultimateStrawSO.timeValue > timerUltimate) {
                 timerUltimate += Time.deltaTime;
             }
             else {
@@ -193,11 +193,11 @@ public class GameManager : MonoBehaviour {
 
         if (actualStrawClass.ultimateStrawSO != null && actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate) {
             Debug.Log("testssss");
-            if (ultimateValue >= actualStrawClass.ultimateStrawSO.timeValue) {
+            if (ultimateValue >= 100) {
                 Debug.Log("ouhahahahah");
                 actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
                 isUltimate = true;
-                ultimateValue -= actualStrawClass.ultimateStrawSO.timeValue;
+                ultimateValue -= 100;
             }
 
             utlimate = false;

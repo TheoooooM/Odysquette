@@ -16,7 +16,7 @@ public class EMainStatsSO : ScriptableObject
    public StateEnemySO baseState;
 
    public SpriteRenderer spriteRenderer;
-    public float giverUltimateStrawPoints;
+    public int  coeifficentUltimateStrawPoints;
   
 
 }

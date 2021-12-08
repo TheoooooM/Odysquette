@@ -7,7 +7,7 @@ public class EnemyFeedBackDeath : MonoBehaviour
 {
  public UnityEvent deathEvent;
  public GameObject ParentToDestroy;
- public void DestroyOtherObject(int delay)
+ public void DestroyOtherObject(float delay)
  {
   Destroy(ParentToDestroy, delay);
  }

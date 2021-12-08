@@ -71,7 +71,7 @@ public override void OnDeath()
 {
  spriteRenderer.color = FxColor;
   BossManager.instance.UpdateDuringPhase();
-  GameManager.Instance.ultimateValue += EMainStatsSo.giverUltimateStrawPoints;
+  
   GetComponent<Animator>().Play(enemyFeedBack.stateDeathName);
   
  }

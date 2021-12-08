@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour {
     [SerializeField] private bool isColliding;
     public Rigidbody2D rb;
     private Vector3 lastVelocity;
-
+    public float ammountUltimate;
     [Header("==============Effects Stat===============")]
     public int pierceCount = 2;
 
@@ -124,8 +124,20 @@ public class Bullet : MonoBehaviour {
                 break;
         }
 
-        if (other.CompareTag("Enemy")) {
-            other.GetComponent<EnemyStateManager>().TakeDamage(damage, rb.position, knockUpValue, true, false);
+        if (other.CompareTag("Enemy"))
+        {
+            EnemyStateManager enemyStateManager = other.GetComponent<EnemyStateManager>();
+                enemyStateManager.TakeDamage(damage, rb.position, knockUpValue, true, false);
+                if (rateMode != StrawSO.RateMode.Ultimate)
+                {
+                    Debug.Log("testaaa");
+                    Debug.Log(enemyStateManager.EMainStatsSo.coeifficentUltimateStrawPoints*ammountUltimate);
+                    Debug.Log(enemyStateManager.EMainStatsSo.coeifficentUltimateStrawPoints);
+                    Debug.Log(ammountUltimate);
+                      GameManager.Instance.ultimateValue += enemyStateManager.EMainStatsSo.coeifficentUltimateStrawPoints*ammountUltimate;
+                }
+              
+            
             if (_pierceCount > 0) {
                 _pierceCount--;
             }
