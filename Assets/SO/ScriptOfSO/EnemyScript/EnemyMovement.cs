@@ -1,13 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Pathfinding;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    private bool reachedEndOfPath;
-
     private Seeker seeker;
 
     private Rigidbody2D rb;
@@ -25,7 +20,7 @@ public class EnemyMovement : MonoBehaviour
 
     public Vector2 currentWaypointDirection;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         tranform = gameObject.transform;
         seeker = GetComponent<Seeker>();
@@ -35,11 +30,9 @@ public class EnemyMovement : MonoBehaviour
 
     }
 
-    void UpdatePath()
-    {
+    private void UpdatePath() {
         createPath = true;
-        if(seeker.IsDone())
-        seeker.StartPath(rb.position, destination, OnPathComplete);
+        if(seeker.IsDone()) seeker.StartPath(rb.position, destination, OnPathComplete);
     }
     private void OnEnable()
     {
@@ -52,7 +45,7 @@ public class EnemyMovement : MonoBehaviour
         if(rb != null) rb.velocity = Vector2.zero;
     }
 
-    void OnPathComplete(Path p)
+    private void OnPathComplete(Path p)
     {
         
         if (!p.error)
@@ -75,9 +68,10 @@ public class EnemyMovement : MonoBehaviour
        else if (enemyStateManager.IsCurrentStartPlayed || enemyStateManager.IsCurrentStatePlayed && !enemyStateManager.EMainStatsSo.stateEnnemList[enemyStateManager.indexCurrentState].needEnemyMovement)
             enabled = false;
     }
-  Vector2 direction = new Vector2();
+
+    private Vector2 direction = new Vector2();
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
        
         if (path == null)
