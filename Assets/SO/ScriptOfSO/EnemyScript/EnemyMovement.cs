@@ -49,7 +49,7 @@ public class EnemyMovement : MonoBehaviour
     private void OnDisable()
     {
         CancelInvoke();
-        rb.velocity = Vector2.zero;
+        if(rb != null) rb.velocity = Vector2.zero;
     }
 
     void OnPathComplete(Path p)
