@@ -142,7 +142,7 @@ public class Bullet : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D other) {
         if (_bounceCount > 0 && other.gameObject.CompareTag("Walls")) {
-            Debug.Log(_bounceCount);
+           
 
             _bounceCount--;
             var speed = lastVelocity.magnitude;

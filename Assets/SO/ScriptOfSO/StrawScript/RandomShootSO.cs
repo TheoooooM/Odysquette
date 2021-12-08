@@ -25,24 +25,27 @@ public class RandomShootSO : StrawSO
 
             for (int i = 0; i < drawNumber; i++)
             {
-                int rand = Random.Range(0, currentTotalProbability);
+                int rand = Random.Range(0, currentTotalProbability+1);
 
                 int index = 0;
-                while (rand >= 0)
+            
+                while (rand > 0)
                 {
-                    rand -= currentListProbability[index].probability;
+                    Debug.Log(rand);
+                        rand -= currentListProbability[index].probability;
                     index++;
                     if (index == currentListProbability.Count)
                     {
+                        index--;
                         break;
                     }
                 }
-
+Debug.Log(index+ "index");
                 GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode);
                 bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 bullet.SetActive(true);
                 Vector3 rotation = Vector3.zero;
-            Debug.Log("test");
+        
             if (possibleDirectionsParameter != null)
             {
                  if (possibleDirectionsParameter.Length >= index + 1)
@@ -53,7 +56,7 @@ public class RandomShootSO : StrawSO
                                                parentBulletTF.transform.right;
                                 } 
                  else
-                 {  Debug.Log("test");
+                 { 
                      rotation = Quaternion.Euler(0, 0, possibleDirections[index].angle) * parentBulletTF.transform.right;
                  }
             }
@@ -61,10 +64,12 @@ public class RandomShootSO : StrawSO
                
                
                 else
-                {  Debug.Log("test");
+                {  
                     rotation = Quaternion.Euler(0, 0, possibleDirections[index].angle) * parentBulletTF.transform.right;
                 }
-              
+
+            if (basePosition != null)
+            {
                 if (basePosition.Length != 0)
                 {
                     bullet.transform.position += basePosition[index];
@@ -73,12 +78,14 @@ public class RandomShootSO : StrawSO
                         bullet.transform.position += basePositionParameter[i] * currentTimeValue;
                     }
                 }
-                Debug.Log("test");
+            }
+
+        
                 //save pool
-                Debug.Log(rotation);
+             
                 bullet.GetComponent<Rigidbody2D>().AddForce(rotation * (speedBullet + speedParameter * currentTimeValue), ForceMode2D.Force);
                 SetParameter(bullet, currentTimeValue, null);
-                Debug.Log(bullet.GetComponent<Bullet>().rb.velocity);
+          
                 if (probabilityDiscount)
                 {
                     currentTotalProbability -= currentListProbability[index].probability;
@@ -101,57 +108,77 @@ public class RandomShootSO : StrawSO
         for (int j = 0; j < numberWaveShoot; j++)
         {
             List<angleRandom> currentListProbability = new List<angleRandom>();
-                        currentListProbability.AddRange(possibleDirections);
-                        int currentTotalProbability = totalProbability;
+            currentListProbability.AddRange(possibleDirections);
+            int currentTotalProbability = totalProbability;
 
             for (int i = 0; i < drawNumber; i++)
             {
-                int rand = Random.Range(0, currentTotalProbability);
-               
+                int rand = Random.Range(0, currentTotalProbability+1);
+
                 int index = 0;
-                while (rand>=0)
+            
+                while (rand > 0)
                 {
-                    rand -= currentListProbability[index].probability;
+                    Debug.Log(rand);
+                        rand -= currentListProbability[index].probability;
                     index++;
                     if (index == currentListProbability.Count)
                     {
+                        index--;
                         break;
                     }
                 }
+Debug.Log(index+ "index");
                 GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode);
-                                        bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                                        bullet.SetActive(true);
-                                        Vector3 rotation = Vector3.zero;
-                                        if (possibleDirectionsParameter != null)
-                                        {
-                                            if (possibleDirectionsParameter.Length >= index + 1)
-                                            {
-                                                rotation = Quaternion.Euler(0, 0,
-                                                               possibleDirections[index].angle +
-                                                               possibleDirectionsParameter[index] * currentTimeValue) *
-                                                           parentBulletTF.transform.right;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            rotation = Quaternion.Euler(0, 0, possibleDirections[index].angle) * parentBulletTF.transform.right;
-                                        }
-                                        if (basePosition.Length != 0)
-                                        {
-                                            bullet.transform.position += basePosition[index];
-                                            if (basePositionParameter.Length == 1 +index )
-                                            {
-                                                bullet.transform.position +=basePositionParameter[i]*currentTimeValue;
-                                            }
-                                        }
-                                        //save pool
-                                        bullet.GetComponent<Rigidbody2D>().AddForce(rotation*(speedBullet+speedParameter*currentTimeValue), ForceMode2D.Force );
-                                        SetParameter(bullet, currentTimeValue, null);
-                                        if (probabilityDiscount)
-                                        { 
-                                            currentTotalProbability -= currentListProbability[index].probability;
-                                            currentListProbability.RemoveAt(index);
-                                        }
+                bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                bullet.SetActive(true);
+                Vector3 rotation = Vector3.zero;
+        
+            if (possibleDirectionsParameter != null)
+            {
+                 if (possibleDirectionsParameter.Length >= index + 1)
+                                {
+                                    rotation = Quaternion.Euler(0, 0,
+                                                   possibleDirections[index].angle +
+                                                   possibleDirectionsParameter[index] * currentTimeValue) *
+                                               parentBulletTF.transform.right;
+                                } 
+                 else
+                 { 
+                     rotation = Quaternion.Euler(0, 0, possibleDirections[index].angle) * parentBulletTF.transform.right;
+                 }
+            }
+            
+               
+               
+                else
+                {  
+                    rotation = Quaternion.Euler(0, 0, possibleDirections[index].angle) * parentBulletTF.transform.right;
+                }
+
+            if (basePosition != null)
+            {
+                if (basePosition.Length != 0)
+                {
+                    bullet.transform.position += basePosition[index];
+                    if (basePositionParameter.Length == 1 + index)
+                    {
+                        bullet.transform.position += basePositionParameter[i] * currentTimeValue;
+                    }
+                }
+            }
+
+        
+                //save pool
+             
+                bullet.GetComponent<Rigidbody2D>().AddForce(rotation * (speedBullet + speedParameter * currentTimeValue), ForceMode2D.Force);
+                SetParameter(bullet, currentTimeValue, null);
+          
+                if (probabilityDiscount)
+                {
+                    currentTotalProbability -= currentListProbability[index].probability;
+                    currentListProbability.RemoveAt(index);
+                }
                                         if(isDelayBetweenShoot) 
                                             yield return new WaitForSeconds(delayBetweenShoot + delayParameter * currentTimeValue);
             }

@@ -91,19 +91,23 @@ public class CurveBullet : Bullet {
         base.Update();
         if (!isBounce) {
             if (isCurve) {
+               
                 if (Vector3.Distance(transform.position, currentListWaypoint[currentStepPoint]) < 0.1f) {
+                    Debug.Log(currentWaypoint.ToString() + ""+ (pointsForBezierCurve.Count - 1 ).ToString());
                     if (currentListWaypoint[currentStepPoint] == currentListWaypoint[currentListWaypoint.Count - 1] && pointsForBezierCurve[currentWaypoint] != pointsForBezierCurve[pointsForBezierCurve.Count - 1]) {
-                        currentWaypoint += 2;
+                        currentWaypoint += 2; 
                         currentStepPoint = 1;
+                        Debug.Log(currentWaypoint);
                         currentListWaypoint.Clear();
                         currentListWaypoint.AddRange(pointsForBezierCurve[currentWaypoint].pointsForBezierCurve);
                     }
 
                     else {
+                      
                         if (currentListWaypoint[currentStepPoint] == currentListWaypoint[currentListWaypoint.Count - 1]) {
                             speed = 0;
 
-                            gameObject.SetActive(false);
+                         
                             if (rateMode == StrawSO.RateMode.Ultimate)
                                 PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][1].Enqueue(gameObject);
                             else {
@@ -115,7 +119,8 @@ public class CurveBullet : Bullet {
                             pointsForBezierCurve = new List<PointsForBezierCurve>();
 
 
-                            currentListWaypoint = new List<Vector3>();
+                            currentListWaypoint = new List<Vector3>();  gameObject.SetActive(false);
+                            return;
                         }
                         else {
                             currentStepPoint++;

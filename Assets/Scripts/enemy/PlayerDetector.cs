@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerDetector : MonoBehaviour
 {
@@ -15,10 +16,12 @@ public class PlayerDetector : MonoBehaviour
     [SerializeField] private Transform aimPatrol;
     private EnemyMovement enemyMovement;
     private bool canPatrol;
+    [SerializeField]
+    private UnityEvent patrolEvent;
 
 
-    
-   
+
+
     void Start()
     {
         if (patrol != null)
@@ -91,6 +94,7 @@ public class PlayerDetector : MonoBehaviour
         enemyMovement.enabled = true;
         enemyMovement.speed = patrol.speed;
         enemyMovement.destination = aimPatrol.position;
+        patrolEvent.Invoke();
         if (Vector2.Distance(rb.position, enemyMovement.destination) < 0.1f)
         {
 

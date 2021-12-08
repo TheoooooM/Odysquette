@@ -410,6 +410,9 @@ MonoBehaviour:
   patrol: {fileID: 0}
   rb: {fileID: 0}
   aimPatrol: {fileID: 0}
+  patrolEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!95 &7896108724452965943
 Animator:
   serializedVersion: 3
@@ -460,6 +463,18 @@ MonoBehaviour:
               m_StringArgument: HO_IdleFlip
               m_BoolArgument: 0
             m_CallState: 2
+          - m_Target: {fileID: 3995892900092999191}
+            m_TargetAssemblyTypeName: EnemyFeedBack, Assembly-CSharp
+            m_MethodName: LaunchAnimation
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: HO_Appear
+              m_BoolArgument: 0
+            m_CallState: 2
     - typeFeedBackEvent: 7
       feedBackEvent:
         m_PersistentCalls:
@@ -474,6 +489,50 @@ MonoBehaviour:
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: HO_Idle
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 3995892900092999191}
+            m_TargetAssemblyTypeName: EnemyFeedBack, Assembly-CSharp
+            m_MethodName: LaunchAnimation
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: HO_AppearFlip
+              m_BoolArgument: 0
+            m_CallState: 2
+    - typeFeedBackEvent: 8
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 3995892900092999191}
+            m_TargetAssemblyTypeName: EnemyFeedBack, Assembly-CSharp
+            m_MethodName: LaunchAnimation
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: HO_DisappearFlip
+              m_BoolArgument: 0
+            m_CallState: 2
+    - typeFeedBackEvent: 9
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 3995892900092999191}
+            m_TargetAssemblyTypeName: EnemyFeedBack, Assembly-CSharp
+            m_MethodName: LaunchAnimation
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: HO_Disappear
               m_BoolArgument: 0
             m_CallState: 2
   - stateEnemySo: HologramShoot

@@ -12,6 +12,7 @@ public class EnemyFeedBackMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     public List<AnimationForSpecificPosition> animationForSpecificPositionsList;
+    public Transform transformPatrol;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -94,25 +95,37 @@ public class EnemyFeedBackMovement : MonoBehaviour
     {
     
         Vector2 direction = (HealthPlayer.Instance.transform.position - transform.position).normalized;
-        float currentInputAngle =  Mathf.Atan2(direction.y, direction.x)*Mathf.Rad2Deg;
-        if (Mathf.Sign(currentInputAngle) == -1)
-        {
-            currentInputAngle = 360 + currentInputAngle;
-        }
+        CheckAngle(direction, index); 
+    }
 
-        MultipleAnimationList multipleAnimationList = AnimationStatesList[index];
-        for (int i = 0; i < multipleAnimationList.angleAnimation.Length; i++)
-        {
+    public void UpdatePositionPatrol(int index)
+    {
+    
+        Vector2 direction = (transformPatrol.position - transform.position).normalized;
+CheckAngle(direction, index);
+    }
+
+    void CheckAngle(Vector2 direction, int index)
+    {
+                float currentInputAngle =  Mathf.Atan2(direction.y, direction.x)*Mathf.Rad2Deg;
+                if (Mathf.Sign(currentInputAngle) == -1)
+                {
+                    currentInputAngle = 360 + currentInputAngle;
+                }
         
-            if (currentInputAngle >=  multipleAnimationList.angleAnimation[i].angleMin &&
-                currentInputAngle <=  multipleAnimationList.angleAnimation[i].angleMax)
-            {
-                                  
-                PlayAnimation(multipleAnimationList.angleAnimation[i].stateName, index, false);
+                MultipleAnimationList multipleAnimationList = AnimationStatesList[index];
+                for (int i = 0; i < multipleAnimationList.angleAnimation.Length; i++)
+                {
                 
+                    if (currentInputAngle >=  multipleAnimationList.angleAnimation[i].angleMin &&
+                        currentInputAngle <=  multipleAnimationList.angleAnimation[i].angleMax)
+                    {
+                                          
+                        PlayAnimation(multipleAnimationList.angleAnimation[i].stateName, index, false);
                         
-            }
-        } 
+                                
+                    }
+                } 
     }
 
     private void PlayAnimation(string stateName, int index, bool animationOneTime)
@@ -121,7 +134,7 @@ public class EnemyFeedBackMovement : MonoBehaviour
                 return; 
         
             animator.Play(stateName);
-            Debug.Log(stateName);
+        
             if(!animationOneTime)
             AnimationStatesList[index].currentStatePlayed = stateName;
     }
