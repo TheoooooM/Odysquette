@@ -8,6 +8,8 @@ public class Ressource : MonoBehaviour
 {
     private Rigidbody2D rb;
     [SerializeField] private float throwForce = 2;
+    [SerializeField] private float moveForce = 2;
+    
     
     void Start()
     {
@@ -17,6 +19,12 @@ public class Ressource : MonoBehaviour
         float y = Random.Range(-throwForce, throwForce)*100;
         Debug.Log("trhow force " + x + " " + y);
         rb.AddForce(new Vector2(x, y));
+    }
+
+    private void FixedUpdate()
+    {
+        Vector2 dir = (Playercontroller.Instance.transform.position - transform.position).normalized * moveForce;
+        rb.velocity = rb.velocity + dir;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

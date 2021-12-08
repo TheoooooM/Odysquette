@@ -260,6 +260,7 @@ public class GameManager : MonoBehaviour {
         NeverDestroy.Instance.firstEffect = firstEffect;
         NeverDestroy.Instance.secondEffect = secondEffect;
         NeverDestroy.Instance.actualStraw = actualStraw;
+        NeverDestroy.Instance.life = HealthPlayer.Instance.healthPlayer;
     }
 
     void ChangeStraw(Straw straw) //change la paille 
