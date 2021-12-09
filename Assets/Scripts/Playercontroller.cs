@@ -7,6 +7,9 @@ using UnityEngine.InputSystem;
 
 public class Playercontroller : MonoBehaviour {
     #region Variables
+
+    [HideInInspector] public static Playercontroller Instance;
+    
     [Header("---- PLAYER DATA")]
     [SerializeField] private String CurrentController;
     public GameObject gun;
@@ -53,7 +56,9 @@ public class Playercontroller : MonoBehaviour {
     #endregion Variables
     
     #region Basic Method
-    private void Awake() {
+    private void Awake()
+    {
+        Instance = this;
         rb = GetComponent<Rigidbody2D>();
         
         playerInput = new PlayerMapping();

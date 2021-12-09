@@ -11,6 +11,8 @@ public class NeverDestroy : MonoBehaviour
     {
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        life = HealthPlayer.Instance.maxHealth;
     }
 
     public GameManager.Effect firstEffect;
@@ -21,10 +23,11 @@ public class NeverDestroy : MonoBehaviour
     public int level = 0;
 
     public int ressources = 0;
+    public int life;
 
     public void AddRessource(int amount = 1)
     {
         ressources += amount;
-        if (UIManager.Instance != null) UIManager.Instance.ressourceText.text = "Ressources : " + amount;
+        if (UIManager.Instance != null) UIManager.Instance.ressourceText.text = "Ressources : " + ressources;
     }
 }

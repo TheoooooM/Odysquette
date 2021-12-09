@@ -29,6 +29,7 @@ public class Exit : MonoBehaviour
 
   private void OnTriggerEnter2D(Collider2D other)
   {
+    GameManager.Instance.SetND();
     if (other.CompareTag("Player")) UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
   }
 
