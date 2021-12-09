@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Pathfinding;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -115,7 +112,6 @@ public class Generation : MonoBehaviour {
                 needOpen = open.right;
                 firstRC.UpdatePart();
                 firstRC.closeRoom.UpdateCloseRoom(false, false, false, true);
-
                 currentPos.x--;
                 break;
 
@@ -159,29 +155,37 @@ public class Generation : MonoBehaviour {
                     //dernière salle
                     GameObject GO = Instantiate(new GameObject(), roomPool);
                     GO.transform.name = "LastRoom";
-                    RoomManager RM = GO.AddComponent<RoomManager>();
+                    GO.AddComponent<RoomManager>();
+                    
                     RoomContainer RC = Instantiate(endpathRoom.GetComponent<RoomCreator>().partList[0].RoomGO, new Vector2((currentPos.x- mapSize/2)*62,(currentPos.y - mapSize/2)*40f), Quaternion.identity, GO.transform).GetComponent<RoomContainer>();
                     RC.roomMapPos = new Vector2((currentPos.x), (int) (currentPos.y));
                     RC.Generator = this;
+                    
                     currentRoom.partList.Add(RC);
                     map[(int)(currentPos.x),(int)(currentPos.y)] = RC;
+                    
                     RC.room = currentRoom;
                     RC.exitLeft = false;
                     RC.exitRight = false;
                     RC.exitTop = false;
                     RC.exitBot = false;
+                    
                     switch (needOpen) {
                         case open.right:
                             RC.exitRight = true;
+                            RC.closeRoom.UpdateCloseRoom(false, true, false, false);
                             break;
                         case open.left:
                             RC.exitLeft = true;
+                            RC.closeRoom.UpdateCloseRoom(false, false, false, true);
                             break;
                         case open.bot:
                             RC.exitBot = true;
+                            RC.closeRoom.UpdateCloseRoom(false, false, true, false);
                             break;
                         case open.top:
                             RC.exitTop = true;
+                            RC.closeRoom.UpdateCloseRoom(true, false, false, false);
                             break;
                     }
 
@@ -350,25 +354,15 @@ public class Generation : MonoBehaviour {
 
                                         currentRoom.cameraRect = roomRect;
 
-                                        switch (exitSide) {
-                                            case open.top:
-                                                needOpen = open.bot;
-                                                break;
-                                            case open.left:
-                                                needOpen = open.right;
-                                                break;
-                                            case open.right:
-                                                needOpen = open.left;
-                                                break;
-                                            case open.bot:
-                                                needOpen = open.top;
-                                                break;
-                                        }
+                                        needOpen = exitSide switch {
+                                            open.top => open.bot,
+                                            open.left => open.right,
+                                            open.right => open.left,
+                                            open.bot => open.top,
+                                            _ => needOpen
+                                        };
 
-                                        currentPos = new Vector2((int) (exitPart.roomPos.x - enterPart.roomPos.x + currentPos.x + movePos.x),
-                                            (int) (exitPart.roomPos.y - enterPart.roomPos.y + currentPos.y + movePos.y));
-
-                                        //Debug.Log("Finish");
+                                        currentPos = new Vector2((int) (exitPart.roomPos.x - enterPart.roomPos.x + currentPos.x + movePos.x), (int) (exitPart.roomPos.y - enterPart.roomPos.y + currentPos.y + movePos.y));
                                         ready = true;
                                         break;
                                     }
@@ -377,7 +371,6 @@ public class Generation : MonoBehaviour {
 
                             x++;
                             if (x == 20) {
-                                //debug.Log("anti while break");
                                 reset = true;
                                 break;
                             }
