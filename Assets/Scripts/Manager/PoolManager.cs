@@ -5,7 +5,7 @@ using Unity.Mathematics;
 using UnityEngine;
 
 public class PoolManager : MonoBehaviour {
-    public Dictionary<Straw, Queue<GameObject>[]> poolDictionary;
+    public Dictionary<GameManager.Straw, Queue<GameObject>[]> poolDictionary;
     public Queue<GameObject> PoisonQueue;
     public GameObject poisonPrefab;
 
@@ -26,7 +26,7 @@ public class PoolManager : MonoBehaviour {
     #endregion
 
     private void Start() {
-        poolDictionary = new Dictionary<Straw, Queue<GameObject>[]>(); //Créer un dictionnaire regroupant chaque pool
+        poolDictionary = new Dictionary<GameManager.Straw, Queue<GameObject>[]>(); //Créer un dictionnaire regroupant chaque pool
         PoisonQueue = new Queue<GameObject>();
         explosionQueue = new Queue<GameObject>();
         foreach (GameManager.StrawClass pol in GameManager.Instance.strawsClass) {
@@ -34,19 +34,24 @@ public class PoolManager : MonoBehaviour {
             //---------------------Génère les pool et les bullets de base------------------------- 
             Queue<GameObject> objectPool = new Queue<GameObject>();
             Queue<GameObject> ultimatePool = new Queue<GameObject>();
-            for (int i = 0; i < pol.sizeShootPool; i++) {
-                if (pol.strawSO.prefabBullet == null) continue;
-                GameObject obj = Instantiate(pol.strawSO.prefabBullet);
-                obj.name = pol.strawSO.strawName + " " + i;
+
+            for (int i = 0; i < pol.sizeShootPool; i++)
+            {
+				if (pol.strawSO.prefabBullet == null) continue;
+                GameObject obj = Instantiate(pol.strawSO.prefabBullet, transform); 
+                obj.name = pol.strawSO.strawName+" "+i;
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
 
-            for (int i = 0; i < pol.sizeUltimatePool; i++) {
-                if (pol.ultimateStrawSO.prefabBullet == null) continue;
-                GameObject obj = Instantiate(pol.ultimateStrawSO.prefabBullet);
-                obj.name = pol.ultimateStrawSO.strawName + " " + i;
-                obj.SetActive(false);
+
+            for (int i = 0; i < pol.sizeUltimatePool; i++)
+            {
+				   if (pol.ultimateStrawSO.prefabBullet == null) continue;
+             GameObject obj = Instantiate(pol.ultimateStrawSO.prefabBullet, transform); 
+                obj.name = pol.ultimateStrawSO.strawName+" "+i;
+                obj.SetActive(false); 
+
                 ultimatePool.Enqueue(obj);
             }
 
@@ -57,9 +62,11 @@ public class PoolManager : MonoBehaviour {
         enemypoolDictionary = new Dictionary<ExtensionMethods.EnemyTypeShoot, Queue<GameObject>>();
         foreach (EnemyShootPool enemyShootPool in EnemySpawnerManager.Instance.enemyShootPools) {
             Queue<GameObject> objectPool = new Queue<GameObject>();
-            for (int i = 0; i < enemyShootPool.sizePool; i++) {
-                GameObject obj = Instantiate(enemyShootPool.bulletPrefab);
-                obj.name = enemyShootPool.enemyTypeShoot + " " + i;
+
+            for (int i = 0; i < enemyShootPool.sizePool; i++)
+            {
+                GameObject obj = Instantiate(enemyShootPool.bulletPrefab, transform); 
+                obj.name = enemyShootPool.enemyTypeShoot+" "+i;
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
@@ -78,8 +85,9 @@ public class PoolManager : MonoBehaviour {
         if (poolDictionary[GameManager.Instance.actualStraw][index].Count ==
             0) // Instancie une balle si il n'y en a plus dans la queue
         {
-            obj = Instantiate(prefabBullet, parentBulletTF.position, parentBulletTF.rotation);
 
+            obj = Instantiate(prefabBullet, parentBulletTF.transform.position, parentBulletTF.rotation);
+            
 
             //poolDictionary[GameManager.Instance.actualStraw].Enqueue(obj);
         }
@@ -130,7 +138,8 @@ public class PoolManager : MonoBehaviour {
         GameObject obj;
         if (enemypoolDictionary[enemyTypeShoot].Count == 0) // Instancie une balle si il n'y en a plus dans la queue
         {
-            obj = Instantiate(prefabBullet, parentBulletTF.position, parentBulletTF.rotation);
+            obj = Instantiate(prefabBullet,  parentBulletTF.transform.position, parentBulletTF.rotation, transform);
+         
         }
         else // Sinon active la première balle se trouvant dans la queue
         {

@@ -61,8 +61,7 @@ public class RoomContainer : MonoBehaviour
 
         room = GetComponentInParent<RoomManager>();
     }
-
-
+    
     void Update()
     {
         if (!neighbor && !room.runningRoom && Generator.endGeneration && !playerIn)
@@ -195,7 +194,7 @@ public class RoomContainer : MonoBehaviour
             playerIn = true;
             neighbor = true;
             playerInRoom = true;
-            Debug.Log("Activate");
+         
             ActivateNeighbor(true);
         }
     }
@@ -206,7 +205,7 @@ public class RoomContainer : MonoBehaviour
         {
             playerIn = false;
             playerInRoom = false;
-            Debug.Log("Desactivate");
+      
             ActivateNeighbor(false);
         }
     }

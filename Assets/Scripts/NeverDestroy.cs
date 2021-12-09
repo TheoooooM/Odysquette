@@ -15,10 +15,10 @@ public class NeverDestroy : MonoBehaviour
         life = HealthPlayer.Instance.maxHealth;
     }
 
-    public Effect firstEffect;
-    public Effect secondEffect;
+    public GameManager.Effect firstEffect;
+    public GameManager.Effect secondEffect;
 
-    public Straw actualStraw;
+    public GameManager.Straw actualStraw;
 
     public int level = 0;
 

@@ -17,7 +17,8 @@ public class Bullet : MonoBehaviour {
     [SerializeField] private bool isColliding;
     public Rigidbody2D rb;
     private Vector3 lastVelocity;
-
+    
+    public float ammountUltimate;
     [Header("==============Effects Stat===============")]
     public int pierceCount = 2;
 
@@ -36,10 +37,10 @@ public class Bullet : MonoBehaviour {
 
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
-        if (GameManager.Instance.firstEffect == Effect.pierce || GameManager.Instance.secondEffect == Effect.pierce) _pierceCount = pierceCount;
+        if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce) _pierceCount = pierceCount;
         else _pierceCount = 0;
 
-        if (GameManager.Instance.firstEffect == Effect.bounce || GameManager.Instance.secondEffect == Effect.bounce) _bounceCount = bounceCount;
+        if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
         else _bounceCount = 0;
         bulletSpriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -55,10 +56,10 @@ public class Bullet : MonoBehaviour {
 
         Invoke(nameof(DelayforDrag), 0.5f);
 
-        if (GameManager.Instance.firstEffect == Effect.pierce || GameManager.Instance.secondEffect == Effect.pierce) _pierceCount = pierceCount;
+        if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce) _pierceCount = pierceCount;
         else _pierceCount = 0;
 
-        if (GameManager.Instance.firstEffect == Effect.bounce || GameManager.Instance.secondEffect == Effect.bounce) _bounceCount = bounceCount;
+        if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
         else _bounceCount = 0;
         GetComponent<SpriteRenderer>().color = GameManager.Instance.currentColor;
     }
@@ -82,7 +83,7 @@ public class Bullet : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        if (GameManager.Instance.firstEffect == Effect.poison || GameManager.Instance.secondEffect == Effect.poison) {
+        if (GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison) {
             //  Debug.Log(distance/rb.velocity.magnitude +"   " +  _poisonCooldown + "   " + Time.deltaTime + "  = " + (_poisonCooldown + Time.deltaTime));
 
 
@@ -104,19 +105,37 @@ public class Bullet : MonoBehaviour {
         StartCoroutine(Reset());
         //  Debug.Log("collid" + other.name);
         switch (GameManager.Instance.firstEffect) {
-            case Effect.explosion:
+            case GameManager.Effect.explosion:
                 Explosion();
+                break;
+
+
+            case GameManager.Effect.ice:
+                Ice(other.gameObject);
                 break;
         }
 
         switch (GameManager.Instance.secondEffect) {
-            case Effect.explosion:
+            case GameManager.Effect.explosion:
                 Explosion();
+                break;
+
+            case GameManager.Effect.ice:
+                Ice(other.gameObject);
                 break;
         }
 
-        if (other.CompareTag("Enemy")) {
-            other.GetComponent<EnemyStateManager>().TakeDamage(damage, rb.position, knockUpValue, true, false);
+        if (other.CompareTag("Enemy"))
+        {
+            EnemyStateManager enemyStateManager = other.GetComponent<EnemyStateManager>();
+                enemyStateManager.TakeDamage(damage, rb.position, knockUpValue, true, false);
+                if (rateMode != StrawSO.RateMode.Ultimate)
+                {
+               
+                      GameManager.Instance.ultimateValue += enemyStateManager.EMainStatsSo.coeifficentUltimateStrawPoints*ammountUltimate;
+                }
+              
+            
             if (_pierceCount > 0) {
                 _pierceCount--;
             }
@@ -126,14 +145,14 @@ public class Bullet : MonoBehaviour {
         }
 
         else if (!other.CompareTag("Walls")) {
-            Debug.Log(other.gameObject.name);
+         
             DesactiveBullet();
         }
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
         if (_bounceCount > 0 && other.gameObject.CompareTag("Walls")) {
-            Debug.Log(_bounceCount);
+           
 
             _bounceCount--;
             var speed = lastVelocity.magnitude;

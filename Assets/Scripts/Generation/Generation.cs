@@ -414,9 +414,9 @@ public class Generation : MonoBehaviour {
         roomPool.name = "RoomPool";
     }
 
+
     void UIUpdate(int value = 0){
         if (UIManager.Instance == null) return;
-        Debug.Log("UIUpdate");
         UIManager UI = UIManager.Instance;
         if (value > UI.loadingBar.value) UI.loadingValue = value;
         if (endGeneration) UI.LoadingScreen.SetActive(false);
