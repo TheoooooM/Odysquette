@@ -20,6 +20,7 @@ public class RoomManager : MonoBehaviour
     public Transform exit;
     
     private bool done = false;
+    private bool sendanim = false;
 
     private void Start()
     {
@@ -46,6 +47,11 @@ public class RoomManager : MonoBehaviour
 
             if (ennemiesList.Count == 0)
             {
+                if (!sendanim)
+                {
+                    GameManager.Instance.endRoom();
+                    sendanim = true;
+                }
                 //Debug.Log("finish Room");
                 roomFinish = true;
                 if(exitGO != null)exitGO.SetActive(false);

@@ -104,7 +104,12 @@ public class GameManager : MonoBehaviour {
 
     //Bullet
     [Header("Settings")] [SerializeField] int ShootRate;
-    [SerializeField] [Header("Player")] public GameObject Player;
+    [HideInInspector]public GameObject Player;
+
+    [Header("Curves")] 
+    [SerializeField] private AnimationCurve endRoomTime;
+    private float timer;
+    private bool animate;
 
 
     [Header("----------------DEBUG---------------")]
@@ -119,7 +124,9 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private void Start() {
+    private void Start()
+    {
+        if (Playercontroller.Instance != null) Player = Playercontroller.Instance.gameObject;
         ChangeStraw(actualStraw);
         lastInput = Vector3.right * viewFinderDistance;
         foreach (StrawClass str in strawsClass) //active la bonne paille au début
@@ -140,8 +147,19 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-
-    private void Update() {
+    private void Update()
+    {
+            if (timer > 1)
+            {
+                animate = false;
+            }
+            if (animate)
+        {
+            timer += Time.deltaTime * (1 / Time.timeScale);
+            Time.timeScale = endRoomTime.Evaluate(timer);
+        }
+        
+        
         if (isUltimate) {
             if (actualStrawClass.ultimateStrawSO.ultimateTime > timerUltimate) {
                 timerUltimate += Time.deltaTime;
@@ -261,6 +279,12 @@ public class GameManager : MonoBehaviour {
         NeverDestroy.Instance.secondEffect = secondEffect;
         NeverDestroy.Instance.actualStraw = actualStraw;
         NeverDestroy.Instance.life = HealthPlayer.Instance.healthPlayer;
+    }
+
+    public void endRoom()
+    {
+        timer = 0;
+        animate = true;
     }
 
     void ChangeStraw(Straw straw) //change la paille 
