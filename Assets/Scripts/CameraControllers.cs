@@ -1,7 +1,6 @@
 using Cinemachine;
 using UnityEngine;
 
-
 public class CameraControllers : MonoBehaviour {
     #region Instance
     public static CameraControllers Instance;
@@ -26,7 +25,6 @@ public class CameraControllers : MonoBehaviour {
     
     [HideInInspector] public Rect currentRectLimitation;
     private Vector3 offSet;
-    private Vector3 actualPos;
     
     private void Update() {
         float distanceX = ((Input.mousePosition.x - (cameraMain.pixelWidth / 2)) / cameraMain.pixelWidth) * 2;
@@ -40,11 +38,6 @@ public class CameraControllers : MonoBehaviour {
         if (GameManager.Instance.isMouse) offSet = player.position + new Vector3(camPosX, camPosY, -10);
         else offSet = (player.position + (Vector3) GameManager.Instance.ViewPad * distanceCurveY.Evaluate(1));
 
-        actualPos = new Vector3(transform.position.x, transform.position.y, -10);
         cameraMain.transform.position = offSet;
     }
-}
-
-public static class CameraHelper {
-    public static Vector2 MousePos(this Camera cam) => cam.ScreenToWorldPoint(Input.mousePosition);
 }

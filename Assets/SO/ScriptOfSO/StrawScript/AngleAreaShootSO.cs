@@ -18,6 +18,7 @@ public class AngleAreaShootSO : StrawSO {
     public override void Shoot(Transform parentBulletTF, MonoBehaviour script, float currentTimeValue = 1) {
         if (!isDelayBetweenShoot && !isDelayBetweenWaveShoot) {
             for (int i = 0; i < angleDivision + 2 + Mathf.RoundToInt(angleDivisionParameter * currentTimeValue); i++) {
+                
                 bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode);
                 bullet.SetActive(true);
                 bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;

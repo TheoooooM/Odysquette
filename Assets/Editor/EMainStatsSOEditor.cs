@@ -101,10 +101,10 @@ public class EMainStatsSOEditor : Editor
 
                                               
                                              
-                                             serializedObject.FindProperty("giverUltimateStrawPoints").floatValue =
-                                                                                                 EditorGUILayout.Slider("Ultimate Straw Points",
-                                                                                                    serializedObject.FindProperty("giverUltimateStrawPoints").floatValue,
-                                                                                                    0, 100);
+                                             serializedObject.FindProperty("coeifficentUltimateStrawPoints").intValue =
+                                                                                                 EditorGUILayout.IntSlider("Ultimate Straw Points",
+                                                                                                    serializedObject.FindProperty("coeifficentUltimateStrawPoints").intValue,
+                                                                                                    0, 20);
                                              EditorGUILayout.Space(4f);
                                              using (new GUILayout.HorizontalScope())
                                              {

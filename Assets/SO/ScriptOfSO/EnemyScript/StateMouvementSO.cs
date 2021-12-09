@@ -29,8 +29,7 @@ public class StateMouvementSO : StateEnemySO
         EnemyMovement enemyMovement =
             (EnemyMovement) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyMovement];
         Rigidbody2D rbPlayer = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyPlayer];
-       Debug.Log(enemyFeedBack);
-       
+
         bool _endstep = false;
         enemyMovement.speed = moveSpeed;
         if (isMovementToSpawn)

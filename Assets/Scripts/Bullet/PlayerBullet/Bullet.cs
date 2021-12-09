@@ -17,7 +17,8 @@ public class Bullet : MonoBehaviour {
     [SerializeField] private bool isColliding;
     public Rigidbody2D rb;
     private Vector3 lastVelocity;
-
+    
+    public float ammountUltimate;
     [Header("==============Effects Stat===============")]
     public int pierceCount = 2;
 
@@ -124,8 +125,17 @@ public class Bullet : MonoBehaviour {
                 break;
         }
 
-        if (other.CompareTag("Enemy")) {
-            other.GetComponent<EnemyStateManager>().TakeDamage(damage, rb.position, knockUpValue, true, false);
+        if (other.CompareTag("Enemy"))
+        {
+            EnemyStateManager enemyStateManager = other.GetComponent<EnemyStateManager>();
+                enemyStateManager.TakeDamage(damage, rb.position, knockUpValue, true, false);
+                if (rateMode != StrawSO.RateMode.Ultimate)
+                {
+               
+                      GameManager.Instance.ultimateValue += enemyStateManager.EMainStatsSo.coeifficentUltimateStrawPoints*ammountUltimate;
+                }
+              
+            
             if (_pierceCount > 0) {
                 _pierceCount--;
             }
@@ -135,14 +145,14 @@ public class Bullet : MonoBehaviour {
         }
 
         else if (!other.CompareTag("Walls")) {
-            Debug.Log(other.gameObject.name);
+         
             DesactiveBullet();
         }
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
         if (_bounceCount > 0 && other.gameObject.CompareTag("Walls")) {
-            Debug.Log(_bounceCount);
+           
 
             _bounceCount--;
             var speed = lastVelocity.magnitude;

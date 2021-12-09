@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1916315120051850183}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 1.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6353946708157474115}
@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2834569882023728949}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 2.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6353946708064069958}
@@ -90,37 +90,6 @@ Transform:
   m_Father: {fileID: 6353946706996803574}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6267532474267417526
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8918690727782642302}
-  m_Layer: 0
-  m_Name: HologramOnly
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8918690727782642302
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6267532474267417526}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.0147073, y: 2.5839474, z: 0.6012268}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 6353946706996803574}
-  m_Father: {fileID: 6353946706901043107}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6353946706901043108
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,7 +117,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8918690727782642302}
+  - {fileID: 6353946706996803574}
   - {fileID: 6353946708064069958}
   - {fileID: 6353946708157474115}
   m_Father: {fileID: 0}
@@ -175,6 +144,7 @@ GameObject:
   - component: {fileID: 97846471465379882}
   - component: {fileID: 1871994426267557388}
   - component: {fileID: 5154981315841071874}
+  - component: {fileID: 1004160048218586617}
   m_Layer: 8
   m_Name: Hologram
   m_TagString: Enemy
@@ -190,14 +160,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6353946706996803575}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0147073, y: -2.5839474, z: -0.6012268}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6353946708976870036}
   - {fileID: 6353946708524438065}
   - {fileID: 6353946708646189335}
   - {fileID: 6408858458756139924}
-  m_Father: {fileID: 8918690727782642302}
+  m_Father: {fileID: 6353946706901043107}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6353946706996803568
@@ -263,6 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d29982ec27ce94f94b8e5f480cce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyFeedBack: {fileID: 0}
   isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: f71f57096822c694d946a961d0d623a6, type: 2}
   forceApply: {x: 0, y: 0}
@@ -291,6 +262,7 @@ MonoBehaviour:
   isDragKnockUp: 0
   isConvey: 0
   conveyBeltSpeed: {x: 0, y: 0}
+  isDead: 0
   playerTransform: {fileID: 0}
   spawnPosition: {x: 0, y: 0, z: 0}
   indexCurrentState: 0
@@ -457,7 +429,19 @@ MonoBehaviour:
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
-              m_StringArgument: HO_IdleFlip
+              m_StringArgument: HO_Disappear
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 1004160048218586617}
+            m_TargetAssemblyTypeName: EnemyFeedBackDelay, Assembly-CSharp
+            m_MethodName: StartUnityEventWithDelay
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
     - typeFeedBackEvent: 7
@@ -473,7 +457,51 @@ MonoBehaviour:
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
-              m_StringArgument: HO_Idle
+              m_StringArgument: HO_DisappearFlip
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 1004160048218586617}
+            m_TargetAssemblyTypeName: EnemyFeedBackDelay, Assembly-CSharp
+            m_MethodName: StartUnityEventWithDelay
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 1
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - typeFeedBackEvent: 8
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 3995892900092999191}
+            m_TargetAssemblyTypeName: EnemyFeedBack, Assembly-CSharp
+            m_MethodName: LaunchAnimation
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: HO_AppearFlip
+              m_BoolArgument: 0
+            m_CallState: 2
+    - typeFeedBackEvent: 9
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 3995892900092999191}
+            m_TargetAssemblyTypeName: EnemyFeedBack, Assembly-CSharp
+            m_MethodName: LaunchAnimation
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: HO_Appear
               m_BoolArgument: 0
             m_CallState: 2
   - stateEnemySo: HologramShoot
@@ -555,10 +583,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 97846471465379882}
-        m_TargetAssemblyTypeName: EnemyFeedBackOtherObject, Assembly-CSharp
-        m_MethodName: PlayAnimationOfOtherObjectDestroy
-        m_Mode: 3
+      - m_Target: {fileID: 6353946706996803575}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -567,26 +595,26 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 6267532474267417526}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1871994426267557388}
+        m_TargetAssemblyTypeName: EnemyFeedBackDeath, Assembly-CSharp
+        m_MethodName: DestroyOtherObject
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 1
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1871994426267557388}
-        m_TargetAssemblyTypeName: EnemyFeedBackDeath, Assembly-CSharp
-        m_MethodName: DestroyOtherObject
+      - m_Target: {fileID: 97846471465379882}
+        m_TargetAssemblyTypeName: EnemyFeedBackOtherObject, Assembly-CSharp
+        m_MethodName: PlayAnimationOfOtherObjectDestroy
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -608,7 +636,52 @@ MonoBehaviour:
   - propertyName: angeramount
     value: 0
   - propertyName: angeramount
-    value: -0.25
+    value: -0.4
+--- !u!114 &1004160048218586617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6353946706996803575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 197c28093a2890c4684601ab4177a01c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unityEventDelaysList:
+  - unityEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3995892900092999191}
+          m_TargetAssemblyTypeName: EnemyFeedBack, Assembly-CSharp
+          m_MethodName: LaunchAnimation
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: HO_IdleFlip
+            m_BoolArgument: 0
+          m_CallState: 2
+    delay: 1
+  - unityEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3995892900092999191}
+          m_TargetAssemblyTypeName: EnemyFeedBack, Assembly-CSharp
+          m_MethodName: LaunchAnimation
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: HO_Idle
+            m_BoolArgument: 0
+          m_CallState: 2
+    delay: 1
 --- !u!1 &6353946708064069959
 GameObject:
   m_ObjectHideFlags: 0

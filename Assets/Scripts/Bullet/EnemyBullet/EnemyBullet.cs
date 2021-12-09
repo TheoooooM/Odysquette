@@ -69,7 +69,7 @@ public class EnemyBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.name);
+
         if (!HealthPlayer.Instance.playerController.InDash)
         {
              if (other.CompareTag("Player"))

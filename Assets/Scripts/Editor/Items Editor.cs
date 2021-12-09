@@ -20,6 +20,7 @@ public class ItemsEditor : Editor
             DrawProperty("Ressource Value", serializedObject.FindProperty("ressourceValue"), true);
             DrawProperty("Cost", serializedObject.FindProperty("cost"), true);
         }
+        DrawProperty("Canvas", serializedObject.FindProperty("canvas"), true);
         serializedObject.ApplyModifiedPropertiesWithoutUndo();
     }
 

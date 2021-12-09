@@ -15,9 +15,12 @@ public class Items : MonoBehaviour
    [SerializeField] private type itemType;
    [SerializeField] private GameManager.Effect effect;
    [SerializeField] private GameManager.Straw straw;
-   [SerializeField] private int healthValue;
-   [SerializeField] private int ressourceValue;
-   [SerializeField] private int cost;
+   [SerializeField] private int healthValue; 
+   [SerializeField] private int ressourceValue = 5;
+   [SerializeField] private int cost = 5;
+   [SerializeField] private GameObject canvas;
+   
+   public bool shop;
 
    
    
@@ -25,11 +28,22 @@ public class Items : MonoBehaviour
       playerInput = new PlayerMapping();
       playerInput.Interface.Enable();
       playerInput.Interface.Button.performed += ButtonOnperformed;
+      canvas.SetActive(false);
    }
 
    private void ButtonOnperformed(InputAction.CallbackContext obj) {
-      Debug.Log(obj.control.displayName);
-      if(inRange) UseItem(obj.control.displayName);
+      if (inRange)
+      {
+         if (cost <= NeverDestroy.Instance.ressources && shop)
+         {
+            UseItem(obj.control.displayName);
+            NeverDestroy.Instance.AddRessource(-cost);
+         }
+         else if(!shop)
+         {
+            UseItem(obj.control.displayName);
+         }
+      }
    }
 
    private void UseItem(string buttonPress = "E") {
@@ -71,11 +85,16 @@ public class Items : MonoBehaviour
       if (other.transform.CompareTag("Player")) {
          GetComponent<SpriteRenderer>().color = Color.yellow;
          inRange = true;
+         canvas.SetActive(true);
       }
    }
    
    private void OnTriggerExit2D(Collider2D other) {
-      if(other.transform.CompareTag("Player")) inRange = false;
+      if (other.transform.CompareTag("Player"))
+      {
+         inRange = false;
          GetComponent<SpriteRenderer>().color = Color.white;
+         canvas.SetActive(false);
+      }
    }
 }

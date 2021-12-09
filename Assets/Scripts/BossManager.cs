@@ -17,7 +17,7 @@ public class BossManager : MonoBehaviour
  [SerializeField] private float timeOffset;
   [SerializeField]
   private ParticleSystem[] EffectInvincible = new ParticleSystem[4];
-  public ExtensionMethods.PhaseBoss currentPhaseBoss;
+
   public float timeBegin;
   public float timeEnd;
   public float timerBegin;
@@ -43,53 +43,30 @@ private int currentMaxEnabledTurret;
 
   private void Update()
   {
-    if (beginBoss)
-    {
-         if (timerBegin < timeBegin)
-          {
-            timerBegin += Time.deltaTime;
-            bossParticleSystem.gameObject.SetActive(true);
-          }
-          else
-          { 
-            SetPhase(ExtensionMethods.PhaseBoss.Begin);
-           
-          }
-    }
- 
-    
-   
+    Debug.Log(bossParticleSystem.gameObject.activeSelf);
   }
+
 
   public void SetPhase(ExtensionMethods.PhaseBoss phaseBoss)
   {
-    if (phaseBoss == ExtensionMethods.PhaseBoss.Begin)
-    {
-         enemyStateManager.enabled = true;
-         
-         bossParticleSystem.gameObject.SetActive(false);
-         beginBoss = false;
-
-    }
-      
-    
-
-   else
-   {
     
      currentMaxEnabledTurret =(int) phaseBoss;
      currentIndexEnabledTurret = 0;
+     Debug.Log(currentIndexEnabledTurret);
+     Debug.Log(currentMaxEnabledTurret);
+     
      for (int i = 0; i < currentMaxEnabledTurret; i++)
      {
+       Debug.Log(i);
+     baseturrets[i].enabled = true;
+     baseturrets[i].boxCollider2D.enabled = true;
        
-       
-   
        baseturrets[i].GetComponent<TurretStateManager>().timerCondition.Remove(0);
        baseturrets[i].GetComponent<TurretStateManager>().timerCondition[0] =
          turret.stateEnnemList[0].timeCondition - timeOffset- timeBetweenShootTurret * i;
       
-baseturrets[i].enabled = true;
-baseturrets[i].boxCollider2D.enabled = true;
+
+
        if (i != 0)
        { EffectInvincible[i].gameObject.SetActive(true);
          ParticleSystem.MainModule mainModule = EffectInvincible[i].main;
@@ -103,7 +80,9 @@ baseturrets[i].boxCollider2D.enabled = true;
      var mainModuleBoss = bossParticleSystem.main;
      mainModuleBoss.startColor = baseturrets[0].FxColor;
      bossParticleSystem.gameObject.SetActive(true);
-   }
+     Debug.Log(bossParticleSystem.gameObject.activeSelf);
+     Debug.Log("tu es lu là");
+   
    
         
      
