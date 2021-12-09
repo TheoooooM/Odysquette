@@ -16,28 +16,6 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
-    #region Enum
-
-    public enum Effect {
-        none,
-        bounce,
-        pierce,
-        explosion,
-        poison,
-        ice
-    }
-
-    public enum Straw {
-        basic,
-        bubble,
-        snipaille,
-        eightPaille,
-        tripaille,
-        mitra
-    }
-
-    #endregion
-
     #region StrawClass
 
     [System.Serializable]
@@ -76,7 +54,7 @@ public class GameManager : MonoBehaviour {
     private Vector2 mousepos; //position de la souris sur l'écran
     public float angle; //angle pour orienter la paille
     public float viewFinderDistance;
-    [SerializeField] private Camera main;
+    [SerializeField] private Camera cameraMain;
 
     [Header("Juices")] [SerializeField] public Effect firstEffect;
 
@@ -103,11 +81,13 @@ public class GameManager : MonoBehaviour {
 
 
     //Bullet
-    [Header("Settings")] [SerializeField] int ShootRate;
-    [HideInInspector]public GameObject Player;
+    [Header("Settings")] 
+    [SerializeField] int ShootRate;
+    [HideInInspector] public GameObject Player;
 
     [Header("Curves")] 
     [SerializeField] private AnimationCurve endRoomTime;
+    [SerializeField] private AnimationCurve cameraFOV;
     private float timer;
     private bool animate;
 
@@ -124,8 +104,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private void Start()
-    {
+    private void Start() {
         if (Playercontroller.Instance != null) Player = Playercontroller.Instance.gameObject;
         ChangeStraw(actualStraw);
         lastInput = Vector3.right * viewFinderDistance;
@@ -147,19 +126,18 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private void Update()
-    {
-            if (timer > 1)
-            {
-                animate = false;
-            }
-            if (animate)
-        {
+    private void Update() {
+        if (timer > 1) {
+            animate = false;
+        }
+
+        if (animate) {
             timer += Time.deltaTime * (1 / Time.timeScale);
             Time.timeScale = endRoomTime.Evaluate(timer);
+            cameraMain.orthographicSize = cameraFOV.Evaluate(timer);
         }
-        
-        
+
+
         if (isUltimate) {
             if (actualStrawClass.ultimateStrawSO.ultimateTime > timerUltimate) {
                 timerUltimate += Time.deltaTime;
@@ -170,7 +148,7 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousepos = cameraMain.ScreenToWorldPoint(Input.mousePosition);
         if (shooting && !isUltimate) {
             switch (actualStrawClass.strawSO.rateMode) {
                 case StrawSO.RateMode.FireLoading:{
@@ -187,8 +165,6 @@ public class GameManager : MonoBehaviour {
                         actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
                         shootLoading = 0;
                     }
-
-
                     break;
                 }
                 case StrawSO.RateMode.FireRate:{
@@ -233,17 +209,16 @@ public class GameManager : MonoBehaviour {
         shootCooldown += Time.deltaTime;
 
         shootCooldown = Mathf.Min(shootCooldown, actualStrawClass.strawSO.timeValue);
-        
-        if(actualStrawClass.StrawType != actualStraw) ChangeStraw(actualStraw);
-    }
 
+        if (actualStrawClass.StrawType != actualStraw) ChangeStraw(actualStraw);
+    }
     private void FixedUpdate() {
         //---------------- Oriente la paille ------------------------
         if (isMouse) {
             Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x, actualStrawClass.StrawParent.transform.position.y);
             _lookDir = new Vector2(mousepos.x, mousepos.y) - Position;
             angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
-            if (UIManager.Instance != null) UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(mousepos);
+            if (UIManager.Instance != null) UIManager.Instance.cursor.transform.position = cameraMain.WorldToScreenPoint(mousepos);
 
 
             actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
@@ -256,19 +231,19 @@ public class GameManager : MonoBehaviour {
 
                 Debug.Log("test");
 
-                UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(actualStrawClass.spawnerTransform.position + (Vector3) ViewPad.normalized * viewFinderDistance);
+                UIManager.Instance.cursor.transform.position = cameraMain.WorldToScreenPoint(actualStrawClass.spawnerTransform.position + (Vector3) ViewPad.normalized * viewFinderDistance);
                 lastInput = ViewPad.normalized;
             }
 
 
-            UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(actualStrawClass.spawnerTransform.position + (Vector3) lastInput.normalized * viewFinderDistance);
+            UIManager.Instance.cursor.transform.position = cameraMain.WorldToScreenPoint(actualStrawClass.spawnerTransform.position + (Vector3) lastInput.normalized * viewFinderDistance);
         }
 
         actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
         //--------------------------------------------------------------
     }
 
-    public void GetND() {
+    private void GetND() {
         firstEffect = NeverDestroy.Instance.firstEffect;
         secondEffect = NeverDestroy.Instance.secondEffect;
         actualStraw = NeverDestroy.Instance.actualStraw;
@@ -281,8 +256,7 @@ public class GameManager : MonoBehaviour {
         NeverDestroy.Instance.life = HealthPlayer.Instance.healthPlayer;
     }
 
-    public void endRoom()
-    {
+    public void endRoom() {
         timer = 0;
         animate = true;
     }
@@ -290,10 +264,11 @@ public class GameManager : MonoBehaviour {
     void ChangeStraw(Straw straw) //change la paille 
     {
         //dictionnaire
-        if(actualStrawClass.StrawParent != null) actualStrawClass.StrawParent.SetActive(false);
+        if (actualStrawClass.StrawParent != null) actualStrawClass.StrawParent.SetActive(false);
         foreach (StrawClass strawC in strawsClass) {
             if (strawC.StrawType == straw) actualStrawClass = strawC;
         }
+
         actualStrawClass.StrawParent.GetComponent<SpriteRenderer>().sprite = actualStrawClass.strawSO.strawRenderer;
         actualStrawClass.StrawParent.SetActive(true);
         for (int i = 0; i < colorEffectsList.Length; i++) {
@@ -303,18 +278,41 @@ public class GameManager : MonoBehaviour {
             }
         }
     }
+}
 
-    public enum ShootMode {
-        BasicShoot,
-        CurveShoot,
-        AreaShoot,
-        AngleAreaShoot
-    }
+/// <summary>
+/// Type of shoot
+/// </summary>
+public enum ShootMode {
+    BasicShoot,
+    CurveShoot,
+    AreaShoot,
+    AngleAreaShoot
+}
 
-    [Serializable]
-    public class CombinaisonColorEffect {
-        public Effect firstEffect;
-        public Effect secondEffect;
-        public Color combinaisonColor;
-    }
+/// <summary>
+/// Type of effect
+/// </summary>
+public enum Effect {
+    none,
+    bounce,
+    pierce,
+    explosion,
+    poison
+}
+
+public enum Straw {
+    basic,
+    bubble,
+    snipaille,
+    eightPaille,
+    tripaille,
+    mitra
+}
+
+[Serializable]
+public class CombinaisonColorEffect {
+    public Effect firstEffect;
+    public Effect secondEffect;
+    public Color combinaisonColor;
 }

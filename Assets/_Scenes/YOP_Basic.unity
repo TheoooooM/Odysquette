@@ -605,7 +605,7 @@ MonoBehaviour:
   - {fileID: 7124168476881402690, guid: c85ed95d75cd2d14bb05a3549825643f, type: 3}
   endpathRoom: {fileID: 4737099685338266052, guid: 21ddb76b7bfc08544850b680d711c29b, type: 3}
   mapSize: 51
-  nbrOfRoom: 3
+  nbrOfRoom: 6
   roomPool: {fileID: 0}
   BasicRect:
     serializedVersion: 2
@@ -949,7 +949,7 @@ MonoBehaviour:
   offsetPadViewFinder: 0.3
   angle: 0
   viewFinderDistance: 2
-  main: {fileID: 196568771}
+  cameraMain: {fileID: 196568771}
   firstEffect: 0
   secondEffect: 0
   colorEffectsList:
@@ -984,7 +984,7 @@ MonoBehaviour:
     secondEffect: 4
     combinaisonColor: {r: 0.509434, g: 0.30972174, b: 0.0744927, a: 1}
   currentColor: {r: 1, g: 1, b: 1, a: 1}
-  actualStraw: 5
+  actualStraw: 0
   strawsClass:
   - StrawName: Basic Straw
     StrawType: 0
@@ -1055,8 +1055,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.16487415
-      value: 0.28380507
+      time: 0.121000916
+      value: 0.7149916
       inSlope: -2.975462
       outSlope: -2.975462
       tangentMode: 0
@@ -1064,20 +1064,53 @@ MonoBehaviour:
       inWeight: 0.1312236
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.5622956
-      value: 0.20720258
-      inSlope: 1.4753261
-      outSlope: 1.4753261
+      time: 0.611125
+      value: 0.8010944
+      inSlope: 1.1627342
+      outSlope: 1.1627342
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.08004653
-      outWeight: 0.33333334
+      outWeight: 0.10653917
     - serializedVersion: 3
       time: 1
       value: 1.0002723
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  cameraFOV:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 12
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.25
+      value: 12
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 12
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334

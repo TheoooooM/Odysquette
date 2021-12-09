@@ -17,31 +17,31 @@ public class ItemShop : Chest
     public override void RdmJuice()
     {
         GameObject item = null;
-        GameManager.Effect effect = GameManager.Effect.none;
+        Effect effect = Effect.none;
         
-        while (effect == GameManager.Instance.firstEffect || effect == GameManager.Instance.secondEffect || effect == GameManager.Effect.none)
+        while (effect == GameManager.Instance.firstEffect || effect == GameManager.Instance.secondEffect || effect == Effect.none)
         {
             int index = Random.Range(0, 3);
             switch (index)
             {
                 case 0 :
                     item = SO.bounceJuice;
-                    effect = GameManager.Effect.bounce;
+                    effect = Effect.bounce;
                     break;
                 
                 case 1 :
                     item = SO.pierceJuice;
-                    effect = GameManager.Effect.pierce;
+                    effect = Effect.pierce;
                     break;
 
                 case 2 :
                     item = SO.explosionJuice;
-                    effect = GameManager.Effect.explosion;
+                    effect = Effect.explosion;
                     break;
 
                 case 3 :
                     item = SO.poisonJuice;
-                    effect = GameManager.Effect.poison;
+                    effect = Effect.poison;
                     break;
             }
         }
@@ -51,7 +51,7 @@ public class ItemShop : Chest
     public override void RdmStraw()
     {
         GameObject item = null;
-        GameManager.Straw straw = GameManager.Straw.basic;
+        Straw straw = Straw.basic;
         
         int index = 0;
         while (index == 0 || straw == GameManager.Instance.actualStraw)
@@ -61,32 +61,32 @@ public class ItemShop : Chest
             {
                 case 0 :
                     item = SO.basicStraw;
-                    straw = GameManager.Straw.basic;
+                    straw = Straw.basic;
                     break;
 
                 case 1 :
                     item = SO.mitraStraw;
-                    straw = GameManager.Straw.mitra;
+                    straw = Straw.mitra;
                     break;
                 
                 case 2 :
                     item = SO.bubbleStraw;
-                    straw = GameManager.Straw.bubble;
+                    straw = Straw.bubble;
                     break;
 
                 case 3 :
                     item = SO.snipStraw;
-                    straw = GameManager.Straw.snipaille;
+                    straw = Straw.snipaille;
                     break;
 
                 case 4 :
                     item = SO.eightStraw;
-                    straw = GameManager.Straw.eightPaille;
+                    straw = Straw.eightPaille;
                     break;
 
                 case 5 :
                     item = SO.triStraw;
-                    straw = GameManager.Straw.tripaille;
+                    straw = Straw.tripaille;
                     break;
             
             }

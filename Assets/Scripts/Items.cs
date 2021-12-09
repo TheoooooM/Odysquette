@@ -13,8 +13,8 @@ public class Items : MonoBehaviour
    
    public bool inRange;
    [SerializeField] private type itemType;
-   [SerializeField] private GameManager.Effect effect;
-   [SerializeField] private GameManager.Straw straw;
+   [SerializeField] private Effect effect;
+   [SerializeField] private Straw straw;
    [SerializeField] private int healthValue; 
    [SerializeField] private int ressourceValue = 5;
    [SerializeField] private int cost = 5;

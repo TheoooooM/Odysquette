@@ -36,10 +36,10 @@ public class Bullet : MonoBehaviour {
 
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
-        if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce) _pierceCount = pierceCount;
+        if (GameManager.Instance.firstEffect == Effect.pierce || GameManager.Instance.secondEffect == Effect.pierce) _pierceCount = pierceCount;
         else _pierceCount = 0;
 
-        if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
+        if (GameManager.Instance.firstEffect == Effect.bounce || GameManager.Instance.secondEffect == Effect.bounce) _bounceCount = bounceCount;
         else _bounceCount = 0;
         bulletSpriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -55,10 +55,10 @@ public class Bullet : MonoBehaviour {
 
         Invoke(nameof(DelayforDrag), 0.5f);
 
-        if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce) _pierceCount = pierceCount;
+        if (GameManager.Instance.firstEffect == Effect.pierce || GameManager.Instance.secondEffect == Effect.pierce) _pierceCount = pierceCount;
         else _pierceCount = 0;
 
-        if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
+        if (GameManager.Instance.firstEffect == Effect.bounce || GameManager.Instance.secondEffect == Effect.bounce) _bounceCount = bounceCount;
         else _bounceCount = 0;
         GetComponent<SpriteRenderer>().color = GameManager.Instance.currentColor;
     }
@@ -82,7 +82,7 @@ public class Bullet : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        if (GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison) {
+        if (GameManager.Instance.firstEffect == Effect.poison || GameManager.Instance.secondEffect == Effect.poison) {
             //  Debug.Log(distance/rb.velocity.magnitude +"   " +  _poisonCooldown + "   " + Time.deltaTime + "  = " + (_poisonCooldown + Time.deltaTime));
 
 
@@ -104,23 +104,14 @@ public class Bullet : MonoBehaviour {
         StartCoroutine(Reset());
         //  Debug.Log("collid" + other.name);
         switch (GameManager.Instance.firstEffect) {
-            case GameManager.Effect.explosion:
+            case Effect.explosion:
                 Explosion();
-                break;
-
-
-            case GameManager.Effect.ice:
-                Ice(other.gameObject);
                 break;
         }
 
         switch (GameManager.Instance.secondEffect) {
-            case GameManager.Effect.explosion:
+            case Effect.explosion:
                 Explosion();
-                break;
-
-            case GameManager.Effect.ice:
-                Ice(other.gameObject);
                 break;
         }
 

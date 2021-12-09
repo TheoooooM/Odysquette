@@ -5,7 +5,7 @@ using Unity.Mathematics;
 using UnityEngine;
 
 public class PoolManager : MonoBehaviour {
-    public Dictionary<GameManager.Straw, Queue<GameObject>[]> poolDictionary;
+    public Dictionary<Straw, Queue<GameObject>[]> poolDictionary;
     public Queue<GameObject> PoisonQueue;
     public GameObject poisonPrefab;
 
@@ -26,7 +26,7 @@ public class PoolManager : MonoBehaviour {
     #endregion
 
     private void Start() {
-        poolDictionary = new Dictionary<GameManager.Straw, Queue<GameObject>[]>(); //Créer un dictionnaire regroupant chaque pool
+        poolDictionary = new Dictionary<Straw, Queue<GameObject>[]>(); //Créer un dictionnaire regroupant chaque pool
         PoisonQueue = new Queue<GameObject>();
         explosionQueue = new Queue<GameObject>();
         foreach (GameManager.StrawClass pol in GameManager.Instance.strawsClass) {
