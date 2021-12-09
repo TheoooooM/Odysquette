@@ -22,6 +22,7 @@ public class PlayerDetector : MonoBehaviour
 
 
 
+
     void Start()
     {
         if (patrol != null)
@@ -73,13 +74,14 @@ public class PlayerDetector : MonoBehaviour
             destination =  patrol.directionPatrol[rand]* length;
          
 
-            GraphNode node = AstarPath.active.GetNearest(rb.position +destination).node;
+            GraphNode node = AstarPath.active.GetNearest((Vector2)ESM.spawnPosition +destination).node;
+           
            
       
         
         if (node.Walkable)
         {
-            aimPatrol.position = rb.position + destination; 
+            aimPatrol.position =  (Vector2)ESM.spawnPosition+ destination; 
             PlayPatrol();
         }
         else

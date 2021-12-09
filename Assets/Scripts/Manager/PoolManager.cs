@@ -37,7 +37,7 @@ public class PoolManager : MonoBehaviour
             Queue<GameObject> ultimatePool = new Queue<GameObject>();
             for (int i = 0; i < pol.sizeShootPool; i++)
             {
-                GameObject obj = Instantiate(pol.strawSO.prefabBullet); 
+                GameObject obj = Instantiate(pol.strawSO.prefabBullet, transform); 
                 obj.name = pol.strawSO.strawName+" "+i;
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
@@ -45,7 +45,7 @@ public class PoolManager : MonoBehaviour
 
             for (int i = 0; i < pol.sizeUltimatePool; i++)
             {
-             GameObject obj = Instantiate(pol.ultimateStrawSO.prefabBullet); 
+             GameObject obj = Instantiate(pol.ultimateStrawSO.prefabBullet, transform); 
                 obj.name = pol.ultimateStrawSO.strawName+" "+i;
                 obj.SetActive(false); 
                 ultimatePool.Enqueue(obj);
@@ -64,7 +64,7 @@ public class PoolManager : MonoBehaviour
             Queue<GameObject> objectPool = new Queue<GameObject>();
             for (int i = 0; i < enemyShootPool.sizePool; i++)
             {
-                GameObject obj = Instantiate(enemyShootPool.bulletPrefab); 
+                GameObject obj = Instantiate(enemyShootPool.bulletPrefab, transform); 
                 obj.name = enemyShootPool.enemyTypeShoot+" "+i;
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
@@ -85,7 +85,7 @@ public class PoolManager : MonoBehaviour
         if (poolDictionary[GameManager.Instance.actualStraw][index].Count ==
             0) // Instancie une balle si il n'y en a plus dans la queue
         {
-            obj = Instantiate(prefabBullet, parentBulletTF.position, parentBulletTF.rotation);
+            obj = Instantiate(prefabBullet, parentBulletTF.transform.position, parentBulletTF.rotation);
             
 
             //poolDictionary[GameManager.Instance.actualStraw].Enqueue(obj);
@@ -150,7 +150,7 @@ public class PoolManager : MonoBehaviour
         GameObject obj;
         if (enemypoolDictionary[enemyTypeShoot].Count == 0) // Instancie une balle si il n'y en a plus dans la queue
         {
-            obj = Instantiate(prefabBullet, parentBulletTF.position, parentBulletTF.rotation);
+            obj = Instantiate(prefabBullet,  parentBulletTF.transform.position, parentBulletTF.rotation, transform);
          
         }
         else // Sinon active la première balle se trouvant dans la queue

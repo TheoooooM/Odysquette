@@ -7,7 +7,7 @@ public class TurretStateManager : EnemyStateManager
 {
  public BoxCollider2D boxCollider2D;
  public Color FxColor;
- private  EnemyFeedBack enemyFeedBack;
+
  private void Awake()
  {
   boxCollider2D = GetComponent<BoxCollider2D>();
@@ -16,7 +16,7 @@ public class TurretStateManager : EnemyStateManager
  public override void Start()
  {  enemyFeedBack = GetComponent<EnemyFeedBack>();
   spriteRenderer = GetComponent<SpriteRenderer>();
-
+  boxCollider2D.enabled = true;
   spawnPosition = transform.position;
   rb = GetComponent<Rigidbody2D>();
   for (int i = 0; i < EMainStatsSo.stateEnnemList.Count; i++)

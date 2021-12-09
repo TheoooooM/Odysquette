@@ -292,6 +292,7 @@ MonoBehaviour:
   isDragKnockUp: 0
   isConvey: 0
   conveyBeltSpeed: {x: 0, y: 0}
+  isDead: 0
   playerTransform: {fileID: 0}
   spawnPosition: {x: 0, y: 0, z: 0}
   indexCurrentState: 0
@@ -615,10 +616,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 97846471465379882}
-        m_TargetAssemblyTypeName: EnemyFeedBackOtherObject, Assembly-CSharp
-        m_MethodName: PlayAnimationOfOtherObjectDestroy
-        m_Mode: 3
+      - m_Target: {fileID: 6353946706996803575}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -627,26 +628,26 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 6267532474267417526}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1871994426267557388}
+        m_TargetAssemblyTypeName: EnemyFeedBackDeath, Assembly-CSharp
+        m_MethodName: DestroyOtherObject
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 1
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1871994426267557388}
-        m_TargetAssemblyTypeName: EnemyFeedBackDeath, Assembly-CSharp
-        m_MethodName: DestroyOtherObject
+      - m_Target: {fileID: 97846471465379882}
+        m_TargetAssemblyTypeName: EnemyFeedBackOtherObject, Assembly-CSharp
+        m_MethodName: PlayAnimationOfOtherObjectDestroy
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

@@ -55,14 +55,13 @@ public class StateShootSO : StateEnemySO
         if (Vector2.Distance(rbPlayer.position, rbEnemy.position) <= rangeForShoot)
         {
             
-           
-           
            Vector2 direction = (rbPlayer.position - rbEnemy.position);
            
            RaycastHit2D hit = Physics2D.BoxCast(rbEnemy.position, extentsRangeDetection, 0,
                direction.normalized, direction.magnitude, layerMaskRay);
            
           ExtDebug.DrawBoxCastBox(rbEnemy.position, extentsRangeDetection/2, Quaternion.identity, direction.normalized, direction.magnitude, Color.red);
+          Debug.Log(hit.collider.name);
            if(hit.collider.gameObject.layer == 9 )
            {
                return true;

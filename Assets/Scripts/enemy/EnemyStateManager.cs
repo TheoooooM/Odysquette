@@ -12,7 +12,8 @@ using Object = UnityEngine.Object;
 
 public class EnemyStateManager : MonoBehaviour
 {
-    private  EnemyFeedBack enemyFeedBack;
+        
+  public  EnemyFeedBack enemyFeedBack;
     public bool isActivate = false;
     
     public EMainStatsSO EMainStatsSo;
@@ -34,7 +35,7 @@ public class EnemyStateManager : MonoBehaviour
     public bool isDragKnockUp;
     public bool isConvey;
     public Vector2 conveyBeltSpeed;
-   
+    public bool isDead;
      
     //Main Stat
     [SerializeField] private Transform playerTransform;
@@ -97,11 +98,7 @@ public class EnemyStateManager : MonoBehaviour
             }
                       
         }
-        
-
-            
-
-                for (int i = 0; i < baseObjectListCondition.Count; i++)
+        for (int i = 0; i < baseObjectListCondition.Count; i++)
                 {
                     
                     switch (baseObjectListCondition[i].objectInStateManager)
@@ -193,7 +190,7 @@ public class EnemyStateManager : MonoBehaviour
                       
                                 if (EMainStatsSo.stateEnnemList[i].healthCondition <=  health || healthUse[i] == true)
                                 {
-                                    Debug.Log("rszzz");
+                           
                                    
                                     continue;
                                 }
@@ -295,7 +292,7 @@ public class EnemyStateManager : MonoBehaviour
           
                 timerCurrentStartState += Time.deltaTime;
             }
-   
+
 
             #endregion
         
@@ -502,49 +499,59 @@ public class EnemyStateManager : MonoBehaviour
   }
 
   public virtual void OnDeath()
-  { collider2D.enabled = false;
-      Debug.Log("Remove from List");
-      rb.constraints = RigidbodyConstraints2D.FreezePosition; 
-      roomParent.ennemiesList.Remove(gameObject);                            
-      this.enabled = false;
-   
-        Animator animator =  GetComponent<Animator>();
-        if (TryGetComponent(out EnemyFeedBackDeath eventDeath))
-        {
-            eventDeath.deathEvent.Invoke();
-            return;
-        }
-      try
+  
+  {
+      if (!isDead)
       {
-          roomParent.ennemiesList.Remove(gameObject.transform.parent.gameObject);
-          if (enemyFeedBack.stateDeathName != "")
-          {
+            collider2D.enabled = false;
              
-              animator.Play(enemyFeedBack.stateDeathName);
-              
-                 
+                rb.constraints = RigidbodyConstraints2D.FreezePosition; 
+                roomParent.ennemiesList.Remove(gameObject);                            
+                this.enabled = false;
+           
+             
+                  Animator animator =  GetComponent<Animator>();
+                  if (TryGetComponent(out EnemyFeedBackDeath eventDeath))
+                  {  
+                      
+                      eventDeath.deathEvent.Invoke();
+                      return;
+                  }
+                try
+                {
+                    roomParent.ennemiesList.Remove(gameObject.transform.parent.gameObject);
+                    if (enemyFeedBack.stateDeathName != "")
+                    {
+                       
+                        animator.Play(enemyFeedBack.stateDeathName);
+                        
+                           
+          
+                        StartCoroutine(ShowCurrentClipLength(gameObject.transform.parent.gameObject, animator));
+                    }
+                    else
+                    {
+                        Destroy(gameObject.transform.parent.gameObject);
+                    }
+          
+          
+                }
+                catch (Exception e)
+                {
+                    roomParent.ennemiesList.Remove(gameObject);
+                    if (enemyFeedBack.stateDeathName != "")
+                    {  
+                        animator.Play(enemyFeedBack.stateDeathName);
+                        StartCoroutine(ShowCurrentClipLength(gameObject, animator));
+                    }
+                    else
+                    {
+                        Destroy(gameObject);
+                    }
 
-              StartCoroutine(ShowCurrentClipLength(gameObject.transform.parent.gameObject, animator));
-          }
-          else
-          {
-              Destroy(gameObject.transform.parent.gameObject);
-          }
-
-
-      }
-      catch (Exception e)
-      {
-          roomParent.ennemiesList.Remove(gameObject);
-          if (enemyFeedBack.stateDeathName != "")
-          {  
-              animator.Play(enemyFeedBack.stateDeathName);
-              StartCoroutine(ShowCurrentClipLength(gameObject, animator));
-          }
-          else
-          {
-              Destroy(gameObject);
-          }
+                    isDead = true;
+                }
+    
        
           
       }

@@ -11,8 +11,7 @@ public class StateShootBasic : StateShootSO
 
     
     public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
-    {  Debug.Log("prepare play shoot"+ this.name);
-    
+    {  
         CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringStartState);
         Transform transformPlayer = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformPlayer];
         Transform parentBulletTF =
@@ -119,7 +118,9 @@ public class StateShootBasic : StateShootSO
        
              for (int i = 0; i < directions.Length; i++)
                     {
+                      
                         GameObject bullet = PoolManager.Instance.SpawnEnnemyShoot(enemyTypeShoot, prefabBullet, parentBulletTF);
+                   
                         bullet.SetActive(true);  
                         if (basePosition.Length != 0)
                         {
