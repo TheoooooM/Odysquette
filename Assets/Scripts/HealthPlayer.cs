@@ -27,7 +27,8 @@ public class HealthPlayer : MonoBehaviour {
     void Start() {
         playerController = GetComponent<Playercontroller>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        healthPlayer = maxHealth;
+        if (NeverDestroy.Instance != null) healthPlayer = NeverDestroy.Instance.life;
+        else healthPlayer = maxHealth;
         rb = GetComponent<Rigidbody2D>();
         for (int i = 0; i < healthPlayer; i++) {
             if (UIManager.Instance != null) {
