@@ -17,6 +17,8 @@ public class RoomManager : MonoBehaviour {
 
     public Transform exit;
 
+    public GameObject chest;
+
     private bool done = false;
     private bool sendanim = false;
 
@@ -41,6 +43,7 @@ public class RoomManager : MonoBehaviour {
             if (ennemiesList.Count == 0) {
                 if (!sendanim) {
                     GameManager.Instance.endRoom();
+                    if (chest != null) Instantiate(chest, Playercontroller.Instance.transform.position, Quaternion.identity);
                     sendanim = true;
                 }
 

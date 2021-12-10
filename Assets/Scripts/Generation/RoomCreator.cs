@@ -32,6 +32,7 @@ public class RoomCreator : MonoBehaviour {
     public GameObject[,] partMap = new GameObject[5, 5];
 
     public GameObject roomPref;
+    public GameObject chest;
 
     public bool update = false;
 

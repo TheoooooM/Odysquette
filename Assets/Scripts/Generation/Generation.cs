@@ -262,6 +262,8 @@ public class Generation : MonoBehaviour {
                                         nR.transform.parent = roomPool;
                                         currentRoom = nR.GetComponent<RoomManager>();
 
+                                        currentRoom.chest = newRoom.chest;
+                                        currentRoom.exit = newRoom.exit;
                                         currentRoom.ennemiesList = new List<GameObject>(newRoom.ennemiList);
                                         currentRoom.name = "room " + i;
                                         Rect roomRect = BasicRect;
