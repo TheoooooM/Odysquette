@@ -294,7 +294,7 @@ public class GameManager : MonoBehaviour {
         foreach (StrawClass strawC in strawsClass) {
             if (strawC.StrawType == straw) actualStrawClass = strawC;
         }
-        actualStrawClass.StrawParent.GetComponent<SpriteRenderer>().sprite = actualStrawClass.strawSO.strawRenderer;
+        //actualStrawClass.StrawParent.GetComponent<SpriteRenderer>().sprite = actualStrawClass.strawSO.strawRenderer;
         actualStrawClass.StrawParent.SetActive(true);
         for (int i = 0; i < colorEffectsList.Length; i++) {
             if (colorEffectsList[i].firstEffect == firstEffect && colorEffectsList[i].secondEffect == secondEffect
