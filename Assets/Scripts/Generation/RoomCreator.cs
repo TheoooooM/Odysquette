@@ -28,12 +28,11 @@ public class RoomCreator : MonoBehaviour {
     public List<GameObject> ennemiList => _ennemiiList;
 
     public Transform exit;
-
     public GameObject[,] partMap = new GameObject[5, 5];
-
     public GameObject roomPref;
-
+    
     public bool update = false;
+    public GameObject chest;
 
     public Dictionary<Generation.open, List<RoomContainer>> exitDicitonnary = new Dictionary<Generation.open, List<RoomContainer>>();
     [HideInInspector] public List<RoomContainer> topExits;
