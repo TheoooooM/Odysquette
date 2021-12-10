@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class GameManager : MonoBehaviour {
     #region Singleton
@@ -72,49 +73,51 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    [Header("mouse")] [SerializeField] private float offsetPadViewFinder;
+    [Header("---- MOUSE")] [SerializeField]
+    private float offsetPadViewFinder;
+
     private Vector2 mousepos; //position de la souris sur l'écran
     public float angle; //angle pour orienter la paille
     public float viewFinderDistance;
     [SerializeField] private Camera main;
 
-    [Header("Juices")] [SerializeField] public Effect firstEffect;
-
+    [Header("---- JUICES")] [SerializeField]
+    public Effect firstEffect;
 
     [SerializeField] public Effect secondEffect;
     [SerializeField] CombinaisonColorEffect[] colorEffectsList;
     public Color currentColor;
-    [Header("Straw")] public Straw actualStraw;
+
+    [Header("---- STRAW")] 
+    public Straw actualStraw;
     public List<StrawClass> strawsClass; //Liste de toute les pailles
     public float timerUltimate;
     public bool shooting;
     public bool utlimate;
+    public float shootCooldown;
     private int countShootRate;
-
     private float shootLoading;
-
     private bool EndLoading;
 
-
-    public float shootCooldown;
-
-    [Header("Input")] public bool isMouse = true;
+    [Header("---- INPUT")] public bool isMouse = true;
     public Vector2 ViewPad;
 
 
     //Bullet
-    [Header("Settings")] [SerializeField] int ShootRate;
-    [HideInInspector]public GameObject Player;
+    [Header("---- SETTINGS")] 
+    [SerializeField] private int shootRate;
+    [HideInInspector] public GameObject Player;
 
-    [Header("Curves")] 
+    [Header("---- CURVES")] 
     [SerializeField] private AnimationCurve endRoomTime;
     private float timer;
     private bool animate;
 
+    [Header("---- IN GAME EFFECT")] 
+    [SerializeField] private Volume endRoomPostProcess = null;
+    [SerializeField] private AnimationCurve endRoomWeigthCurve = null;
 
-    [Header("----------------DEBUG---------------")]
-    public Vector2 _lookDir;
-
+    [Header("---- DEBUG")] public Vector2 _lookDir;
     public StrawClass actualStrawClass;
 
     private void OnValidate() {
@@ -124,19 +127,16 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private void Start()
-    {
+    private void Start() {
+        animate = false;
+        timer = 0;
+        
         if (Playercontroller.Instance != null) Player = Playercontroller.Instance.gameObject;
         ChangeStraw(actualStraw);
         lastInput = Vector3.right * viewFinderDistance;
-        foreach (StrawClass str in strawsClass) //active la bonne paille au début
-        {
-            if (str == actualStrawClass) {
-                str.StrawParent.SetActive((true));
-            }
-            else {
-                str.StrawParent.SetActive((false));
-            }
+        
+        foreach (StrawClass str in strawsClass) {
+            str.StrawParent.SetActive(str == actualStrawClass);
         }
 
         for (int i = 0; i < colorEffectsList.Length; i++) {
@@ -147,19 +147,10 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private void Update()
-    {
-            if (timer > 1)
-            {
-                animate = false;
-            }
-            if (animate)
-        {
-            timer += Time.deltaTime * (1 / Time.timeScale);
-            Time.timeScale = endRoomTime.Evaluate(timer);
-        }
-        
-        
+    private void Update() {
+        if (animate) EndRoomAnimation();
+
+
         if (isUltimate) {
             if (actualStrawClass.ultimateStrawSO.timeValue > timerUltimate) {
                 timerUltimate += Time.deltaTime;
@@ -233,8 +224,8 @@ public class GameManager : MonoBehaviour {
         shootCooldown += Time.deltaTime;
 
         shootCooldown = Mathf.Min(shootCooldown, actualStrawClass.strawSO.timeValue);
-        
-        if(actualStrawClass.StrawType != actualStraw) ChangeStraw(actualStraw);
+
+        if (actualStrawClass.StrawType != actualStraw) ChangeStraw(actualStraw);
     }
 
     private void FixedUpdate() {
@@ -268,7 +259,29 @@ public class GameManager : MonoBehaviour {
         //--------------------------------------------------------------
     }
 
-    public void GetND() {
+
+    #region END ROOM
+    /// <summary>
+    /// Make bloom in the room when the room end
+    /// </summary>
+    private void EndRoomAnimation() {
+        timer += Time.deltaTime * (1 / Time.timeScale);
+        Time.timeScale = endRoomTime.Evaluate(timer);
+        if(endRoomPostProcess != null) endRoomPostProcess.weight = endRoomWeigthCurve.Evaluate(timer);
+
+        if (timer > 1) animate = false;
+    }
+    
+    /// <summary>
+    /// Called when the room is finished
+    /// </summary>
+    public void endRoom() {
+        timer = 0;
+        animate = true;
+    }
+    #endregion END ROOM
+    
+    private void GetND() {
         firstEffect = NeverDestroy.Instance.firstEffect;
         secondEffect = NeverDestroy.Instance.secondEffect;
         actualStraw = NeverDestroy.Instance.actualStraw;
@@ -280,20 +293,19 @@ public class GameManager : MonoBehaviour {
         NeverDestroy.Instance.actualStraw = actualStraw;
         NeverDestroy.Instance.life = HealthPlayer.Instance.healthPlayer;
     }
-
-    public void endRoom()
-    {
-        timer = 0;
-        animate = true;
-    }
-
-    void ChangeStraw(Straw straw) //change la paille 
+    
+    /// <summary>
+    /// Change the actual straw
+    /// </summary>
+    /// <param name="straw"></param>
+    private void ChangeStraw(Straw straw)
     {
         //dictionnaire
-        if(actualStrawClass.StrawParent != null) actualStrawClass.StrawParent.SetActive(false);
+        if (actualStrawClass.StrawParent != null) actualStrawClass.StrawParent.SetActive(false);
         foreach (StrawClass strawC in strawsClass) {
             if (strawC.StrawType == straw) actualStrawClass = strawC;
         }
+
         actualStrawClass.StrawParent.GetComponent<SpriteRenderer>().sprite = actualStrawClass.strawSO.strawRenderer;
         actualStrawClass.StrawParent.SetActive(true);
         for (int i = 0; i < colorEffectsList.Length; i++) {

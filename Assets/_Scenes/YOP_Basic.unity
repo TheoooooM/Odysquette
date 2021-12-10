@@ -201,7 +201,7 @@ Transform:
   m_Children:
   - {fileID: 116964428}
   m_Father: {fileID: 1464809496}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &116964427
 GameObject:
@@ -329,7 +329,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1464809496}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &196568773
 MonoBehaviour:
@@ -551,7 +551,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1464809496}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &574978394
 GameObject:
@@ -1040,7 +1040,7 @@ MonoBehaviour:
   shootCooldown: 0
   isMouse: 1
   ViewPad: {x: 0, y: 0}
-  ShootRate: 0
+  shootRate: 0
   Player: {fileID: 1881559862}
   endRoomTime:
     serializedVersion: 2
@@ -1057,12 +1057,12 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.121000916
       value: 0.7149916
-      inSlope: -2.975462
-      outSlope: -2.975462
+      inSlope: -1.7374018
+      outSlope: -1.7374018
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.1312236
-      outWeight: 0.33333334
+      outWeight: 0.058437288
     - serializedVersion: 3
       time: 0.611125
       value: 0.8010944
@@ -1078,6 +1078,40 @@ MonoBehaviour:
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  endRoomPostProcess: {fileID: 1660600205}
+  endRoomWeigthCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.2
+      value: 1
+      inSlope: 10.157568
+      outSlope: -15.086539
+      tangentMode: 1
+      weightedMode: 3
+      inWeight: 0.15068275
+      outWeight: 0.10145271
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
@@ -1337,6 +1371,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1660600204}
   - {fileID: 299648076}
   - {fileID: 1626125956}
   - {fileID: 196568772}
@@ -1414,8 +1449,56 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1464809496}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1660600203
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1660600204}
+  - component: {fileID: 1660600205}
+  m_Layer: 0
+  m_Name: PostProcessInGameEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1660600204
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660600203}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.6664543, y: 2.1856446, z: -69.916336}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1464809496}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1660600205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660600203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 6
+  blendDistance: 0
+  weight: 0
+  sharedProfile: {fileID: 11400000, guid: 155fb52fc6c587c45a7ab714c8ac4ee9, type: 2}
 --- !u!1 &1881559862 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1464324219867819126, guid: 1a3c8bcdae53ae348931bfd230a43f00, type: 3}

@@ -17,8 +17,9 @@ public class Bullet : MonoBehaviour {
     [SerializeField] private bool isColliding;
     public Rigidbody2D rb;
     private Vector3 lastVelocity;
-    
+
     public float ammountUltimate;
+
     [Header("==============Effects Stat===============")]
     public int pierceCount = 2;
 
@@ -99,16 +100,17 @@ public class Bullet : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
+        if (other.CompareTag("DestructableObject")) return;
         if (isColliding) return;
+
         isColliding = true;
         // Rest of the code
         StartCoroutine(Reset());
-        //  Debug.Log("collid" + other.name);
+        
         switch (GameManager.Instance.firstEffect) {
             case GameManager.Effect.explosion:
                 Explosion();
                 break;
-
 
             case GameManager.Effect.ice:
                 Ice(other.gameObject);
@@ -125,16 +127,12 @@ public class Bullet : MonoBehaviour {
                 break;
         }
 
-        if (other.CompareTag("Enemy"))
-        {
+        if (other.CompareTag("Enemy")) {
             EnemyStateManager enemyStateManager = other.GetComponent<EnemyStateManager>();
-                enemyStateManager.TakeDamage(damage, rb.position, knockUpValue, true, false);
-                if (rateMode != StrawSO.RateMode.Ultimate)
-                {
-               
-                      GameManager.Instance.ultimateValue += enemyStateManager.EMainStatsSo.coeifficentUltimateStrawPoints*ammountUltimate;
-                }
-              
+            enemyStateManager.TakeDamage(damage, rb.position, knockUpValue, true, false);
+            if (rateMode != StrawSO.RateMode.Ultimate) {
+                GameManager.Instance.ultimateValue += enemyStateManager.EMainStatsSo.coeifficentUltimateStrawPoints * ammountUltimate;
+            }
             
             if (_pierceCount > 0) {
                 _pierceCount--;
@@ -145,15 +143,12 @@ public class Bullet : MonoBehaviour {
         }
 
         else if (!other.CompareTag("Walls")) {
-         
             DesactiveBullet();
         }
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
         if (_bounceCount > 0 && other.gameObject.CompareTag("Walls")) {
-           
-
             _bounceCount--;
             var speed = lastVelocity.magnitude;
             //Debug.Log(lastVelocity);
