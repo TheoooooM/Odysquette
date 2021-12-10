@@ -17,22 +17,21 @@ public class BossManager : MonoBehaviour
  [SerializeField] private float timeOffset;
   [SerializeField]
   private ParticleSystem[] EffectInvincible = new ParticleSystem[4];
-
-  public float timeBegin;
-  public float timeEnd;
-  public float timerBegin;
-  public float timerEnd;
   private EnemyStateManager enemyStateManager;
   public int[] numberEnabledTurrets;
   [SerializeField]
   private EMainStatsSO turret;
 static  public BossManager instance;
-private bool beginBoss = true;
+
 
 private int currentMaxEnabledTurret;
   private void Awake()
   {
-    instance = this;
+    if (instance == null)
+    {
+         instance = this;
+    }
+ 
   }
 
   private void Start()
@@ -44,6 +43,7 @@ private int currentMaxEnabledTurret;
   private void Update()
   {
     Debug.Log(bossParticleSystem.gameObject.activeSelf);
+    Debug.Log( baseturrets[0].enabled);
   }
 
 
@@ -52,13 +52,12 @@ private int currentMaxEnabledTurret;
     
      currentMaxEnabledTurret =(int) phaseBoss;
      currentIndexEnabledTurret = 0;
-     Debug.Log(currentIndexEnabledTurret);
-     Debug.Log(currentMaxEnabledTurret);
+ 
      
      for (int i = 0; i < currentMaxEnabledTurret; i++)
      {
-       Debug.Log(i);
-     baseturrets[i].enabled = true;
+   
+     baseturrets[i].enabled = true;    Debug.Log( baseturrets[i].enabled);
      baseturrets[i].boxCollider2D.enabled = true;
        
        baseturrets[i].GetComponent<TurretStateManager>().timerCondition.Remove(0);
@@ -90,6 +89,7 @@ private int currentMaxEnabledTurret;
 
   public void UpdateDuringPhase()
   {
+    Debug.Log("aled");
     baseturrets[currentIndexEnabledTurret].enabled = false;
     baseturrets[currentIndexEnabledTurret].boxCollider2D.enabled = false;
     currentIndexEnabledTurret++;

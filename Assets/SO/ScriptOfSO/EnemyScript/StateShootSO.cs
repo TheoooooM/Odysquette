@@ -49,6 +49,7 @@ public class StateShootSO : StateEnemySO
 
     public override bool CheckCondition(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary)
     {
+        Debug.Log(objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyPlayer]);
         Rigidbody2D rbPlayer = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyPlayer];
         Rigidbody2D rbEnemy = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyEnemy];
  
