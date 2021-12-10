@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,10 +21,10 @@ public class Generation : MonoBehaviour {
         bot
     }
 
-    [Header("--- GENERATION")] [SerializeField]
-    private int seed = 0;
-
-    public bool endGeneration;
+    [Header("--- GENERATION")]
+    public int seed = 0;
+    public bool disableNeighboor = false;
+    [HideInInspector] public bool endGeneration;
 
     [Header("--- ROOMS")] public GameObject StartingRoom;
     public RoomCreator[] normalRoom;
@@ -56,12 +57,13 @@ public class Generation : MonoBehaviour {
     /// <summary>
     /// Generate the level
     /// </summary>
-    private void GenerateLevel() {
+    public void GenerateLevel() {
         Random.InitState(seed);
         ResetGen();
         StartCoroutine("GeneratePath", nbrOfRoom);
     }
-
+    
+    private bool reset = false;
     /// <summary>
     /// Generate the rooms
     /// </summary>
@@ -75,7 +77,45 @@ public class Generation : MonoBehaviour {
         UIManager.Instance.loadingBar.value = 0;
         UIManager.Instance.LoadingScreen.SetActive(true);
 
-        //Debug.Log(" middl: " + currentPos);
+        GenerateFirstRoom();
+        
+        reset = false;
+
+        int k = 0;
+        for (int i = 1; i <= nbrOfRoom; i++) {
+            if (reset) {
+                i--;
+                reset = false;
+            }
+            else {
+                yield return new WaitForSeconds(0.05f);
+            }
+            
+            UIUpdate(i);
+            
+            if (i == size) {
+                if (endpathRoom != null) GenerateLastRoom();
+                ReGeneratePath();
+            }
+            else GenerateRooms(i);
+
+            k++;
+            if (k == 10 * size) {
+                ResetGen();
+                StartCoroutine("GeneratePath", nbrOfRoom);
+                break;
+            }
+        }
+
+        endGeneration = true;
+        UIUpdate();
+    }
+    
+    #region ROOM GENERATION
+    /// <summary>
+    /// Generate the first room
+    /// </summary>
+    private void GenerateFirstRoom() {
         GameObject nR = new GameObject();
         nR.AddComponent(typeof(RoomManager));
         nR.transform.parent = roomPool;
@@ -132,71 +172,56 @@ public class Generation : MonoBehaviour {
                 break;
         }
 
-        bool reset = false;
+    }
 
-        int k = 0;
-        for (int i = 1; i <= nbrOfRoom; i++) {
-            if (reset) {
-                i--;
-                //Debug.Log("reset");
-                reset = false;
-            }
-            else {
-                yield return new WaitForSeconds(0.05f);
-            }
-
-
-            //Debug.Log("Create Room n°" + i);
-            UIUpdate(i);
-
-
-            if (i == size) {
-                if (endpathRoom != null) {
-                    //dernière salle
-                    GameObject GO = Instantiate(new GameObject(), roomPool);
-                    GO.transform.name = "LastRoom";
-                    GO.AddComponent<RoomManager>();
+    /// <summary>
+    /// Generate the last room
+    /// </summary>
+    private void GenerateLastRoom() {
+        GameObject GO = Instantiate(new GameObject(), roomPool);
+        GO.transform.name = "LastRoom";
+        GO.AddComponent<RoomManager>();
                     
-                    RoomContainer RC = Instantiate(endpathRoom.GetComponent<RoomCreator>().partList[0].RoomGO, new Vector2((currentPos.x- mapSize/2)*62,(currentPos.y - mapSize/2)*40f), Quaternion.identity, GO.transform).GetComponent<RoomContainer>();
-                    RC.roomMapPos = new Vector2((currentPos.x), (int) (currentPos.y));
-                    RC.Generator = this;
+        RoomContainer RC = Instantiate(endpathRoom.GetComponent<RoomCreator>().partList[0].RoomGO, new Vector2((currentPos.x- mapSize/2)*62,(currentPos.y - mapSize/2)*40f), Quaternion.identity, GO.transform).GetComponent<RoomContainer>();
+        RC.roomMapPos = new Vector2((currentPos.x), (int) (currentPos.y));
+        RC.Generator = this;
                     
-                    currentRoom.partList.Add(RC);
-                    map[(int)(currentPos.x),(int)(currentPos.y)] = RC;
+        currentRoom.partList.Add(RC);
+        map[(int)(currentPos.x),(int)(currentPos.y)] = RC;
                     
-                    RC.room = currentRoom;
-                    RC.exitLeft = false;
-                    RC.exitRight = false;
-                    RC.exitTop = false;
-                    RC.exitBot = false;
+        RC.room = currentRoom;
+        RC.exitLeft = false;
+        RC.exitRight = false;
+        RC.exitTop = false;
+        RC.exitBot = false;
                     
-                    switch (needOpen) {
-                        case open.right:
-                            RC.exitRight = true;
-                            RC.closeRoom.UpdateCloseRoom(false, true, false, false);
-                            break;
-                        case open.left:
-                            RC.exitLeft = true;
-                            RC.closeRoom.UpdateCloseRoom(false, false, false, true);
-                            break;
-                        case open.bot:
-                            RC.exitBot = true;
-                            RC.closeRoom.UpdateCloseRoom(false, false, true, false);
-                            break;
-                        case open.top:
-                            RC.exitTop = true;
-                            RC.closeRoom.UpdateCloseRoom(true, false, false, false);
-                            break;
-                    }
+        switch (needOpen) {
+            case open.right:
+                RC.exitRight = true;
+                RC.closeRoom.UpdateCloseRoom(false, true, false, false);
+                break;
+            case open.left:
+                RC.exitLeft = true;
+                RC.closeRoom.UpdateCloseRoom(false, false, false, true);
+                break;
+            case open.bot:
+                RC.exitBot = true;
+                RC.closeRoom.UpdateCloseRoom(false, false, true, false);
+                break;
+            case open.top:
+                RC.exitTop = true;
+                RC.closeRoom.UpdateCloseRoom(true, false, false, false);
+                break;
+        }
 
-                    RC.UpdatePart();
-                }
+        RC.UpdatePart();
+    }
 
-                ReGeneratePath();
-            }
-            else {
-                //Debug.Log("room with " + needOpen);
-                RoomCreator newRoom = normalRoom[Random.Range(0, normalRoom.Length)];
+    /// <summary>
+    /// Generate all the room
+    /// </summary>
+    private void GenerateRooms(int i) {
+        RoomCreator newRoom = normalRoom[Random.Range(0, normalRoom.Length)];
                 if (newRoom.exitDicitonnary.Count == 0) {
                     newRoom.DictionaryUpdate();
                     newRoom.PartUpdate();
@@ -250,24 +275,22 @@ public class Generation : MonoBehaviour {
                                         break;
                                 }
 
-                                if ((exitPart.roomPos.x - enterPart.roomPos.x + currentPos.x + movePos.x) >= 0 && (exitPart.roomPos.x - enterPart.roomPos.x + currentPos.x + movePos.x) < mapSize &&
-                                    (exitPart.roomPos.y - enterPart.roomPos.y + currentPos.y + movePos.y) >= 0 && (exitPart.roomPos.y - enterPart.roomPos.y + currentPos.y + movePos.y) < mapSize) {
-                                    Vector2 enablePos = new Vector2(
-                                        (int) (exitPart.roomPos.x - enterPart.roomPos.x + currentPos.x + movePos.x),
-                                        (int) (exitPart.roomPos.y - enterPart.roomPos.y + currentPos.y + movePos.y));
-                                    //debug.Log(enablePos + " pos of " + map[(int)enablePos.x, (int) enablePos.y]);
+                                if ((exitPart.roomPos.x - enterPart.roomPos.x + currentPos.x + movePos.x) >= 0 && (exitPart.roomPos.x - enterPart.roomPos.x + currentPos.x + movePos.x) < mapSize && (exitPart.roomPos.y - enterPart.roomPos.y + currentPos.y + movePos.y) >= 0 && (exitPart.roomPos.y - enterPart.roomPos.y + currentPos.y + movePos.y) < mapSize) {
+                                    Vector2 enablePos = new Vector2((int) (exitPart.roomPos.x - enterPart.roomPos.x + currentPos.x + movePos.x), (int) (exitPart.roomPos.y - enterPart.roomPos.y + currentPos.y + movePos.y));
+                                    
                                     if (map[(int) enablePos.x, (int) enablePos.y] == null) {
-                                        nR = new GameObject();
-                                        nR.AddComponent(typeof(RoomManager));
-                                        nR.transform.parent = roomPool;
-                                        currentRoom = nR.GetComponent<RoomManager>();
+                                        GameObject newR = new GameObject();
+                                        newR.AddComponent(typeof(RoomManager));
+                                        newR.transform.parent = roomPool;
+                                        currentRoom = newR.GetComponent<RoomManager>();
 
                                         currentRoom.ennemiesList = new List<GameObject>(newRoom.ennemiList);
                                         currentRoom.name = "room " + i;
                                         Rect roomRect = BasicRect;
+                                        
                                         Debug.Log("current pos x -  mapsize :" + (currentPos.x - mapSize / 2) + "  basicRect x :" + BasicRect.x + "  so " + ((currentPos.x - mapSize / 2) * BasicRect.x - (BasicRect.x * 1.5f)));
-                                        roomRect.x += (currentPos.x - mapSize / 2) * BasicRect.x - (BasicRect.x * 1.5f); //(currentPos.x - Mathf.CeilToInt(mapSize / 2)) * BasicRect.x - (BasicRect.x*1.5f);
-                                        roomRect.y += (currentPos.y - mapSize / 2) * BasicRect.y - (BasicRect.y * 1.5f); //(currentPos.y - mapSize / 2) * BasicRect.y - (BasicRect.y*1.5f);
+                                        roomRect.x += (currentPos.x - mapSize / 2) * BasicRect.x - (BasicRect.x * 1.5f);
+                                        roomRect.y += (currentPos.y - mapSize / 2) * BasicRect.y - (BasicRect.y * 1.5f);
 
                                         //debug.Log("Instantiate " + currentRoom);
                                         foreach (Room rom in newRoom.partList) {
@@ -353,15 +376,7 @@ public class Generation : MonoBehaviour {
                                         }
 
                                         currentRoom.cameraRect = roomRect;
-
-                                        needOpen = exitSide switch {
-                                            open.top => open.bot,
-                                            open.left => open.right,
-                                            open.right => open.left,
-                                            open.bot => open.top,
-                                            _ => needOpen
-                                        };
-
+                                        needOpen = exitSide switch {open.top => open.bot, open.left => open.right, open.right => open.left, open.bot => open.top, _ => needOpen};
                                         currentPos = new Vector2((int) (exitPart.roomPos.x - enterPart.roomPos.x + currentPos.x + movePos.x), (int) (exitPart.roomPos.y - enterPart.roomPos.y + currentPos.y + movePos.y));
                                         ready = true;
                                         break;
@@ -370,40 +385,19 @@ public class Generation : MonoBehaviour {
                             }
 
                             x++;
-                            if (x == 20) {
-                                reset = true;
-                                break;
-                            }
+                            if (x == 20) reset = true;
                         }
                     }
-                    else {
-                        reset = true;
-                    }
+                    else reset = true;
                 }
-                else {
-                    reset = true;
-                }
-            }
-
-            k++;
-            if (k == 10 * size) {
-                //debug.Log("anti while break at " + i);
-                ResetGen();
-                StartCoroutine("GeneratePath", nbrOfRoom);
-                break;
-            }
-        }
-
-        endGeneration = true;
-        UIUpdate();
+                else reset = true;
     }
-
+    #endregion ROOM GENERATION
+    
     /// <summary>
     /// Regenerate NavMesh
     /// </summary>
-    private void ReGeneratePath() {
-        AstarPath.active.Scan();
-    }
+    private void ReGeneratePath() => AstarPath.active.Scan();
 
     /// <summary>
     /// Reset the generation by destroying the default rommPool and creating a new one
@@ -413,9 +407,8 @@ public class Generation : MonoBehaviour {
         roomPool = Instantiate(new GameObject(), transform).transform;
         roomPool.name = "RoomPool";
     }
-
-
-    void UIUpdate(int value = 0){
+    
+    private void UIUpdate(int value = 0){
         if (UIManager.Instance == null) return;
         UIManager UI = UIManager.Instance;
         if (value > UI.loadingBar.value) UI.loadingValue = value;
