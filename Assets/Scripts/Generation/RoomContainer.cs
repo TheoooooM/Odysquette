@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using Pathfinding;
 using UnityEngine;
 
-public class RoomContainer : MonoBehaviour
-{
+public class RoomContainer : MonoBehaviour {
     public Generation Generator;
     public RoomManager room;
     public ABPath nasvMesh;
@@ -18,17 +17,18 @@ public class RoomContainer : MonoBehaviour
     #region Generation Variables
 
     public bool playerInRoom;
-    
+
     public RoomCreator roomRef;
     public Vector2 roomPos;
-        
+
     public RoomContainer partTop;
     public RoomContainer partLeft;
     public RoomContainer partRight;
     public RoomContainer partBot;
-    
+
     [Header("=======================DEBUG=========================")]
     public bool exitTop = true;
+
     public bool exitLeft = true;
     public bool exitRight = true;
     public bool exitBot = true;
@@ -40,6 +40,7 @@ public class RoomContainer : MonoBehaviour
 
     [Header("=======================PAS TOUCHE !!!=========================")]
     [SerializeField] public GameObject closeBot;
+
     [SerializeField] public GameObject closeLeft;
     [SerializeField] public GameObject closeRight;
     [SerializeField] public GameObject closeTop;
@@ -47,12 +48,12 @@ public class RoomContainer : MonoBehaviour
     [SerializeField] private GameObject openLeft;
     [SerializeField] private GameObject openRight;
     [SerializeField] private GameObject openTop;
+
     #endregion
 
     [Space] public CloseRoomManager closeRoom = null;
-    
-    void Awake()
-    {
+
+    private void Awake() {
         exitBool = new Dictionary<Generation.open, bool>();
         exitBool.Add(Generation.open.top, exitTop);
         exitBool.Add(Generation.open.left, exitLeft);
@@ -61,151 +62,134 @@ public class RoomContainer : MonoBehaviour
 
         room = GetComponentInParent<RoomManager>();
     }
-    
-    void Update()
-    {
-        if (!neighbor && !room.runningRoom && Generator.endGeneration && !playerIn)
-        {
-            gameObject.SetActive(false);
+
+    private void Update() {
+        if (!neighbor && !room.runningRoom && Generator.endGeneration && !playerIn && Generator.disableNeighboor) gameObject.SetActive(false);
+        if (firstRoom && Generator.endGeneration) {
+            ActivateNeighbor(true);
+            firstRoom = false;
         }
+    }
 
-        if (firstRoom && Generator.endGeneration) {ActivateNeighbor(true); firstRoom = false; }
-}
-
-    public void UpdatePart()
-    {
+    /// <summary>
+    /// Update door collision and trigger base on the room layout
+    /// </summary>
+    public void UpdatePart() {
         exitList = new Dictionary<int, Generation.open>();
         exitAmount = 0;
-        
-        if (partTop)
-        {
-           openTop.SetActive(false); 
-           closeTop.SetActive(false);
-           exitTop = false;
+
+        if (partTop) {
+            openTop.SetActive(false);
+            closeTop.SetActive(false);
+            exitTop = false;
         }
-        else
-        {
-            if (exitTop)
-            {
+        else {
+            if (exitTop) {
                 openTop.SetActive(true);
                 closeTop.SetActive(false);
-                exitList.Add(exitAmount,Generation.open.top);
+                exitList.Add(exitAmount, Generation.open.top);
                 exitAmount++;
             }
-            else
-            {
+            else {
                 openTop.SetActive(false);
                 closeTop.SetActive(true);
             }
         }
-        if (partLeft)
-        {
-            openLeft.SetActive(false); 
+
+        if (partLeft) {
+            openLeft.SetActive(false);
             closeLeft.SetActive(false);
             exitLeft = false;
         }
-        else
-        {
-            if (exitLeft)
-            {
+        else {
+            if (exitLeft) {
                 openLeft.SetActive(true);
                 closeLeft.SetActive(false);
-                exitList.Add(exitAmount,Generation.open.left);
+                exitList.Add(exitAmount, Generation.open.left);
                 exitAmount++;
             }
-            else
-            {
+            else {
                 openLeft.SetActive(false);
                 closeLeft.SetActive(true);
             }
         }
 
-        
-        if (partRight)
-        {
-            openRight.SetActive(false); 
+
+        if (partRight) {
+            openRight.SetActive(false);
             closeRight.SetActive(false);
             exitRight = false;
         }
-        else
-        {
-            if (exitRight)
-            {
+        else {
+            if (exitRight) {
                 openRight.SetActive(true);
                 closeRight.SetActive(false);
-                exitList.Add(exitAmount,Generation.open.right);
+                exitList.Add(exitAmount, Generation.open.right);
                 exitAmount++;
             }
-            else
-            {
+            else {
                 openRight.SetActive(false);
                 closeRight.SetActive(true);
             }
         }
 
-        
-        if (partBot)
-        {
-            openBot.SetActive(false); 
+
+        if (partBot) {
+            openBot.SetActive(false);
             closeBot.SetActive(false);
             exitBot = false;
         }
-        else
-        {
-            if (exitBot)
-            {
-                
+        else {
+            if (exitBot) {
                 openBot.SetActive(true);
                 closeBot.SetActive(false);
-                exitList.Add(exitAmount,Generation.open.bot);
+                exitList.Add(exitAmount, Generation.open.bot);
                 exitAmount++;
             }
-            else
-            {
+            else {
                 openBot.SetActive(false);
                 closeBot.SetActive(true);
             }
         }
-
     }
 
-    void ActivateNeighbor(bool active)
-    {
-       if(Generator.map[(int)roomMapPos.x-1,(int)roomMapPos.y] != null) Generator.map[(int)roomMapPos.x-1,(int)roomMapPos.y  ].neighbor = active;
-       if(Generator.map[(int)roomMapPos.x+1,(int)roomMapPos.y  ] != null) Generator.map[(int)roomMapPos.x+1,(int)roomMapPos.y  ].neighbor = active;
-       if(Generator.map[(int)roomMapPos.x  ,(int)roomMapPos.y-1] != null) Generator.map[(int)roomMapPos.x  ,(int)roomMapPos.y-1].neighbor = active;
-       if(Generator.map[(int)roomMapPos.x  ,(int)roomMapPos.y+1] != null) Generator.map[(int)roomMapPos.x  ,(int)roomMapPos.y+1].neighbor = active;
-       
+    /// <summary>
+    /// Activate neighboors base on the position of the player
+    /// </summary>
+    /// <param name="active"></param>
+    private void ActivateNeighbor(bool active) {
+        if (!Generator.disableNeighboor) return;
+        
+        if (Generator.map[(int) roomMapPos.x - 1, (int) roomMapPos.y] != null) Generator.map[(int) roomMapPos.x - 1, (int) roomMapPos.y].neighbor = active;
+        if (Generator.map[(int) roomMapPos.x + 1, (int) roomMapPos.y] != null) Generator.map[(int) roomMapPos.x + 1, (int) roomMapPos.y].neighbor = active;
+        if (Generator.map[(int) roomMapPos.x, (int) roomMapPos.y - 1] != null) Generator.map[(int) roomMapPos.x, (int) roomMapPos.y - 1].neighbor = active;
+        if (Generator.map[(int) roomMapPos.x, (int) roomMapPos.y + 1] != null) Generator.map[(int) roomMapPos.x, (int) roomMapPos.y + 1].neighbor = active;
 
-       if (active)
-       {
-           if(Generator.map[(int)roomMapPos.x-1,(int)roomMapPos.y  ] != null)Generator.map[(int) roomMapPos.x-1,(int)roomMapPos.y  ].gameObject.SetActive(true);
-           if(Generator.map[(int)roomMapPos.x+1,(int)roomMapPos.y  ] != null)Generator.map[(int) roomMapPos.x+1,(int)roomMapPos.y  ].gameObject.SetActive(true);
-           if(Generator.map[(int)roomMapPos.x  ,(int)roomMapPos.y-1] != null)Generator.map[(int) roomMapPos.x  ,(int)roomMapPos.y-1].gameObject.SetActive(true);
-           if(Generator.map[(int)roomMapPos.x  ,(int)roomMapPos.y+1] != null)Generator.map[(int) roomMapPos.x  ,(int)roomMapPos.y+1].gameObject.SetActive(true);
-       }
+
+        if (active) {
+            if (Generator.map[(int) roomMapPos.x - 1, (int) roomMapPos.y] != null) Generator.map[(int) roomMapPos.x - 1, (int) roomMapPos.y].gameObject.SetActive(true);
+            if (Generator.map[(int) roomMapPos.x + 1, (int) roomMapPos.y] != null) Generator.map[(int) roomMapPos.x + 1, (int) roomMapPos.y].gameObject.SetActive(true);
+            if (Generator.map[(int) roomMapPos.x, (int) roomMapPos.y - 1] != null) Generator.map[(int) roomMapPos.x, (int) roomMapPos.y - 1].gameObject.SetActive(true);
+            if (Generator.map[(int) roomMapPos.x, (int) roomMapPos.y + 1] != null) Generator.map[(int) roomMapPos.x, (int) roomMapPos.y + 1].gameObject.SetActive(true);
+        }
     }
-    
-    private void OnTriggerEnter2D(Collider2D other)
-    {
+
+    private void OnTriggerEnter2D(Collider2D other) {
         //Debug.Log("enter collider with " + other.name);
-        if (other.CompareTag("Player"))
-        {
+        if (other.CompareTag("Player")) {
             playerIn = true;
             neighbor = true;
             playerInRoom = true;
-         
+
             ActivateNeighbor(true);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
+    private void OnTriggerExit2D(Collider2D other) {
+        if (other.CompareTag("Player")) {
             playerIn = false;
             playerInRoom = false;
-      
+
             ActivateNeighbor(false);
         }
     }
