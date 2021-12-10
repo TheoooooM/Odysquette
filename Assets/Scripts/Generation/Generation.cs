@@ -407,7 +407,9 @@ public class Generation : MonoBehaviour {
     /// </summary>
     private void ResetGen() {
         if (roomPool != null) Destroy(roomPool.gameObject);
-        roomPool = Instantiate(new GameObject(), transform).transform;
+        GameObject poolGam  = new GameObject();
+        poolGam.transform.parent = transform;
+        roomPool = poolGam.transform;
         roomPool.name = "RoomPool";
     }
     

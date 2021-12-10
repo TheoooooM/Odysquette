@@ -18,19 +18,26 @@ public class Items : MonoBehaviour
    [SerializeField] private int healthValue; 
    [SerializeField] private int ressourceValue = 5;
    [SerializeField] private int cost = 5;
-   [SerializeField] private GameObject canvas;
+   [SerializeField] private GameObject shopCanvas;
+   [SerializeField] private GameObject groundCanvas;
+   private bool shop;
    
-   public bool shop;
-
-   
-   
-   public void Awake() {
+   public void SpawnObject(bool ground = false) {
       playerInput = new PlayerMapping();
       playerInput.Interface.Enable();
-      playerInput.Interface.Button.performed += ButtonOnperformed;
-      canvas.SetActive(false);
+      playerInput.Interface.Button.started += ButtonOnperformed;
+      
+      shopCanvas.SetActive(false);
+      groundCanvas.SetActive(false);
+      
+      shop = !ground;
    }
-
+   
+   
+   /// <summary>
+   /// When the player press a button
+   /// </summary>
+   /// <param name="obj"></param>
    private void ButtonOnperformed(InputAction.CallbackContext obj) {
       if (inRange)
       {
@@ -46,6 +53,10 @@ public class Items : MonoBehaviour
       }
    }
 
+   /// <summary>
+   /// When the player press a key
+   /// </summary>
+   /// <param name="buttonPress"></param>
    private void UseItem(string buttonPress = "E") {
       switch (buttonPress) {
           case "E":
@@ -80,21 +91,30 @@ public class Items : MonoBehaviour
       Destroy(gameObject);
    }
    
-   
+   /// <summary>
+   /// When the player enter in the trigger of the item
+   /// </summary>
+   /// <param name="other"></param>
    private void OnTriggerEnter2D(Collider2D other) {
       if (other.transform.CompareTag("Player")) {
          GetComponent<SpriteRenderer>().color = Color.yellow;
          inRange = true;
-         canvas.SetActive(true);
+         if(shop) shopCanvas.SetActive(true);
+         else groundCanvas.SetActive(true);
       }
    }
    
+   /// <summary>
+   /// When the player exit the trigger of the item
+   /// </summary>
+   /// <param name="other"></param>
    private void OnTriggerExit2D(Collider2D other) {
       if (other.transform.CompareTag("Player"))
       {
          inRange = false;
          GetComponent<SpriteRenderer>().color = Color.white;
-         canvas.SetActive(false);
+         if(shop) shopCanvas.SetActive(false);
+         else groundCanvas.SetActive(false);
       }
    }
 }

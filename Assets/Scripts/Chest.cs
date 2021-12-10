@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public class Chest : MonoBehaviour {
     [SerializeField] public itemSO SO;
     [SerializeField] private ChestDrop[] Drops;
-
+    [SerializeField] private bool itemFromChest = true;
 
     private bool canOpen;
     private float rate;
@@ -30,8 +30,8 @@ public class Chest : MonoBehaviour {
         foreach (ChestDrop CD in Drops) {
             totalProb += CD.dropRate;
         }
-
         rate = Random.Range(0, totalProb);
+        
         while (rate >= 0) {
             finalItem = Drops[index].item;
             rate -= Drops[index].dropRate;
@@ -64,19 +64,22 @@ public class Chest : MonoBehaviour {
 
         Destroy(gameObject);
     }
-
-
+    
+    /// <summary>
+    /// Create a random Straw
+    /// </summary>
     protected virtual void RdmStraw() {
         GameObject item = null;
 
-        int index = Random.Range(1, 6);
+        
         while (item == null) {
+            index = Random.Range(1, 6);
             item = index switch {
-                0 => SO.basicStraw,
+                0 => /*SO.basicStraw*/ null,
                 1 => SO.bounceJuice,
                 2 => SO.bubbleStraw,
-                3 => /*SO.snipStraw*/ null,
-                4 => SO.eightStraw,
+                3 => SO.snipStraw,
+                4 => /*SO.eightStraw*/ null,
                 5 => SO.triStraw,
                 6 => SO.mitraStraw,
                 _ => null
@@ -86,37 +89,34 @@ public class Chest : MonoBehaviour {
         InstantiateItem(item);
     }
 
-    virtual public void RdmJuice() {
+    /// <summary>
+    /// Create a random juice
+    /// </summary>
+    protected virtual void RdmJuice() {
         GameObject item = null;
 
         int index = Random.Range(0, 3);
-        switch (index) {
-            case 0:
-                item = SO.bounceJuice;
-                break;
-
-            case 1:
-                item = SO.pierceJuice;
-                break;
-
-            case 2:
-                item = SO.explosionJuice;
-                break;
-
-            case 3:
-                item = SO.poisonJuice;
-                break;
-        }
+        item = index switch {
+            0 => SO.bounceJuice,
+            1 => SO.pierceJuice,
+            2 => SO.explosionJuice,
+            3 => SO.poisonJuice,
+            _ => item
+        };
 
         InstantiateItem(item);
     }
-
-    virtual public void InstantiateItem(GameObject GO) {
-        Instantiate(GO, transform.position, Quaternion.identity, transform.parent);
-        //gameObject.name = GO.name;
+   
+    /// <summary>
+    /// Instantiate the item
+    /// </summary>
+    /// <param name="GO"></param>
+    protected virtual void InstantiateItem(GameObject GO) {
+        GameObject gam = Instantiate(GO, transform.position, Quaternion.identity, transform.parent);
+        gam.GetComponent<Items>().SpawnObject(itemFromChest);
     }
 
-
+    
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             canOpen = true;

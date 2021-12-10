@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemShop : Chest {
-    [SerializeField] bool shop;
-
     public override void Start() {
         base.Start();
         Generate();
@@ -13,7 +11,7 @@ public class ItemShop : Chest {
     public override void Update() {
     }
 
-    public override void RdmJuice() {
+    protected override void RdmJuice() {
         GameObject item = null;
         GameManager.Effect effect = GameManager.Effect.none;
 
@@ -88,8 +86,8 @@ public class ItemShop : Chest {
         InstantiateItem(item);
     }
 
-    public override void InstantiateItem(GameObject GO) {
-        GameObject Gobj = Instantiate(GO, transform.position, Quaternion.identity, transform.parent);
-        Gobj.GetComponent<Items>().shop = true;
+    protected override void InstantiateItem(GameObject GO) {
+        GameObject gam = Instantiate(GO, transform.position, Quaternion.identity, transform.parent);
+        gam.GetComponent<Items>().SpawnObject();
     }
 }
