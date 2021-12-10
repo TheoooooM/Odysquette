@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1293664239353021862}
   - component: {fileID: 1293664239353021861}
   - component: {fileID: 707804363679471128}
+  - component: {fileID: 7982937945004502575}
   m_Layer: 10
   m_Name: Barricade 03
   m_TagString: Walls
@@ -109,3 +110,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.0780306, y: 0.12540054}
   m_EdgeRadius: 0
+--- !u!114 &7982937945004502575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1293664239353021860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98113aeb6103ad4687ff8de422f2231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gamToDesactivate:
+  - {fileID: 1293664239353021860}
+  col: {fileID: 0}
+  life: 239
+  particleToSpawn: {fileID: 0}
+  particlePos: {fileID: 1293664239353021862}

@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 3822803952070309429}
   - component: {fileID: 3822803952070309430}
   - component: {fileID: 5802563375178023517}
-  m_Layer: 0
+  - component: {fileID: 6284566992843364774}
+  m_Layer: 10
   m_Name: FruitBox 01
   m_TagString: Walls
   m_Icon: {fileID: 0}
@@ -109,3 +110,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8125, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6284566992843364774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3822803952070309431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98113aeb6103ad4687ff8de422f2231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gamToDesactivate:
+  - {fileID: 3822803952070309431}
+  col: {fileID: 0}
+  life: 79
+  particleToSpawn: {fileID: 0}
+  particlePos: {fileID: 3822803952070309429}
