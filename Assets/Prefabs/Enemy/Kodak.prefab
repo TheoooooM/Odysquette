@@ -39,6 +39,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 243450508003097545}
+  - {fileID: 7809872405231891986}
   m_Father: {fileID: 243450507811954009}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -105,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d29982ec27ce94f94b8e5f480cce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyFeedBack: {fileID: 0}
   isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: 6689daf8a9ea18e46ae692f9e4247477, type: 2}
   forceApply: {x: 0, y: 0}
@@ -227,21 +229,6 @@ MonoBehaviour:
   patrol: {fileID: 11400000, guid: 1a5e71f4ee653b244a10f5b078c899b3, type: 2}
   rb: {fileID: 0}
   aimPatrol: {fileID: 3120177988508136464}
-  patrolEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4604958879303727888}
-        m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
-        m_MethodName: UpdatePositionPatrol
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!95 &5148572880405207474
 Animator:
   serializedVersion: 3
@@ -655,4 +642,70 @@ GameObject:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6715641839360329328, guid: 02c6c0bd6c6446e469d7b3dcabb911bf, type: 3}
   m_PrefabInstance: {fileID: 2658891208802453778}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7334668551088256492
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 243450507285515238}
+    m_Modifications:
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8103009
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5860141
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3285624419240036279, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_Name
+      value: EnemyLight
+      objectReference: {fileID: 0}
+    - target: {fileID: 6615253965481681356, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1.2481685
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+--- !u!4 &7809872405231891986 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+  m_PrefabInstance: {fileID: 7334668551088256492}
   m_PrefabAsset: {fileID: 0}
