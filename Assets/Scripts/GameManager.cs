@@ -96,6 +96,7 @@ public class GameManager : MonoBehaviour {
     public bool utlimate;
     public float shootCooldown;
     private int countShootRate;
+    [SerializeField] private GameObject snipStrawFx;
     private float shootLoading;
     private bool EndLoading;
 
@@ -172,15 +173,14 @@ public class GameManager : MonoBehaviour {
                     shootLoading += Time.deltaTime;
                     if (shootLoading >= 0.25f) {
                         EndLoading = true;
-                    }
-
-                    if (shootLoading >= actualStrawClass.strawSO.timeValue - 0.1f) {
-                        EndLoading = false;
+                        snipStrawFx.SetActive(true);
                     }
 
                     if (shootLoading >= actualStrawClass.strawSO.timeValue) {
                         actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
                         shootLoading = 0;
+                        snipStrawFx.SetActive(true);
+                        EndLoading = false;
                     }
 
 
@@ -205,9 +205,7 @@ public class GameManager : MonoBehaviour {
         }
 
         if (actualStrawClass.ultimateStrawSO != null && actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate) {
-            Debug.Log("testssss");
             if (ultimateValue >= 100) {
-                Debug.Log("ouhahahahah");
                 actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
                 isUltimate = true;
                 ultimateValue -= 100;
@@ -220,7 +218,7 @@ public class GameManager : MonoBehaviour {
             if (EndLoading) {
                 actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
                 shootLoading = 0;
-
+                snipStrawFx.SetActive(true);
                 EndLoading = false;
             }
         }

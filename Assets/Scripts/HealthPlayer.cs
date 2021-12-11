@@ -47,7 +47,7 @@ public class HealthPlayer : MonoBehaviour {
             else {
                 timerInvincible += Time.deltaTime;
 
-                spriteRenderer.color = Color.red;
+                //spriteRenderer.color = Color.red;
             }
         }
     }
@@ -68,7 +68,7 @@ public class HealthPlayer : MonoBehaviour {
             for (int i = UIManager.Instance.HeartsLife.Length - 1; i > -1; i--) {
                 if (i >= healthPlayer) UIManager.Instance.HeartsLife[i].SetActive(false);
                 else break;
-
+                spriteRenderer.material.SetFloat("_HitTime", Time.time);
                 isInvincible = true;
             }
         }

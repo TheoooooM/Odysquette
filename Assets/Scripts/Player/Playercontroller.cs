@@ -39,6 +39,8 @@ public class Playercontroller : MonoBehaviour {
     private Vector2 dashDirection;
     private float timerDash;
     private float timerBetweenDash;
+    [SerializeField] private float distanceBetweenImage;
+    private Vector3 lastImagePosition;
     
     [Header("---- OTHER")]
     public bool isInFlash;
@@ -125,6 +127,10 @@ public class Playercontroller : MonoBehaviour {
         }
 
         if (InDash) {
+            if (Vector3.Distance(transform.position, lastImagePosition) > distanceBetweenImage) {
+                PlayerAfterImagePool.Instance.GetFromPool();
+                lastImagePosition = transform.position;
+            }
             timerDash += Time.deltaTime;
         }
 
@@ -139,6 +145,8 @@ public class Playercontroller : MonoBehaviour {
                 timerBetweenDash = 0;
                 dashDirection = lastMoveVector.normalized;
                 rb.velocity = Vector2.zero;
+                PlayerAfterImagePool.Instance.GetFromPool();
+                lastImagePosition = transform.position;
             }
 
             if (isInWind || isConvey) rb.velocity = (moveVector * MouvementSpeed + windDirection + conveyorBeltSpeed);
