@@ -91,6 +91,7 @@ public class GameManager : MonoBehaviour {
     [Header("---- STRAW")] 
     public Straw actualStraw;
     public List<StrawClass> strawsClass; //Liste de toute les pailles
+    public Transform strawTRansform;
     public float timerUltimate;
     public bool shooting;
     public bool utlimate;
@@ -236,8 +237,7 @@ public class GameManager : MonoBehaviour {
             angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
             if (UIManager.Instance != null) UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(mousepos);
 
-
-            actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+            strawTRansform.rotation = Quaternion.Euler(0f, 0f, angle);
         }
         else {
             if (ViewPad.magnitude > 0.5f) {
@@ -306,7 +306,7 @@ public class GameManager : MonoBehaviour {
             if (strawC.StrawType == straw) actualStrawClass = strawC;
         }
 
-        actualStrawClass.StrawParent.GetComponent<SpriteRenderer>().sprite = actualStrawClass.strawSO.strawRenderer;
+        //actualStrawClass.StrawParent.GetComponent<SpriteRenderer>().sprite = actualStrawClass.strawSO.strawRenderer;
         actualStrawClass.StrawParent.SetActive(true);
         for (int i = 0; i < colorEffectsList.Length; i++) {
             if (colorEffectsList[i].firstEffect == firstEffect && colorEffectsList[i].secondEffect == secondEffect
