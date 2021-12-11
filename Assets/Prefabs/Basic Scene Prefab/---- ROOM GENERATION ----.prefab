@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8730241956978092252
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8730241956978092253}
+  - component: {fileID: 8730241956978092250}
+  m_Layer: 0
+  m_Name: ---- ROOM GENERATION ----
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8730241956978092253
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8730241956978092252}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8730241956978092250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8730241956978092252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62e7e20db85401545b4ec4555c2d70b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seed: 404090
+  disableNeighboor: 1
+  endGeneration: 0
+  StartingRoom: {fileID: 4595291330530407119, guid: 16b4cac50471b38428589a3e25916356, type: 3}
+  normalRoom:
+  - {fileID: 7130220447867864880, guid: 58a976453c4a8b94d831017eda8621e0, type: 3}
+  - {fileID: 1881911091456145055, guid: f8668631d6adf6b4abf36ef0e90188a0, type: 3}
+  - {fileID: 2642931421814715214, guid: dc4bb1b0c3dd030468388362bb12d6f4, type: 3}
+  - {fileID: 7124168476881402690, guid: c85ed95d75cd2d14bb05a3549825643f, type: 3}
+  endpathRoom: {fileID: 4737099685338266052, guid: 21ddb76b7bfc08544850b680d711c29b, type: 3}
+  mapSize: 51
+  nbrOfRoom: 6
+  roomPool: {fileID: 0}
+  BasicRect:
+    serializedVersion: 2
+    x: 60
+    y: 60
+    width: 60
+    height: 40
