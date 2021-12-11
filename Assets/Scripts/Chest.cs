@@ -70,18 +70,37 @@ public class Chest : MonoBehaviour {
     /// </summary>
     protected virtual void RdmStraw() {
         GameObject item = null;
+        GameManager.Straw strawSelect = GameManager.Straw.basic;
 
         
         while (item == null) {
-            index = Random.Range(1, 6);
-            item = index switch {
-                0 => /*SO.basicStraw*/ null,
-                1 => SO.bounceJuice,
-                2 => SO.bubbleStraw,
-                3 => SO.snipStraw,
-                4 => /*SO.eightStraw*/ null,
-                5 => SO.triStraw,
-                6 => SO.mitraStraw,
+            index = Random.Range(1, 4);
+
+
+            strawSelect = index switch
+            {
+                0 => GameManager.Straw.basic,
+                1 => GameManager.Straw.snipaille,
+                2 => GameManager.Straw.mitra,
+                3 => GameManager.Straw.tripaille,
+                4 => GameManager.Straw.bubble,
+                5 => GameManager.Straw.eightPaille,
+                _ => GameManager.Straw.basic,
+            };
+
+            if (strawSelect == GameManager.Instance.actualStraw)
+            {
+                RdmStraw();
+                return ;
+            }
+            
+            item = strawSelect switch {
+                GameManager.Straw.basic=> SO.basicStraw,
+                GameManager.Straw.bubble => SO.bubbleStraw,
+                GameManager.Straw.snipaille => SO.snipStraw,
+                GameManager.Straw.eightPaille => SO.eightStraw,
+                GameManager.Straw.tripaille => SO.triStraw,
+                GameManager.Straw.mitra => SO.mitraStraw,
                 _ => null
             };
         }
@@ -94,13 +113,28 @@ public class Chest : MonoBehaviour {
     /// </summary>
     protected virtual void RdmJuice() {
         GameObject item = null;
-
+        GameManager.Effect effectSelect;
+        
         int index = Random.Range(0, 3);
-        item = index switch {
-            0 => SO.bounceJuice,
-            1 => SO.pierceJuice,
-            2 => SO.explosionJuice,
-            3 => SO.poisonJuice,
+        effectSelect = index switch
+        {
+            0 => GameManager.Effect.bounce,
+            1 => GameManager.Effect.pierce,
+            2 => GameManager.Effect.explosion,
+            3 => GameManager.Effect.poison,
+        };
+
+        if (effectSelect == GameManager.Instance.firstEffect || effectSelect == GameManager.Instance.secondEffect)
+        {
+            RdmJuice();
+            return;
+        }
+        
+        item = effectSelect switch {
+            GameManager.Effect.bounce => SO.bounceJuice,
+            GameManager.Effect.pierce => SO.pierceJuice,
+            GameManager.Effect.explosion => SO.explosionJuice,
+            GameManager.Effect.poison => SO.poisonJuice,
             _ => item
         };
 
