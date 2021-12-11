@@ -1,0 +1,229 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7547639510492287558
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7547639510492287553}
+  - component: {fileID: 7547639510492287552}
+  m_Layer: 0
+  m_Name: ---- GAME MANAGER ----
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7547639510492287553
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7547639510492287558}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7547639510492287552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7547639510492287558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06127b54c36660a489cdae7e76086074, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUltimate: 0
+  maxUltimateValue: 100
+  offsetPadViewFinder: 0.3
+  angle: 0
+  viewFinderDistance: 2
+  main: {fileID: 0}
+  firstEffect: 1
+  secondEffect: 0
+  colorEffectsList:
+  - firstEffect: 1
+    secondEffect: 0
+    combinaisonColor: {r: 0.39117432, g: 0, b: 1, a: 1}
+  - firstEffect: 2
+    secondEffect: 0
+    combinaisonColor: {r: 1, g: 0.9479667, b: 0, a: 1}
+  - firstEffect: 3
+    secondEffect: 0
+    combinaisonColor: {r: 1, g: 0, b: 0, a: 1}
+  - firstEffect: 4
+    secondEffect: 0
+    combinaisonColor: {r: 0.03127098, g: 1, b: 0, a: 1}
+  - firstEffect: 1
+    secondEffect: 2
+    combinaisonColor: {r: 1, g: 0.6316455, b: 0, a: 1}
+  - firstEffect: 1
+    secondEffect: 3
+    combinaisonColor: {r: 0.80047655, g: 0, b: 1, a: 1}
+  - firstEffect: 1
+    secondEffect: 4
+    combinaisonColor: {r: 0, g: 0.9612417, b: 1, a: 1}
+  - firstEffect: 2
+    secondEffect: 3
+    combinaisonColor: {r: 1, g: 0.3483723, b: 0, a: 1}
+  - firstEffect: 2
+    secondEffect: 4
+    combinaisonColor: {r: 0.6461047, g: 1, b: 0, a: 1}
+  - firstEffect: 3
+    secondEffect: 4
+    combinaisonColor: {r: 0.509434, g: 0.30972174, b: 0.0744927, a: 1}
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  actualStraw: 5
+  strawsClass:
+  - StrawName: Basic Straw
+    StrawType: 0
+    StrawParent: {fileID: 0}
+    strawSO: {fileID: 11400000, guid: c6a5e905b2398d442b4ecaa31bd69658, type: 2}
+    sizeUltimatePool: 15
+    ultimateStrawSO: {fileID: 11400000, guid: ca60bda0eb4fbb4499b5a1b68826f7be, type: 2}
+    spawnerTransform: {fileID: 0}
+    sizeShootPool: 5
+  - StrawName: Bubble Straw
+    StrawType: 1
+    StrawParent: {fileID: 0}
+    strawSO: {fileID: 11400000, guid: 4411fe9fc15340d4b82a21d3a7b97773, type: 2}
+    sizeUltimatePool: 15
+    ultimateStrawSO: {fileID: 11400000, guid: 73c4a0ca106eab44382ebe48a16af4cb, type: 2}
+    spawnerTransform: {fileID: 0}
+    sizeShootPool: 5
+  - StrawName: Snip Straw
+    StrawType: 2
+    StrawParent: {fileID: 0}
+    strawSO: {fileID: 11400000, guid: 3f5997e0706a3184b9ca72c0d73ab6bd, type: 2}
+    sizeUltimatePool: 15
+    ultimateStrawSO: {fileID: 11400000, guid: e03f8c18cc15405459c383b93873433b, type: 2}
+    spawnerTransform: {fileID: 0}
+    sizeShootPool: 5
+  - StrawName: Height Straw
+    StrawType: 3
+    StrawParent: {fileID: 0}
+    strawSO: {fileID: 11400000, guid: 008d91e3744ea94428924d6db8232b1e, type: 2}
+    sizeUltimatePool: 15
+    ultimateStrawSO: {fileID: 11400000, guid: ca60bda0eb4fbb4499b5a1b68826f7be, type: 2}
+    spawnerTransform: {fileID: 0}
+    sizeShootPool: 0
+  - StrawName: Tri Straw
+    StrawType: 4
+    StrawParent: {fileID: 0}
+    strawSO: {fileID: 11400000, guid: 3c22d2bbd41d6f4499350fefa30855ea, type: 2}
+    sizeUltimatePool: 15
+    ultimateStrawSO: {fileID: 11400000, guid: 9a814fca707bd514fb051bf4a037f19f, type: 2}
+    spawnerTransform: {fileID: 0}
+    sizeShootPool: 5
+  - StrawName: Riffle Shoot
+    StrawType: 5
+    StrawParent: {fileID: 0}
+    strawSO: {fileID: 11400000, guid: d59a22ec87c430e45bf5327383caceb4, type: 2}
+    sizeUltimatePool: 15
+    ultimateStrawSO: {fileID: 11400000, guid: 3e530475a2eead848986f12e54fbaf25, type: 2}
+    spawnerTransform: {fileID: 0}
+    sizeShootPool: 5
+  timerUltimate: 0
+  shooting: 0
+  utlimate: 0
+  shootCooldown: 0
+  isMouse: 1
+  ViewPad: {x: 0, y: 0}
+  shootRate: 0
+  Player: {fileID: 0}
+  endRoomTime:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.121000916
+      value: 0.7149916
+      inSlope: -1.7374018
+      outSlope: -1.7374018
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1312236
+      outWeight: 0.058437288
+    - serializedVersion: 3
+      time: 0.611125
+      value: 0.8010944
+      inSlope: 1.1627342
+      outSlope: 1.1627342
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.08004653
+      outWeight: 0.10653917
+    - serializedVersion: 3
+      time: 1
+      value: 1.0002723
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  endRoomPostProcess: {fileID: 0}
+  endRoomWeigthCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.2
+      value: 1
+      inSlope: 10.157568
+      outSlope: -15.086539
+      tangentMode: 1
+      weightedMode: 3
+      inWeight: 0.15068275
+      outWeight: 0.10145271
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _lookDir: {x: 0, y: 0}
+  actualStrawClass:
+    StrawName: 
+    StrawType: 0
+    StrawParent: {fileID: 0}
+    strawSO: {fileID: 0}
+    sizeUltimatePool: 0
+    ultimateStrawSO: {fileID: 0}
+    spawnerTransform: {fileID: 0}
+    sizeShootPool: 0
