@@ -131,7 +131,7 @@ public class PoolManager : MonoBehaviour {
         SpawnEffectBulletPool(bullet, impactQueue, impactPrefab);
     }
 
-  public  GameObject SpawnEffectBulletPool(Transform bullet, Queue<GameObject> QueueEffect, GameObject prefabBullet)
+    public  GameObject SpawnEffectBulletPool(Transform bullet, Queue<GameObject> QueueEffect, GameObject prefabBullet)
     {
         GameObject obj;
         if (QueueEffect.Count == 0)

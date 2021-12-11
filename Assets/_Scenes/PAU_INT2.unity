@@ -123,49 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &30636351
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 30636352}
-  - component: {fileID: 30636353}
-  m_Layer: 9
-  m_Name: DashPool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &30636352
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 30636351}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 830474826}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &30636353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 30636351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bac974b49808c7f409affd5481c51559, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  afterImagePrefab: {fileID: 800161671304815234, guid: eac18fd91a3e0dc4080a29529e690453, type: 3}
 --- !u!1 &75304929
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,6 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1464324221124304236}
+  cameraShake: {fileID: 0}
   _cinemachineVirtualCamera: {fileID: 75304931}
   cameraMain: {fileID: 196568771}
   speed: 100
@@ -488,10 +446,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distXMouseToPlayer: 0
-  distYMouseToPlayer: 0
   maxDistanceX: 5
   maxDistanceY: 3.75
+  distXMouseToPlayer: 0
+  distYMouseToPlayer: 0
   currentRectLimitation:
     serializedVersion: 2
     x: -58.65
@@ -750,6 +708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seed: 3
+  disableNeighboor: 0
   endGeneration: 0
   StartingRoom: {fileID: 4595291330530407119, guid: 16b4cac50471b38428589a3e25916356, type: 3}
   normalRoom:
@@ -995,7 +954,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1008797745}
-  - {fileID: 30636352}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1062,11 +1020,6 @@ Transform:
   m_Father: {fileID: 830474826}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1119574022 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8410869144526307780, guid: cd8ddc45c3aee9443a6ca537e33a3f5f, type: 3}
-  m_PrefabInstance: {fileID: 354391861}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1119574025 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2327383864308610873, guid: cd8ddc45c3aee9443a6ca537e33a3f5f, type: 3}
@@ -1208,11 +1161,11 @@ MonoBehaviour:
   timerUltimate: 0
   shooting: 0
   utlimate: 0
-  snipStrawFX: {fileID: 1119574022}
   shootCooldown: 0
+  snipStrawFx: {fileID: 0}
   isMouse: 1
   ViewPad: {x: 0, y: 0}
-  ShootRate: 0
+  shootRate: 0
   Player: {fileID: 1464324221124304224}
   endRoomTime:
     serializedVersion: 2
@@ -1253,6 +1206,13 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  endRoomPostProcess: {fileID: 0}
+  endRoomWeigthCurve:
+    serializedVersion: 2
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -2021,11 +1981,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1464324221124304238}
+  cameraShake: {fileID: 0}
   maxHealth: 6
   healthPlayer: 0
   timeInvincible: 2
   isInvincible: 0
-  isDead: 0
   timerInvincible: 0
   playerController: {fileID: 1464324221124304239}
   isGameOver: 0
@@ -2131,6 +2091,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentController: 
   gun: {fileID: 1464324221243847396}
+  strawTransform: {fileID: 0}
+  enableMovementAtLaunch: 1
   MouvementSpeed: 10
   falling: 0
   InDash: 0
@@ -2684,6 +2646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b375e0f620dfbc84d8c66570cfbe5c57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerShadow: {fileID: 0}
   controller: {fileID: 1464324221124304239}
   goBackForce: 2
   dashPos: {x: 0, y: 0, z: 0}
