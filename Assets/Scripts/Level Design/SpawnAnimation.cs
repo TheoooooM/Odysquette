@@ -13,16 +13,21 @@ public class SpawnAnimation : MonoBehaviour {
     [SerializeField] private Animator startCanvasAnim = null;
     [SerializeField] private bool hasSpawn = false;
     #endregion Variables
-    
+
+    private void Awake() {
+        playerPrefab.SetActive(false);
+    }
+
     private void Update() {
         if ((Input.anyKeyDown) && !hasSpawn && canSpawn) {
             hasSpawn = true;
             startCanvasAnim.SetTrigger("CloseAnim");
-            //Spawn and launch all the animation and particles needed for the spawn of the player
-            //Enable the inputs for the player
+            playerPrefab.SetActive(true);
+            playerPrefab.GetComponent<PlayerMovementHub>().StartMoveAnim();
         }
     }
-    
+
+
     /// <summary>
     /// Activate the menu which allow the player to press any key to start the game
     /// </summary>
