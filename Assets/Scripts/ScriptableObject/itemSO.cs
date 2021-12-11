@@ -37,7 +37,19 @@ public class itemSO : ScriptableObject
 
     [SerializeField] private GameObject _poisonJuice;
     public GameObject poisonJuice => _poisonJuice;
+
+    [Header("----------- Juice Sprite -----------")] 
+    [SerializeField] private Sprite _bounceSprite;
+    public Sprite bounceSprite => _bounceSprite;
+
+    [SerializeField] private Sprite _pierceSprite;
+    public Sprite pierceSprite => _pierceSprite;
     
+    [SerializeField] private Sprite _explosionSprite;
+    public Sprite explosionSprite => _explosionSprite;
+    
+    [SerializeField] private Sprite _poisonSprite;
+    public Sprite poisonSprite => _poisonSprite;
     
     [Header("----------- Other -----------")]
     
