@@ -10,8 +10,7 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance;
 
     private void Awake() {
-        if (NeverDestroy.Instance == null) Instantiate(Resources.Load<GameObject>("NeverDestroy"));
-        else GetND();
+        
         Instance = this;
     }
 
@@ -129,6 +128,8 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Start() {
+        if (NeverDestroy.Instance == null) Instantiate(Resources.Load<GameObject>("NeverDestroy"));
+        else GetND();
         animate = false;
         timer = 0;
         
