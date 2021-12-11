@@ -14,6 +14,7 @@ public class Playercontroller : MonoBehaviour {
     [SerializeField] private String CurrentController = "";
     public GameObject gun;
     private PlayerMapping playerInput;
+    public Transform strawTransform;
 
 
     [Header("---- MOVEMENT")] 
