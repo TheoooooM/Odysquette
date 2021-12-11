@@ -1,5 +1,6 @@
 using Cinemachine;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CameraControllers : MonoBehaviour {
     #region Instance
@@ -22,6 +23,8 @@ public class CameraControllers : MonoBehaviour {
     [Header("CAMERA MAX DISTANCE")]
     [SerializeField] private float maxDistanceX = 0;
     [SerializeField] private float maxDistanceY = 0;
+
+    private Vector3 shakePos;
     
     [HideInInspector] public Rect currentRectLimitation;
     private Vector3 offSet;
@@ -37,7 +40,22 @@ public class CameraControllers : MonoBehaviour {
         
         if (GameManager.Instance.isMouse) offSet = player.position + new Vector3(camPosX, camPosY, -10);
         else offSet = (player.position + (Vector3) GameManager.Instance.ViewPad * distanceCurveY.Evaluate(1));
-
+        offSet += shakePos;
+        
         cameraMain.transform.position = offSet;
+    }
+    
+    
+    public void ScreenShake(float shakeTime = 1, float magnitude = 1 )
+    {
+        float timer = 0;
+        while (timer < shakeTime)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+            shakePos = new Vector3(x, y);
+            timer += Time.deltaTime;
+        }
+        shakePos = Vector3.zero;
     }
 }

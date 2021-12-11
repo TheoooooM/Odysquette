@@ -59,6 +59,7 @@ public class HealthPlayer : MonoBehaviour {
             }
 
             healthPlayer -= damage;
+            Camera.main.GetComponent<CameraControllers>().ScreenShake();
             if (UIManager.Instance == null) return;
             for (int i = UIManager.Instance.HeartsLife.Length - 1; i > -1; i--) {
                 if (i >= healthPlayer) {
