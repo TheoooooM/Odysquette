@@ -170,6 +170,11 @@ public class Bullet : MonoBehaviour {
         }
     }
 
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        bounceCount--;
+    }
+
     void Explosion() {
         PoolManager.Instance.SpawnExplosionPool(transform);
     }
