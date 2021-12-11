@@ -19,13 +19,12 @@ public class EnemyFeedBackMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         if (AnimationStatesListOneTime.Count != 0)
         {
-                  for (int i = 0; i < AnimationStatesListOneTime.Count; i++)
+                for (int i = 0; i < AnimationStatesListOneTime.Count; i++)
                     {
                         if (AnimationStatesListOneTime[i].destination == null)
                         {
                             AnimationStatesListOneTime[i].destination = HealthPlayer.Instance.transform;
                         }
-                      
                     }
         }
   

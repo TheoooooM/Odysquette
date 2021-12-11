@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,9 +15,14 @@ public class PlayerAfterImagePool : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        
+    }
+
+    private void Start()
+    {
         GrowPool();
     }
-    
+
     private void GrowPool() 
     {
         for(int i = 0; i < 10; i++)

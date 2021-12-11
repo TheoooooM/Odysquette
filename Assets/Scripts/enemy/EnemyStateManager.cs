@@ -22,7 +22,7 @@ public class EnemyStateManager : MonoBehaviour {
     public Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionaryCondition =
         new Dictionary<ExtensionMethods.ObjectInStateManager, Object>();
 
-    private Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionaryState =
+    public Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionaryState =
         new Dictionary<ExtensionMethods.ObjectInStateManager, Object>();
 
     private Collider2D collider2D;
@@ -58,18 +58,18 @@ public class EnemyStateManager : MonoBehaviour {
     public delegate void CurrentState(Dictionary<ExtensionMethods.ObjectInStateManager, Object>
         objectValue, out bool endStep, EnemyFeedBack enemyFeedBack);
 
-    private CurrentState CurrentFixedState;
+    public CurrentState CurrentFixedState;
 
-    private CurrentState CurrentUpdateState;
+    public CurrentState CurrentUpdateState;
     //Timer
 
     public Dictionary<int, float> timerCondition = new Dictionary<int, float>();
-    [SerializeField] private float timerCurrentStartState;
-    private float timerCurrentState;
+ public float timerCurrentStartState;
+    public float timerCurrentState;
     public Rigidbody2D rb;
     public SpriteRenderer spriteRenderer;
     public Dictionary<int, bool> healthUse = new Dictionary<int, bool>();
-
+    private int counthealh;
     private void OnValidate() {
         //   
         // spriteRenderer.sprite = EMainStatsSo.sprite;
@@ -87,10 +87,7 @@ public class EnemyStateManager : MonoBehaviour {
             if (EMainStatsSo.stateEnnemList[i].useTimeCondition) {
                 timerCondition.Add(i, 0);
             }
-
-            if (EMainStatsSo.stateEnnemList[i].useHealthCondition) {
-                healthUse.Add(i, false);
-            }
+            
         }
 
         for (int i = 0; i < baseObjectListCondition.Count; i++) {
@@ -147,16 +144,12 @@ public class EnemyStateManager : MonoBehaviour {
     }
 
     private void Update() {
-        if (isActivate) {
+        if (isActivate && !isDead) {
             #region CheckStates
 
             if (!IsCurrentStatePlayed && !IsCurrentStartPlayed && EMainStatsSo.stateEnnemList.Count != 0) {
                 for (int i = 0; i < EMainStatsSo.stateEnnemList.Count; i++) {
-                    if (EMainStatsSo.stateEnnemList[i].useHealthCondition) {
-                        if (EMainStatsSo.stateEnnemList[i].healthCondition <= health || healthUse[i] == true) {
-                            continue;
-                        }
-                    }
+                    
 
                     if (EMainStatsSo.stateEnnemList[i].useTimeCondition) {
                         if (EMainStatsSo.stateEnnemList[i].timeCondition > timerCondition[i]) {
@@ -166,15 +159,19 @@ public class EnemyStateManager : MonoBehaviour {
 
 
                     if (EMainStatsSo.stateEnnemList[i].CheckCondition(objectDictionaryCondition)) {
+                       
                         if (!EMainStatsSo.stateEnnemList[i].isFixedUpdate) {
                             if (EMainStatsSo.stateEnnemList[i].haveStartState) {
                                 CurrentUpdateState += EMainStatsSo.stateEnnemList[i].StartState;
+                                
 
                                 IsCurrentStartPlayed = true;
                                 if (EMainStatsSo.stateEnnemList[i].oneStartState)
                                     IsFirstStartPlayed = true;
+                                Debug.Log(i);
                             }
                             else {
+                               
                                 CurrentUpdateState += EMainStatsSo.stateEnnemList[i].PlayState;
                                 IsCurrentStatePlayed = true;
                             }
@@ -196,9 +193,7 @@ public class EnemyStateManager : MonoBehaviour {
 
                             knockUpInState = EMainStatsSo.stateEnnemList[i].isKnockUpInState;
                             indexCurrentState = i;
-                            if (EMainStatsSo.stateEnnemList[i].useHealthCondition) {
-                                healthUse[i] = true;
-                            }
+                         
 
                             UpdateDictionaries(EMainStatsSo.stateEnnemList[indexCurrentState]);
                         }
@@ -237,7 +232,7 @@ public class EnemyStateManager : MonoBehaviour {
 
 
     private void FixedUpdate() {
-        if (isActivate) {
+        if (isActivate && !isDead) {
             ApplyState();
 
             if (EMainStatsSo.baseState != null) {
@@ -281,17 +276,26 @@ public class EnemyStateManager : MonoBehaviour {
         if (IsCurrentStartPlayed
             || IsCurrentStatePlayed) {
             bool _endstep = false;
-            if (CurrentUpdateState != null || CurrentFixedState != null) {
-                if (EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate) {
+            if (CurrentFixedState != null)
+            {
+                if (EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate)
+                {
+               
                     CurrentFixedState(objectDictionaryState, out bool endStep, enemyFeedBack);
                     _endstep = endStep;
                 }
+            }
 
-                else {
+            if(CurrentUpdateState != null)
+            {
+             if(!EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate)
+               {
+                  
                     CurrentUpdateState(objectDictionaryState, out bool endStep, enemyFeedBack);
                     _endstep = endStep;
                 }
             }
+            
 
             if (IsCurrentStartPlayed) {
                 if (IsFirstStartPlayed) {
@@ -303,20 +307,21 @@ public class EnemyStateManager : MonoBehaviour {
                     ;
                 }
 
-                if (EMainStatsSo.stateEnnemList[indexCurrentState].useHealthCondition) {
-                    healthUse[indexCurrentState] = true;
-                }
 
                 if (CheckTimer(timerCurrentStartState, EMainStatsSo.stateEnnemList[indexCurrentState].startTime)) {
                     if (EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate) {
                         if (!EMainStatsSo.stateEnnemList[indexCurrentState].oneStartState)
                             CurrentFixedState -= EMainStatsSo.stateEnnemList[indexCurrentState].StartState;
+                  
                         CurrentFixedState += EMainStatsSo.stateEnnemList[indexCurrentState].PlayState;
+                  
                     }
                     else {
                         if (!EMainStatsSo.stateEnnemList[indexCurrentState].oneStartState)
                             CurrentUpdateState -= EMainStatsSo.stateEnnemList[indexCurrentState].StartState;
+                      
                         CurrentUpdateState += EMainStatsSo.stateEnnemList[indexCurrentState].PlayState;
+                  
                     }
 
 
@@ -332,7 +337,7 @@ public class EnemyStateManager : MonoBehaviour {
                     : CheckTimer(timerCurrentState, EMainStatsSo.stateEnnemList[indexCurrentState].playStateTime);
                 if (check) {
                     IsCurrentStatePlayed = false;
-
+                 
                     if (EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate)
                         CurrentFixedState -= EMainStatsSo.stateEnnemList[indexCurrentState].PlayState;
 
@@ -349,7 +354,7 @@ public class EnemyStateManager : MonoBehaviour {
                         UpdateDictionaries(EMainStatsSo.baseState);
                     timerCurrentState = 0;
                     timerCondition[indexCurrentState] = 0;
-                    indexCurrentState = 0;
+                    indexCurrentState = 0;                
                 }
             }
         }
@@ -409,13 +414,16 @@ public class EnemyStateManager : MonoBehaviour {
             }
             catch (Exception e) {
                 roomParent.ennemiesList.Remove(gameObject);
-                if (enemyFeedBack.stateDeathName != "") {
-                    animator.Play(enemyFeedBack.stateDeathName);
-                    StartCoroutine(ShowCurrentClipLength(gameObject, animator));
-                }
-                else {
-                    Destroy(gameObject);
-                }
+               
+                      if (enemyFeedBack.stateDeathName != "") {
+                                        animator.Play(enemyFeedBack.stateDeathName);
+                                        StartCoroutine(ShowCurrentClipLength(gameObject, animator));
+                                    }
+                                    else {
+                                        Destroy(gameObject);
+                                    }
+                
+              
 
                 isDead = true;
             }
@@ -435,7 +443,9 @@ public class EnemyStateManager : MonoBehaviour {
         else {
             Knockup(position, knockUpValue, knockup, isExplosion);
             health -= damage;
+            
         }
+        spriteRenderer.material.SetFloat("_HitTime", Time.time);
     }
 
     void Knockup(Vector2 position, float knockUpValue, bool knockUp, bool isExplosion) {

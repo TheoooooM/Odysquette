@@ -1,4 +1,5 @@
 using System;
+using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,16 +15,21 @@ public class Explosion : MonoBehaviour
     [SerializeField]
     private float damage;
 
- 
-    
+    private float timerCollider;
+    [SerializeField] private float timeCollider;
+    [SerializeField]
+    private  Collider2D collider2D;
     private void Start()
     {
+    
        anim = GetComponent<Animation>();
        rb = GetComponent<Rigidbody2D>();
     }
 
     void OnEnable()
     {
+        collider2D.enabled = true;
+        timerCollider = 0;
         timer = 0; 
         /*  if(anim !=null)anim.Play("explosion");
         else
@@ -36,6 +42,11 @@ public class Explosion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timerCollider += Time.deltaTime;
+        if (timerCollider > timeCollider)
+        {
+            collider2D.enabled = false;
+        }
         timer += Time.deltaTime;
         if (timer > time)
         {

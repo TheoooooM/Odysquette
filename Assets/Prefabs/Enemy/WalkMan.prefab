@@ -141,6 +141,7 @@ GameObject:
   - component: {fileID: 9123325105654296365}
   - component: {fileID: 6906724987814036677}
   - component: {fileID: 4975862093282308843}
+  - component: {fileID: 4514802860873063471}
   m_Layer: 8
   m_Name: WalkManOnly
   m_TagString: Enemy
@@ -162,7 +163,6 @@ Transform:
   - {fileID: 6290530628342197121}
   - {fileID: 6290530629586656413}
   - {fileID: 8456005039682089436}
-  - {fileID: 2304304280907190308}
   m_Father: {fileID: 3568766412412642622}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -185,7 +185,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e8a65c6061707934ea1f23159495d2c7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -271,6 +271,7 @@ MonoBehaviour:
   IsFirstStartPlayed: 0
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
+  timerCurrentState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
 --- !u!50 &6290530629349266516
@@ -334,7 +335,7 @@ MonoBehaviour:
     useRaycasting: 1
     mask:
       serializedVersion: 2
-      m_Bits: 1280
+      m_Bits: 1281
     useGraphRaycasting: 0
   traversableTags: -1
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -382,6 +383,21 @@ MonoBehaviour:
   patrol: {fileID: 11400000, guid: 1a5e71f4ee653b244a10f5b078c899b3, type: 2}
   rb: {fileID: 6290530629349266516}
   aimPatrol: {fileID: 7449746332791056143}
+  patrolEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4975862093282308843}
+        m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
+        m_MethodName: UpdatePositionPatrol
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &9123325105654296365
 Animator:
   serializedVersion: 3
@@ -432,6 +448,18 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+          - m_Target: {fileID: 4514802860873063471}
+            m_TargetAssemblyTypeName: EnemyFeedBackFX, Assembly-CSharp
+            m_MethodName: InstantiateOneTimeFx
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
     - typeFeedBackEvent: 5
       feedBackEvent:
         m_PersistentCalls:
@@ -439,6 +467,18 @@ MonoBehaviour:
           - m_Target: {fileID: 4975862093282308843}
             m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
             m_MethodName: CancelBoolOneTime
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 4514802860873063471}
+            m_TargetAssemblyTypeName: EnemyFeedBackFX, Assembly-CSharp
+            m_MethodName: CancelInstantiateOneTimeFx
             m_Mode: 3
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
@@ -496,6 +536,34 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+          - m_Target: {fileID: 4514802860873063471}
+            m_TargetAssemblyTypeName: EnemyFeedBackFX, Assembly-CSharp
+            m_MethodName: InstantiateOneTimeFx
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - typeFeedBackEvent: 5
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4514802860873063471}
+            m_TargetAssemblyTypeName: EnemyFeedBackFX, Assembly-CSharp
+            m_MethodName: CancelInstantiateOneTimeFx
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
   stateDeathName: 
 --- !u!114 &4975862093282308843
 MonoBehaviour:
@@ -541,7 +609,23 @@ MonoBehaviour:
       angleMax: 359
       stateName: AttackBackRight
   animationForSpecificPositionsList: []
-  transformPatrol: {fileID: 0}
+  transformPatrol: {fileID: 7449746332791056143}
+--- !u!114 &4514802860873063471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6290530629349266512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fd36e1f2fc334409b9a5e8d742b395, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FxOneTimeList:
+  - enemyTypeShootFX: 6
+    isOneTime: 0
+    prefab: {fileID: 7743982384819659830, guid: bff37a0a4e104e44ea554ff201d8f762, type: 3}
 --- !u!1 &6290530629586656412
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,69 +683,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5783494, y: 1.1782632}
   m_EdgeRadius: 0
---- !u!1001 &1608153633948586970
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 6290530629349266523}
-    m_Modifications:
-    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.041585967
-      objectReference: {fileID: 0}
-    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.07890773
-      objectReference: {fileID: 0}
-    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.859775
-      objectReference: {fileID: 0}
-    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.51067305
-      objectReference: {fileID: 0}
-    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3285624419240036279, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
-      propertyPath: m_Name
-      value: EnemyLight
-      objectReference: {fileID: 0}
-    - target: {fileID: 6615253965481681356, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
-      propertyPath: m_PointLightOuterRadius
-      value: 1.1035283
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
---- !u!4 &2304304280907190308 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
-  m_PrefabInstance: {fileID: 1608153633948586970}
-  m_PrefabAsset: {fileID: 0}

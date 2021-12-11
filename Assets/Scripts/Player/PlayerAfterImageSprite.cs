@@ -10,7 +10,7 @@ public class PlayerAfterImageSprite : MonoBehaviour
     private float alpha;
     [SerializeField]
     private float alphaSet = 0.8f;
-    private float alphaMultiplier = 0.85f;
+    private float alphaMultiplier = 0.9f;
 
     private Transform player;
 
@@ -22,7 +22,7 @@ public class PlayerAfterImageSprite : MonoBehaviour
     private void OnEnable()
     {
         SR = GetComponent<SpriteRenderer>();
-        player = GameObject.FindGameObjectWithTag("Player").transform; //check if this is the right tag for the player
+        player = HealthPlayer.Instance.transform; //check if this is the right tag for the player
         playerSR = player.GetComponent<SpriteRenderer>();
 
         alpha = alphaSet;

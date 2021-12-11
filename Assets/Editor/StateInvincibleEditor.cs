@@ -23,7 +23,7 @@ public class StateInvincibleEditor : StateSOEditor
             }
         }
         EditorGUILayout.Space(6f);
-     
+     EditorGUILayout.EndFoldoutHeaderGroup();
         serializedObject.ApplyModifiedProperties();
     }
 }
