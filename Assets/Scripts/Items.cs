@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,7 +11,7 @@ public class Items : MonoBehaviour
    }
    
    private PlayerMapping playerInput;
-   
+
    public bool inRange;
    [SerializeField] private type itemType;
    [SerializeField] private GameManager.Effect effect;
@@ -24,7 +25,7 @@ public class Items : MonoBehaviour
    
    public void SpawnObject(bool ground = false) {
       playerInput = new PlayerMapping();
-      playerInput.Interface.Enable();
+      
       playerInput.Interface.Button.started += ButtonOnperformed;
       
       shopCanvas.SetActive(false);
@@ -32,8 +33,13 @@ public class Items : MonoBehaviour
       
       shop = !ground;
    }
-   
-   
+
+   private void Update()
+   {
+      if (Input.GetKeyUp(KeyCode.E)) playerInput.Interface.Enable();;
+   }
+
+
    /// <summary>
    /// When the player press a button
    /// </summary>

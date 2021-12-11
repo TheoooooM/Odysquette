@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
     public bool isBounce;
+    private bool colliding;
     public bool hasRange;
     public float damage;
     public float range;
@@ -147,7 +148,9 @@ public class Bullet : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other) {
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        colliding = true;
         if (_bounceCount > 0 && other.gameObject.CompareTag("Walls")) {
             _bounceCount--;
             var speed = lastVelocity.magnitude;
@@ -167,9 +170,14 @@ public class Bullet : MonoBehaviour {
 
     private void OnCollisionStay2D(Collision2D other)
     {
-        bounceCount--;
+        _bounceCount--;
     }
-    
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        colliding = false;
+    }
+
     void Explosion() {
         PoolManager.Instance.SpawnExplosionPool(transform);
     }
@@ -198,7 +206,6 @@ public class Bullet : MonoBehaviour {
             isDesactive = true;
         }
     }
-
 
     IEnumerator Reset() {
         yield return new WaitForEndOfFrame();
