@@ -51,17 +51,12 @@ public class Items : MonoBehaviour
       {
          if (cost <= NeverDestroy.Instance.ressources && shop)
          {
-            Debug.Log("pay " + cost);
             UseItem(obj.control.displayName);
             NeverDestroy.Instance.AddRessource(-cost);
          }
          else if(!shop)
          {
             UseItem(obj.control.displayName);
-         }
-         else
-         {
-            Debug.Log("can't buy");
          }
       }
    }
