@@ -294,7 +294,6 @@ public class GameManager : MonoBehaviour {
         NeverDestroy.Instance.actualStraw = actualStraw;
         NeverDestroy.Instance.life = HealthPlayer.Instance.healthPlayer;
     }
-
     
     /// <summary>
     /// Change the actual straw
