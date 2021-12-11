@@ -21,6 +21,7 @@ public class HealthPlayer : MonoBehaviour {
 
     private void Awake() {
         Instance = this;
+        if (Camera.main != null) cameraShake = Camera.main.GetComponent<CameraShake>();
     }
 
     private void Start() {
@@ -60,7 +61,7 @@ public class HealthPlayer : MonoBehaviour {
             if (healthPlayer - damage <= 0) OnDeathPlayer();
 
             healthPlayer -= damage;
-            cameraShake.CreateCameraShake(0.1f, .25f);
+            if(cameraShake != null) cameraShake.CreateCameraShake(0.1f, .25f);
             
             if (UIManager.Instance == null) return;
             
