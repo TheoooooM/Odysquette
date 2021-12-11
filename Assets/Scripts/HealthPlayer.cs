@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class HealthPlayer : MonoBehaviour {
     public Rigidbody2D rb;
+    [SerializeField] private CameraShake cameraShake;
 
     [SerializeField] public int maxHealth;
     [SerializeField] public int healthPlayer;
     [SerializeField] private float timeInvincible;
     private SpriteRenderer spriteRenderer;
     [SerializeField] private bool isInvincible;
-    public bool isDead;
-
     [SerializeField] private float timerInvincible;
 
     // Start is called before the first frame update
@@ -24,7 +23,7 @@ public class HealthPlayer : MonoBehaviour {
         Instance = this;
     }
 
-    void Start() {
+    private void Start() {
         playerController = GetComponent<Playercontroller>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (NeverDestroy.Instance != null) healthPlayer = NeverDestroy.Instance.life;
@@ -52,28 +51,33 @@ public class HealthPlayer : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Deal damage to the player
+    /// </summary>
+    /// <param name="damage"></param>
     public void TakeDamagePlayer(int damage) {
         if (!isInvincible) {
-            if (healthPlayer - damage <= 0) {
-                OnDeathPlayer();
-            }
+            if (healthPlayer - damage <= 0) OnDeathPlayer();
 
             healthPlayer -= damage;
+            cameraShake.CreateCameraShake(0.1f, .25f);
+            
             if (UIManager.Instance == null) return;
+            
             for (int i = UIManager.Instance.HeartsLife.Length - 1; i > -1; i--) {
-                if (i >= healthPlayer) {
-                    UIManager.Instance.HeartsLife[i].SetActive(false);
-                }
-                else {
-                    break;
-                }
+                if (i >= healthPlayer) UIManager.Instance.HeartsLife[i].SetActive(false);
+                else break;
 
                 isInvincible = true;
             }
         }
     }
 
-    void TakeHealPlayer(int heal) {
+    /// <summary>
+    /// Heal the player
+    /// </summary>
+    /// <param name="heal"></param>
+    public void TakeHealPlayer(int heal) {
         healthPlayer += heal;
         for (int i = 0; i < healthPlayer; i++) {
             if (i <= healthPlayer) {
@@ -85,15 +89,13 @@ public class HealthPlayer : MonoBehaviour {
         }
     }
 
-    void OnDeathPlayer() {
+    private void OnDeathPlayer() {
         if (GameManager.Instance != null) GameManager.Instance.enabled = false;
         gameObject.SetActive(false);
         if (UIManager.Instance != null) UIManager.Instance.GameOver();
     }
 
     private void OnTriggerStay2D(Collider2D other) {
-        if (other.CompareTag("ShieldEnemy")) {
-            TakeDamagePlayer(1);
-        }
+        if (other.CompareTag("ShieldEnemy")) TakeDamagePlayer(1);
     }
 }
