@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour {
     [Header("---- STRAW")] 
     public Straw actualStraw;
     public List<StrawClass> strawsClass; //Liste de toute les pailles
-    public Transform strawTRansform;
+    private Transform strawTRansform;
     public float timerUltimate;
     public bool shooting;
     public bool utlimate;
@@ -127,9 +127,11 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private void Start() {
+    private void Start()
+    {
         if (NeverDestroy.Instance == null) Instantiate(Resources.Load<GameObject>("NeverDestroy"));
         else GetND();
+        strawTRansform = Playercontroller.Instance.strawTransform;
         animate = false;
         timer = 0;
         

@@ -10,5 +10,8 @@ public class HubCamera : MonoBehaviour{
     /// <summary>
     /// When the camera animation stop. The player can press any button to start
     /// </summary>
-    public void CanPressButton() => spawnData.ChangePressMenuState();
+    public void CanPressButton() {
+        spawnData.ChangePressMenuState();
+        GetComponent<Animator>().enabled = false;
+    }
 }

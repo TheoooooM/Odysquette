@@ -11,20 +11,24 @@ public class Playercontroller : MonoBehaviour {
     [HideInInspector] public static Playercontroller Instance;
     
     [Header("---- PLAYER DATA")]
-    [SerializeField] private String CurrentController;
+    [SerializeField] private String CurrentController = "";
     public GameObject gun;
     private PlayerMapping playerInput;
+    public Transform strawTransform;
 
-    
-    [Header("---- MOVEMENT")]
+
+    [Header("---- MOVEMENT")] 
+    [SerializeField] private bool enableMovementAtLaunch = true;
     [SerializeField] float MouvementSpeed = 0.01f;
-    private Vector2 moveVector;
-    private float defaultSpeed;
-    private Vector2 lastMoveVector = Vector3.right;
-    private Rigidbody2D rb;
-    private CapsuleCollider2D capsuleCollider2D;
     public bool falling;
-
+    
+    private CapsuleCollider2D capsuleCollider2D;
+    private Rigidbody2D rb;
+    private Vector2 moveVector;
+    private Vector2 lastMoveVector = Vector3.right;
+    private float defaultSpeed;
+    private bool canPlayAnim = false;
+    
     [Header("---- DASH")]
     public bool InDash;
     [SerializeField] private bool TryDash;
@@ -56,11 +60,15 @@ public class Playercontroller : MonoBehaviour {
     #endregion Variables
     
     #region Basic Method
-    private void Awake()
-    {
+    private void Awake() {
+        canPlayAnim = false;
         Instance = this;
         rb = GetComponent<Rigidbody2D>();
-        
+        if(enableMovementAtLaunch) StartInput();
+    }
+
+    public void StartInput() {
+        canPlayAnim = true;
         playerInput = new PlayerMapping();
         playerInput.Player.Enable();
         playerInput.Player.Shoot.performed += ShootOnperformed;
@@ -77,31 +85,32 @@ public class Playercontroller : MonoBehaviour {
         
         defaultSpeed = MouvementSpeed;
     }
+    
     private void Start() {
         currentAngleAnimation = baseAngleAnimation[0];
         lastMoveVector = Vector2.right;
     }
     private void Update() {
+        if (playerInput == null) return;
         moveVector = Vector2.zero;
-
 
         if(GameManager.Instance != null) GameManager.Instance.isMouse = true;
         if (playerInput.Player.Movement.ReadValue<Vector2>() != Vector2.zero && !falling) {
             moveVector = playerInput.Player.Movement.ReadValue<Vector2>();
             lastMoveVector = moveVector;
-            CheckForPlayAnimation(moveVector, true);
+            if(canPlayAnim) CheckForPlayAnimation(moveVector, true);
         }
         else if (playerInput.Player.MovementGamepad.ReadValue<Vector2>() != Vector2.zero && !falling) {
             moveVector = playerInput.Player.MovementGamepad.ReadValue<Vector2>();
             lastMoveVector = moveVector;
             if(GameManager.Instance != null) GameManager.Instance.isMouse = false;
-            CheckForPlayAnimation(moveVector, true);
+            if(canPlayAnim) CheckForPlayAnimation(moveVector, true);
         }
         else if (InDash && !falling) {
-            CheckForPlayAnimation(lastMoveVector.normalized, true);
+            if(canPlayAnim) CheckForPlayAnimation(lastMoveVector.normalized, true);
         }
         else if(!falling){
-            CheckForPlayAnimation(lastMoveVector.normalized, false);
+            if(canPlayAnim) CheckForPlayAnimation(lastMoveVector.normalized, false);
         }
 
         if (isInEffectFlash) {
@@ -147,8 +156,7 @@ public class Playercontroller : MonoBehaviour {
 
         if (GameManager.Instance != null && !GameManager.Instance.isMouse) GameManager.Instance.ViewPad = playerInput.Player.ViewPad.ReadValue<Vector2>();
 
-        if (falling)
-        {
+        if (falling) {
             rb.velocity = dir.normalized * 1.5f;
         }
     }
@@ -184,34 +192,36 @@ public class Playercontroller : MonoBehaviour {
     //FALL
     private Vector3 dir;
     private Vector3 dashPos;
-    public void StartFall(bool Indash = false, fallScript fl = null)
-    {
-        Debug.Log("Player fall");
+    
+    #region FALL
+    /// <summary>
+    /// When the player start to fall
+    /// </summary>
+    /// <param name="Indash"></param>
+    /// <param name="fl"></param>
+    public void StartFall(bool Indash = false, fallScript fl = null) {
         dir = rb.velocity;
-        
-        if (Indash) dashPos = fl.dashPos;
-        else        dashPos = Vector3.zero;
-        
+        dashPos = fl !=null && Indash ? fl.dashPos : Vector3.zero;
         falling = true;
-        playerAnimator.Play("fall"); 
+        if(canPlayAnim) playerAnimator.Play("fall"); 
     }
 
-    public void EndFall()
-    {
-        //GetComponent<HealthPlayer>().TakeDamagePlayer(1);
+    /// <summary>
+    /// When the player end falling. This method is called in an animation
+    /// </summary>
+    public void EndFall() {
+        if(enableMovementAtLaunch) GetComponent<HealthPlayer>().TakeDamagePlayer(1);
         falling = false;
-        if (dashPos == Vector3.zero)
-        {
+        if (dashPos == Vector3.zero) {
             transform.position -= dir.normalized * 2.5f;
         }
-        else
-        {
+        else {
             transform.position = dashPos;
         }
     }
+    #endregion FALL
     
-    
-    #region Collision
+    #region COLLISION
     /// <summary>
     /// When the player enter in a trigger
     /// </summary>
@@ -257,7 +267,7 @@ public class Playercontroller : MonoBehaviour {
                 break;
         }
     }
-    #endregion Collision
+    #endregion COLLISION
     
     /// <summary>
     /// When the player is flashed by an enemy
@@ -270,7 +280,7 @@ public class Playercontroller : MonoBehaviour {
         MouvementSpeed = lowSpeed;
     }
     
-    #region Player Animation
+    #region PLAYER ANIMATION
     /// <summary>
     /// get the different animation
     /// </summary>
@@ -319,7 +329,7 @@ public class Playercontroller : MonoBehaviour {
             }
         }
     }
-    #endregion Player Animation
+    #endregion PLAYER ANIMATION
 }
 
 [Serializable]

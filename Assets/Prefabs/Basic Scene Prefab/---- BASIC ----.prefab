@@ -291,6 +291,7 @@ GameObject:
   - component: {fileID: 492872804940323638}
   - component: {fileID: 492872804940323633}
   - component: {fileID: 492872804940323634}
+  - component: {fileID: 8654570127542962032}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -408,6 +409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  cameraShake: {fileID: 8654570127542962032}
   _cinemachineVirtualCamera: {fileID: 492872804876775959}
   cameraMain: {fileID: 492872804940323639}
   speed: 100
@@ -477,16 +479,31 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distXMouseToPlayer: 0
-  distYMouseToPlayer: 0
   maxDistanceX: 5
   maxDistanceY: 3.75
+  distXMouseToPlayer: 0
+  distYMouseToPlayer: 0
   currentRectLimitation:
     serializedVersion: 2
     x: -58.65
     y: 11.3
     width: 34.5
     height: 21
+  duration: 0
+  magnitude: 0
+--- !u!114 &8654570127542962032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 492872804940323637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8db9301bdd1fa05408cda8ef76d98e21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraShakeOffset: {x: 0, y: 0}
 --- !u!1 &492872805101091262
 GameObject:
   m_ObjectHideFlags: 0
