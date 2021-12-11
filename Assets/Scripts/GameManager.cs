@@ -166,7 +166,7 @@ public class GameManager : MonoBehaviour {
         }
 
         mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (shooting && !isUltimate) {
+        if (shooting && !isUltimate && PoolManager.Instance != null) {
             switch (actualStrawClass.strawSO.rateMode) {
                 case StrawSO.RateMode.FireLoading:{
                     shootLoading += Time.deltaTime;
