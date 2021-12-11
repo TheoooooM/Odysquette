@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerDetector : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class PlayerDetector : MonoBehaviour
     [SerializeField] private Transform aimPatrol;
     private EnemyMovement enemyMovement;
     private bool canPatrol;
+
+    [SerializeField] private UnityEvent patrolEvent;
 
 
     
@@ -38,7 +41,10 @@ public class PlayerDetector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+   Debug.Log(name);
         float distance = Vector2.Distance(transform.position, GameManager.Instance.Player.transform.position);
+        Debug.Log(ESM);
+        Debug.Log(ESM.roomParent);
         if (distance <= range && ESM.roomParent.runningRoom)
         {
             ESM.isActivate = true;
@@ -67,16 +73,17 @@ public class PlayerDetector : MonoBehaviour
         float length = Random.Range(patrol.minDistance, patrol.maxDistance);
         int rand = Random.Range(0, patrol.directionPatrol.Length);
      
-            destination =  patrol.directionPatrol[rand]* length;
+        destination =  patrol.directionPatrol[rand]* length;
          
 
-            GraphNode node = AstarPath.active.GetNearest(rb.position +destination).node;
+        GraphNode node = AstarPath.active.GetNearest((Vector2)ESM.spawnPosition +destination).node;
+           
            
       
         
         if (node.Walkable)
         {
-            aimPatrol.position = rb.position + destination; 
+            aimPatrol.position =  (Vector2)ESM.spawnPosition+ destination; 
             PlayPatrol();
         }
         else
@@ -91,10 +98,10 @@ public class PlayerDetector : MonoBehaviour
         enemyMovement.enabled = true;
         enemyMovement.speed = patrol.speed;
         enemyMovement.destination = aimPatrol.position;
+        patrolEvent.Invoke();
         if (Vector2.Distance(rb.position, enemyMovement.destination) < 0.1f)
         {
-
-           BeginPatrol();
+            BeginPatrol();
         }
     }
 

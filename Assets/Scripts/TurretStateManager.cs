@@ -30,10 +30,7 @@ public class TurretStateManager : EnemyStateManager
     timerCondition.Add(i, 0);
    }
 
-   if (EMainStatsSo.stateEnnemList[i].useHealthCondition)
-   {
-    healthUse.Add(i, false);
-   }
+
   }
 
   for (int i = 0; i < baseObjectListCondition.Count; i++)
@@ -115,7 +112,7 @@ public class TurretStateManager : EnemyStateManager
  private void OnEnable()
  {
   health = EMainStatsSo.maxHealth;
-  Debug.Log(health);
+
   isDead = false;
  }
 
@@ -125,7 +122,7 @@ public class TurretStateManager : EnemyStateManager
   {
    spriteRenderer.color = FxColor;
    BossManager.instance.UpdateDuringPhase();
-   Debug.Log("mort ? ");
+
 //  GetComponent<Animator>().Play(enemyFeedBack.stateDeathName);
    isDead = true;
    if (IsCurrentStartPlayed)

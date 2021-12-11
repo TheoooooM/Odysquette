@@ -34,8 +34,6 @@ public static class ExtensionMethods
         FlashObject,
         PlayerController,
         PreviousTransformPlayer,
-        
-    
         EnemyDashCollision,
         AimPatrol
     }
@@ -47,7 +45,8 @@ public static class ExtensionMethods
         BossBullet,
         BossWave,
         BossTurret,
-        WalkmanTypeWave
+        WalkmanTypeWave,
+        WalkmanLoading
     }
 
     public enum PhaseBoss

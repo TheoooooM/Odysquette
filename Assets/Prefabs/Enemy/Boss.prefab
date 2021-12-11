@@ -194,10 +194,11 @@ GameObject:
   - component: {fileID: 4512851393080758038}
   - component: {fileID: 4512851393080758039}
   - component: {fileID: 4512851393080758036}
-  - component: {fileID: 4512851393080758037}
   - component: {fileID: 4512851393080758042}
   - component: {fileID: 867352224232273417}
   - component: {fileID: 8565142783127015580}
+  - component: {fileID: 2105533335983440603}
+  - component: {fileID: 235117669260147664}
   m_Layer: 8
   m_Name: Boss
   m_TagString: Enemy
@@ -214,7 +215,7 @@ Transform:
   m_GameObject: {fileID: 4512851393080758034}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.3842659, y: -1.1426411, z: 8.937716}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4512851394486423831}
   - {fileID: 4512851394081132782}
@@ -262,7 +263,7 @@ SpriteRenderer:
   m_SortingLayerID: -1990800739
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 511812539270186847, guid: 70968b1621c7b5444a220161eb41444f, type: 3}
+  m_Sprite: {fileID: -4165222119527955206, guid: e608bc066bee0c841977cd594fe981ad, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -325,6 +326,7 @@ MonoBehaviour:
   IsFirstStartPlayed: 0
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
+  timerCurrentState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
 --- !u!114 &4512851393080758038
@@ -394,32 +396,6 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
---- !u!61 &4512851393080758037
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4512851393080758034}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 1.5}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!114 &4512851393080758042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -447,6 +423,20 @@ MonoBehaviour:
   - {fileID: 4512851394574263887}
   numberEnabledTurrets: 
   turret: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
+  currentBossPhase: 0
+  healthConditionList:
+  - phaseBoss: 1
+    firstUse: 0
+    healthTrigger: 2000
+  - phaseBoss: 2
+    firstUse: 0
+    healthTrigger: 1500
+  - phaseBoss: 3
+    firstUse: 0
+    healthTrigger: 1000
+  - phaseBoss: 4
+    firstUse: 0
+    healthTrigger: 500
 --- !u!114 &867352224232273417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,6 +453,9 @@ MonoBehaviour:
   patrol: {fileID: 0}
   rb: {fileID: 0}
   aimPatrol: {fileID: 0}
+  patrolEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8565142783127015580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,6 +469,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: {fileID: 0}
+--- !u!95 &2105533335983440603
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4512851393080758034}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e14ba94bfa7be464c910fff54c8f7cdc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!61 &235117669260147664
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4512851393080758034}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.823267, y: -1.050374}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 14, y: 6.75}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.566868, y: 4.649252}
+  m_EdgeRadius: 0
 --- !u!1 &4512851393255716662
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,6 +650,7 @@ MonoBehaviour:
   IsFirstStartPlayed: 0
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
+  timerCurrentState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 4512851393255716664}
   boxCollider2D: {fileID: 0}
@@ -1009,6 +1048,7 @@ MonoBehaviour:
   IsFirstStartPlayed: 0
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
+  timerCurrentState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 4512851393769003420}
   boxCollider2D: {fileID: 0}
@@ -1237,6 +1277,7 @@ MonoBehaviour:
   IsFirstStartPlayed: 0
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
+  timerCurrentState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 4512851393999645458}
   boxCollider2D: {fileID: 0}
@@ -6204,7 +6245,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.7480221, y: -0.97909594}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -6215,7 +6256,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 4.4185677, y: 4.439149}
   m_EdgeRadius: 0
 --- !u!1 &4512851394194436671
 GameObject:
@@ -15963,7 +16004,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4512851394486423830}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.8, y: -1.28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4512851393080758033}
@@ -20993,6 +21034,7 @@ MonoBehaviour:
   IsFirstStartPlayed: 0
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
+  timerCurrentState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 4512851394618652994}
   boxCollider2D: {fileID: 0}

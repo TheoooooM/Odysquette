@@ -141,6 +141,7 @@ GameObject:
   - component: {fileID: 9123325105654296365}
   - component: {fileID: 6906724987814036677}
   - component: {fileID: 4975862093282308843}
+  - component: {fileID: 4514802860873063471}
   m_Layer: 8
   m_Name: WalkManOnly
   m_TagString: Enemy
@@ -184,7 +185,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e8a65c6061707934ea1f23159495d2c7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -270,6 +271,7 @@ MonoBehaviour:
   IsFirstStartPlayed: 0
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
+  timerCurrentState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
 --- !u!50 &6290530629349266516
@@ -381,6 +383,21 @@ MonoBehaviour:
   patrol: {fileID: 11400000, guid: 1a5e71f4ee653b244a10f5b078c899b3, type: 2}
   rb: {fileID: 6290530629349266516}
   aimPatrol: {fileID: 7449746332791056143}
+  patrolEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4975862093282308843}
+        m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
+        m_MethodName: UpdatePositionPatrol
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &9123325105654296365
 Animator:
   serializedVersion: 3
@@ -431,6 +448,18 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+          - m_Target: {fileID: 4514802860873063471}
+            m_TargetAssemblyTypeName: EnemyFeedBackFX, Assembly-CSharp
+            m_MethodName: InstantiateOneTimeFx
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
     - typeFeedBackEvent: 5
       feedBackEvent:
         m_PersistentCalls:
@@ -438,6 +467,18 @@ MonoBehaviour:
           - m_Target: {fileID: 4975862093282308843}
             m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
             m_MethodName: CancelBoolOneTime
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 4514802860873063471}
+            m_TargetAssemblyTypeName: EnemyFeedBackFX, Assembly-CSharp
+            m_MethodName: CancelInstantiateOneTimeFx
             m_Mode: 3
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
@@ -495,6 +536,34 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+          - m_Target: {fileID: 4514802860873063471}
+            m_TargetAssemblyTypeName: EnemyFeedBackFX, Assembly-CSharp
+            m_MethodName: InstantiateOneTimeFx
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - typeFeedBackEvent: 5
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4514802860873063471}
+            m_TargetAssemblyTypeName: EnemyFeedBackFX, Assembly-CSharp
+            m_MethodName: CancelInstantiateOneTimeFx
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
   stateDeathName: 
 --- !u!114 &4975862093282308843
 MonoBehaviour:
@@ -540,7 +609,23 @@ MonoBehaviour:
       angleMax: 359
       stateName: AttackBackRight
   animationForSpecificPositionsList: []
-  transformPatrol: {fileID: 0}
+  transformPatrol: {fileID: 7449746332791056143}
+--- !u!114 &4514802860873063471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6290530629349266512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fd36e1f2fc334409b9a5e8d742b395, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FxOneTimeList:
+  - enemyTypeShootFX: 6
+    isOneTime: 0
+    prefab: {fileID: 7743982384819659830, guid: bff37a0a4e104e44ea554ff201d8f762, type: 3}
 --- !u!1 &6290530629586656412
 GameObject:
   m_ObjectHideFlags: 0

@@ -138,8 +138,11 @@ public class Bullet : MonoBehaviour {
             
             if (_pierceCount > 0) {
                 _pierceCount--;
+                PoolManager.Instance.SpawnPiercePool(transform);
+                PoolManager.Instance.SpawnImpactPool(transform);
             }
             else {
+                
                 DesactiveBullet();
             }
         }
@@ -164,6 +167,7 @@ public class Bullet : MonoBehaviour {
             transform.rotation = Quaternion.Euler(0, 0, angle);
 
             isBounce = true;
+            PoolManager.Instance.SpawnImpactPool(transform);
         }
         else {
             DesactiveBullet();
@@ -187,7 +191,7 @@ public class Bullet : MonoBehaviour {
         if (isDesactive == false) {
             StopAllCoroutines();
             gameObject.SetActive(false);
-
+            PoolManager.Instance.SpawnImpactPool(transform);
             if (rateMode == StrawSO.RateMode.Ultimate) {
                 PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][1].Enqueue(gameObject);
             }

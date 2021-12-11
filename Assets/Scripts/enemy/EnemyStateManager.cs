@@ -69,7 +69,7 @@ public class EnemyStateManager : MonoBehaviour {
     public Rigidbody2D rb;
     public SpriteRenderer spriteRenderer;
     public Dictionary<int, bool> healthUse = new Dictionary<int, bool>();
-
+    private int counthealh;
     private void OnValidate() {
         //   
         // spriteRenderer.sprite = EMainStatsSo.sprite;
@@ -87,10 +87,7 @@ public class EnemyStateManager : MonoBehaviour {
             if (EMainStatsSo.stateEnnemList[i].useTimeCondition) {
                 timerCondition.Add(i, 0);
             }
-
-            if (EMainStatsSo.stateEnnemList[i].useHealthCondition) {
-                healthUse.Add(i, false);
-            }
+            
         }
 
         for (int i = 0; i < baseObjectListCondition.Count; i++) {
@@ -152,11 +149,7 @@ public class EnemyStateManager : MonoBehaviour {
 
             if (!IsCurrentStatePlayed && !IsCurrentStartPlayed && EMainStatsSo.stateEnnemList.Count != 0) {
                 for (int i = 0; i < EMainStatsSo.stateEnnemList.Count; i++) {
-                    if (EMainStatsSo.stateEnnemList[i].useHealthCondition) {
-                        if (EMainStatsSo.stateEnnemList[i].healthCondition <= health || healthUse[i] == true) {
-                            continue;
-                        }
-                    }
+                    
 
                     if (EMainStatsSo.stateEnnemList[i].useTimeCondition) {
                         if (EMainStatsSo.stateEnnemList[i].timeCondition > timerCondition[i]) {
@@ -166,6 +159,7 @@ public class EnemyStateManager : MonoBehaviour {
 
 
                     if (EMainStatsSo.stateEnnemList[i].CheckCondition(objectDictionaryCondition)) {
+                       
                         if (!EMainStatsSo.stateEnnemList[i].isFixedUpdate) {
                             if (EMainStatsSo.stateEnnemList[i].haveStartState) {
                                 CurrentUpdateState += EMainStatsSo.stateEnnemList[i].StartState;
@@ -174,8 +168,10 @@ public class EnemyStateManager : MonoBehaviour {
                                 IsCurrentStartPlayed = true;
                                 if (EMainStatsSo.stateEnnemList[i].oneStartState)
                                     IsFirstStartPlayed = true;
+                                Debug.Log(i);
                             }
                             else {
+                               
                                 CurrentUpdateState += EMainStatsSo.stateEnnemList[i].PlayState;
                                 IsCurrentStatePlayed = true;
                             }
@@ -197,9 +193,7 @@ public class EnemyStateManager : MonoBehaviour {
 
                             knockUpInState = EMainStatsSo.stateEnnemList[i].isKnockUpInState;
                             indexCurrentState = i;
-                            if (EMainStatsSo.stateEnnemList[i].useHealthCondition) {
-                                healthUse[i] = true;
-                            }
+                         
 
                             UpdateDictionaries(EMainStatsSo.stateEnnemList[indexCurrentState]);
                         }
@@ -282,18 +276,21 @@ public class EnemyStateManager : MonoBehaviour {
         if (IsCurrentStartPlayed
             || IsCurrentStatePlayed) {
             bool _endstep = false;
-            if (CurrentUpdateState != null || CurrentFixedState != null)
+            if (CurrentFixedState != null)
             {
                 if (EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate)
                 {
-                    Debug.Log(indexCurrentState);
+               
                     CurrentFixedState(objectDictionaryState, out bool endStep, enemyFeedBack);
                     _endstep = endStep;
                 }
-            
-              else 
+            }
+
+            if(CurrentUpdateState != null)
+            {
+             if(!EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate)
                {
-                   
+                  
                     CurrentUpdateState(objectDictionaryState, out bool endStep, enemyFeedBack);
                     _endstep = endStep;
                 }
@@ -310,32 +307,21 @@ public class EnemyStateManager : MonoBehaviour {
                     ;
                 }
 
-                if (EMainStatsSo.stateEnnemList[indexCurrentState].useHealthCondition)
-                {
-                    healthUse[indexCurrentState] = true;
-
-                }
 
                 if (CheckTimer(timerCurrentStartState, EMainStatsSo.stateEnnemList[indexCurrentState].startTime)) {
                     if (EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate) {
                         if (!EMainStatsSo.stateEnnemList[indexCurrentState].oneStartState)
                             CurrentFixedState -= EMainStatsSo.stateEnnemList[indexCurrentState].StartState;
-                        Debug.Log(indexCurrentState);
+                  
                         CurrentFixedState += EMainStatsSo.stateEnnemList[indexCurrentState].PlayState;
-                        if (EMainStatsSo.stateEnnemList[indexCurrentState].useHealthCondition)
-                        {
-                            healthUse[indexCurrentState] = true;
-                        }
+                  
                     }
                     else {
                         if (!EMainStatsSo.stateEnnemList[indexCurrentState].oneStartState)
                             CurrentUpdateState -= EMainStatsSo.stateEnnemList[indexCurrentState].StartState;
-                        Debug.Log(indexCurrentState);
+                      
                         CurrentUpdateState += EMainStatsSo.stateEnnemList[indexCurrentState].PlayState;
-                        if (EMainStatsSo.stateEnnemList[indexCurrentState].useHealthCondition)
-                        {
-                            healthUse[indexCurrentState] = true;
-                        }
+                  
                     }
 
 
@@ -362,15 +348,12 @@ public class EnemyStateManager : MonoBehaviour {
                         timerCondition[indexCurrentState] = 0;
                     }
 
-   Debug.Log(indexCurrentState);
+
                     objectDictionaryState.Clear();
                     if (EMainStatsSo.baseState != null)
                         UpdateDictionaries(EMainStatsSo.baseState);
                     timerCurrentState = 0;
-                    timerCondition[indexCurrentState] = 0;if (EMainStatsSo.stateEnnemList[indexCurrentState].useHealthCondition) {
-                                                                                                                        healthUse[indexCurrentState] = true;
-                                                                                                                        Debug.Log(indexCurrentState);
-                                                                                                                    }
+                    timerCondition[indexCurrentState] = 0;
                     indexCurrentState = 0;                
                 }
             }
@@ -431,13 +414,16 @@ public class EnemyStateManager : MonoBehaviour {
             }
             catch (Exception e) {
                 roomParent.ennemiesList.Remove(gameObject);
-                if (enemyFeedBack.stateDeathName != "") {
-                    animator.Play(enemyFeedBack.stateDeathName);
-                    StartCoroutine(ShowCurrentClipLength(gameObject, animator));
-                }
-                else {
-                    Destroy(gameObject);
-                }
+               
+                      if (enemyFeedBack.stateDeathName != "") {
+                                        animator.Play(enemyFeedBack.stateDeathName);
+                                        StartCoroutine(ShowCurrentClipLength(gameObject, animator));
+                                    }
+                                    else {
+                                        Destroy(gameObject);
+                                    }
+                
+              
 
                 isDead = true;
             }
@@ -457,7 +443,9 @@ public class EnemyStateManager : MonoBehaviour {
         else {
             Knockup(position, knockUpValue, knockup, isExplosion);
             health -= damage;
+            
         }
+        spriteRenderer.material.SetFloat("_HitTime", Time.time);
     }
 
     void Knockup(Vector2 position, float knockUpValue, bool knockUp, bool isExplosion) {

@@ -22,8 +22,9 @@ public class BossManager : MonoBehaviour
   [SerializeField]
   private EMainStatsSO turret;
 static  public BossManager instance;
-
-
+public ExtensionMethods.PhaseBoss currentBossPhase;
+[SerializeField]
+private List<HealthCondition> healthConditionList = new List<HealthCondition>();
 private int currentMaxEnabledTurret;
   private void Awake()
   {
@@ -36,20 +37,59 @@ private int currentMaxEnabledTurret;
 
   private void Start()
   {
+    
     enemyStateManager = GetComponent<EnemyStateManager>();
    
   }
 
   private void Update()
   {
-    Debug.Log(bossParticleSystem.gameObject.activeSelf);
-    Debug.Log( baseturrets[0].enabled);
+    if (enemyStateManager.isActivate)
+    {
+         if (!healthConditionList[0].firstUse)
+          {
+                if (healthConditionList[0].healthTrigger >= enemyStateManager.health)
+                {
+                  Debug.Log("test");
+                  SetPhase(ExtensionMethods.PhaseBoss.First);
+                  healthConditionList[0].firstUse = true;
+                }
+          }
+         else if (!healthConditionList[1].firstUse)
+          {
+            if (healthConditionList[1].healthTrigger >= enemyStateManager.health)
+            {
+              SetPhase(ExtensionMethods.PhaseBoss.Second);
+              healthConditionList[1].firstUse = true;
+            }
+          }
+      
+          else if (!healthConditionList[2].firstUse)
+          {
+            if (healthConditionList[2].healthTrigger >= enemyStateManager.health)
+            {
+              SetPhase(ExtensionMethods.PhaseBoss.Third);
+              healthConditionList[2].firstUse = true;
+            }
+          }
+      
+          else if (!healthConditionList[3].firstUse)
+          {
+            if (healthConditionList[3].healthTrigger >= enemyStateManager.health)
+            {
+              SetPhase(ExtensionMethods.PhaseBoss.Four);
+              healthConditionList[3].firstUse = true;
+            }
+          }
+    }
+ 
   }
 
 
   public void SetPhase(ExtensionMethods.PhaseBoss phaseBoss)
   {
-    
+ 
+
      currentMaxEnabledTurret =(int) phaseBoss;
      currentIndexEnabledTurret = 0;
  
@@ -79,12 +119,10 @@ private int currentMaxEnabledTurret;
      var mainModuleBoss = bossParticleSystem.main;
      mainModuleBoss.startColor = baseturrets[0].FxColor;
      bossParticleSystem.gameObject.SetActive(true);
-     Debug.Log(bossParticleSystem.gameObject.activeSelf);
-     Debug.Log("tu es lu là");
-   
-   
-        
-     
+
+      currentBossPhase = phaseBoss;
+
+
   }
 
   public void UpdateDuringPhase()
@@ -113,6 +151,11 @@ private int currentMaxEnabledTurret;
       baseturrets[currentIndexEnabledTurret].FxColor;
  
   }
-  
-
+[Serializable]
+  public class HealthCondition
+  {
+    public ExtensionMethods.PhaseBoss phaseBoss;
+    public bool firstUse;
+    public int healthTrigger;
+  }
 }
