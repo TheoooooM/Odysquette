@@ -41,7 +41,7 @@ public class PlayerDetector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-   Debug.Log(name);
+   //Debug.Log(name);
         float distance = Vector2.Distance(transform.position, GameManager.Instance.Player.transform.position);
         //Debug.Log(ESM);
         //Debug.Log(ESM.roomParent);
