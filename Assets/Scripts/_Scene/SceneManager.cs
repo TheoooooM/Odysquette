@@ -4,7 +4,10 @@ using UnityEngine.SceneManagement;
 using Manager = UnityEngine.SceneManagement.SceneManager;
 
 public class SceneManager : MonoBehaviour {
-    [SerializeField] private GameObject sceneTransitionGam = null;
+    public static SceneManager instance = null;
+    private void Awake(){ if(instance == null) instance = this; }
+
+        [SerializeField] private GameObject sceneTransitionGam = null;
     private string nextSceneName = "";
 
 
