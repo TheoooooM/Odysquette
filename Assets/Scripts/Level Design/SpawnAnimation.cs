@@ -5,8 +5,7 @@ public class SpawnAnimation : MonoBehaviour {
     #region Variables
     [Header("Spawn Data")]
     [SerializeField] private GameObject playerPrefab = null;
-    [SerializeField] private Transform playerPosTransf = null;
-    [SerializeField] private Transform playerGoTo = null;
+    [SerializeField] private Animator machineAnimator = null;
     [SerializeField] private bool canSpawn = false;
     
     [Header("PreSpawn Data")]
@@ -22,8 +21,7 @@ public class SpawnAnimation : MonoBehaviour {
         if ((Input.anyKeyDown) && !hasSpawn && canSpawn) {
             hasSpawn = true;
             startCanvasAnim.SetTrigger("CloseAnim");
-            playerPrefab.SetActive(true);
-            playerPrefab.GetComponent<PlayerMovementHub>().StartMoveAnim();
+            machineAnimator.SetTrigger("SpawnPlayer");
         }
     }
 
