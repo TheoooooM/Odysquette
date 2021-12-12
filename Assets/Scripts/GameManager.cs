@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour {
             switch (actualStrawClass.strawSO.rateMode) {
                 case StrawSO.RateMode.FireLoading:{
                     shootLoading += Time.deltaTime;
-                    if (shootLoading >= 0.25f) {
+                    if (shootLoading >= 0.35f) {
                         EndLoading = true;
                         snipStrawFx.SetActive(true);
                     }
@@ -183,7 +183,7 @@ public class GameManager : MonoBehaviour {
                     if (shootLoading >= actualStrawClass.strawSO.timeValue) {
                         actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
                         shootLoading = 0;
-                        snipStrawFx.SetActive(true);
+                        snipStrawFx.SetActive(false);
                         EndLoading = false;
                     }
 
@@ -222,7 +222,7 @@ public class GameManager : MonoBehaviour {
             if (EndLoading) {
                 actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
                 shootLoading = 0;
-                snipStrawFx.SetActive(true);
+                snipStrawFx.SetActive(false);
                 EndLoading = false;
             }
         }

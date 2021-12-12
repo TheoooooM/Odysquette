@@ -81,11 +81,13 @@ public class StateShootBasic : StateShootSO
                 }
                 Vector3 rotation = new Vector3();
                 directionPlayer = parentBulletTF.right;
-                if (isAimPlayer)
+                if (isAimPlayer || isFirstAimPlayer)
                 {
                     directionPlayer = (transformPlayer.position - bullet.transform.position).normalized;
                     
                 }
+
+
                 rotation = Quaternion.Euler(0, 0, directions[i]) * directionPlayer;
                 float angle = Mathf.Atan2(rotation.y, rotation.x)*Mathf.Rad2Deg;
                 bullet.transform.rotation = Quaternion.Euler(0, 0, angle) ;

@@ -64,11 +64,15 @@ public class EnemyFeedBackMovement : MonoBehaviour
         {
  
             Vector2 direction = (AnimationStatesListOneTime[index].destination.position - transform.position).normalized;
+            Debug.Log(AnimationStatesListOneTime[index].destination.name);
+            Debug.Log(direction);
                             float currentInputAngle =  Mathf.Atan2(direction.y, direction.x)*Mathf.Rad2Deg;
+                            Debug.Log(currentInputAngle);
                             if (Mathf.Sign(currentInputAngle) == -1)
                             {
                                 currentInputAngle = 360 + currentInputAngle;
                             }
+                            Debug.Log(currentInputAngle);
             
                             MultipleAnimationListOneTime multipleAnimationList = AnimationStatesListOneTime[index];
                             for (int i = 0; i < multipleAnimationList.angleAnimation.Length; i++)
@@ -77,7 +81,7 @@ public class EnemyFeedBackMovement : MonoBehaviour
                                 if (currentInputAngle >=  multipleAnimationList.angleAnimation[i].angleMin &&
                                     currentInputAngle <=  multipleAnimationList.angleAnimation[i].angleMax)
                                 {
-                                              
+                                           Debug.Log(multipleAnimationList.angleAnimation[i].stateName);   
                                     PlayAnimation(multipleAnimationList.angleAnimation[i].stateName, index, true);
                                     AnimationStatesListOneTime[index].ApplyState = true;
                                 }

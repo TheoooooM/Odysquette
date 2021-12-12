@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2259390503318066460}
   - component: {fileID: 2259390503318066463}
+  - component: {fileID: 2577829652238923711}
   m_Layer: 14
   m_Name: ColliderWall
   m_TagString: Untagged
@@ -44,7 +45,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.18323165, y: 0.24160135}
+  m_Offset: {x: -0.48965526, y: 0.16002843}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -55,8 +56,22 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.8886279, y: 1.5650427}
+  m_Size: {x: 2.5014763, y: 1.7281885}
   m_EdgeRadius: 0
+--- !u!114 &2577829652238923711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259390503318066461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d31f08ee3bea6249b9d451a1a91bbb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStateManager: {fileID: 2259390503688608348}
+  enemyDashCollision: {fileID: 5175634095495853138}
 --- !u!1 &2259390503688608288
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,6 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyFeedBack: {fileID: 0}
   isActivate: 0
+  isContactWall: 0
   EMainStatsSo: {fileID: 11400000, guid: 1a24df601862f71498b186675b986f13, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -535,6 +551,7 @@ MonoBehaviour:
   lastImageposition: {x: 0, y: 0, z: 0}
   distanceBetweenImage: 1
   firstGhost: 0
+  contactWall: 0
 --- !u!61 &5397051491870573342
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -55,7 +55,7 @@ public class Bullet : MonoBehaviour {
         basePosition = transform.position;
         _pierceCount = pierceCount;
         //canBounce = false; 
-
+        lastVelocity = rb.velocity;
         Invoke(nameof(DelayforDrag), 0.5f);
 
         if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce) _pierceCount = pierceCount;
@@ -81,7 +81,7 @@ public class Bullet : MonoBehaviour {
         // transform.rotation = Quaternion.Euler(0f, 0f, GameManager.Instance.angle);
 
 
-        lastVelocity = rb.velocity;
+       
     }
 
     private void FixedUpdate() {
@@ -98,6 +98,7 @@ public class Bullet : MonoBehaviour {
                 _poisonCooldown = poisonCooldown;
             }
         }
+        if(!isColliding)lastVelocity = rb.velocity;
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
@@ -154,13 +155,15 @@ public class Bullet : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D other)
     {
         colliding = true;
-        if (_bounceCount > 0 && other.gameObject.CompareTag("Walls")) {
+        Debug.Log("collide with " + rb.velocity);
+        if (_bounceCount > 0 && other.gameObject.CompareTag("Walls") && lastVelocity.x!=0 && lastVelocity.y!=0) {
             _bounceCount--;
             var speed = lastVelocity.magnitude;
             //Debug.Log(lastVelocity);
 
             var direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
             rb.velocity = direction * Mathf.Max(speed, 0f);
+            lastVelocity = rb.velocity;
             var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
             transform.rotation = Quaternion.Euler(0, 0, angle);
 

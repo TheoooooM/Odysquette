@@ -108,6 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyFeedBack: {fileID: 0}
   isActivate: 0
+  isContactWall: 0
   EMainStatsSo: {fileID: 11400000, guid: 6689daf8a9ea18e46ae692f9e4247477, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -164,7 +165,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 50
+  m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -515,6 +516,7 @@ GameObject:
   m_Component:
   - component: {fileID: 243450508003097545}
   - component: {fileID: 243450508003097544}
+  - component: {fileID: 7313825635927807735}
   m_Layer: 14
   m_Name: ColliderWall
   m_TagString: Untagged
@@ -562,6 +564,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.8469052, y: 1.7669997}
   m_EdgeRadius: 0
+--- !u!114 &7313825635927807735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243450508003097546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1b5b5de83b6e4d46b74399d219ae5a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStateManager: {fileID: 243450507285515241}
 --- !u!1 &616640635404415290
 GameObject:
   m_ObjectHideFlags: 0

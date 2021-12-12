@@ -1,9 +1,11 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class PlayerDetector : MonoBehaviour
 {
@@ -24,39 +26,31 @@ public class PlayerDetector : MonoBehaviour
    
     void Start()
     {
-        if (patrol != null)
-        {
-            Debug.Log("start fonctionne");
-               enemyMovement = GetComponent<EnemyMovement>();
-                
-                    rb = GetComponent<Rigidbody2D>();
-                   Debug.Log("start fonctionne");
+        ESM = GetComponent<EnemyStateManager>();
+    }
 
-                   StartCoroutine(WaitGenFinish());
-        }
-        Debug.Log("start fonctionne");
-          ESM = GetComponent<EnemyStateManager>();
+    private void OnEnable()
+    {
+                if (patrol != null)
+                {
+               
+                       enemyMovement = GetComponent<EnemyMovement>();
+                        
+                            rb = GetComponent<Rigidbody2D>();
+                          
+        
+                           StartCoroutine(WaitGenFinish());
+                }
     }
 
     // Update is called once per frame
     void Update()
     {
-   Debug.Log(name);
-        float distance = Vector2.Distance(transform.position, GameManager.Instance.Player.transform.position);
-        //Debug.Log(ESM);
-        //Debug.Log(ESM.roomParent);
-        if (distance <= range && ESM.roomParent.runningRoom)
-        {
-            ESM.isActivate = true;
-            enabled = false;
-            if (patrol != null)
-            
-            enemyMovement.enabled = false;
-        }
-        else if(patrol != null && canPatrol)
-        {
-         PlayPatrol();  
-        }
+
+      CheckDetection();
+
+
+
     }
 
     private void OnDrawGizmos()
@@ -110,5 +104,29 @@ public class PlayerDetector : MonoBehaviour
         yield return new WaitForSeconds(2f);
         BeginPatrol();
         canPatrol = true;
+    }
+
+    public void CheckDetection()
+    {
+        float distance = Vector2.Distance(transform.position, GameManager.Instance.Player.transform.position);
+        if (distance <= range && ESM.roomParent.runningRoom)
+        {
+          EndDetection();
+        }
+        else if(patrol != null && canPatrol)
+        {
+            PlayPatrol();  
+        }
+    }
+
+    public void EndDetection()
+    {
+        ESM.isActivate = true;
+        enabled = false;
+        
+        
+        if (patrol != null)
+            
+            enemyMovement.enabled = false;
     }
 }
