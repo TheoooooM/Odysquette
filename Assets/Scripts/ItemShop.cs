@@ -88,6 +88,7 @@ public class ItemShop : Chest {
 
     protected override void InstantiateItem(GameObject GO) {
         GameObject gam = Instantiate(GO, transform.position, Quaternion.identity, transform.parent);
+        gam.GetComponent<Items>().shop = true;
         gam.GetComponent<Items>().SpawnObject();
     }
 }
