@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 public class Exit : MonoBehaviour {
+    [SerializeField] private SceneManager sceneManager = null;
     public bool isShop;
     public bool ePress;
     private string sceneToLoad;
@@ -16,13 +17,11 @@ public class Exit : MonoBehaviour {
             else sceneToLoad = "Boss";
         }
         else sceneToLoad = "Shop";
+        
+        if(sceneManager == null) sceneManager = SceneManager.instance;
     }
 
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.E)) ePress = true;
-        else ePress = false;
-    }
+    private void Update() => ePress = Input.GetKey(KeyCode.E);
 
 
     private void OnEnable() {
@@ -34,7 +33,7 @@ public class Exit : MonoBehaviour {
         if (ePress)
         {
             GameManager.Instance.SetND();
-            if (other.CompareTag("Player")) UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
+            if (other.CompareTag("Player")) sceneManager.StartLoadScene(sceneToLoad);
         }
     }
 

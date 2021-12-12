@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SceneLoader : MonoBehaviour {
-    [SerializeField] private SceneManager sceneManager = null;
+    private SceneManager sceneManager = null;
+
+    private void Start() => sceneManager = SceneManager.instance;
 
     /// <summary>
     /// Launch the load of the scene
