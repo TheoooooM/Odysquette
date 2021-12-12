@@ -187,6 +187,7 @@ public class Bullet : MonoBehaviour {
 
     void Explosion() {
         PoolManager.Instance.SpawnExplosionPool(transform);
+        if (Camera.main != null) Camera.main.GetComponent<CameraShake>().CreateCameraShake(.085f, .15f);
     }
 
     void Ice(GameObject gam) {
