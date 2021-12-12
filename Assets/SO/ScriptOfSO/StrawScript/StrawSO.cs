@@ -60,8 +60,7 @@ public class StrawSO : ScriptableObject {
             scriptBullet.damage = damage + damageParameter * currentTimeValue;
             if (hasRange)
                 scriptBullet.range = range + rangeParameter * currentTimeValue;
-            scriptBullet.rb.drag = dragRB + dragRBParameter * currentTimeValue;
-          
+            scriptBullet.rb.drag = dragRB + dragRBParameter * currentTimeValue;        
             if (rateMode == RateMode.FireLoading || rateMode == RateMode.FireRate)
             {
                  scriptBullet.ammountUltimate = ultimatePoints;

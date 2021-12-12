@@ -22,6 +22,7 @@ public class Generation : MonoBehaviour {
     }
 
     [Header("--- GENERATION")]
+    [SerializeField] private bool generateRandomLevel = false;
     public int seed = 0;
     public bool disableNeighboor = false;
     [HideInInspector] public bool endGeneration;
@@ -59,7 +60,10 @@ public class Generation : MonoBehaviour {
     /// Generate the level
     /// </summary>
     public void GenerateLevel() {
-        Random.InitState(seed);
+        int actualSeed = seed;
+        if (generateRandomLevel) actualSeed = Random.Range(0, 1000000);
+        
+        Random.InitState(actualSeed);
         ResetGen();
         StartCoroutine("GeneratePath", nbrOfRoom);
     }
