@@ -195,7 +195,7 @@ public class Playercontroller : MonoBehaviour {
     //SHOOT
     private void ShootOnperformed(InputAction.CallbackContext obj) {
         if (GameManager.Instance != null) {
-            Debug.Log("bonsoiraezmrkdmjsqlkfj");
+          
             if (!InDash)
             {GameManager.Instance.shooting = true;}
             GameManager.Instance.isMouse = true;
