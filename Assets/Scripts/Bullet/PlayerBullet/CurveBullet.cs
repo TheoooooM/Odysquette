@@ -7,14 +7,14 @@ public class CurveBullet : Bullet {
     public List<Vector3> trajectories;
     public int stepOfCurve;
     public int currentWaypoint;
-
+    public float speedBounce;
     private int currentStepPoint;
     public List<Vector3> currentListWaypoint = new List<Vector3>();
 
     public float speed;
     public bool isCurve;
     public bool isParameterTrajectories;
-
+    private Vector2 currentDirection;
 
     public override void OnEnable() {
         base.OnEnable();
@@ -43,11 +43,8 @@ public class CurveBullet : Bullet {
 
             Vector3 End = trajectories[i + 1];
 
-            for (int j = 0;
-                j < stepOfCurve;
-                j++) {
-                Vector3 StepPoint =
-                    ExtensionMethods.Bezier(Start, trajectories[i], End, (j / (float) stepOfCurve));
+            for (int j = 0; j < stepOfCurve; j++) {
+                Vector3 StepPoint = ExtensionMethods.Bezier(Start, trajectories[i], End, (j / (float) stepOfCurve));
                 Start = StepPoint;
 
                 pointsForBezierCurve[i].pointsForBezierCurve.Add(StepPoint);
@@ -90,15 +87,15 @@ public class CurveBullet : Bullet {
 
     public override void Update() {
         base.Update();
-        if (!isBounce) {
+        if (!isBounce && !colliding) {
             if (isCurve) {
                
                 if (Vector3.Distance(transform.position, currentListWaypoint[currentStepPoint]) < 0.1f) {
-                    Debug.Log(currentWaypoint.ToString() + ""+ (pointsForBezierCurve.Count - 1 ).ToString());
+                  
                     if (currentListWaypoint[currentStepPoint] == currentListWaypoint[currentListWaypoint.Count - 1] && pointsForBezierCurve[currentWaypoint] != pointsForBezierCurve[pointsForBezierCurve.Count - 1]) {
                         currentWaypoint += 2; 
                         currentStepPoint = 1;
-                        Debug.Log(currentWaypoint);
+                    
                         currentListWaypoint.Clear();
                         currentListWaypoint.AddRange(pointsForBezierCurve[currentWaypoint].pointsForBezierCurve);
                     }
@@ -107,6 +104,7 @@ public class CurveBullet : Bullet {
                       
                         if (currentListWaypoint[currentStepPoint] == currentListWaypoint[currentListWaypoint.Count - 1]) {
                             speed = 0;
+                            Debug.Log("end curve");
 
                          
                             if (rateMode == StrawSO.RateMode.Ultimate)
@@ -127,22 +125,44 @@ public class CurveBullet : Bullet {
                             currentStepPoint++;
                             
                           
-                            Debug.Log("try");
+                        
                          
                         }
                     }
                    
                 }
+                if(((Vector2)currentListWaypoint[currentStepPoint]-rb.position).magnitude > 0.3f)
+                    currentDirection = ((Vector2)currentListWaypoint[currentStepPoint]-rb.position).normalized;
                  rb.position = Vector2.MoveTowards(rb.position, currentListWaypoint[currentStepPoint], speed );
+                 
             }
         }
+      
     }
 
-    private void FixedUpdate() {
-        if (!isBounce) {
-            if (isCurve) {
-                
-            }
+    public override void OnCollisionEnter2D(Collision2D other)
+    {
+        colliding = true;
+      
+        if (_bounceCount > 0 && other.gameObject.CompareTag("Walls")) {
+            
+            _bounceCount--;
+            
+            Debug.Log(currentDirection);
+
+            var direction = Vector3.Reflect(currentDirection, other.contacts[0].normal);
+            rb.velocity = direction * Mathf.Max(speedBounce, 0f);
+        
+            var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+            
+
+            isBounce = true;
+   
+            PoolManager.Instance.SpawnImpactPool(transform);
+        }
+        else {
+            DesactiveBullet();
         }
     }
 }

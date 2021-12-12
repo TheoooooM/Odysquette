@@ -61,7 +61,7 @@ public class HealthPlayer : MonoBehaviour {
             if (healthPlayer - damage <= 0) OnDeathPlayer();
 
             healthPlayer -= damage;
-            if(cameraShake != null) cameraShake.CreateCameraShake(0.1f, .25f);
+            if(cameraShake != null) cameraShake.CreateCameraShake(.15f, .4f);
             
             if (UIManager.Instance == null) return;
             
@@ -69,6 +69,7 @@ public class HealthPlayer : MonoBehaviour {
                 if (i >= healthPlayer) UIManager.Instance.HeartsLife[i].SetActive(false);
                 else break;
                 spriteRenderer.material.SetFloat("_HitTime", Time.time);
+                if(GameManager.Instance != null && GameManager.Instance.strawSprite != null) GameManager.Instance.strawSprite.material.SetFloat("_HitTime", Time.time);
                 isInvincible = true;
             }
         }

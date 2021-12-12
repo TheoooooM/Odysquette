@@ -16,6 +16,8 @@ public class CurveShootSO : StrawSO
     public int[] stepOfCurve;
     public int[] stepOfCurveParameter;
     public Vector3[] pointsForBezierCurve;
+    public float speedBounce;
+    
 
     public PointsForBezierCurve[] trajectoriesParameters ;
     private int indexBullet;
@@ -170,11 +172,15 @@ public class CurveShootSO : StrawSO
         if (rateMainParameter)
         {
             curveBullet.speed = currentTimeValue * speedParameter + speedBullet;
+            
+            
         }
         else if (!rateMainParameter)
         {
             curveBullet.speed =  speedBullet;
         }
+
+        curveBullet.speedBounce = speedBounce;
         
         bullet.SetActive(true);
     }

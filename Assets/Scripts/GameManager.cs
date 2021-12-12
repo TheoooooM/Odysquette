@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour {
         set {
             _ultimateValue = Mathf.Clamp(value, 0, maxUltimateValue);
 
-            UIManager.Instance.UltSlider.value = _ultimateValue;
+            if(UIManager.Instance != null) UIManager.Instance.UltSlider.value = _ultimateValue;
         }
     }
 
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour {
     public Effect firstEffect;
 
     [SerializeField] public Effect secondEffect;
-    [SerializeField] CombinaisonColorEffect[] colorEffectsList;
+   public CombinaisonColorEffect[] colorEffectsList;
     public Color currentColor;
 
     [Header("---- STRAW")] 
@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private GameObject snipStrawFx;
     private float shootLoading;
     private bool EndLoading;
-    private SpriteRenderer strawSprite;
+    public SpriteRenderer strawSprite;
 
     [Header("---- INPUT")] public bool isMouse = true;
     public Vector2 ViewPad;
@@ -229,7 +229,7 @@ public class GameManager : MonoBehaviour {
 
         shootCooldown += Time.deltaTime;
 
-        shootCooldown = Mathf.Min(shootCooldown, actualStrawClass.strawSO.timeValue);
+        if(actualStrawClass.StrawName != "") shootCooldown = Mathf.Min(shootCooldown, actualStrawClass.strawSO.timeValue);
 
         if (actualStrawClass.StrawType != actualStraw) ChangeStraw(actualStraw);
     }
@@ -291,6 +291,9 @@ public class GameManager : MonoBehaviour {
         firstEffect = NeverDestroy.Instance.firstEffect;
         secondEffect = NeverDestroy.Instance.secondEffect;
         actualStraw = NeverDestroy.Instance.actualStraw;
+        ultimateValue = NeverDestroy.Instance.ultimateValue;
+        UIManager.Instance.UltSlider.value = _ultimateValue;
+        NeverDestroy.Instance.AddRessource(0);
     }
 
     public void SetND() {
@@ -298,6 +301,7 @@ public class GameManager : MonoBehaviour {
         NeverDestroy.Instance.secondEffect = secondEffect;
         NeverDestroy.Instance.actualStraw = actualStraw;
         NeverDestroy.Instance.life = HealthPlayer.Instance.healthPlayer;
+        NeverDestroy.Instance.ultimateValue = ultimateValue;
     }
     
     /// <summary>
@@ -315,14 +319,20 @@ public class GameManager : MonoBehaviour {
         //actualStrawClass.StrawParent.GetComponent<SpriteRenderer>().sprite = actualStrawClass.strawSO.strawRenderer;
         actualStrawClass.StrawParent.SetActive(true);
         strawSprite = actualStrawClass.StrawParent.GetComponent<SpriteRenderer>();
-        for (int i = 0; i < colorEffectsList.Length; i++) {
-            if (colorEffectsList[i].firstEffect == firstEffect && colorEffectsList[i].secondEffect == secondEffect
-                || colorEffectsList[i].firstEffect == secondEffect && colorEffectsList[i].secondEffect == firstEffect) {
-                currentColor = colorEffectsList[i].combinaisonColor;
-            }
-        }
+        SetVisualEffect();
+
     }
 
+
+  public  void SetVisualEffect()
+    {
+                for (int i = 0; i < colorEffectsList.Length; i++) {
+                    if (colorEffectsList[i].firstEffect == firstEffect && colorEffectsList[i].secondEffect == secondEffect
+                        || colorEffectsList[i].firstEffect == secondEffect && colorEffectsList[i].secondEffect == firstEffect) {
+                        currentColor = colorEffectsList[i].combinaisonColor;
+                    }
+                }
+    }
     public enum ShootMode {
         BasicShoot,
         CurveShoot,

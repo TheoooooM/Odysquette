@@ -83,6 +83,7 @@ MonoBehaviour:
     secondEffect: 4
     combinaisonColor: {r: 0.509434, g: 0.30972174, b: 0.0744927, a: 1}
   currentColor: {r: 1, g: 1, b: 1, a: 1}
+  disableStraw: 0
   actualStraw: 0
   strawsClass:
   - StrawName: Basic Straw
@@ -98,7 +99,7 @@ MonoBehaviour:
     StrawParent: {fileID: 0}
     strawSO: {fileID: 11400000, guid: 80fc2f0fc751d02499af99c92ab08fcb, type: 2}
     sizeUltimatePool: 15
-    ultimateStrawSO: {fileID: 11400000, guid: 73c4a0ca106eab44382ebe48a16af4cb, type: 2}
+    ultimateStrawSO: {fileID: 11400000, guid: e0b534be9cd0e284782b496a46829bdf, type: 2}
     spawnerTransform: {fileID: 0}
     sizeShootPool: 5
   - StrawName: Snip Straw
@@ -114,7 +115,7 @@ MonoBehaviour:
     StrawParent: {fileID: 0}
     strawSO: {fileID: 11400000, guid: 008d91e3744ea94428924d6db8232b1e, type: 2}
     sizeUltimatePool: 15
-    ultimateStrawSO: {fileID: 11400000, guid: ca60bda0eb4fbb4499b5a1b68826f7be, type: 2}
+    ultimateStrawSO: {fileID: 11400000, guid: 0b0f5eef8ae53ed4e92f6921a94e6bd1, type: 2}
     spawnerTransform: {fileID: 0}
     sizeShootPool: 0
   - StrawName: Tri Straw
@@ -125,7 +126,7 @@ MonoBehaviour:
     ultimateStrawSO: {fileID: 11400000, guid: 9a814fca707bd514fb051bf4a037f19f, type: 2}
     spawnerTransform: {fileID: 0}
     sizeShootPool: 5
-  - StrawName: Bubble Straw
+  - StrawName: Riffle Straw
     StrawType: 5
     StrawParent: {fileID: 0}
     strawSO: {fileID: 11400000, guid: 54416bd26e6a39c45bc96f5e02a4157d, type: 2}
@@ -133,11 +134,13 @@ MonoBehaviour:
     ultimateStrawSO: {fileID: 11400000, guid: 3e530475a2eead848986f12e54fbaf25, type: 2}
     spawnerTransform: {fileID: 0}
     sizeShootPool: 5
+  strawTRansform: {fileID: 0}
   timerUltimate: 0
   shooting: 0
   utlimate: 0
   shootCooldown: 0
   snipStrawFx: {fileID: 8410869144526307780, guid: cd8ddc45c3aee9443a6ca537e33a3f5f, type: 3}
+  strawSprite: {fileID: 0}
   isMouse: 1
   ViewPad: {x: 0, y: 0}
   shootRate: 0

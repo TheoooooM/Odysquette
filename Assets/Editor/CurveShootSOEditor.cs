@@ -43,7 +43,9 @@ public class CurveShootSOEditor : StrawSOEditor
                
                 
             }
-
+            EditorGUILayout.Space(2f);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("speedBounce")); 
+            EditorGUILayout.Space(2f);
             using (new GUILayout.VerticalScope(EditorStyles.helpBox))
             {
                 GUILayout.Label("Trajectories" , myStylo );

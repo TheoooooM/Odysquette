@@ -92,7 +92,7 @@ public class RoomContainer : MonoBehaviour {
             }
             else {
                 openTop.SetActive(false);
-                closeTop.SetActive(true);
+                closeTop.SetActive(false);
             }
         }
 
@@ -110,7 +110,7 @@ public class RoomContainer : MonoBehaviour {
             }
             else {
                 openLeft.SetActive(false);
-                closeLeft.SetActive(true);
+                closeLeft.SetActive(false);
             }
         }
 
@@ -129,7 +129,7 @@ public class RoomContainer : MonoBehaviour {
             }
             else {
                 openRight.SetActive(false);
-                closeRight.SetActive(true);
+                closeRight.SetActive(false);
             }
         }
 
@@ -148,7 +148,7 @@ public class RoomContainer : MonoBehaviour {
             }
             else {
                 openBot.SetActive(false);
-                closeBot.SetActive(true);
+                closeBot.SetActive(false);
             }
         }
     }
