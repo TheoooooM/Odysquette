@@ -23,11 +23,11 @@ public class Items : MonoBehaviour
    [SerializeField] private GameObject shopCanvas;
    [SerializeField] private GameObject groundCanvas;
    [SerializeField] private itemSO SO;
-   private bool shop;
+   public bool shop;
    
    public void SpawnObject(bool ground = false) {
       playerInput = new PlayerMapping();
-      
+      if(shop)playerInput.Interface.Enable();
       playerInput.Interface.Button.started += ButtonOnperformed;
       
       shopCanvas.SetActive(false);
@@ -38,7 +38,7 @@ public class Items : MonoBehaviour
 
    private void Update()
    {
-      if (Input.GetKeyUp(KeyCode.E)) playerInput.Interface.Enable();;
+      if (Input.GetKeyUp(KeyCode.E) && !shop) playerInput.Interface.Enable();
    }
 
 
@@ -47,8 +47,10 @@ public class Items : MonoBehaviour
    /// </summary>
    /// <param name="obj"></param>
    private void ButtonOnperformed(InputAction.CallbackContext obj) {
+         Debug.Log("Performed");
       if (inRange)
       {
+         Debug.Log("in range");
          if (cost <= NeverDestroy.Instance.ressources && shop)
          {
             Debug.Log("pay " + cost);
