@@ -5,6 +5,7 @@ using UnityEngine;
 public class Exit : MonoBehaviour {
     [SerializeField] private SceneManager sceneManager = null;
     public bool isShop;
+    public bool isHubTransition = false;
     public bool ePress;
     private string sceneToLoad;
     
@@ -16,6 +17,7 @@ public class Exit : MonoBehaviour {
             if (NeverDestroy.Instance.level == 1) sceneToLoad = "YOP_Basic";
             else sceneToLoad = "Boss";
         }
+        else if(isHubTransition) sceneToLoad = "YOP_Basic";
         else sceneToLoad = "Shop";
         
         if(sceneManager == null) sceneManager = SceneManager.instance;
