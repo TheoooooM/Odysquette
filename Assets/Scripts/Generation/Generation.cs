@@ -47,8 +47,8 @@ public class Generation : MonoBehaviour {
 
     private void Start() {
         map = new RoomContainer[mapSize, mapSize];
-        //if (NeverDestroy.Instance == null) Instantiate(Resources.Load<GameObject>("NeverDestroy"));
-        if(NeverDestroy.Instance != null) NeverDestroy.Instance.level++;
+        if (NeverDestroy.Instance == null) Instantiate(Resources.Load<GameObject>("NeverDestroy"));
+        NeverDestroy.Instance.level++;
         GenerateLevel();
     }
 
