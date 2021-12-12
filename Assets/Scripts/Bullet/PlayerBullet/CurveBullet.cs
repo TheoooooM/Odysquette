@@ -43,11 +43,8 @@ public class CurveBullet : Bullet {
 
             Vector3 End = trajectories[i + 1];
 
-            for (int j = 0;
-                j < stepOfCurve;
-                j++) {
-                Vector3 StepPoint =
-                    ExtensionMethods.Bezier(Start, trajectories[i], End, (j / (float) stepOfCurve));
+            for (int j = 0; j < stepOfCurve; j++) {
+                Vector3 StepPoint = ExtensionMethods.Bezier(Start, trajectories[i], End, (j / (float) stepOfCurve));
                 Start = StepPoint;
 
                 pointsForBezierCurve[i].pointsForBezierCurve.Add(StepPoint);

@@ -86,17 +86,24 @@ public class Bullet : MonoBehaviour {
 
     private void FixedUpdate() {
         if (GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison) {
-            //  Debug.Log(distance/rb.velocity.magnitude +"   " +  _poisonCooldown + "   " + Time.deltaTime + "  = " + (_poisonCooldown + Time.deltaTime));
-
-
-            if (_poisonCooldown < distance / rb.velocity.magnitude) {
+            /*if (_poisonCooldown < distance / rb.velocity.magnitude) {
                 _poisonCooldown += Time.fixedDeltaTime;
+            }*/
+            // v= d/t => t = d/v => d = vt
+            
+            
+            if (Vector2.Distance(oldPositionPoison, transform.position) > distance) {
+                oldPositionPoison = transform.position;
+                PoolManager.Instance.SpawnPoisonPool(transform);
+                //_poisonCooldown = poisonCooldown;
             }
-            else {
+            
+            /*else {
+                oldPositionPoison = transform.position;
                 //Debug.Log(_poisonCooldown);
                 PoolManager.Instance.SpawnPoisonPool(transform);
                 _poisonCooldown = poisonCooldown;
-            }
+            }*/
         }
         if(!isColliding)lastVelocity = rb.velocity;
     }
@@ -187,12 +194,16 @@ public class Bullet : MonoBehaviour {
         colliding = false;
     }
 
+
+    private float maxDistance = 15;
     void Explosion() {
         PoolManager.Instance.SpawnExplosionPool(transform);
         if (Camera.main != null) {
-            float distanceToCamera = Vector2.Distance(Camera.main.transform.position, transform.position);
+            float distanceToCamera = Mathf.Abs(Vector2.Distance(Camera.main.transform.position, transform.position));
+            float distanceSubstract = Mathf.Clamp(maxDistance - distanceToCamera, 0, maxDistance);
+            float ratio = distanceSubstract / maxDistance;
             
-            Camera.main.GetComponent<CameraShake>().CreateCameraShake(.085f, .15f);
+            Camera.main.GetComponent<CameraShake>().CreateCameraShake(.085f * ratio, .15f * ratio);
         }
     }
 
