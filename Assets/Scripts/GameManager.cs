@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private GameObject snipStrawFx;
     private float shootLoading;
     private bool EndLoading;
-    private SpriteRenderer strawSprite;
+    public SpriteRenderer strawSprite;
 
     [Header("---- INPUT")] public bool isMouse = true;
     public Vector2 ViewPad;
