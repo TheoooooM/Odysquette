@@ -11,8 +11,9 @@ using Object = UnityEngine.Object;
 public class EnemyStateManager : MonoBehaviour {
     public EnemyFeedBack enemyFeedBack;
     public bool isActivate = false;
-
+    public bool isContactWall;
     public EMainStatsSO EMainStatsSo;
+    private PlayerDetector playerDetector;
 
     // Variable for Set Value and Object in States
     public Vector2 forceApply;
@@ -76,8 +77,11 @@ public class EnemyStateManager : MonoBehaviour {
         // spriteRenderer.sprite = EMainStatsSo.sprite;
     }
 
-    public virtual void Start() {
-        collider2D = GetComponent<Collider2D>();
+    public virtual void Start()
+    {
+        
+            playerDetector = GetComponent<PlayerDetector>();
+            collider2D = GetComponent<Collider2D>();
         enemyFeedBack = GetComponent<EnemyFeedBack>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         spawnPosition = transform.position;
@@ -252,10 +256,11 @@ public class EnemyStateManager : MonoBehaviour {
                     rb.drag = EMainStatsSo.dragForKnockUp;
 
 
-                    if (rb.velocity.magnitude <= 0.1f) {
+                    if (rb.velocity.magnitude <= 0.1f || isContactWall) {
                         isDragKnockUp = false;
                         rb.drag = 0;
                         rb.velocity = Vector2.zero;
+                        isContactWall = false;
                     }
                 }
             }
@@ -422,7 +427,7 @@ public class EnemyStateManager : MonoBehaviour {
     }
 
     public void TakeDamage(float damage, Vector2 position, float knockUpValue, bool knockup, bool isExplosion) {
-        isActivate = true;
+        playerDetector.EndDetection();
         if (health - damage <= 0) {
             OnDeath();
         }
