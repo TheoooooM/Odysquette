@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour {
         set {
             _ultimateValue = Mathf.Clamp(value, 0, maxUltimateValue);
 
-            UIManager.Instance.UltSlider.value = _ultimateValue;
+            if(UIManager.Instance != null) UIManager.Instance.UltSlider.value = _ultimateValue;
         }
     }
 
@@ -229,7 +229,7 @@ public class GameManager : MonoBehaviour {
 
         shootCooldown += Time.deltaTime;
 
-        shootCooldown = Mathf.Min(shootCooldown, actualStrawClass.strawSO.timeValue);
+        if(actualStrawClass.StrawName != "") shootCooldown = Mathf.Min(shootCooldown, actualStrawClass.strawSO.timeValue);
 
         if (actualStrawClass.StrawType != actualStraw) ChangeStraw(actualStraw);
     }
@@ -292,6 +292,8 @@ public class GameManager : MonoBehaviour {
         secondEffect = NeverDestroy.Instance.secondEffect;
         actualStraw = NeverDestroy.Instance.actualStraw;
         ultimateValue = NeverDestroy.Instance.ultimateValue;
+        UIManager.Instance.UltSlider.value = _ultimateValue;
+        NeverDestroy.Instance.AddRessource(0);
     }
 
     public void SetND() {
