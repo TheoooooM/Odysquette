@@ -34,34 +34,33 @@ public class PoolManager : MonoBehaviour {
         explosionQueue = new Queue<GameObject>();
         impactQueue = new Queue<GameObject>();
         pierceQueue = new Queue<GameObject>();
-        foreach (GameManager.StrawClass pol in GameManager.Instance.strawsClass) {
-            
-            //---------------------Génère les pool et les bullets de base------------------------- 
-            Queue<GameObject> objectPool = new Queue<GameObject>();
-            Queue<GameObject> ultimatePool = new Queue<GameObject>();
 
-            for (int i = 0; i < pol.sizeShootPool; i++)
-            {
-				if (pol.strawSO.prefabBullet == null) continue;
-                GameObject obj = Instantiate(pol.strawSO.prefabBullet, transform); 
-                obj.name = pol.strawSO.strawName+" "+i;
-                obj.SetActive(false);
-                objectPool.Enqueue(obj);
+        if (GameManager.Instance != null) {
+            foreach (GameManager.StrawClass pol in GameManager.Instance.strawsClass) {
+                //---------------------Génère les pool et les bullets de base------------------------- 
+                Queue<GameObject> objectPool = new Queue<GameObject>();
+                Queue<GameObject> ultimatePool = new Queue<GameObject>();
+
+                for (int i = 0; i < pol.sizeShootPool; i++) {
+                    if (pol.strawSO.prefabBullet == null) continue;
+                    GameObject obj = Instantiate(pol.strawSO.prefabBullet, transform);
+                    obj.name = pol.strawSO.strawName + " " + i;
+                    obj.SetActive(false);
+                    objectPool.Enqueue(obj);
+                }
+                
+                for (int i = 0; i < pol.sizeUltimatePool; i++) {
+                    if (pol.ultimateStrawSO.prefabBullet == null) continue;
+                    GameObject obj = Instantiate(pol.ultimateStrawSO.prefabBullet, transform);
+                    obj.name = pol.ultimateStrawSO.strawName + " " + i;
+                    obj.SetActive(false);
+
+                    ultimatePool.Enqueue(obj);
+                }
+
+                //---------------------------------------------------------------------------------------
+                poolDictionary.Add(pol.StrawType, new[] {objectPool, ultimatePool});
             }
-
-
-            for (int i = 0; i < pol.sizeUltimatePool; i++)
-            {
-				   if (pol.ultimateStrawSO.prefabBullet == null) continue;
-             GameObject obj = Instantiate(pol.ultimateStrawSO.prefabBullet, transform); 
-                obj.name = pol.ultimateStrawSO.strawName+" "+i;
-                obj.SetActive(false); 
-
-                ultimatePool.Enqueue(obj);
-            }
-
-            //---------------------------------------------------------------------------------------
-            poolDictionary.Add(pol.StrawType, new[] {objectPool, ultimatePool});
         }
 
         enemypoolDictionary = new Dictionary<ExtensionMethods.EnemyTypeShoot, Queue<GameObject>>();

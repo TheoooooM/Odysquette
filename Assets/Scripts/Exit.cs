@@ -17,6 +17,8 @@ public class Exit : MonoBehaviour {
             else sceneToLoad = "Boss";
         }
         else sceneToLoad = "Shop";
+        
+        if(sceneManager == null) sceneManager = SceneManager.instance;
     }
 
     private void Update() => ePress = Input.GetKey(KeyCode.E);
