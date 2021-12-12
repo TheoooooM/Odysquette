@@ -88,6 +88,7 @@ public class GameManager : MonoBehaviour {
     public Color currentColor;
 
     [Header("---- STRAW")] 
+    [SerializeField] private bool disableStraw = false;
     public Straw actualStraw;
     public List<StrawClass> strawsClass; //Liste de toute les pailles
     public Transform strawTRansform;
@@ -158,9 +159,8 @@ public class GameManager : MonoBehaviour {
 
     private void Update() {
         if (animate) EndRoomAnimation();
-
-
-        if (isUltimate) {
+        
+        if (isUltimate && !disableStraw) {
             if (actualStrawClass.ultimateStrawSO.timeValue > timerUltimate) {
                 timerUltimate += Time.deltaTime;
             }
@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour {
         }
 
         mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (shooting && !isUltimate && PoolManager.Instance != null) {
+        if (shooting && !isUltimate && PoolManager.Instance != null && !disableStraw) {
             switch (actualStrawClass.strawSO.rateMode) {
                 case StrawSO.RateMode.FireLoading:{
                     shootLoading += Time.deltaTime;
@@ -208,7 +208,7 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        if (actualStrawClass.ultimateStrawSO != null && actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate) {
+        if (actualStrawClass.ultimateStrawSO != null && actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate && !disableStraw) {
             if (ultimateValue >= 100) {
                 actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
                 isUltimate = true;
@@ -218,7 +218,7 @@ public class GameManager : MonoBehaviour {
             utlimate = false;
         }
 
-        if (!shooting) {
+        if (!shooting && !disableStraw) {
             if (EndLoading) {
                 actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
                 shootLoading = 0;
