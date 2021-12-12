@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour {
     public Effect firstEffect;
 
     [SerializeField] public Effect secondEffect;
-    [SerializeField] CombinaisonColorEffect[] colorEffectsList;
+   public CombinaisonColorEffect[] colorEffectsList;
     public Color currentColor;
 
     [Header("---- STRAW")] 
@@ -315,14 +315,20 @@ public class GameManager : MonoBehaviour {
         //actualStrawClass.StrawParent.GetComponent<SpriteRenderer>().sprite = actualStrawClass.strawSO.strawRenderer;
         actualStrawClass.StrawParent.SetActive(true);
         strawSprite = actualStrawClass.StrawParent.GetComponent<SpriteRenderer>();
-        for (int i = 0; i < colorEffectsList.Length; i++) {
-            if (colorEffectsList[i].firstEffect == firstEffect && colorEffectsList[i].secondEffect == secondEffect
-                || colorEffectsList[i].firstEffect == secondEffect && colorEffectsList[i].secondEffect == firstEffect) {
-                currentColor = colorEffectsList[i].combinaisonColor;
-            }
-        }
+        SetVisualEffect();
+
     }
 
+
+  public  void SetVisualEffect()
+    {
+                for (int i = 0; i < colorEffectsList.Length; i++) {
+                    if (colorEffectsList[i].firstEffect == firstEffect && colorEffectsList[i].secondEffect == secondEffect
+                        || colorEffectsList[i].firstEffect == secondEffect && colorEffectsList[i].secondEffect == firstEffect) {
+                        currentColor = colorEffectsList[i].combinaisonColor;
+                    }
+                }
+    }
     public enum ShootMode {
         BasicShoot,
         CurveShoot,
