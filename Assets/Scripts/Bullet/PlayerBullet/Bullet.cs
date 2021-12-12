@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
     public bool isBounce;
+    private bool colliding;
     public bool hasRange;
     public float damage;
     public float range;
@@ -136,8 +137,11 @@ public class Bullet : MonoBehaviour {
             
             if (_pierceCount > 0) {
                 _pierceCount--;
+                PoolManager.Instance.SpawnPiercePool(transform);
+                PoolManager.Instance.SpawnImpactPool(transform);
             }
             else {
+                
                 DesactiveBullet();
             }
         }
@@ -147,7 +151,9 @@ public class Bullet : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other) {
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        colliding = true;
         if (_bounceCount > 0 && other.gameObject.CompareTag("Walls")) {
             _bounceCount--;
             var speed = lastVelocity.magnitude;
@@ -159,10 +165,21 @@ public class Bullet : MonoBehaviour {
             transform.rotation = Quaternion.Euler(0, 0, angle);
 
             isBounce = true;
+            PoolManager.Instance.SpawnImpactPool(transform);
         }
         else {
             DesactiveBullet();
         }
+    }
+
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        _bounceCount--;
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        colliding = false;
     }
 
     void Explosion() {
@@ -182,7 +199,7 @@ public class Bullet : MonoBehaviour {
         if (isDesactive == false) {
             StopAllCoroutines();
             gameObject.SetActive(false);
-
+            PoolManager.Instance.SpawnImpactPool(transform);
             if (rateMode == StrawSO.RateMode.Ultimate) {
                 PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][1].Enqueue(gameObject);
             }
@@ -193,7 +210,6 @@ public class Bullet : MonoBehaviour {
             isDesactive = true;
         }
     }
-
 
     IEnumerator Reset() {
         yield return new WaitForEndOfFrame();

@@ -8,7 +8,10 @@ public class PoolManager : MonoBehaviour {
     public Dictionary<GameManager.Straw, Queue<GameObject>[]> poolDictionary;
     public Queue<GameObject> PoisonQueue;
     public GameObject poisonPrefab;
-
+    public GameObject piercePrefab;
+    public Queue<GameObject> pierceQueue;
+    public GameObject impactPrefab;
+    public Queue<GameObject> impactQueue;
     public Queue<GameObject> explosionQueue;
     public GameObject explosionPrefab;
 
@@ -29,6 +32,8 @@ public class PoolManager : MonoBehaviour {
         poolDictionary = new Dictionary<GameManager.Straw, Queue<GameObject>[]>(); //Créer un dictionnaire regroupant chaque pool
         PoisonQueue = new Queue<GameObject>();
         explosionQueue = new Queue<GameObject>();
+        impactQueue = new Queue<GameObject>();
+        pierceQueue = new Queue<GameObject>();
         foreach (GameManager.StrawClass pol in GameManager.Instance.strawsClass) {
             
             //---------------------Génère les pool et les bullets de base------------------------- 
@@ -105,16 +110,7 @@ public class PoolManager : MonoBehaviour {
     }
 
     public void SpawnPoisonPool(Transform bullet) {
-        GameObject obj;
-        if (PoisonQueue.Count == 0) {
-            obj = Instantiate(poisonPrefab);
-            obj.transform.position = bullet.position;
-        }
-        else {
-            obj = PoisonQueue.Dequeue();
-            obj.transform.position = bullet.position;
-            obj.SetActive(true);
-        }
+        GameObject obj = SpawnEffectBulletPool(bullet, explosionQueue, explosionPrefab);
 
         obj.GetComponent<Poison>().rbBullet = bullet.GetComponent<Rigidbody2D>();
 
@@ -122,16 +118,32 @@ public class PoolManager : MonoBehaviour {
     }
 
 
-    public void SpawnExplosionPool(Transform bullet) {
-        if (explosionQueue.Count == 0) {
-            GameObject obj = Instantiate(explosionPrefab, bullet.position, quaternion.identity);
-            //obj.transform.position = bullet.position;
+    public void SpawnExplosionPool(Transform bullet)
+    {
+        SpawnEffectBulletPool(bullet, explosionQueue, explosionPrefab);
+    }
+    public void SpawnPiercePool(Transform bullet)
+    {
+        SpawnEffectBulletPool(bullet, pierceQueue, piercePrefab);
+    }
+    public void SpawnImpactPool(Transform bullet)
+    {
+        SpawnEffectBulletPool(bullet, impactQueue, impactPrefab);
+    }
+
+    public  GameObject SpawnEffectBulletPool(Transform bullet, Queue<GameObject> QueueEffect, GameObject prefabBullet)
+    {
+        GameObject obj;
+        if (QueueEffect.Count == 0)
+        {
+            obj = Instantiate(prefabBullet, bullet.position, quaternion.identity);
         }
         else {
-            GameObject obj = explosionQueue.Dequeue();
+            obj = QueueEffect.Dequeue();
             obj.transform.position = bullet.position;
             obj.SetActive(true);
         }
+        return obj;
     }
 
     public GameObject SpawnEnnemyShoot(ExtensionMethods.EnemyTypeShoot enemyTypeShoot, GameObject prefabBullet, Transform parentBulletTF) {

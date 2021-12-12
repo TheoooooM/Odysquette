@@ -10,8 +10,7 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance;
 
     private void Awake() {
-        if (NeverDestroy.Instance == null) Instantiate(Resources.Load<GameObject>("NeverDestroy"));
-        else GetND();
+        
         Instance = this;
     }
 
@@ -91,13 +90,16 @@ public class GameManager : MonoBehaviour {
     [Header("---- STRAW")] 
     public Straw actualStraw;
     public List<StrawClass> strawsClass; //Liste de toute les pailles
+    private Transform strawTRansform;
     public float timerUltimate;
     public bool shooting;
     public bool utlimate;
     public float shootCooldown;
     private int countShootRate;
+    [SerializeField] private GameObject snipStrawFx;
     private float shootLoading;
     private bool EndLoading;
+    private SpriteRenderer strawSprite;
 
     [Header("---- INPUT")] public bool isMouse = true;
     public Vector2 ViewPad;
@@ -127,7 +129,11 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private void Start() {
+    private void Start()
+    {
+        if (NeverDestroy.Instance == null) Instantiate(Resources.Load<GameObject>("NeverDestroy"));
+        else GetND();
+        strawTRansform = Playercontroller.Instance.strawTransform;
         animate = false;
         timer = 0;
         
@@ -162,21 +168,20 @@ public class GameManager : MonoBehaviour {
         }
 
         mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (shooting && !isUltimate) {
+        if (shooting && !isUltimate && PoolManager.Instance != null) {
             switch (actualStrawClass.strawSO.rateMode) {
                 case StrawSO.RateMode.FireLoading:{
                     shootLoading += Time.deltaTime;
                     if (shootLoading >= 0.25f) {
                         EndLoading = true;
-                    }
-
-                    if (shootLoading >= actualStrawClass.strawSO.timeValue - 0.1f) {
-                        EndLoading = false;
+                        snipStrawFx.SetActive(true);
                     }
 
                     if (shootLoading >= actualStrawClass.strawSO.timeValue) {
                         actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
                         shootLoading = 0;
+                        snipStrawFx.SetActive(true);
+                        EndLoading = false;
                     }
 
 
@@ -201,9 +206,7 @@ public class GameManager : MonoBehaviour {
         }
 
         if (actualStrawClass.ultimateStrawSO != null && actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate) {
-            Debug.Log("testssss");
             if (ultimateValue >= 100) {
-                Debug.Log("ouhahahahah");
                 actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
                 isUltimate = true;
                 ultimateValue -= 100;
@@ -216,7 +219,7 @@ public class GameManager : MonoBehaviour {
             if (EndLoading) {
                 actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
                 shootLoading = 0;
-
+                snipStrawFx.SetActive(true);
                 EndLoading = false;
             }
         }
@@ -230,14 +233,18 @@ public class GameManager : MonoBehaviour {
 
     private void FixedUpdate() {
         //---------------- Oriente la paille ------------------------
-        if (isMouse) {
-            Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x, actualStrawClass.StrawParent.transform.position.y);
+        if (isMouse)
+        {
+            Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x,
+                actualStrawClass.StrawParent.transform.position.y);
             _lookDir = new Vector2(mousepos.x, mousepos.y) - Position;
             angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
             if (UIManager.Instance != null) UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(mousepos);
-
-
-            actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+            
+            if (angle >= 90 && angle <= 180 || angle <= -90 && angle >= -180) strawSprite.flipY = true;
+            else strawSprite.flipY = false;
+            
+            strawTRansform.rotation = Quaternion.Euler(0f, 0f, angle);
         }
         else {
             if (ViewPad.magnitude > 0.5f) {
@@ -306,8 +313,9 @@ public class GameManager : MonoBehaviour {
             if (strawC.StrawType == straw) actualStrawClass = strawC;
         }
 
-        actualStrawClass.StrawParent.GetComponent<SpriteRenderer>().sprite = actualStrawClass.strawSO.strawRenderer;
+        //actualStrawClass.StrawParent.GetComponent<SpriteRenderer>().sprite = actualStrawClass.strawSO.strawRenderer;
         actualStrawClass.StrawParent.SetActive(true);
+        strawSprite = actualStrawClass.StrawParent.GetComponent<SpriteRenderer>();
         for (int i = 0; i < colorEffectsList.Length; i++) {
             if (colorEffectsList[i].firstEffect == firstEffect && colorEffectsList[i].secondEffect == secondEffect
                 || colorEffectsList[i].firstEffect == secondEffect && colorEffectsList[i].secondEffect == firstEffect) {

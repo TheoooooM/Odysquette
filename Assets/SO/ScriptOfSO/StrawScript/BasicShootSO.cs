@@ -20,13 +20,10 @@ public class BasicShootSO : StrawSO
     
     public override void Shoot(Transform parentBulletTF,MonoBehaviour script, float currentTimeValue = 1 ) 
     {
-
         if (!isDelayBetweenShoot && !isDelayBetweenWaveShoot)
         {
             for (int i = 0; i < directions.Length; i++)
             {
-             
-               
                 GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode );
                 bullet.SetActive(true);
                 Vector3 rotation = Vector3.zero;

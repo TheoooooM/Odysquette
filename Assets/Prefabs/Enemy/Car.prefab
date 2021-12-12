@@ -96,6 +96,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2259390503318066460}
+  - {fileID: 8837318144678640504}
   m_Father: {fileID: 2259390504700047939}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -118,7 +119,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e8a65c6061707934ea1f23159495d2c7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -162,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d29982ec27ce94f94b8e5f480cce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyFeedBack: {fileID: 0}
   isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: 1a24df601862f71498b186675b986f13, type: 2}
   forceApply: {x: 0, y: 0}
@@ -194,6 +196,7 @@ MonoBehaviour:
   isDragKnockUp: 0
   isConvey: 0
   conveyBeltSpeed: {x: 0, y: 0}
+  isDead: 0
   playerTransform: {fileID: 0}
   spawnPosition: {x: 0, y: 0, z: 0}
   indexCurrentState: 0
@@ -202,6 +205,7 @@ MonoBehaviour:
   IsFirstStartPlayed: 0
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
+  timerCurrentState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
 --- !u!50 &2259390503688608350
@@ -380,6 +384,18 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+          - m_Target: {fileID: 5175634095495853138}
+            m_TargetAssemblyTypeName: EnemyDashCollision, Assembly-CSharp
+            m_MethodName: GhostDash
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
     - typeFeedBackEvent: 3
       feedBackEvent:
         m_PersistentCalls:
@@ -388,6 +404,18 @@ MonoBehaviour:
             m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
             m_MethodName: CancelBoolOneTime
             m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 5175634095495853138}
+            m_TargetAssemblyTypeName: EnemyDashCollision, Assembly-CSharp
+            m_MethodName: CancelGhostDash
+            m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -504,6 +532,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inDash: 0
   isTrigger: 0
+  lastImageposition: {x: 0, y: 0, z: 0}
+  distanceBetweenImage: 1
+  firstGhost: 0
 --- !u!61 &5397051491870573342
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -670,4 +701,66 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6254517144727061817, guid: 999ccc69983d56f4c978fd73c60cd5b3, type: 3}
   m_PrefabInstance: {fileID: 5302554828185115891}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8291040853691988102
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2259390503688608290}
+    m_Modifications:
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.81365544
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5813475
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3285624419240036279, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+      propertyPath: m_Name
+      value: EnemyLight
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+--- !u!4 &8837318144678640504 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 696870183165281278, guid: beaf8abd2e9ca9c4094770dde7f98817, type: 3}
+  m_PrefabInstance: {fileID: 8291040853691988102}
   m_PrefabAsset: {fileID: 0}

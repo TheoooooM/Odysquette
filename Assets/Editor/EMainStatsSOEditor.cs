@@ -165,22 +165,7 @@ public class EMainStatsSOEditor : Editor
              using (new GUILayout.VerticalScope(EditorStyles.helpBox))
                         {
                            
-                           using (new GUILayout.HorizontalScope())
-                           {
-                              eMainStatsSo.stateEnnemList[currentTab - 1].useHealthCondition =
-                                 EditorGUILayout.Toggle("Health Condition",
-                                    eMainStatsSo.stateEnnemList[currentTab - 1].useHealthCondition);
-                              if (eMainStatsSo.stateEnnemList[currentTab - 1].useHealthCondition)
-                              {
-                              
-                              
-                                 eMainStatsSo.stateEnnemList[currentTab-1].healthCondition =
-                                    EditorGUILayout.FloatField("Health for State", eMainStatsSo.stateEnnemList[currentTab - 1].healthCondition);
-                              }
-                            
-                           }
-            
-                           EditorGUILayout.Space(4f);
+                         
                            using (new GUILayout.HorizontalScope())
                            {
                               eMainStatsSo.stateEnnemList[currentTab - 1].useTimeCondition =

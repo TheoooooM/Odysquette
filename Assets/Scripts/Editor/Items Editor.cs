@@ -22,6 +22,7 @@ public class ItemsEditor : Editor
         }
         DrawProperty("Shop Canvas", serializedObject.FindProperty("shopCanvas"), true);
         DrawProperty("Ground Canvas", serializedObject.FindProperty("groundCanvas"), true);
+        DrawProperty("SO", serializedObject.FindProperty("SO"), true);
         serializedObject.ApplyModifiedProperties();
     }
 

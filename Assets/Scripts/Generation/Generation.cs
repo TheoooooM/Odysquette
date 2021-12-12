@@ -22,6 +22,7 @@ public class Generation : MonoBehaviour {
     }
 
     [Header("--- GENERATION")]
+    [SerializeField] private bool generateRandomLevel = false;
     public int seed = 0;
     public bool disableNeighboor = false;
     [HideInInspector] public bool endGeneration;
@@ -46,6 +47,7 @@ public class Generation : MonoBehaviour {
 
     private void Start() {
         map = new RoomContainer[mapSize, mapSize];
+        if (NeverDestroy.Instance == null) Instantiate(Resources.Load<GameObject>("NeverDestroy"));
         NeverDestroy.Instance.level++;
         GenerateLevel();
     }
@@ -58,7 +60,10 @@ public class Generation : MonoBehaviour {
     /// Generate the level
     /// </summary>
     public void GenerateLevel() {
-        Random.InitState(seed);
+        int actualSeed = seed;
+        if (generateRandomLevel) actualSeed = Random.Range(0, 1000000);
+        
+        Random.InitState(actualSeed);
         ResetGen();
         StartCoroutine("GeneratePath", nbrOfRoom);
     }
@@ -291,14 +296,14 @@ public class Generation : MonoBehaviour {
                                         currentRoom.name = "room " + i;
                                         Rect roomRect = BasicRect;
                                         
-                                        Debug.Log("current pos x -  mapsize :" + (currentPos.x - mapSize / 2) + "  basicRect x :" + BasicRect.x + "  so " + ((currentPos.x - mapSize / 2) * BasicRect.x - (BasicRect.x * 1.5f)));
+                                        //Debug.Log("current pos x -  mapsize :" + (currentPos.x - mapSize / 2) + "  basicRect x :" + BasicRect.x + "  so " + ((currentPos.x - mapSize / 2) * BasicRect.x - (BasicRect.x * 1.5f)));
                                         roomRect.x += (currentPos.x - mapSize / 2) * BasicRect.x - (BasicRect.x * 1.5f);
                                         roomRect.y += (currentPos.y - mapSize / 2) * BasicRect.y - (BasicRect.y * 1.5f);
 
                                         //debug.Log("Instantiate " + currentRoom);
                                         foreach (Room rom in newRoom.partList) {
                                             Vector2 posInRoom = new Vector2(rom.RoomGO.roomPos.x - enterPart.roomPos.x, rom.RoomGO.roomPos.y - enterPart.roomPos.y);
-                                            Debug.Log(posInRoom);
+                                            //.Log(posInRoom);
                                             if (posInRoom == new Vector2(0, 1)) roomRect.height += BasicRect.height;
                                             else if (posInRoom == new Vector2(0, -1)) {
                                                 roomRect.y -= BasicRect.y;

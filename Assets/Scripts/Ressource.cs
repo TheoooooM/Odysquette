@@ -17,7 +17,7 @@ public class Ressource : MonoBehaviour
         
         float x = Random.Range(-throwForce, throwForce)*100;
         float y = Random.Range(-throwForce, throwForce)*100;
-        Debug.Log("trhow force " + x + " " + y);
+ 
         rb.AddForce(new Vector2(x, y));
     }
 

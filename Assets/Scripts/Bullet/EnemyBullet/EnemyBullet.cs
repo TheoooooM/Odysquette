@@ -25,7 +25,7 @@ public class EnemyBullet : MonoBehaviour
         isEnable = false;
         basePosition = transform.position;
         Invoke(nameof(DelayforDrag),0.5f);
-        GetComponent<SpriteRenderer>().color = GameManager.Instance.currentColor;
+        
     }
 
     // Update is called once per frame
