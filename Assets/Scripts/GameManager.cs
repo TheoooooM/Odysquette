@@ -291,6 +291,7 @@ public class GameManager : MonoBehaviour {
         firstEffect = NeverDestroy.Instance.firstEffect;
         secondEffect = NeverDestroy.Instance.secondEffect;
         actualStraw = NeverDestroy.Instance.actualStraw;
+        ultimateValue = NeverDestroy.Instance.ultimateValue;
     }
 
     public void SetND() {
@@ -298,6 +299,7 @@ public class GameManager : MonoBehaviour {
         NeverDestroy.Instance.secondEffect = secondEffect;
         NeverDestroy.Instance.actualStraw = actualStraw;
         NeverDestroy.Instance.life = HealthPlayer.Instance.healthPlayer;
+        NeverDestroy.Instance.ultimateValue = ultimateValue;
     }
     
     /// <summary>
