@@ -26,20 +26,21 @@ public class AngleAreaShootSO : StrawSO {
                 Vector3 rotation;
                 if (angleDivisionParameter != 0) {
                     if (angleParameter != 0) {
-                        currentAngle = (-angle - angleParameter * currentTimeValue) / 2 + ((angle + angleParameter * currentTimeValue) / (angleDivision + Mathf.RoundToInt(angleDivisionParameter * currentTimeValue))) * i;
+                        currentAngle = (-angle - angleParameter * currentTimeValue) / 2 + ((angle + angleParameter * currentTimeValue) / ((angleDivision+1) + Mathf.RoundToInt(angleDivisionParameter * currentTimeValue))) * i;
                     }
                     else {
-                        currentAngle = -angle / 2 + (angle / (angleDivision + Mathf.RoundToInt(angleDivisionParameter * currentTimeValue))) * i;
+                        currentAngle = -angle / 2 + (angle / ((angleDivision+1) + Mathf.RoundToInt(angleDivisionParameter * currentTimeValue))) * i;
                     }
                 }
                 else {
                     if (angleParameter != 0) {
-                        currentAngle = (-angle - angleParameter * currentTimeValue) / 2 + ((angle + angleParameter * currentTimeValue) / angleDivision) * i;
+                        currentAngle = (-angle - angleParameter * currentTimeValue) / 2 + ((angle + angleParameter * currentTimeValue) / (angleDivision+1)) * i;
                     }
                     else {
-                        currentAngle = -angle / 2 + (angle / angleDivision) * i;
+                        currentAngle = -angle / 2 + (angle /(angleDivision+1)) * i;
                     }
                 }
+         
 
 
                 rotation = Quaternion.Euler(0, 0, currentAngle) * parentBulletTF.transform.right;

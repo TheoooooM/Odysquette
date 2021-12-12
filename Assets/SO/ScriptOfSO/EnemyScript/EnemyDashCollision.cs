@@ -12,6 +12,7 @@ public class EnemyDashCollision : MonoBehaviour
     private float distanceBetweenImage;
 
     public bool firstGhost;
+    public bool contactWall;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (inDash)
@@ -21,6 +22,8 @@ public class EnemyDashCollision : MonoBehaviour
 
         }
     }
+
+
 
     public void GhostDash()
     {

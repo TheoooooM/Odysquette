@@ -56,15 +56,19 @@ public class StateDash : StateEnemySO {
         rb.velocity = direction.normalized * speed;
         enemyDashCollision.inDash = true;
         if (enemyDashCollision.isTrigger) {
+            
             CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.CollideDuringPlayState);
         }
 
-        if (Vector2.Distance(rb.position, transformDash.position) < 0.2f) {
+  
+
+        if (Vector2.Distance(rb.position, transformDash.position) < 0.2f || enemyDashCollision.contactWall) {
             CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.EndPlayState);
             enemyDashCollision.inDash = false;
             transformDash.gameObject.SetActive(false);
             rb.velocity = Vector2.zero;
             endStep = true;
+            enemyDashCollision.contactWall = false;
 
             return;
         }

@@ -40,6 +40,8 @@ public class Playercontroller : MonoBehaviour {
     private float timerDash;
     private float timerBetweenDash;
     [SerializeField] private float distanceBetweenImage;
+    bool shootIsPress;
+    private bool ultimateIsPress;
     private Vector3 lastImagePosition;
     
     [Header("---- OTHER")]
@@ -79,7 +81,8 @@ public class Playercontroller : MonoBehaviour {
         playerInput.Player.ShootGamepad.canceled += ShootGamepadOncanceled;
         playerInput.Player.SpecialShoot.performed += SpecialShootOnperformed;
         playerInput.Player.SpecialShootGamepad.performed += SpecialShootGamepadOnperformed;
-        
+        playerInput.Player.SpecialShoot.canceled += SpecialShootOncanceled;
+        playerInput.Player.SpecialShoot.canceled += SpecialShootGamepadOncanceled;
         playerInput.Player.Dash.performed += DashOnperformed;
         playerInput.Player.DashGamepad.performed += DashGamepadOnperformed;
         playerInput.Player.Dash.canceled += DashCanceled;
@@ -129,7 +132,8 @@ public class Playercontroller : MonoBehaviour {
         if (InDash) {
             if (Vector3.Distance(transform.position, lastImagePosition) > distanceBetweenImage) {
                 PlayerAfterImagePool.Instance.GetFromPool();
-                lastImagePosition = transform.position;
+                lastImagePosition = transform.position; 
+                GameManager.Instance.shooting = false;
             }
             timerDash += Time.deltaTime;
         }
@@ -158,6 +162,16 @@ public class Playercontroller : MonoBehaviour {
         }
         else if (timerDash > timeDash) {
             InDash = false;
+            if (shootIsPress)
+            {
+                GameManager.Instance.shooting = true;
+            }
+
+            if (ultimateIsPress)
+            {
+                GameManager.Instance.utlimate= true;
+            }
+           
             timerDash = 0;
             dashDirection = Vector2.zero;
         }
@@ -181,20 +195,33 @@ public class Playercontroller : MonoBehaviour {
     //SHOOT
     private void ShootOnperformed(InputAction.CallbackContext obj) {
         if (GameManager.Instance != null) {
-            if (!InDash) GameManager.Instance.shooting = true;
+          
+            if (!InDash)
+            {GameManager.Instance.shooting = true;}
             GameManager.Instance.isMouse = true;
+            shootIsPress = true;
         }
     }
     private void ShootGamepadOnperformed(InputAction.CallbackContext obj) {
         if (GameManager.Instance != null) {
             if (!InDash) GameManager.Instance.shooting = true;
             GameManager.Instance.isMouse = true;
+            shootIsPress = true;
         }
     }
-    private void ShootOncanceled(InputAction.CallbackContext obj) { if(GameManager.Instance != null) GameManager.Instance.shooting = false; }
-    private void ShootGamepadOncanceled(InputAction.CallbackContext obj) { if(GameManager.Instance != null) GameManager.Instance.shooting = false; }
-    private void SpecialShootOnperformed(InputAction.CallbackContext obj) { if(GameManager.Instance != null) GameManager.Instance.utlimate = true; }
-    private void SpecialShootGamepadOnperformed(InputAction.CallbackContext obj) { if(GameManager.Instance != null) GameManager.Instance.utlimate = true; }
+    private void ShootOncanceled(InputAction.CallbackContext obj) { if(GameManager.Instance != null) GameManager.Instance.shooting = false; shootIsPress = false;}
+    private void ShootGamepadOncanceled(InputAction.CallbackContext obj) { if(GameManager.Instance != null) GameManager.Instance.shooting = false; shootIsPress = false; }
+    private void SpecialShootOnperformed(InputAction.CallbackContext obj) { if(GameManager.Instance != null) if (!InDash) GameManager.Instance.utlimate = true; ultimateIsPress = true; }
+    private void SpecialShootGamepadOnperformed(InputAction.CallbackContext obj) { if(GameManager.Instance != null) if (!InDash) GameManager.Instance.utlimate = true;
+        ultimateIsPress = true;
+    }
+
+    void SpecialShootOncanceled(InputAction.CallbackContext obj)
+    {
+        ultimateIsPress = false;}
+    void SpecialShootGamepadOncanceled(InputAction.CallbackContext obj)
+    {
+        ultimateIsPress = false;}
     #endregion Get Inputs
 
     //FALL

@@ -23,12 +23,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 459077611994291315}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.16558596, y: -1.0420923, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6290530629349266523}
-  m_RootOrder: 2
+  m_Father: {fileID: 3568766412412642622}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2022295680574927192
 GameObject:
@@ -58,7 +58,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3568766412412642622}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5878305568757292024
 GameObject:
@@ -87,6 +87,7 @@ Transform:
   m_LocalPosition: {x: 0.16558596, y: 1.0420923, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 8456005039682089436}
   - {fileID: 6290530629349266523}
   - {fileID: 7449746332791056143}
   m_Father: {fileID: 0}
@@ -162,9 +163,8 @@ Transform:
   m_Children:
   - {fileID: 6290530628342197121}
   - {fileID: 6290530629586656413}
-  - {fileID: 8456005039682089436}
   m_Father: {fileID: 3568766412412642622}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6290530629349266522
 SpriteRenderer:
@@ -231,6 +231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyFeedBack: {fileID: 0}
   isActivate: 0
+  isContactWall: 0
   EMainStatsSo: {fileID: 11400000, guid: a7e88a471dfa89348b289eaf2783e076, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -596,7 +597,7 @@ MonoBehaviour:
       stateName: MoveFrontRight
   AnimationStatesListOneTime:
   - ApplyState: 0
-    destination: {fileID: 8456005039682089436}
+    destination: {fileID: 0}
     angleAnimation:
     - angleMin: 90
       angleMax: 180
@@ -638,6 +639,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6290530629586656413}
   - component: {fileID: 6290530629586656386}
+  - component: {fileID: 3138740011884207778}
   m_Layer: 14
   m_Name: ColliderWall
   m_TagString: Untagged
@@ -685,3 +687,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5783494, y: 1.1782632}
   m_EdgeRadius: 0
+--- !u!114 &3138740011884207778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6290530629586656412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1b5b5de83b6e4d46b74399d219ae5a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStateManager: {fileID: 6290530629349266517}
