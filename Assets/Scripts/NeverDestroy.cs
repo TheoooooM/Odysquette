@@ -19,7 +19,7 @@ public class NeverDestroy : MonoBehaviour
 
     public GameManager.Straw actualStraw;
 
-    public int level = 0;
+    public int level = 1;
 
     public int ressources = 0;
     public int life;

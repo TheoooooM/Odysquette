@@ -69,6 +69,7 @@ public class HealthPlayer : MonoBehaviour {
                 if (i >= healthPlayer) UIManager.Instance.HeartsLife[i].SetActive(false);
                 else break;
                 spriteRenderer.material.SetFloat("_HitTime", Time.time);
+                if(GameManager.Instance != null && GameManager.Instance.strawSprite != null) GameManager.Instance.strawSprite.material.SetFloat("_HitTime", Time.time);
                 isInvincible = true;
             }
         }
