@@ -15,11 +15,11 @@ MonoBehaviour:
   hasRange: 1
   strawName: Height Straw
   strawRenderer: {fileID: 21300000, guid: 11f910b33cda4cb4fb9973f1aa354ff2, type: 3}
-  damage: 90
-  timeValue: 0.5
+  damage: 80
+  timeValue: 0.3
   effectAllNumberShoot: 0
   dragRB: 0
-  range: 5.47
+  range: 13.5
   rateMode: 1
   knockUp: 4
   rateMainParameter: 0
@@ -33,13 +33,13 @@ MonoBehaviour:
   numberWaveShoot: 1
   delayBetweenShoot: 0
   delayBetweenWaveShoot: 0
-  ultimatePoints: 10
+  ultimatePoints: 1.2
   delayParameter: 0
   basePositionParameter: []
   basePosition:
   - {x: 0, y: 0, z: 0}
-  - {x: 1.9162254, y: 0, z: 0}
-  speedBullet: 5
+  - {x: 0, y: 0, z: 0}
+  speedBullet: 4
   prefabBullet: {fileID: 602687282885438852, guid: 12445dbb287f9364e8ab07da78955095, type: 3}
   trajectories:
   - pointsForBezierCurve:
@@ -48,12 +48,16 @@ MonoBehaviour:
     - {x: 4.5, y: 0, z: 0}
     - {x: 6.75, y: -2, z: 0}
     - {x: 9, y: 0, z: 0}
+    - {x: 11.25, y: 2, z: 0}
+    - {x: 13.5, y: 0, z: 0}
   - pointsForBezierCurve:
     - {x: 1.9162254, y: 0, z: 0}
     - {x: 2.25, y: -2, z: 0}
     - {x: 4.5, y: 0, z: 0}
     - {x: 6.75, y: 2, z: 0}
     - {x: 9, y: 0, z: 0}
+    - {x: 11.25, y: -2, z: 0}
+    - {x: 13.5, y: 0, z: 0}
   stepOfCurve: 0c0000000c000000
   stepOfCurveParameter: 
   pointsForBezierCurve: []

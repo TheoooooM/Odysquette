@@ -17,7 +17,6 @@ public class CurveBullet : Bullet {
 
 
     public override void OnEnable() {
-   Debug.Log(speed);
         base.OnEnable();
         for (int i = 0; i < trajectories.Count; i++) {
             trajectories[i] += transform.position;
