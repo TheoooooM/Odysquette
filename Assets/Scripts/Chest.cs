@@ -74,7 +74,7 @@ public class Chest : MonoBehaviour {
 
         
         while (item == null) {
-            index = Random.Range(1, 4);
+            index = Random.Range(1, 6);
 
 
             strawSelect = index switch
