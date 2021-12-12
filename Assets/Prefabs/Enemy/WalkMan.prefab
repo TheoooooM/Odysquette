@@ -228,6 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d29982ec27ce94f94b8e5f480cce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyFeedBack: {fileID: 0}
   isActivate: 0
   EMainStatsSo: {fileID: 11400000, guid: a7e88a471dfa89348b289eaf2783e076, type: 2}
   forceApply: {x: 0, y: 0}
@@ -253,6 +254,8 @@ MonoBehaviour:
     _object: {fileID: 0}
   - objectInStateManager: 14
     _object: {fileID: 8456005039682089436}
+  - objectInStateManager: 16
+    _object: {fileID: 7449746332791056143}
   isInWind: 0
   windDirection: {x: 0, y: 0}
   windSpeed: 0
@@ -260,6 +263,7 @@ MonoBehaviour:
   isDragKnockUp: 0
   isConvey: 0
   conveyBeltSpeed: {x: 0, y: 0}
+  isDead: 0
   playerTransform: {fileID: 0}
   spawnPosition: {x: 0, y: 0, z: 0}
   indexCurrentState: 0
@@ -538,6 +542,7 @@ MonoBehaviour:
       angleMax: 359
       stateName: AttackBackRight
   animationForSpecificPositionsList: []
+  transformPatrol: {fileID: 0}
 --- !u!1 &6290530629586656412
 GameObject:
   m_ObjectHideFlags: 0
