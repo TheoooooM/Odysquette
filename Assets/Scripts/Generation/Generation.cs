@@ -296,14 +296,14 @@ public class Generation : MonoBehaviour {
                                         currentRoom.name = "room " + i;
                                         Rect roomRect = BasicRect;
                                         
-                                        Debug.Log("current pos x -  mapsize :" + (currentPos.x - mapSize / 2) + "  basicRect x :" + BasicRect.x + "  so " + ((currentPos.x - mapSize / 2) * BasicRect.x - (BasicRect.x * 1.5f)));
+                                        //Debug.Log("current pos x -  mapsize :" + (currentPos.x - mapSize / 2) + "  basicRect x :" + BasicRect.x + "  so " + ((currentPos.x - mapSize / 2) * BasicRect.x - (BasicRect.x * 1.5f)));
                                         roomRect.x += (currentPos.x - mapSize / 2) * BasicRect.x - (BasicRect.x * 1.5f);
                                         roomRect.y += (currentPos.y - mapSize / 2) * BasicRect.y - (BasicRect.y * 1.5f);
 
                                         //debug.Log("Instantiate " + currentRoom);
                                         foreach (Room rom in newRoom.partList) {
                                             Vector2 posInRoom = new Vector2(rom.RoomGO.roomPos.x - enterPart.roomPos.x, rom.RoomGO.roomPos.y - enterPart.roomPos.y);
-                                            Debug.Log(posInRoom);
+                                            //.Log(posInRoom);
                                             if (posInRoom == new Vector2(0, 1)) roomRect.height += BasicRect.height;
                                             else if (posInRoom == new Vector2(0, -1)) {
                                                 roomRect.y -= BasicRect.y;

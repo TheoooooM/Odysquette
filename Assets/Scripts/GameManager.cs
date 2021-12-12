@@ -99,6 +99,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private GameObject snipStrawFx;
     private float shootLoading;
     private bool EndLoading;
+    private SpriteRenderer strawSprite;
 
     [Header("---- INPUT")] public bool isMouse = true;
     public Vector2 ViewPad;
@@ -232,12 +233,17 @@ public class GameManager : MonoBehaviour {
 
     private void FixedUpdate() {
         //---------------- Oriente la paille ------------------------
-        if (isMouse) {
-            Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x, actualStrawClass.StrawParent.transform.position.y);
+        if (isMouse)
+        {
+            Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x,
+                actualStrawClass.StrawParent.transform.position.y);
             _lookDir = new Vector2(mousepos.x, mousepos.y) - Position;
             angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
             if (UIManager.Instance != null) UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(mousepos);
-
+            
+            if (angle >= 90 && angle <= 180 || angle <= -90 && angle >= -180) strawSprite.flipY = true;
+            else strawSprite.flipY = false;
+            
             strawTRansform.rotation = Quaternion.Euler(0f, 0f, angle);
         }
         else {
@@ -309,6 +315,7 @@ public class GameManager : MonoBehaviour {
 
         //actualStrawClass.StrawParent.GetComponent<SpriteRenderer>().sprite = actualStrawClass.strawSO.strawRenderer;
         actualStrawClass.StrawParent.SetActive(true);
+        strawSprite = actualStrawClass.StrawParent.GetComponent<SpriteRenderer>();
         for (int i = 0; i < colorEffectsList.Length; i++) {
             if (colorEffectsList[i].firstEffect == firstEffect && colorEffectsList[i].secondEffect == secondEffect
                 || colorEffectsList[i].firstEffect == secondEffect && colorEffectsList[i].secondEffect == firstEffect) {
