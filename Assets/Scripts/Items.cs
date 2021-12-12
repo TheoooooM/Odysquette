@@ -83,6 +83,7 @@ public class Items : MonoBehaviour
          
                 case  type.juice: 
                    GameManager.Instance.secondEffect = effect;
+          GameManager.Instance.SetVisualEffect();
                    break;
          
                 case type.life : 
@@ -98,6 +99,7 @@ public class Items : MonoBehaviour
           
           case "A":
              GameManager.Instance.firstEffect = effect;
+             GameManager.Instance.SetVisualEffect();
              break;
           
           case "F":

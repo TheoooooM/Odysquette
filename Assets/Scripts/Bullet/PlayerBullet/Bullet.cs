@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
     public bool isBounce;
-    private bool colliding;
+    public bool colliding;
     public bool hasRange;
     public float damage;
     public float range;
@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour {
     public Vector3 oldPositionPoison;
     [SerializeField] private bool isColliding;
     public Rigidbody2D rb;
-    private Vector3 lastVelocity;
+    public Vector3 lastVelocity;
 
     public float ammountUltimate;
 
@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour {
     private int _pierceCount;
 
     public int bounceCount = 2;
-    private int _bounceCount;
+    public int _bounceCount;
 
     public float poisonCooldown = 5;
     float _poisonCooldown = 0;
@@ -86,17 +86,24 @@ public class Bullet : MonoBehaviour {
 
     private void FixedUpdate() {
         if (GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison) {
-            //  Debug.Log(distance/rb.velocity.magnitude +"   " +  _poisonCooldown + "   " + Time.deltaTime + "  = " + (_poisonCooldown + Time.deltaTime));
-
-
-            if (_poisonCooldown < distance / rb.velocity.magnitude) {
+            /*if (_poisonCooldown < distance / rb.velocity.magnitude) {
                 _poisonCooldown += Time.fixedDeltaTime;
+            }*/
+            // v= d/t => t = d/v => d = vt
+            
+            
+            if (Vector2.Distance(oldPositionPoison, transform.position) > distance) {
+                oldPositionPoison = transform.position;
+                PoolManager.Instance.SpawnPoisonPool(transform);
+                //_poisonCooldown = poisonCooldown;
             }
-            else {
+            
+            /*else {
+                oldPositionPoison = transform.position;
                 //Debug.Log(_poisonCooldown);
                 PoolManager.Instance.SpawnPoisonPool(transform);
                 _poisonCooldown = poisonCooldown;
-            }
+            }*/
         }
         if(!isColliding)lastVelocity = rb.velocity;
     }
@@ -152,7 +159,7 @@ public class Bullet : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+  public virtual void OnCollisionEnter2D(Collision2D other)
     {
         colliding = true;
         Debug.Log("collide with " + rb.velocity);
@@ -166,8 +173,10 @@ public class Bullet : MonoBehaviour {
             lastVelocity = rb.velocity;
             var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
             transform.rotation = Quaternion.Euler(0, 0, angle);
+            
 
             isBounce = true;
+            Debug.Log(isBounce);
             PoolManager.Instance.SpawnImpactPool(transform);
         }
         else {
@@ -185,12 +194,16 @@ public class Bullet : MonoBehaviour {
         colliding = false;
     }
 
+
+    private float maxDistance = 15;
     void Explosion() {
         PoolManager.Instance.SpawnExplosionPool(transform);
         if (Camera.main != null) {
-            float distanceToCamera = Vector2.Distance(Camera.main.transform.position, transform.position);
+            float distanceToCamera = Mathf.Abs(Vector2.Distance(Camera.main.transform.position, transform.position));
+            float distanceSubstract = Mathf.Clamp(maxDistance - distanceToCamera, 0, maxDistance);
+            float ratio = distanceSubstract / maxDistance;
             
-            Camera.main.GetComponent<CameraShake>().CreateCameraShake(.085f, .15f);
+            Camera.main.GetComponent<CameraShake>().CreateCameraShake(.085f * ratio, .15f * ratio);
         }
     }
 
@@ -203,7 +216,7 @@ public class Bullet : MonoBehaviour {
         isEnable = true;
     }
 
-    void DesactiveBullet() {
+   public void DesactiveBullet() {
         if (isDesactive == false) {
             StopAllCoroutines();
             gameObject.SetActive(false);
