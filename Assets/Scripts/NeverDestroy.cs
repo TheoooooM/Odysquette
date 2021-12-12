@@ -11,8 +11,7 @@ public class NeverDestroy : MonoBehaviour
     {
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        life = HealthPlayer.Instance.maxHealth;
+        life = 6;
     }
 
     public GameManager.Effect firstEffect;
