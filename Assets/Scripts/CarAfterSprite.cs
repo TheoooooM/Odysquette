@@ -8,7 +8,7 @@ public class CarAfterSprite : MonoBehaviour
     private float timeActivated;
     private float alpha;
     [SerializeField] private float alphaSet = 0.8f;
-    private float alphaMultiplier = 0.99f;
+    [SerializeField] private float alphaMultiplier = 0.99f;
 
     public Transform car;
 

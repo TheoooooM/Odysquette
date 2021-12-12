@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class PlayerAfterImageSprite : MonoBehaviour
 {
-    [SerializeField]
-    private float activeTime = 0.1f;
+    [SerializeField] private float activeTime = 0.1f;
     private float timeActivated;
     private float alpha;
-    [SerializeField]
-    private float alphaSet = 0.8f;
-    private float alphaMultiplier = 0.9f;
+    [SerializeField] private float alphaSet = 0.8f;
+    [SerializeField] private float alphaMultiplier = 0.9f;
 
     private Transform player;
 
