@@ -20,6 +20,8 @@ public class PlayerAfterImageSprite : MonoBehaviour
     private void OnEnable()
     {
         SR = GetComponent<SpriteRenderer>();
+        
+        if (HealthPlayer.Instance == null) return;
         player = HealthPlayer.Instance.transform; //check if this is the right tag for the player
         playerSR = player.GetComponent<SpriteRenderer>();
 

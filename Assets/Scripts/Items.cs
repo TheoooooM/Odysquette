@@ -122,7 +122,7 @@ public class Items : MonoBehaviour
       };
 
      GameObject GO = Instantiate(straw, transform.position, Quaternion.identity);
-     GO.GetComponent<Items>().SpawnObject();
+     GO.GetComponent<Items>().SpawnObject(true);
    }
    
    
