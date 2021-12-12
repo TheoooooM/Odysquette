@@ -43,8 +43,8 @@ public class PlayerDetector : MonoBehaviour
     {
    Debug.Log(name);
         float distance = Vector2.Distance(transform.position, GameManager.Instance.Player.transform.position);
-        Debug.Log(ESM);
-        Debug.Log(ESM.roomParent);
+        //Debug.Log(ESM);
+        //Debug.Log(ESM.roomParent);
         if (distance <= range && ESM.roomParent.runningRoom)
         {
             ESM.isActivate = true;
