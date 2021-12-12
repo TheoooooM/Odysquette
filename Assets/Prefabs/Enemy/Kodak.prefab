@@ -234,6 +234,21 @@ MonoBehaviour:
   patrol: {fileID: 11400000, guid: 1a5e71f4ee653b244a10f5b078c899b3, type: 2}
   rb: {fileID: 0}
   aimPatrol: {fileID: 3120177988508136464}
+  patrolEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4604958879303727888}
+        m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
+        m_MethodName: UpdatePositionPatrol
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &5148572880405207474
 Animator:
   serializedVersion: 3
