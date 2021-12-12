@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
     public bool isBounce;
-    private bool colliding;
+    public bool colliding;
     public bool hasRange;
     public float damage;
     public float range;
@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour {
     public Vector3 oldPositionPoison;
     [SerializeField] private bool isColliding;
     public Rigidbody2D rb;
-    private Vector3 lastVelocity;
+    public Vector3 lastVelocity;
 
     public float ammountUltimate;
 
@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour {
     private int _pierceCount;
 
     public int bounceCount = 2;
-    private int _bounceCount;
+    public int _bounceCount;
 
     public float poisonCooldown = 5;
     float _poisonCooldown = 0;
@@ -152,7 +152,7 @@ public class Bullet : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+  public virtual void OnCollisionEnter2D(Collision2D other)
     {
         colliding = true;
         Debug.Log("collide with " + rb.velocity);
@@ -166,8 +166,10 @@ public class Bullet : MonoBehaviour {
             lastVelocity = rb.velocity;
             var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
             transform.rotation = Quaternion.Euler(0, 0, angle);
+            
 
             isBounce = true;
+            Debug.Log(isBounce);
             PoolManager.Instance.SpawnImpactPool(transform);
         }
         else {
@@ -203,7 +205,7 @@ public class Bullet : MonoBehaviour {
         isEnable = true;
     }
 
-    void DesactiveBullet() {
+   public void DesactiveBullet() {
         if (isDesactive == false) {
             StopAllCoroutines();
             gameObject.SetActive(false);
