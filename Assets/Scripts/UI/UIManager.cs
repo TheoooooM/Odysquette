@@ -20,8 +20,8 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     float maxUltSlider = 100f;
     
-    [SerializeField]
-    private GameObject GameOverPanel;
+    [SerializeField] private GameObject GameOverPanel;
+    [SerializeField] private GameObject pauseMenu;
 
     [Header("----Ressources----")] 
     public TextMeshProUGUI ressourceText;
