@@ -221,6 +221,7 @@ public class Bullet : MonoBehaviour {
             StopAllCoroutines();
             gameObject.SetActive(false);
             PoolManager.Instance.SpawnImpactPool(transform);
+            //if(GameManager.Instance.firstEffect == GameManager.Effect.explosion && GameManager.Instance.secondEffect == GameManager.Effect.explosion) PoolManager.Instance.SpawnExplosionPool(transform);
             if (rateMode == StrawSO.RateMode.Ultimate) {
                 PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][1].Enqueue(gameObject);
             }

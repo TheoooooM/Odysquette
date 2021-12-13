@@ -13,7 +13,8 @@ public class UIManager : MonoBehaviour
 
     public string sceneToLoad;
     public GameObject cursor;
-    public GameObject[] HeartsLife;
+    public List<Hearth> HeartsLifes;
+    public List<Hearth> _HeartsLife;
     public Slider UltSlider;
     // Start is called before the first frame update
     public static UIManager Instance;
