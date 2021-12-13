@@ -30,20 +30,21 @@ public class HealthPlayer : MonoBehaviour {
         if (NeverDestroy.Instance != null) healthPlayer = NeverDestroy.Instance.life;
         else healthPlayer = maxHealth;
         rb = GetComponent<Rigidbody2D>();
-        for (int i = 0; i < healthPlayer/2; i++)
-        {
-            Debug.Log("i");
-            UIManager.Instance._HeartsLife.Add(UIManager.Instance.HeartsLifes[i]);
-            UIManager.Instance._HeartsLife[i].gameObject.SetActive(true);
-        }
+        if (UIManager.Instance != null) {
+            for (int i = 0; i < healthPlayer / 2; i++) {
+                Debug.Log("i");
+                UIManager.Instance._HeartsLife.Add(UIManager.Instance.HeartsLifes[i]);
+                UIManager.Instance._HeartsLife[i].gameObject.SetActive(true);
+            }
 
-        if (healthPlayer % 2 == 1)
-        {
-            UIManager.Instance._HeartsLife.Add(UIManager.Instance.HeartsLifes[UIManager.Instance._HeartsLife.Count]);
-            UIManager.Instance._HeartsLife[UIManager.Instance._HeartsLife.Count - 1].gameObject.SetActive(true);
-            UIManager.Instance._HeartsLife[UIManager.Instance._HeartsLife.Count-1].setHalf();
+            if (healthPlayer % 2 == 1) {
+                UIManager.Instance._HeartsLife.Add(UIManager.Instance.HeartsLifes[UIManager.Instance._HeartsLife.Count]);
+                UIManager.Instance._HeartsLife[UIManager.Instance._HeartsLife.Count - 1].gameObject.SetActive(true);
+                UIManager.Instance._HeartsLife[UIManager.Instance._HeartsLife.Count - 1].setHalf();
+            }
+
+            UIManager.Instance._HeartsLife[UIManager.Instance._HeartsLife.Count - 1].currentHearth = true;
         }
-        UIManager.Instance._HeartsLife[UIManager.Instance._HeartsLife.Count-1].currentHearth = true;
     }
 
     private void Update() {

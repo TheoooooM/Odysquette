@@ -61,6 +61,7 @@ public class UIManager : MonoBehaviour
 
     public void PlayAgain()
     {
+        Destroy(NeverDestroy.Instance.gameObject);
         Time.timeScale = 1 ;
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
     }
