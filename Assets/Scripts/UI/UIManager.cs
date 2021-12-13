@@ -36,6 +36,7 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        GameOverPanel.SetActive(false);
     }
     private void Start()
     {
@@ -52,9 +53,9 @@ public class UIManager : MonoBehaviour
 
 
     public void GameOver()
-    { GameOverPanel.SetActive(true);
+    { 
+        GameOverPanel.SetActive(true);
         Time.timeScale = 0;
-       
     }
 
     public void PlayAgain()
