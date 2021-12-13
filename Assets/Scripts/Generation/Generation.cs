@@ -30,6 +30,7 @@ public class Generation : MonoBehaviour {
     [Header("--- ROOMS")] public GameObject StartingRoom;
     public RoomCreator[] normalRoom;
     public GameObject endpathRoom;
+    private List<RoomManager> roomList = new List<RoomManager>();
     [Space] public int mapSize = 51;
     public int nbrOfRoom = 10;
 
@@ -100,7 +101,19 @@ public class Generation : MonoBehaviour {
             
             if (i == size) {
                 if (endpathRoom != null) GenerateLastRoom();
+                foreach (RoomManager room in roomList)
+                {
+                   // Debug.Log("get exitGO from" + room.gameObject.name);
+                    
+                    if (room.exitGO != null)room.exitGO.SetActive(true);
+                }
                 ReGeneratePath();
+                foreach (RoomManager room in roomList)
+                {
+                    // Debug.Log("get exitGO from" + room.gameObject.name);
+                    
+                    if (room.exitGO != null)room.exitGO.SetActive(false);
+                }
             }
             else GenerateRooms(i);
 
@@ -186,7 +199,7 @@ public class Generation : MonoBehaviour {
         GameObject GO = Instantiate(new GameObject(), roomPool);
         GO.transform.name = "LastRoom";
         GO.AddComponent<RoomManager>();
-                    
+        roomList.Add(GO.GetComponent<RoomManager>());         
         RoomContainer RC = Instantiate(endpathRoom.GetComponent<RoomCreator>().partList[0].RoomGO, new Vector2((currentPos.x- mapSize/2)*62,(currentPos.y - mapSize/2)*40f), Quaternion.identity, GO.transform).GetComponent<RoomContainer>();
         RC.roomMapPos = new Vector2((currentPos.x), (int) (currentPos.y));
         RC.Generator = this;
@@ -288,7 +301,7 @@ public class Generation : MonoBehaviour {
                                         newR.AddComponent(typeof(RoomManager));
                                         newR.transform.parent = roomPool;
                                         currentRoom = newR.GetComponent<RoomManager>();
-
+                                        roomList.Add(currentRoom);
                                         currentRoom.chest = newRoom.chest;
                                         currentRoom.exit = newRoom.exit;
                                         
@@ -333,21 +346,25 @@ public class Generation : MonoBehaviour {
                                                     case open.top:
                                                         RC.exitTop = true;
                                                         RC.room.exitGO = RC.closeTop.gameObject;
+                                                        Debug.Log("set exit top at room n°" + i);
                                                         break;
 
                                                     case open.left:
                                                         RC.exitLeft = true;
                                                         RC.room.exitGO = RC.closeLeft.gameObject;
+                                                        Debug.Log("set exit left at room n°" + i);
                                                         break;
 
                                                     case open.right:
                                                         RC.exitRight = true;
                                                         RC.room.exitGO = RC.closeRight.gameObject;
+                                                        Debug.Log("set exit right at room n°" + i);
                                                         break;
 
                                                     case open.bot:
                                                         RC.exitBot = true;
                                                         RC.room.exitGO = RC.closeBot.gameObject;
+                                                        Debug.Log("set exit bot at room n°" + i);
                                                         break;
                                                 }
                                             }
