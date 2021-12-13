@@ -46,11 +46,7 @@ public class PlayerDetector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-      CheckDetection();
-
-
-
+        CheckDetection();
     }
 
     private void OnDrawGizmos()
