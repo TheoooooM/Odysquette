@@ -158,6 +158,8 @@ public class RoomContainer : MonoBehaviour {
     /// </summary>
     /// <param name="active"></param>
     private void ActivateNeighbor(bool active) {
+        if (Generator == null) return;
+        
         if (!Generator.disableNeighboor) return;
         
         if (Generator.map[(int) roomMapPos.x - 1, (int) roomMapPos.y] != null) Generator.map[(int) roomMapPos.x - 1, (int) roomMapPos.y].neighbor = active;
