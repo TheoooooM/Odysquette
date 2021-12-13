@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour {
     //Bullet
     [Header("---- SETTINGS")] 
     [SerializeField] private int shootRate;
-    [HideInInspector] public GameObject Player;
+    public GameObject Player;
 
     [Header("---- CURVES")] 
     [SerializeField] private AnimationCurve endRoomTime;

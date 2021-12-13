@@ -11,5 +11,4 @@ public class EnemyFixedSpawn : MonoBehaviour
         part.room.ennemiesList.Add(this.gameObject);
         GetComponent<EnemyStateManager>().roomParent = part.room;
     }
-    
 }

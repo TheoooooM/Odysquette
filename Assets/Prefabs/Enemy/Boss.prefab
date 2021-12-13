@@ -214,7 +214,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4512851393080758034}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3842659, y: -1.1426411, z: 8.937716}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4512851394486423831}
@@ -428,13 +428,13 @@ MonoBehaviour:
   healthConditionList:
   - phaseBoss: 1
     firstUse: 0
-    healthTrigger: 2000
+    healthTrigger: 4250
   - phaseBoss: 2
     firstUse: 0
-    healthTrigger: 1500
+    healthTrigger: 3000
   - phaseBoss: 3
     firstUse: 0
-    healthTrigger: 1000
+    healthTrigger: 1750
   - phaseBoss: 4
     firstUse: 0
     healthTrigger: 500
@@ -531,7 +531,7 @@ GameObject:
   - component: {fileID: 4512851393255716660}
   - component: {fileID: 1214578225403730302}
   m_Layer: 8
-  m_Name: Turret (2)
+  m_Name: Turret
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -545,7 +545,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4512851393255716662}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.52, y: 1.27, z: 8.937716}
+  m_LocalPosition: {x: 15.52, y: 1.27, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4512851392810320162}
@@ -930,7 +930,7 @@ GameObject:
   - component: {fileID: 4512851393769003416}
   - component: {fileID: 8156060461099689828}
   m_Layer: 8
-  m_Name: Turret (3)
+  m_Name: Turret
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -944,7 +944,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4512851393769003418}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.92, y: -6.82, z: 8.937716}
+  m_LocalPosition: {x: 3.92, y: -6.82, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4512851394436821256}
@@ -1160,7 +1160,7 @@ GameObject:
   - component: {fileID: 4512851393999645454}
   - component: {fileID: 176144073031690107}
   m_Layer: 8
-  m_Name: Turret (1)
+  m_Name: Turret
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1174,7 +1174,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4512851393999645448}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.22, y: 10.83, z: 8.937716}
+  m_LocalPosition: {x: 4.22, y: 10.83, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4512851394311591329}
@@ -1385,14 +1385,14 @@ GameObject:
   - component: {fileID: 4512851394052730264}
   - component: {fileID: 4512851394052730271}
   - component: {fileID: 4512851394052730270}
-  - component: {fileID: 4512851394052730265}
+  - component: {fileID: 536971363}
   m_Layer: 22
   m_Name: ShieldEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4512851394052730264
 Transform:
   m_ObjectHideFlags: 0
@@ -6179,8 +6179,8 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!61 &4512851394052730265
-BoxCollider2D:
+--- !u!58 &536971363
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6192,19 +6192,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: -0.96, y: -1.29}
   serializedVersion: 2
-  m_Size: {x: 1.89, y: 1.79}
-  m_EdgeRadius: 0
+  m_Radius: 4.5
 --- !u!1 &4512851394081132777
 GameObject:
   m_ObjectHideFlags: 0
@@ -20946,7 +20936,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4512851394618653112}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.34, y: 1.1273594, z: 8.937716}
+  m_LocalPosition: {x: -13.34, y: 1.1273594, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4512851393532707552}

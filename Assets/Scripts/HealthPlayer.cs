@@ -30,11 +30,20 @@ public class HealthPlayer : MonoBehaviour {
         if (NeverDestroy.Instance != null) healthPlayer = NeverDestroy.Instance.life;
         else healthPlayer = maxHealth;
         rb = GetComponent<Rigidbody2D>();
-        for (int i = 0; i < healthPlayer; i++) {
-            if (UIManager.Instance != null) {
-                UIManager.Instance.HeartsLife[i].SetActive(true);
-            }
+        for (int i = 0; i < healthPlayer/2; i++)
+        {
+            Debug.Log("i");
+            UIManager.Instance._HeartsLife.Add(UIManager.Instance.HeartsLifes[i]);
+            UIManager.Instance._HeartsLife[i].gameObject.SetActive(true);
         }
+
+        if (healthPlayer % 2 == 1)
+        {
+            UIManager.Instance._HeartsLife.Add(UIManager.Instance.HeartsLifes[UIManager.Instance._HeartsLife.Count]);
+            UIManager.Instance._HeartsLife[UIManager.Instance._HeartsLife.Count - 1].gameObject.SetActive(true);
+            UIManager.Instance._HeartsLife[UIManager.Instance._HeartsLife.Count-1].setHalf();
+        }
+        UIManager.Instance._HeartsLife[UIManager.Instance._HeartsLife.Count-1].currentHearth = true;
     }
 
     private void Update() {
@@ -64,10 +73,9 @@ public class HealthPlayer : MonoBehaviour {
             if(cameraShake != null) cameraShake.CreateCameraShake(.15f, .4f);
             
             if (UIManager.Instance == null) return;
+            foreach (Hearth hearth in UIManager.Instance._HeartsLife) hearth.LifeUpdate();
             
-            for (int i = UIManager.Instance.HeartsLife.Length - 1; i > -1; i--) {
-                if (i >= healthPlayer) UIManager.Instance.HeartsLife[i].SetActive(false);
-                else break;
+            for (int i = UIManager.Instance._HeartsLife.Count - 1; i > -1; i--) {
                 spriteRenderer.material.SetFloat("_HitTime", Time.time);
                 if(GameManager.Instance != null && GameManager.Instance.strawSprite != null) GameManager.Instance.strawSprite.material.SetFloat("_HitTime", Time.time);
                 isInvincible = true;
@@ -83,7 +91,7 @@ public class HealthPlayer : MonoBehaviour {
         healthPlayer += heal;
         for (int i = 0; i < healthPlayer; i++) {
             if (i <= healthPlayer) {
-                UIManager.Instance.HeartsLife[i].SetActive(true);
+                UIManager.Instance._HeartsLife[i].gameObject.SetActive(true);
             }
             else {
                 break;

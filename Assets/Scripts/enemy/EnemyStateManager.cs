@@ -407,7 +407,7 @@ public class EnemyStateManager : MonoBehaviour {
             catch (Exception e) {
                 roomParent.ennemiesList.Remove(gameObject);
 
-                if (enemyFeedBack.stateDeathName != "") {
+                if (enemyFeedBack != null && enemyFeedBack.stateDeathName != "") {
                     animator.Play(enemyFeedBack.stateDeathName);
                     StartCoroutine(ShowCurrentClipLength(gameObject, animator));
                 }
@@ -427,7 +427,7 @@ public class EnemyStateManager : MonoBehaviour {
     }
 
     public void TakeDamage(float damage, Vector2 position, float knockUpValue, bool knockup, bool isExplosion) {
-        playerDetector.EndDetection();
+        if(playerDetector != null) playerDetector.EndDetection();
         if (health - damage <= 0) {
             OnDeath();
         }

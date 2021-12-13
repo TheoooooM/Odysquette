@@ -124,7 +124,8 @@ public class PoolManager : MonoBehaviour {
     }
     public void SpawnPiercePool(Transform bullet)
     {
-        SpawnEffectBulletPool(bullet, pierceQueue, piercePrefab);
+       GameObject obj = SpawnEffectBulletPool(bullet, pierceQueue, piercePrefab);
+        obj.transform.rotation = bullet.rotation;
     }
     public void SpawnImpactPool(Transform bullet)
     {
