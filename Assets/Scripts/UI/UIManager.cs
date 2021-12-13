@@ -52,7 +52,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
-
+    void Pause()
+    {
+        Time
+    }
+    
+    
     public void GameOver()
     { 
         GameOverPanel.SetActive(true);
@@ -65,6 +70,7 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1 ;
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
     }
+    
 
     // Update is called once per frame
 
