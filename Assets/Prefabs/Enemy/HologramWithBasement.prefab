@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 1871994426267557388}
   - component: {fileID: 5154981315841071874}
   - component: {fileID: 1004160048218586617}
+  - component: {fileID: 5739612603508074569}
   m_Layer: 8
   m_Name: Hologram
   m_TagString: Enemy
@@ -235,6 +236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyFeedBack: {fileID: 0}
   isActivate: 0
+  isContactWall: 0
   EMainStatsSo: {fileID: 11400000, guid: f71f57096822c694d946a961d0d623a6, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -271,6 +273,7 @@ MonoBehaviour:
   IsFirstStartPlayed: 0
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
+  timerCurrentState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
 --- !u!50 &6353946706996803570
@@ -382,6 +385,9 @@ MonoBehaviour:
   patrol: {fileID: 0}
   rb: {fileID: 0}
   aimPatrol: {fileID: 0}
+  patrolEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!95 &7896108724452965943
 Animator:
   serializedVersion: 3
@@ -682,6 +688,19 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     delay: 1
+--- !u!114 &5739612603508074569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6353946706996803575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fccf4b61209b814595d3a0ac0d6c21b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  part: {fileID: 0}
 --- !u!1 &6353946708064069959
 GameObject:
   m_ObjectHideFlags: 0
