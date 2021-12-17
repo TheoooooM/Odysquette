@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -54,11 +55,20 @@ public class CommandConsoleRuntime : MonoBehaviour {
 
             if(Input.GetKeyDown(KeyCode.Return)) CheckEndText();
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Backspace)) RemoveText();
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                ResetPrefab();
+                objectChild.SetActive(false);
+                textInputField.text = "";
+                if (Playercontroller.Instance != null) Playercontroller.Instance.ChangeInputState(true);
+            }
+            if(Input.GetKeyDown(KeyCode.Tab) && methodList.Count != 0) MakeTabulation(methodList[0].GetComponent<CmdPrefabData>().textToWrite);
         }
 
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Slash)) {
+            if (Playercontroller.Instance != null) Playercontroller.Instance.ChangeInputState(false);
             objectChild.SetActive(true);
             SelectInputField();
+            CheckForHelp();
         }
     }
     #endregion BASIC METHODS
@@ -89,6 +99,7 @@ public class CommandConsoleRuntime : MonoBehaviour {
         
         if(textInputField.text.ToUpper() != "HELP") objectChild.SetActive(false);
         textInputField.text = "";
+        if (Playercontroller.Instance != null) Playercontroller.Instance.ChangeInputState(true);
     }
 
     /// <summary>
@@ -128,7 +139,7 @@ public class CommandConsoleRuntime : MonoBehaviour {
                     int commandPropertyLength = command.CommandsClassType.Count;
 
                     if (string.Equals(textFieldProperties[0], command.CommandName, StringComparison.CurrentCultureIgnoreCase)) {
-                        if (commandPropertyLength >= 1) {
+                        if (commandPropertyLength >= 1 && commandPropertyLength >= textFieldProperties.Length - 1) {
                             Type actualType = command.CommandsClassType[textFieldProperties.Length - 2].parameterType;
                             string actualProperty = textFieldProperties[textFieldProperties.Length - 1];
                             int actualPropertyLength = actualProperty.Length;
@@ -245,15 +256,20 @@ public class CommandConsoleRuntime : MonoBehaviour {
         ResetPrefab();
 
         isShowingHelp = true;
-        
+
+        List<CommandConsoleBase> cmdList = new List<CommandConsoleBase>();
         foreach (object obj in commandList) {
             if (obj is CommandConsoleBase command) {
-                if (showAll) {
-                    if (command.CommandName.ToUpper() != "HELP") CreateMethodPrefab(command.FormatCommand, 0);
-                }
-                else {
-                    if (command.CommandName.ToUpper() != "HELP") CreateMethodPrefab(command.CommandName, 0);
-                }
+                cmdList.Add(command);
+            }
+        }
+        List<CommandConsoleBase> cmdListSorted = cmdList.OrderByDescending(cmdL => cmdL.CommandName).ToList();
+        foreach (CommandConsoleBase cmd in cmdListSorted) {
+            if (showAll) {
+                if (cmd.CommandName.ToUpper() != "HELP") CreateMethodPrefab(cmd.FormatCommand, 0);
+            }
+            else {
+                if (cmd.CommandName.ToUpper() != "HELP") CreateMethodPrefab(cmd.CommandName, 0);
             }
         }
 

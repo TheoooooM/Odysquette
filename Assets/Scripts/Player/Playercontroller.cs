@@ -89,6 +89,12 @@ public class Playercontroller : MonoBehaviour {
         
         defaultSpeed = MouvementSpeed;
     }
+
+    public void ChangeInputState(bool activ) {
+        if(activ) playerInput.Player.Enable();
+        else playerInput.Player.Disable();
+    }
+    
     
     private void Start() {
         currentAngleAnimation = baseAngleAnimation[0];

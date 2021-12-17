@@ -309,11 +309,7 @@ public class GameManager : MonoBehaviour {
         else {
             if (ViewPad.magnitude > 0.5f) {
                 angle = Mathf.Atan2(ViewPad.y, ViewPad.x) * Mathf.Rad2Deg;
-
                 lastInput = ViewPad.normalized;
-
-                Debug.Log("test");
-
                 UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(actualStrawClass.spawnerTransform.position + (Vector3) ViewPad.normalized * viewFinderDistance);
                 lastInput = ViewPad.normalized;
             }
@@ -321,7 +317,7 @@ public class GameManager : MonoBehaviour {
 
             UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(actualStrawClass.spawnerTransform.position + (Vector3) lastInput.normalized * viewFinderDistance);
         }
-
+        
         actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
     
