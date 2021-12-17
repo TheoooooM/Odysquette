@@ -47,15 +47,34 @@ public class Generation : MonoBehaviour {
     #endregion VARIABLES
 
     private void Start() {
+        AddCommandToConsole();
+        
         map = new RoomContainer[mapSize, mapSize];
         if (NeverDestroy.Instance == null) Instantiate(Resources.Load<GameObject>("NeverDestroy"));
         NeverDestroy.Instance.level++;
         GenerateLevel();
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.P)) GenerateLevel();
+    private void AddCommandToConsole() {
+        CommandConsole RELOAD = new CommandConsole("reload", "reload", null, (_) => { GenerateLevel(); });
+        CommandConsole ENDROOM = new CommandConsole("endroom", "endroom", null, (_) => {
+            foreach (RoomManager room in roomList) {
+                if (room.runningRoom) {
+                    List<GameObject> enemyList = new List<GameObject>(room.ennemiesList);
+
+                    foreach (GameObject enemy in enemyList) {
+                        enemy.GetComponentInChildren<EnemyStateManager>().OnDeath();
+                    }
+            
+                    room.ennemiesList.Clear();
+                }
+            }
+        });
+        
+        CommandConsoleRuntime.Instance.AddCommand(RELOAD);
+        CommandConsoleRuntime.Instance.AddCommand(ENDROOM);
     }
+    
 
     /// <summary>
     /// Generate the level

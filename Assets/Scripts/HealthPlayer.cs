@@ -25,6 +25,8 @@ public class HealthPlayer : MonoBehaviour {
     }
 
     private void Start() {
+        AddCommandConsole();
+        
         playerController = GetComponent<Playercontroller>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (NeverDestroy.Instance != null) healthPlayer = NeverDestroy.Instance.life;
@@ -47,6 +49,20 @@ public class HealthPlayer : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Add the command to the console
+    /// </summary>
+    private void AddCommandConsole() {
+        CommandConsole REGEN = new CommandConsole("life", "life <int>", new List<CommandClass>() {new CommandClass(typeof(int))}, (value) => {
+            int life = int.Parse(value[0]);
+            
+            if(life > 0) GiveHealthPlayer(life);
+            else if(life < 0) TakeDamagePlayer(-life);
+        });
+        
+        CommandConsoleRuntime.Instance.AddCommand(REGEN);
+    }
+    
     private void Update() {
         if (isInvincible) {
             if (timerInvincible > timeInvincible) {
@@ -88,15 +104,11 @@ public class HealthPlayer : MonoBehaviour {
     /// Heal the player
     /// </summary>
     /// <param name="heal"></param>
-    public void TakeHealPlayer(int heal) {
-        healthPlayer += heal;
+    public void GiveHealthPlayer(int heal) {
+        healthPlayer = Mathf.Clamp(healthPlayer + heal, 0, 6);
+        
         for (int i = 0; i < healthPlayer; i++) {
-            if (i <= healthPlayer) {
-                UIManager.Instance._HeartsLife[i].gameObject.SetActive(true);
-            }
-            else {
-                break;
-            }
+            if (i <= healthPlayer) UIManager.Instance.HeartsLifes[i].gameObject.SetActive(true);
         }
     }
 

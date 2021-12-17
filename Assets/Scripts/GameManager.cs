@@ -130,8 +130,10 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private void Start()
-    {
+    private void Start() {
+        AddCommandConsole();
+        
+        
         if (NeverDestroy.Instance == null) Instantiate(Resources.Load<GameObject>("NeverDestroy"));
         else GetND();
         if (Playercontroller.Instance != null) {
@@ -157,6 +159,64 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    
+    /// <summary>
+    /// Add the command to the console
+    /// </summary>
+    private void AddCommandConsole() {
+        CommandConsole STRAW = new CommandConsole("setstraw", "setstraw <Straw>", new List<CommandClass>() {new CommandClass(typeof(Straw))}, (value) => { actualStraw = (Straw) Enum.Parse(typeof(Straw), value[0]); });
+        
+        CommandConsole EFFECT = new CommandConsole("seteffect", "seteffect <Effect> <Effect>", new List<CommandClass>() {new CommandClass(typeof(Effect)), new CommandClass(typeof(Effect))}, (value) => {
+            firstEffect = (Effect) Enum.Parse(typeof(Effect), value[0]);
+            secondEffect = (Effect) Enum.Parse(typeof(Effect), value[1]);
+        });
+        
+        CommandConsole ARSENAL = new CommandConsole("setarsenal", "setarsenal <Straw> <Effect> <Effect>", new List<CommandClass>() {new CommandClass(typeof(Straw)), new CommandClass(typeof(Effect)), new CommandClass(typeof(Effect))}, (value) => {
+            actualStraw = (Straw) Enum.Parse(typeof(Straw), value[0]);
+            firstEffect = (Effect) Enum.Parse(typeof(Effect), value[1]);
+            secondEffect = (Effect) Enum.Parse(typeof(Effect), value[2]);
+        });
+        
+        CommandConsole GOTO = new CommandConsole("go", "go <Area>", new List<CommandClass>() {new CommandClass(typeof(Area))}, (value) => {
+            switch ((Area) Enum.Parse(typeof(Area), value[0])) {
+                case Area.hub:
+                    NeverDestroy.Instance.level = 0;
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("HUB");
+                    break;
+                case Area.train:
+                    NeverDestroy.Instance.level = 0;
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("HubToLevelTransition");
+                    break;
+                case Area.level01:
+                    NeverDestroy.Instance.level = 1;
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("YOP_Basic");
+                    break;
+                case Area.shop01:
+                    NeverDestroy.Instance.level = 1;
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("Shop");
+                    break;
+                case Area.level02:
+                    NeverDestroy.Instance.level = 2;
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("YOP_Basic");
+                    break;
+                case Area.shop02:
+                    NeverDestroy.Instance.level = 2;
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("Shop");
+                    break;
+                case Area.boss:
+                    NeverDestroy.Instance.level = 2;
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("Boss");
+                    break;
+            }
+        });
+        
+        
+        CommandConsoleRuntime.Instance.AddCommand(STRAW);
+        CommandConsoleRuntime.Instance.AddCommand(EFFECT);
+        CommandConsoleRuntime.Instance.AddCommand(ARSENAL);
+        CommandConsoleRuntime.Instance.AddCommand(GOTO);
+    }
+    
     private void Update() {
         if (animate) EndRoomAnimation();
         
@@ -264,8 +324,7 @@ public class GameManager : MonoBehaviour {
 
         actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
-
-
+    
     #region END ROOM
     /// <summary>
     /// Make bloom in the room when the room end
@@ -333,17 +392,13 @@ public class GameManager : MonoBehaviour {
                     }
                 }
     }
-    public enum ShootMode {
-        BasicShoot,
-        CurveShoot,
-        AreaShoot,
-        AngleAreaShoot
-    }
 
-    [Serializable]
-    public class CombinaisonColorEffect {
-        public Effect firstEffect;
-        public Effect secondEffect;
-        public Color combinaisonColor;
-    }
+  [Serializable]
+  public class CombinaisonColorEffect {
+      public Effect firstEffect;
+      public Effect secondEffect;
+      public Color combinaisonColor;
+  }
 }
+
+public enum Area {hub, train, level01, shop01, level02, shop02, boss}
