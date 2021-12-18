@@ -80,11 +80,11 @@ public class Chest : MonoBehaviour {
             strawSelect = index switch
             {
                 0 => GameManager.Straw.basic,
-                1 => GameManager.Straw.snipaille,
-                2 => GameManager.Straw.mitra,
-                3 => GameManager.Straw.tripaille,
+                1 => GameManager.Straw.sniper,
+                2 => GameManager.Straw.riffle,
+                3 => GameManager.Straw.tri,
                 4 => GameManager.Straw.bubble,
-                5 => GameManager.Straw.eightPaille,
+                5 => GameManager.Straw.helix,
                 _ => GameManager.Straw.basic,
             };
 
@@ -97,10 +97,10 @@ public class Chest : MonoBehaviour {
             item = strawSelect switch {
                 GameManager.Straw.basic=> SO.basicStraw,
                 GameManager.Straw.bubble => SO.bubbleStraw,
-                GameManager.Straw.snipaille => SO.snipStraw,
-                GameManager.Straw.eightPaille => SO.eightStraw,
-                GameManager.Straw.tripaille => SO.triStraw,
-                GameManager.Straw.mitra => SO.mitraStraw,
+                GameManager.Straw.sniper => SO.snipStraw,
+                GameManager.Straw.helix => SO.eightStraw,
+                GameManager.Straw.tri => SO.triStraw,
+                GameManager.Straw.riffle => SO.mitraStraw,
                 _ => null
             };
         }
@@ -118,9 +118,9 @@ public class Chest : MonoBehaviour {
         int index = Random.Range(0, 3);
         effectSelect = index switch
         {
-            0 => GameManager.Effect.bounce,
-            1 => GameManager.Effect.pierce,
-            2 => GameManager.Effect.explosion,
+            0 => GameManager.Effect.bouncing,
+            1 => GameManager.Effect.piercing,
+            2 => GameManager.Effect.explosive,
             3 => GameManager.Effect.poison,
         };
 
@@ -131,9 +131,9 @@ public class Chest : MonoBehaviour {
         }
         
         item = effectSelect switch {
-            GameManager.Effect.bounce => SO.bounceJuice,
-            GameManager.Effect.pierce => SO.pierceJuice,
-            GameManager.Effect.explosion => SO.explosionJuice,
+            GameManager.Effect.bouncing => SO.bounceJuice,
+            GameManager.Effect.piercing => SO.pierceJuice,
+            GameManager.Effect.explosive => SO.explosionJuice,
             GameManager.Effect.poison => SO.poisonJuice,
             _ => item
         };

@@ -20,20 +20,19 @@ public class GameManager : MonoBehaviour {
 
     public enum Effect {
         none,
-        bounce,
-        pierce,
-        explosion,
-        poison,
-        ice
+        bouncing,
+        piercing,
+        explosive,
+        poison
     }
 
     public enum Straw {
         basic,
         bubble,
-        snipaille,
-        eightPaille,
-        tripaille,
-        mitra
+        sniper,
+        helix,
+        tri,
+        riffle
     }
 
     #endregion
@@ -164,53 +163,93 @@ public class GameManager : MonoBehaviour {
     /// Add the command to the console
     /// </summary>
     private void AddCommandConsole() {
-        CommandConsole STRAW = new CommandConsole("setstraw", "setstraw <Straw>", new List<CommandClass>() {new CommandClass(typeof(Straw))}, (value) => { actualStraw = (Straw) Enum.Parse(typeof(Straw), value[0]); });
+        CommandConsole STRAW = new CommandConsole("setstraw", "setstraw : Set the actual Straw of the player", new List<CommandClass>() {new CommandClass(typeof(Straw))}, (value) => { actualStraw = (Straw) Enum.Parse(typeof(Straw), value[0]); });
         
-        CommandConsole EFFECT = new CommandConsole("seteffect", "seteffect <Effect> <Effect>", new List<CommandClass>() {new CommandClass(typeof(Effect)), new CommandClass(typeof(Effect))}, (value) => {
+        CommandConsole EFFECT = new CommandConsole("seteffect", "seteffect : Set the actual Effects of the player", new List<CommandClass>() {new CommandClass(typeof(Effect)), new CommandClass(typeof(Effect))}, (value) => {
             firstEffect = (Effect) Enum.Parse(typeof(Effect), value[0]);
             secondEffect = (Effect) Enum.Parse(typeof(Effect), value[1]);
         });
         
-        CommandConsole ARSENAL = new CommandConsole("setarsenal", "setarsenal <Straw> <Effect> <Effect>", new List<CommandClass>() {new CommandClass(typeof(Straw)), new CommandClass(typeof(Effect)), new CommandClass(typeof(Effect))}, (value) => {
+        CommandConsole ARSENAL = new CommandConsole("setarsenal", "setarsenal : Set the Straw and the Effects of the player", new List<CommandClass>() {new CommandClass(typeof(Straw)), new CommandClass(typeof(Effect)), new CommandClass(typeof(Effect))}, (value) => {
             actualStraw = (Straw) Enum.Parse(typeof(Straw), value[0]);
             firstEffect = (Effect) Enum.Parse(typeof(Effect), value[1]);
             secondEffect = (Effect) Enum.Parse(typeof(Effect), value[2]);
         });
         
-        CommandConsole GOTO = new CommandConsole("go", "go <Area>", new List<CommandClass>() {new CommandClass(typeof(Area))}, (value) => {
+        CommandConsole GOTO = new CommandConsole("go", "go : Go to another area in the game", new List<CommandClass>() {new CommandClass(typeof(Area))}, (value) => {
             switch ((Area) Enum.Parse(typeof(Area), value[0])) {
                 case Area.hub:
                     NeverDestroy.Instance.level = 0;
+                    SetND();
                     UnityEngine.SceneManagement.SceneManager.LoadScene("HUB");
                     break;
                 case Area.train:
                     NeverDestroy.Instance.level = 0;
+                    SetND();
                     UnityEngine.SceneManagement.SceneManager.LoadScene("HubToLevelTransition");
                     break;
                 case Area.level01:
                     NeverDestroy.Instance.level = 1;
+                    SetND();
                     UnityEngine.SceneManagement.SceneManager.LoadScene("YOP_Basic");
                     break;
                 case Area.shop01:
                     NeverDestroy.Instance.level = 1;
+                    SetND();
                     UnityEngine.SceneManagement.SceneManager.LoadScene("Shop");
                     break;
                 case Area.level02:
                     NeverDestroy.Instance.level = 2;
+                    SetND();
                     UnityEngine.SceneManagement.SceneManager.LoadScene("YOP_Basic");
                     break;
                 case Area.shop02:
                     NeverDestroy.Instance.level = 2;
+                    SetND();
                     UnityEngine.SceneManagement.SceneManager.LoadScene("Shop");
                     break;
                 case Area.boss:
                     NeverDestroy.Instance.level = 2;
+                    SetND();
                     UnityEngine.SceneManagement.SceneManager.LoadScene("Boss");
+                    break;
+                case Area.lastroom:
+                    foreach (RoomManager room in Generation.Instance.RoomList) {
+                        if (room.runningRoom) {
+                            room.runningRoom = false;
+                            room.transform.GetChild(0).GetComponent<RoomContainer>().playerInRoom = false;
+                            room.transform.GetChild(0).GetComponent<RoomContainer>().ActivateNeighbor(false);
+                            room.transform.GetChild(0).gameObject.SetActive(false);
+                        }
+                        else if (room == Generation.Instance.RoomList[Generation.Instance.RoomList.Count - 1]) {
+                            room.transform.GetChild(0).gameObject.SetActive(true);
+                            room.runningRoom = true;
+                            room.transform.GetChild(0).GetComponent<RoomContainer>().playerInRoom = true;
+                            room.transform.GetChild(0).GetComponent<RoomContainer>().ActivateNeighbor(true);
+                            Playercontroller.Instance.transform.position = room.transform.GetChild(0).position;
+                        }
+                    }
+                    break;
+                case Area.startroom:
+                    foreach (RoomManager room in Generation.Instance.RoomList) {
+                        if (room.runningRoom) {
+                            room.runningRoom = false;
+                            room.transform.GetChild(0).GetComponent<RoomContainer>().playerInRoom = false;
+                            room.transform.GetChild(0).GetComponent<RoomContainer>().ActivateNeighbor(false);
+                            room.transform.GetChild(0).gameObject.SetActive(false);
+                        }
+                        else if (room == Generation.Instance.RoomList[0]) {
+                            room.transform.GetChild(0).gameObject.SetActive(true);
+                            room.runningRoom = true;
+                            room.transform.GetChild(0).GetComponent<RoomContainer>().playerInRoom = true;
+                            room.transform.GetChild(0).GetComponent<RoomContainer>().ActivateNeighbor(true);
+                            Playercontroller.Instance.transform.position = room.transform.position;
+                        }
+                    }
                     break;
             }
         });
-        
-        
+
         CommandConsoleRuntime.Instance.AddCommand(STRAW);
         CommandConsoleRuntime.Instance.AddCommand(EFFECT);
         CommandConsoleRuntime.Instance.AddCommand(ARSENAL);
@@ -397,4 +436,4 @@ public class GameManager : MonoBehaviour {
   }
 }
 
-public enum Area {hub, train, level01, shop01, level02, shop02, boss}
+public enum Area {lastroom, startroom, hub, train, level01, shop01, level02, shop02, boss}

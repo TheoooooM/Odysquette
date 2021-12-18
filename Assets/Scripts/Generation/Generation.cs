@@ -31,6 +31,7 @@ public class Generation : MonoBehaviour {
     public RoomCreator[] normalRoom;
     public GameObject endpathRoom;
     private List<RoomManager> roomList = new List<RoomManager>();
+    public List<RoomManager> RoomList => roomList;
     [Space] public int mapSize = 51;
     public int nbrOfRoom = 10;
 
@@ -56,8 +57,8 @@ public class Generation : MonoBehaviour {
     }
 
     private void AddCommandToConsole() {
-        CommandConsole RELOAD = new CommandConsole("reload", "reload", null, (_) => { GenerateLevel(); });
-        CommandConsole ENDROOM = new CommandConsole("endroom", "endroom", null, (_) => {
+        CommandConsole RELOAD = new CommandConsole("reload", "reload : Reload the actual generation of the level", null, (_) => { GenerateLevel(); });
+        CommandConsole ENDROOM = new CommandConsole("endroom", "endroom : Kill all the ennemies in the actual room", null, (_) => {
             foreach (RoomManager room in roomList) {
                 if (room.runningRoom) {
                     List<GameObject> enemyList = new List<GameObject>(room.ennemiesList);

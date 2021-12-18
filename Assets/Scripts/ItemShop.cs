@@ -20,17 +20,17 @@ public class ItemShop : Chest {
             switch (index) {
                 case 0:
                     item = SO.bounceJuice;
-                    effect = GameManager.Effect.bounce;
+                    effect = GameManager.Effect.bouncing;
                     break;
 
                 case 1:
                     item = SO.pierceJuice;
-                    effect = GameManager.Effect.pierce;
+                    effect = GameManager.Effect.piercing;
                     break;
 
                 case 2:
                     item = SO.explosionJuice;
-                    effect = GameManager.Effect.explosion;
+                    effect = GameManager.Effect.explosive;
                     break;
 
                 case 3:
@@ -58,7 +58,7 @@ public class ItemShop : Chest {
 
                 case 1:
                     item = SO.mitraStraw;
-                    straw = GameManager.Straw.mitra;
+                    straw = GameManager.Straw.riffle;
                     break;
 
                 case 2:
@@ -68,17 +68,17 @@ public class ItemShop : Chest {
 
                 case 3:
                     item = SO.snipStraw;
-                    straw = GameManager.Straw.snipaille;
+                    straw = GameManager.Straw.sniper;
                     break;
 
                 case 4:
                     item = SO.eightStraw;
-                    straw = GameManager.Straw.eightPaille;
+                    straw = GameManager.Straw.helix;
                     break;
 
                 case 5:
                     item = SO.triStraw;
-                    straw = GameManager.Straw.tripaille;
+                    straw = GameManager.Straw.tri;
                     break;
             }
         }

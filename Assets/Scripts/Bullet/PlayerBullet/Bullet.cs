@@ -39,10 +39,10 @@ public class Bullet : MonoBehaviour {
 
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
-        if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce) _pierceCount = pierceCount;
+        if (GameManager.Instance.firstEffect == GameManager.Effect.piercing || GameManager.Instance.secondEffect == GameManager.Effect.piercing) _pierceCount = pierceCount;
         else _pierceCount = 0;
 
-        if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
+        if (GameManager.Instance.firstEffect == GameManager.Effect.bouncing || GameManager.Instance.secondEffect == GameManager.Effect.bouncing) _bounceCount = bounceCount;
         else _bounceCount = 0;
         bulletSpriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -58,10 +58,10 @@ public class Bullet : MonoBehaviour {
         lastVelocity = rb.velocity;
         Invoke(nameof(DelayforDrag), 0.5f);
 
-        if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce) _pierceCount = pierceCount;
+        if (GameManager.Instance.firstEffect == GameManager.Effect.piercing || GameManager.Instance.secondEffect == GameManager.Effect.piercing) _pierceCount = pierceCount;
         else _pierceCount = 0;
 
-        if (GameManager.Instance.firstEffect == GameManager.Effect.bounce || GameManager.Instance.secondEffect == GameManager.Effect.bounce) _bounceCount = bounceCount;
+        if (GameManager.Instance.firstEffect == GameManager.Effect.bouncing || GameManager.Instance.secondEffect == GameManager.Effect.bouncing) _bounceCount = bounceCount;
         else _bounceCount = 0;
         GetComponent<SpriteRenderer>().color = GameManager.Instance.currentColor;
     }
@@ -117,23 +117,23 @@ public class Bullet : MonoBehaviour {
         StartCoroutine(Reset());
         
         switch (GameManager.Instance.firstEffect) {
-            case GameManager.Effect.explosion:
+            case GameManager.Effect.explosive:
                 Explosion();
                 break;
 
-            case GameManager.Effect.ice:
+            /*case GameManager.Effect.ice:
                 Ice(other.gameObject);
-                break;
+                break;*/
         }
 
         switch (GameManager.Instance.secondEffect) {
-            case GameManager.Effect.explosion:
+            case GameManager.Effect.explosive:
                 Explosion();
                 break;
 
-            case GameManager.Effect.ice:
+            /*case GameManager.Effect.ice:
                 Ice(other.gameObject);
-                break;
+                break;*/
         }
 
         if (other.CompareTag("Enemy")) {

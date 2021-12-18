@@ -25,17 +25,17 @@ public class EffectUI : MonoBehaviour
             if (firstEffect)
                 image.sprite = GameManager.Instance.firstEffect switch
                 {
-                    GameManager.Effect.bounce => SO.bounceSprite,
-                    GameManager.Effect.pierce => SO.pierceSprite,
-                    GameManager.Effect.explosion => SO.explosionSprite,
+                    GameManager.Effect.bouncing => SO.bounceSprite,
+                    GameManager.Effect.piercing => SO.pierceSprite,
+                    GameManager.Effect.explosive => SO.explosionSprite,
                     GameManager.Effect.poison => SO.poisonSprite,
                     _ => basicSprite,
                 };
             else image.sprite = GameManager.Instance.secondEffect switch
                 {
-                    GameManager.Effect.bounce => SO.bounceSprite,
-                    GameManager.Effect.pierce => SO.pierceSprite,
-                    GameManager.Effect.explosion => SO.explosionSprite,
+                    GameManager.Effect.bouncing => SO.bounceSprite,
+                    GameManager.Effect.piercing => SO.pierceSprite,
+                    GameManager.Effect.explosive => SO.explosionSprite,
                     GameManager.Effect.poison => SO.poisonSprite,
                     _ => basicSprite,
                 };

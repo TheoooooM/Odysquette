@@ -53,7 +53,7 @@ public class HealthPlayer : MonoBehaviour {
     /// Add the command to the console
     /// </summary>
     private void AddCommandConsole() {
-        CommandConsole REGEN = new CommandConsole("life", "life <int>", new List<CommandClass>() {new CommandClass(typeof(int))}, (value) => {
+        CommandConsole REGEN = new CommandConsole("life", "life : Take (<0) or Give (>0) life to the player", new List<CommandClass>() {new CommandClass(typeof(int))}, (value) => {
             int life = int.Parse(value[0]);
             
             if(life > 0) GiveHealthPlayer(life);

@@ -22,25 +22,27 @@ public class CommandConsoleRuntime : MonoBehaviour {
     }
     #endregion INSTANCE
 
+    [SerializeField] private TMP_InputField inputField = null;
+    [SerializeField] private TextMeshProUGUI text = null;
     [SerializeField] private GameObject objectChild = null;
+    [Space]
     [SerializeField] private Transform textTransformArea = null;
     [SerializeField] private GameObject textPrefab = null;
     [Space]
-    [SerializeField] private Transform parameterTransform = null;
+    [SerializeField] private Transform parameterTransformArea = null;
     [SerializeField] private GameObject parameterPrefab = null;
-    [SerializeField] private TMP_InputField textInputField = null;
 
     [HideInInspector] public List<object> commandList = new List<object>();
 
     private bool isShowingHelp = false;
     private List<GameObject> methodList = new List<GameObject>();
-
+    private string lastCommand = "";
     
     #endregion VARIABLES
     
     #region BASIC METHODS
     private void Start() {
-        CommandConsole HELP = new CommandConsole("help", "help", null, (_) => { ShowHelp(true); });
+        CommandConsole HELP = new CommandConsole("help", "help : show all the possible commands", null, (_) => { ShowHelp(true); });
         
         /* EXAMPLE WITH ENUM
         CommandConsole STRAW = new CommandConsole("straw", "straw <strawType> <strawType2>", new List<CommandClass>() {new (typeof(strawType)), new (typeof(strawType2))}, (value) => { Debug.Log(value[0] + " " + value[1]); });
@@ -51,17 +53,18 @@ public class CommandConsoleRuntime : MonoBehaviour {
     }
 
     private void Update() {
-        if (textInputField != null && textInputField.IsActive()) {
+        if (inputField != null && inputField.IsActive()) {
 
             if(Input.GetKeyDown(KeyCode.Return)) CheckEndText();
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Backspace)) RemoveText();
             if (Input.GetKeyDown(KeyCode.Escape)) {
                 ResetPrefab();
                 objectChild.SetActive(false);
-                textInputField.text = "";
+                inputField.text = "";
                 if (Playercontroller.Instance != null) Playercontroller.Instance.ChangeInputState(true);
             }
             if(Input.GetKeyDown(KeyCode.Tab) && methodList.Count != 0) MakeTabulation(methodList[0].GetComponent<CmdPrefabData>().textToWrite);
+            if (Input.GetKeyDown(KeyCode.UpArrow) && lastCommand != "") inputField.text = lastCommand;
         }
 
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Slash)) {
@@ -85,7 +88,7 @@ public class CommandConsoleRuntime : MonoBehaviour {
     /// </summary>
     /// <param name="inputField"></param>
     private void CheckEndText() {
-        string[] properties = textInputField.text.Split(' ');
+        string[] properties = inputField.text.Split(' ');
         
         ResetPrefab();
         
@@ -94,12 +97,15 @@ public class CommandConsoleRuntime : MonoBehaviour {
                 List<string> paramerterListString = new List<string>(properties);
                 paramerterListString.RemoveAt(0);
                 (command as CommandConsole)?.InvokeCommand(paramerterListString);
+                lastCommand = inputField.text;
             }
         }
-        
-        if(textInputField.text.ToUpper() != "HELP") objectChild.SetActive(false);
-        textInputField.text = "";
-        if (Playercontroller.Instance != null) Playercontroller.Instance.ChangeInputState(true);
+
+        if (inputField.text.ToUpper() != "HELP") {
+            objectChild.SetActive(false);
+            if (Playercontroller.Instance != null) Playercontroller.Instance.ChangeInputState(true);
+        }
+        inputField.text = "";
     }
 
     /// <summary>
@@ -107,12 +113,12 @@ public class CommandConsoleRuntime : MonoBehaviour {
     /// </summary>
     /// <param name="inputField"></param>
     public void CheckForHelp() {
-        string textField = textInputField.text;
+        string textField = inputField.text;
         string[] textFieldProperties = textField.Split(' ');
 
         string property = textFieldProperties[0].ToUpper();
         int propertyLength = property.Length;
-
+        
         if (textFieldProperties.Length == 1) {
             if (textField == "" && !isShowingHelp) {
                 ShowHelpText();
@@ -126,9 +132,16 @@ public class CommandConsoleRuntime : MonoBehaviour {
             foreach (object obj in commandList) {
                 if (obj is CommandConsole command) {
                     string propertyNameCut = propertyLength < command.CommandName.Length ? command.CommandName.ToUpper().Remove(propertyLength) : command.CommandName.ToUpper();
-                    if (propertyNameCut == property) CreateMethodPrefab(command.FormatCommand, propertyLength);
+                    if (propertyNameCut == property) CreateMethodPrefab(command.DescriptionCommand, propertyLength);
+
+                    if (command.CommandsClassType == null && property == command.CommandName.ToUpper()) {
+                        text.color = new Color(13f/255f, 1, 0, 128f / 255f);
+                    }
                 }
             }
+
+            if (methodList.Count == 0) text.color = new Color(1, 0, 0, 128f / 255f);
+            else if(methodList[0].GetComponent<CmdPrefabData>().textToWrite.Split(' ')[0] != "") text.color = new Color(1, 1, 1, 128f / 255f);
         }
         else if (textFieldProperties.Length >= 2) {
             ResetPrefab();
@@ -149,17 +162,32 @@ public class CommandConsoleRuntime : MonoBehaviour {
                                     string cutEnum = actualPropertyLength < enumTxt.Length ? enumTxt.Remove(actualPropertyLength) : enumTxt;
                                     if (cutEnum == actualProperty) {
                                         CreateParameterPrefab(enumTxt, textField.Length, actualPropertyLength);
+                                        if(commandPropertyLength == textFieldProperties.Length - 1 && actualProperty == enumTxt) text.color = new Color(13f/255f, 1, 0, 128f / 255f);
+                                        else text.color = new Color(1, 1, 1, 128f / 255f);
                                     }
                                 }
+                                
+                                if(methodList.Count == 0) text.color = new Color(1, 0, 0, 128f / 255f);
                             }
                             else if (actualType == typeof(bool)) {
                                 CreateParameterPrefab("true", textField.Length, actualPropertyLength);
                                 CreateParameterPrefab("false", textField.Length, actualPropertyLength);
+
+                                string trueCut = actualPropertyLength < 4 ? "true".Remove(actualPropertyLength) : "true";
+                                string falseCut = actualPropertyLength < 5 ? "false".Remove(actualPropertyLength) : "false";
+                                
+                                if(commandPropertyLength == textFieldProperties.Length && (actualProperty == "true" || actualProperty == "false")) text.color = new Color(13f/255f, 1, 0, 128f / 255f);
+                                else if(commandPropertyLength == textFieldProperties.Length && (actualProperty != trueCut || actualProperty != falseCut)) text.color = new Color(1, 0, 0, 128f / 255f);
+                                else text.color =  new Color(1, 1, 1, 128f / 255f);
                             }
                             else {
                                 string typeName = actualType.Name;
                                 CreateParameterPrefab(typeName, textField.Length, actualPropertyLength);
                             }
+                            
+                        }
+                        else {
+                            text.color = new Color(1, 0, 0, 128f / 255f);
                         }
                     }
                 }
@@ -194,7 +222,7 @@ public class CommandConsoleRuntime : MonoBehaviour {
     /// <param name="textToShow"></param>
     /// <returns></returns>
     private void CreateParameterPrefab(string textToShow, int textSize, int actualTextWriteLength) {
-        GameObject gam = Instantiate(parameterPrefab, parameterTransform);
+        GameObject gam = Instantiate(parameterPrefab, parameterTransformArea);
         RectTransform trans = gam.GetComponent<RectTransform>();
         CmdPrefabData data = gam.GetComponent<CmdPrefabData>();
         data.MethodText.text = textToShow;
@@ -228,10 +256,10 @@ public class CommandConsoleRuntime : MonoBehaviour {
     /// <summary>
     /// Fill the tabulation text
     /// </summary>
-    public void MakeTabulation(string text) {
-        if (textInputField != null) {
-            textInputField.text += text;
-            textInputField.caretPosition = textInputField.text.Length;
+    public void MakeTabulation(string tabText) {
+        if (inputField != null) {
+            inputField.text += tabText;
+            inputField.caretPosition = inputField.text.Length;
             
             SelectInputField();
             ResetPrefab();
@@ -243,8 +271,8 @@ public class CommandConsoleRuntime : MonoBehaviour {
     /// Remove the last word in the inputfield
     /// </summary>
     private void RemoveText() {
-        string lastWord = textInputField.text.Split(' ')[textInputField.text.Split(' ').Length - 1];
-        textInputField.text = lastWord.Length == textInputField.text.Length ? "" : textInputField.text.Remove(textInputField.text.Length - (lastWord.Length + 1));
+        string lastWord = inputField.text.Split(' ')[inputField.text.Split(' ').Length - 1];
+        inputField.text = lastWord.Length == inputField.text.Length ? "" : inputField.text.Remove(inputField.text.Length - (lastWord.Length + 1));
     }
     #endregion CHANGE INPUTFIELD
     
@@ -266,7 +294,7 @@ public class CommandConsoleRuntime : MonoBehaviour {
         List<CommandConsoleBase> cmdListSorted = cmdList.OrderByDescending(cmdL => cmdL.CommandName).ToList();
         foreach (CommandConsoleBase cmd in cmdListSorted) {
             if (showAll) {
-                if (cmd.CommandName.ToUpper() != "HELP") CreateMethodPrefab(cmd.FormatCommand, 0);
+                if (cmd.CommandName.ToUpper() != "HELP") CreateMethodPrefab(cmd.DescriptionCommand, 0);
             }
             else {
                 if (cmd.CommandName.ToUpper() != "HELP") CreateMethodPrefab(cmd.CommandName, 0);
@@ -288,8 +316,8 @@ public class CommandConsoleRuntime : MonoBehaviour {
     /// Select the InputField
     /// </summary>
     private void SelectInputField() {
-        textInputField.Select();
-        textInputField.ActivateInputField();
+        inputField.Select();
+        inputField.ActivateInputField();
     }
 
     public void AddCommand(CommandConsole command) {
@@ -318,16 +346,16 @@ public class CommandClass {
 /// </summary>
 public class CommandConsoleBase {
     private string commandName;
-    private string formatCommand;
+    private string descriptionCommand;
     private List<CommandClass> commandsClassType;
 
     public string CommandName => commandName;
-    public string FormatCommand => formatCommand;
+    public string DescriptionCommand => descriptionCommand;
     public List<CommandClass> CommandsClassType => commandsClassType;
 
-    protected CommandConsoleBase(string commandName, string formatCommand, List<CommandClass> commandsClassType) {
+    protected CommandConsoleBase(string commandName, string descriptionCommand, List<CommandClass> commandsClassType) {
         this.commandName = commandName;
-        this.formatCommand = formatCommand;
+        this.descriptionCommand = descriptionCommand;
         this.commandsClassType = commandsClassType;
     }
 }
@@ -338,7 +366,7 @@ public class CommandConsoleBase {
 public class CommandConsole : CommandConsoleBase {
     private Action<List<string>> actionEvent = null;
 
-    public CommandConsole(string commandName, string formatCommand, List<CommandClass> commandsClassType, Action<List<string>> actionEvent) : base(commandName, formatCommand, commandsClassType) {
+    public CommandConsole(string commandName, string descriptionCommand, List<CommandClass> commandsClassType, Action<List<string>> actionEvent) : base(commandName, descriptionCommand, commandsClassType) {
         this.actionEvent = actionEvent;
     }
 

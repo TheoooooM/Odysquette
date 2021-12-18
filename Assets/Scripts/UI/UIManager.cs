@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour {
         GameOverPanel.SetActive(false);
     }
     private void Start() {
-        CommandConsole RESTART = new CommandConsole("restart", "restart", null, (_) => { PlayAgain(); });
+        CommandConsole RESTART = new CommandConsole("restart", "restart : Restart all the game", null, (_) => { PlayAgain(); });
         CommandConsoleRuntime.Instance.AddCommand(RESTART);
 
         UltSlider.maxValue = GameManager.Instance.maxUltimateValue;
