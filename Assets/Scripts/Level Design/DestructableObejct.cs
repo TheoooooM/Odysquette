@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Object = System.Object;
+using Random = UnityEngine.Random;
 
 public class DestructableObejct : MonoBehaviour {
     [Header("Object Data")] 
@@ -24,6 +25,14 @@ public class DestructableObejct : MonoBehaviour {
             gam.SetActive(false);
         }
 
+        int rdm = Random.Range(0, 100);
+
+        if (rdm>80)
+        {
+            GameObject GO = Resources.Load<GameObject>("ressource");
+            Instantiate(GO, transform.position, Quaternion.identity);
+        }
+        
         if (col != null) col.enabled = false;
         if (particleToSpawn != null && !hasSpawn) Instantiate(particleToSpawn, particlePos.position, Quaternion.identity, transform);
         hasSpawn = true;

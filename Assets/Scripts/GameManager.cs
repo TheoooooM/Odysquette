@@ -58,6 +58,8 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
+    #region VARIABLES
+
     public bool isUltimate;
     public float maxUltimateValue;
 
@@ -72,6 +74,8 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public int Score=0;
+    
     [Header("mouse")] [SerializeField] private float offsetPadViewFinder;
     private Vector2 mousepos; //position de la souris sur l'écran
     public float angle; //angle pour orienter la paille
@@ -116,6 +120,8 @@ public class GameManager : MonoBehaviour {
     public Vector2 _lookDir;
 
     public StrawClass actualStrawClass;
+    
+    #endregion
 
     private void OnValidate() {
         foreach (StrawClass str in strawsClass) {
@@ -268,6 +274,8 @@ public class GameManager : MonoBehaviour {
         //--------------------------------------------------------------
     }
 
+    #region NeverDestroy
+    
     public void GetND() {
         firstEffect = NeverDestroy.Instance.firstEffect;
         secondEffect = NeverDestroy.Instance.secondEffect;
@@ -280,6 +288,8 @@ public class GameManager : MonoBehaviour {
         NeverDestroy.Instance.actualStraw = actualStraw;
         NeverDestroy.Instance.life = HealthPlayer.Instance.healthPlayer;
     }
+    
+    #endregion
 
     public void endRoom()
     {
@@ -303,14 +313,8 @@ public class GameManager : MonoBehaviour {
             }
         }
     }
-
-    public enum ShootMode {
-        BasicShoot,
-        CurveShoot,
-        AreaShoot,
-        AngleAreaShoot
-    }
-
+    
+    
     [Serializable]
     public class CombinaisonColorEffect {
         public Effect firstEffect;
