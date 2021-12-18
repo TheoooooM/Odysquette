@@ -64,7 +64,10 @@ public class CommandConsoleRuntime : MonoBehaviour {
                 if (Playercontroller.Instance != null) Playercontroller.Instance.ChangeInputState(true);
             }
             if(Input.GetKeyDown(KeyCode.Tab) && methodList.Count != 0) MakeTabulation(methodList[0].GetComponent<CmdPrefabData>().textToWrite);
-            if (Input.GetKeyDown(KeyCode.UpArrow) && lastCommand != "") inputField.text = lastCommand;
+            if (Input.GetKeyDown(KeyCode.UpArrow) && lastCommand != "") {
+                inputField.text = lastCommand;
+                inputField.caretPosition = inputField.text.Length;
+            }
         }
 
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Slash)) {
@@ -183,6 +186,7 @@ public class CommandConsoleRuntime : MonoBehaviour {
                             else {
                                 string typeName = actualType.Name;
                                 CreateParameterPrefab(typeName, textField.Length, actualPropertyLength);
+                                text.color =  new Color(1, 1, 1, 128f / 255f);
                             }
                             
                         }
