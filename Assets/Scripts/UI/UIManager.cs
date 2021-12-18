@@ -58,11 +58,7 @@ public class UIManager : MonoBehaviour {
         if (loadingBar.value < loadingValue) {
             loadingBar.value += loadingBar.maxValue * chargeSpeed*0.01f;
         }
-    }
-
-
-    private void Update()
-    {
+        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
            if(!GameManager.Instance.gameIsPause) Pause();
@@ -86,7 +82,7 @@ public class UIManager : MonoBehaviour {
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         GameManager.Instance.gameIsPause = false;
-    } THM3
+    }
 
     /// <summary>
     /// Show game over panel
