@@ -26,6 +26,32 @@ public class NeverDestroy : MonoBehaviour
 
     public float ultimateValue = 0;
 
+    private float time;
+    private int minute = 0;
+    private string minuteText;
+    private int second = 0;
+    private string secondText;
+    
+
+    private void Update()
+    {
+        time += Time.deltaTime;
+        second = (int) time;
+        if (second == 60)
+        {
+            time = 0;
+            minute++;
+        }
+
+        if (minute < 10) minuteText = "0" + minute;
+        else minuteText = minute.ToString();
+        if (second < 10) secondText = "0" + second;
+        else secondText = second.ToString();
+
+        UIManager.Instance.Timer.text = minuteText + " : " + secondText;
+    }
+
+
     public void AddRessource(int amount = 1)
     {
         ressources += amount;

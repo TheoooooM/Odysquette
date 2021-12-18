@@ -27,8 +27,12 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject option;
     
 
-    [Header("----Ressources----")] 
+    [Header("----Ressources & Score----")] 
     public TextMeshProUGUI ressourceText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI Timer;
+    
+    
     
     
     [Header("----Generation----")] 
@@ -61,17 +65,16 @@ public class UIManager : MonoBehaviour {
         
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Debug.Log((int) 1.78f);
            if(!GameManager.Instance.gameIsPause) Pause();
-
-
-           else Unpause();
+            else Unpause();
         }
     }
 
     void Pause()
     {
         pauseMenu.SetActive(true);
-        main.SetActive(false);
+        main.SetActive(true);
         option.SetActive(false);
         Time.timeScale = 0f;
         GameManager.Instance.gameIsPause = true;

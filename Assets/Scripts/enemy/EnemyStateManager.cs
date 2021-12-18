@@ -10,6 +10,7 @@ using Random = UnityEngine.Random;
 
 
 public class EnemyStateManager : MonoBehaviour {
+    public int scorePoint = 3;
     public EnemyFeedBack enemyFeedBack;
     public bool isActivate = false;
     public bool isContactWall;
@@ -375,8 +376,8 @@ public class EnemyStateManager : MonoBehaviour {
         if (!isDead) {
             GameObject GO = Resources.Load<GameObject>("ressource");
             
+            GameManager.Instance.AddScore(scorePoint);
             int rdm = Random.Range(0, 5);
-            
             for (int i = 0; i < rdm; i++) {
                 Debug.Log("gen Ressources");
                 Instantiate(GO, transform.position, Quaternion.identity);

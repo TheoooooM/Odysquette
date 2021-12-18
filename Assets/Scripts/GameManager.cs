@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour {
     [Header("---- GAME")]
     public bool gameIsPause = false;
     
+
     [Header("---- MOUSE")] [SerializeField]
     private float offsetPadViewFinder;
 
@@ -427,6 +428,12 @@ public class GameManager : MonoBehaviour {
     }
 
 
+    public void AddScore(int amount = 1)
+    {
+        Score += amount;
+        UIManager.Instance.scoreText.text = "Score : " + Score;
+    }
+    
   public  void SetVisualEffect()
     {
                 for (int i = 0; i < colorEffectsList.Length; i++) {
