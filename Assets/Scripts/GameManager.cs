@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
+    #region VARIABLES
     public bool isUltimate;
     public float maxUltimateValue;
 
@@ -70,6 +71,8 @@ public class GameManager : MonoBehaviour {
             if(UIManager.Instance != null) UIManager.Instance.UltSlider.value = _ultimateValue;
         }
     }
+
+    public int Score;
 
     [Header("---- GAME")]
     public bool gameIsPause = false;
@@ -124,7 +127,8 @@ public class GameManager : MonoBehaviour {
 
     [Header("---- DEBUG")] public Vector2 _lookDir;
     public StrawClass actualStrawClass;
-
+    #endregion
+    
     private void OnValidate() {
         foreach (StrawClass str in strawsClass) {
             if (str.strawSO != null)
@@ -383,7 +387,8 @@ public class GameManager : MonoBehaviour {
         animate = true;
     }
     #endregion END ROOM
-    
+
+    #region NeverDestroy
     private void GetND() {
         firstEffect = NeverDestroy.Instance.firstEffect;
         secondEffect = NeverDestroy.Instance.secondEffect;
@@ -400,6 +405,7 @@ public class GameManager : MonoBehaviour {
         NeverDestroy.Instance.life = HealthPlayer.Instance.healthPlayer;
         NeverDestroy.Instance.ultimateValue = ultimateValue;
     }
+    #endregion
     
     /// <summary>
     /// Change the actual straw

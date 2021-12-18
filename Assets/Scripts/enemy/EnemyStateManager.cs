@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Pathfinding;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 
 public class EnemyStateManager : MonoBehaviour {
@@ -373,11 +374,13 @@ public class EnemyStateManager : MonoBehaviour {
     public virtual void OnDeath() {
         if (!isDead) {
             GameObject GO = Resources.Load<GameObject>("ressource");
-            for (int i = 0; i < 5; i++) {
+            
+            int rdm = Random.Range(0, 5);
+            
+            for (int i = 0; i < rdm; i++) {
                 Debug.Log("gen Ressources");
                 Instantiate(GO, transform.position, Quaternion.identity);
             }
-
 
             collider2D.enabled = false;
 
