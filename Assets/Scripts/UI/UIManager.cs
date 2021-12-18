@@ -20,7 +20,12 @@ public class UIManager : MonoBehaviour {
     float maxUltSlider = 100f;
     
     [SerializeField] private GameObject GameOverPanel;
+    
+    [Header("----Pause----")] 
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject main;
+    [SerializeField] private GameObject option;
+    
 
     [Header("----Ressources----")] 
     public TextMeshProUGUI ressourceText;
@@ -43,6 +48,7 @@ public class UIManager : MonoBehaviour {
         CommandConsoleRuntime.Instance.AddCommand(RESTART);
 
         UltSlider.maxValue = GameManager.Instance.maxUltimateValue;
+        pauseMenu.SetActive(false);
     }
 
     /// <summary>
@@ -54,11 +60,39 @@ public class UIManager : MonoBehaviour {
         }
     }
 
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+           if(!GameManager.Instance.gameIsPause) Pause();
+
+
+           else Unpause();
+        }
+    }
+
+    void Pause()
+    {
+        pauseMenu.SetActive(true);
+        main.SetActive(false);
+        option.SetActive(false);
+        Time.timeScale = 0f;
+        GameManager.Instance.gameIsPause = true;
+    }
+
+    public void Unpause()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+        GameManager.Instance.gameIsPause = false;
+    } THM3
+
     /// <summary>
     /// Show game over panel
     /// </summary>
     public void GameOver()
-    { 
+    {
         GameOverPanel.SetActive(true);
         Time.timeScale = 0;
     }
@@ -72,4 +106,12 @@ public class UIManager : MonoBehaviour {
         Time.timeScale = 1 ;
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
     }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+    
+
+    // Update is called once per frame
+
 }

@@ -71,6 +71,9 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    [Header("---- GAME")]
+    public bool gameIsPause = false;
+    
     [Header("---- MOUSE")] [SerializeField]
     private float offsetPadViewFinder;
 
