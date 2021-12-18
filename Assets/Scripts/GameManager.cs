@@ -20,20 +20,19 @@ public class GameManager : MonoBehaviour {
 
     public enum Effect {
         none,
-        bounce,
-        pierce,
-        explosion,
-        poison,
-        ice
+        bouncing,
+        piercing,
+        explosive,
+        poison
     }
 
     public enum Straw {
         basic,
         bubble,
-        snipaille,
-        eightPaille,
-        tripaille,
-        mitra
+        sniper,
+        helix,
+        tri,
+        riffle
     }
 
     #endregion
@@ -130,8 +129,10 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private void Start()
-    {
+    private void Start() {
+        AddCommandConsole();
+        
+        
         if (NeverDestroy.Instance == null) Instantiate(Resources.Load<GameObject>("NeverDestroy"));
         else GetND();
         if (Playercontroller.Instance != null) {
@@ -157,6 +158,104 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    
+    /// <summary>
+    /// Add the command to the console
+    /// </summary>
+    private void AddCommandConsole() {
+        CommandConsole STRAW = new CommandConsole("setstraw", "setstraw : Set the actual Straw of the player", new List<CommandClass>() {new CommandClass(typeof(Straw))}, (value) => { actualStraw = (Straw) Enum.Parse(typeof(Straw), value[0]); });
+        
+        CommandConsole EFFECT = new CommandConsole("seteffect", "seteffect : Set the actual Effects of the player", new List<CommandClass>() {new CommandClass(typeof(Effect)), new CommandClass(typeof(Effect))}, (value) => {
+            firstEffect = (Effect) Enum.Parse(typeof(Effect), value[0]);
+            secondEffect = (Effect) Enum.Parse(typeof(Effect), value[1]);
+        });
+        
+        CommandConsole ARSENAL = new CommandConsole("setarsenal", "setarsenal : Set the Straw and the Effects of the player", new List<CommandClass>() {new CommandClass(typeof(Straw)), new CommandClass(typeof(Effect)), new CommandClass(typeof(Effect))}, (value) => {
+            actualStraw = (Straw) Enum.Parse(typeof(Straw), value[0]);
+            firstEffect = (Effect) Enum.Parse(typeof(Effect), value[1]);
+            secondEffect = (Effect) Enum.Parse(typeof(Effect), value[2]);
+        });
+        
+        CommandConsole GOTO = new CommandConsole("go", "go : Go to another area in the game", new List<CommandClass>() {new CommandClass(typeof(Area))}, (value) => {
+            switch ((Area) Enum.Parse(typeof(Area), value[0])) {
+                case Area.hub:
+                    NeverDestroy.Instance.level = 0;
+                    SetND();
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("HUB");
+                    break;
+                case Area.train:
+                    NeverDestroy.Instance.level = 0;
+                    SetND();
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("HubToLevelTransition");
+                    break;
+                case Area.level01:
+                    NeverDestroy.Instance.level = 1;
+                    SetND();
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("YOP_Basic");
+                    break;
+                case Area.shop01:
+                    NeverDestroy.Instance.level = 1;
+                    SetND();
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("Shop");
+                    break;
+                case Area.level02:
+                    NeverDestroy.Instance.level = 2;
+                    SetND();
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("YOP_Basic");
+                    break;
+                case Area.shop02:
+                    NeverDestroy.Instance.level = 2;
+                    SetND();
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("Shop");
+                    break;
+                case Area.boss:
+                    NeverDestroy.Instance.level = 2;
+                    SetND();
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("Boss");
+                    break;
+                case Area.lastroom:
+                    foreach (RoomManager room in Generation.Instance.RoomList) {
+                        if (room.runningRoom) {
+                            room.runningRoom = false;
+                            room.transform.GetChild(0).GetComponent<RoomContainer>().playerInRoom = false;
+                            room.transform.GetChild(0).GetComponent<RoomContainer>().ActivateNeighbor(false);
+                            room.transform.GetChild(0).gameObject.SetActive(false);
+                        }
+                        else if (room == Generation.Instance.RoomList[Generation.Instance.RoomList.Count - 1]) {
+                            room.transform.GetChild(0).gameObject.SetActive(true);
+                            room.runningRoom = true;
+                            room.transform.GetChild(0).GetComponent<RoomContainer>().playerInRoom = true;
+                            room.transform.GetChild(0).GetComponent<RoomContainer>().ActivateNeighbor(true);
+                            Playercontroller.Instance.transform.position = room.transform.GetChild(0).position;
+                        }
+                    }
+                    break;
+                case Area.startroom:
+                    foreach (RoomManager room in Generation.Instance.RoomList) {
+                        if (room.runningRoom) {
+                            room.runningRoom = false;
+                            room.transform.GetChild(0).GetComponent<RoomContainer>().playerInRoom = false;
+                            room.transform.GetChild(0).GetComponent<RoomContainer>().ActivateNeighbor(false);
+                            room.transform.GetChild(0).gameObject.SetActive(false);
+                        }
+                        else if (room == Generation.Instance.RoomList[0]) {
+                            room.transform.GetChild(0).gameObject.SetActive(true);
+                            room.runningRoom = true;
+                            room.transform.GetChild(0).GetComponent<RoomContainer>().playerInRoom = true;
+                            room.transform.GetChild(0).GetComponent<RoomContainer>().ActivateNeighbor(true);
+                            Playercontroller.Instance.transform.position = room.transform.position;
+                        }
+                    }
+                    break;
+            }
+        });
+
+        CommandConsoleRuntime.Instance.AddCommand(STRAW);
+        CommandConsoleRuntime.Instance.AddCommand(EFFECT);
+        CommandConsoleRuntime.Instance.AddCommand(ARSENAL);
+        CommandConsoleRuntime.Instance.AddCommand(GOTO);
+    }
+    
     private void Update() {
         if (animate) EndRoomAnimation();
         
@@ -249,11 +348,7 @@ public class GameManager : MonoBehaviour {
         else {
             if (ViewPad.magnitude > 0.5f) {
                 angle = Mathf.Atan2(ViewPad.y, ViewPad.x) * Mathf.Rad2Deg;
-
                 lastInput = ViewPad.normalized;
-
-                Debug.Log("test");
-
                 UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(actualStrawClass.spawnerTransform.position + (Vector3) ViewPad.normalized * viewFinderDistance);
                 lastInput = ViewPad.normalized;
             }
@@ -261,11 +356,10 @@ public class GameManager : MonoBehaviour {
 
             UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(actualStrawClass.spawnerTransform.position + (Vector3) lastInput.normalized * viewFinderDistance);
         }
-
+        
         actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
-
-
+    
     #region END ROOM
     /// <summary>
     /// Make bloom in the room when the room end
@@ -333,17 +427,13 @@ public class GameManager : MonoBehaviour {
                     }
                 }
     }
-    public enum ShootMode {
-        BasicShoot,
-        CurveShoot,
-        AreaShoot,
-        AngleAreaShoot
-    }
 
-    [Serializable]
-    public class CombinaisonColorEffect {
-        public Effect firstEffect;
-        public Effect secondEffect;
-        public Color combinaisonColor;
-    }
+  [Serializable]
+  public class CombinaisonColorEffect {
+      public Effect firstEffect;
+      public Effect secondEffect;
+      public Color combinaisonColor;
+  }
 }
+
+public enum Area {lastroom, startroom, hub, train, level01, shop01, level02, shop02, boss}

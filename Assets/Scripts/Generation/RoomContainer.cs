@@ -157,7 +157,7 @@ public class RoomContainer : MonoBehaviour {
     /// Activate neighboors base on the position of the player
     /// </summary>
     /// <param name="active"></param>
-    private void ActivateNeighbor(bool active) {
+    public void ActivateNeighbor(bool active) {
         if (Generator == null) return;
         
         if (!Generator.disableNeighboor) return;

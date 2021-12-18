@@ -41,23 +41,25 @@ public class colScript : MonoBehaviour {
     }
 
     private void OnTriggerExit2D(Collider2D other) {
-        if (!part.playerInRoom) {
-            switch (side) {
-                case Generation.open.top:
-                    Generation.Instance.map[(int) part.roomMapPos.x, (int) part.roomMapPos.y + 1].GetComponent<RoomContainer>().room.runningRoom = true;
-                    break;
-                case Generation.open.left:
-                    Generation.Instance.map[(int) part.roomMapPos.x - 1, (int) part.roomMapPos.y].GetComponent<RoomContainer>().room.runningRoom = true;
-                    break;
-                case Generation.open.right:
-                    Generation.Instance.map[(int) part.roomMapPos.x + 1, (int) part.roomMapPos.y].GetComponent<RoomContainer>().room.runningRoom = true;
-                    break;
-                case Generation.open.bot:
-                    Generation.Instance.map[(int) part.roomMapPos.x, (int) part.roomMapPos.y - 1].GetComponent<RoomContainer>().room.runningRoom = true;
-                    break;
-            }
+        if (part.room.runningRoom && part.room.ennemiesList.Count == 0) {
+            if (!part.playerInRoom) {
+                switch (side) {
+                    case Generation.open.top:
+                        Generation.Instance.map[(int) part.roomMapPos.x, (int) part.roomMapPos.y + 1].GetComponent<RoomContainer>().room.runningRoom = true;
+                        break;
+                    case Generation.open.left:
+                        Generation.Instance.map[(int) part.roomMapPos.x - 1, (int) part.roomMapPos.y].GetComponent<RoomContainer>().room.runningRoom = true;
+                        break;
+                    case Generation.open.right:
+                        Generation.Instance.map[(int) part.roomMapPos.x + 1, (int) part.roomMapPos.y].GetComponent<RoomContainer>().room.runningRoom = true;
+                        break;
+                    case Generation.open.bot:
+                        Generation.Instance.map[(int) part.roomMapPos.x, (int) part.roomMapPos.y - 1].GetComponent<RoomContainer>().room.runningRoom = true;
+                        break;
+                }
 
-            part.room.runningRoom = false;
+                part.room.runningRoom = false;
+            }
         }
     }
 }

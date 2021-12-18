@@ -13,6 +13,8 @@ public class Exit : MonoBehaviour {
     
 
     private void Start() {
+        if(sceneManager == null) sceneManager = SceneManager.instance;
+        
         if (isShop) {
             if (NeverDestroy.Instance.level == 1) sceneToLoad = "YOP_Basic";
             else sceneToLoad = "Boss";
@@ -20,7 +22,6 @@ public class Exit : MonoBehaviour {
         else if(isHubTransition) sceneToLoad = "YOP_Basic";
         else sceneToLoad = "Shop";
         
-        if(sceneManager == null) sceneManager = SceneManager.instance;
     }
 
     private void Update() => ePress = Input.GetKey(KeyCode.E);
@@ -32,8 +33,7 @@ public class Exit : MonoBehaviour {
     }
 
     private void OnTriggerStay2D(Collider2D other) {
-        if (ePress)
-        {
+        if (ePress) {
             GameManager.Instance.SetND();
             if (other.CompareTag("Player")) sceneManager.StartLoadScene(sceneToLoad);
         }

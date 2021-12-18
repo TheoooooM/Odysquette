@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -69,6 +67,7 @@ public class Playercontroller : MonoBehaviour {
         Instance = this;
         rb = GetComponent<Rigidbody2D>();
         if(enableMovementAtLaunch) StartInput();
+        if (CommandConsoleRuntime.Instance == null) Instantiate(Resources.Load("GodMod/Command"));
     }
 
     public void StartInput() {
@@ -90,6 +89,12 @@ public class Playercontroller : MonoBehaviour {
         
         defaultSpeed = MouvementSpeed;
     }
+
+    public void ChangeInputState(bool activ) {
+        if(activ) playerInput.Player.Enable();
+        else playerInput.Player.Disable();
+    }
+    
     
     private void Start() {
         currentAngleAnimation = baseAngleAnimation[0];

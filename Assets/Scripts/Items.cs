@@ -115,10 +115,10 @@ public class Items : MonoBehaviour
       {
          GameManager.Straw.basic => SO.basicStraw,
          GameManager.Straw.bubble => SO.bubbleStraw,
-         GameManager.Straw.snipaille => SO.snipStraw,
-         GameManager.Straw.eightPaille => SO.eightStraw,
-         GameManager.Straw.tripaille => SO.triStraw,
-         GameManager.Straw.mitra => SO.mitraStraw,
+         GameManager.Straw.sniper => SO.snipStraw,
+         GameManager.Straw.helix => SO.eightStraw,
+         GameManager.Straw.tri => SO.triStraw,
+         GameManager.Straw.riffle => SO.mitraStraw,
       };
 
      GameObject GO = Instantiate(straw, transform.position, Quaternion.identity);
