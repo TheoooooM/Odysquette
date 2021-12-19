@@ -23,6 +23,7 @@ public class Items : MonoBehaviour
    [SerializeField] private GameObject shopCanvas;
    [SerializeField] private GameObject groundCanvas;
    [SerializeField] private itemSO SO;
+   
    public bool shop;
    
    public void SpawnObject(bool ground = false) {

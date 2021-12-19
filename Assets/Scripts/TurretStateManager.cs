@@ -116,7 +116,7 @@ public class TurretStateManager : EnemyStateManager
   isDead = false;
  }
 
- public override void OnDeath()
+ public override void OnDeath(bool byFall = false)
  {
   if (!isDead)
   {
