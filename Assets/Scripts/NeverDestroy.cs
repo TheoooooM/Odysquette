@@ -1,18 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using LootLocker.Requests;
 using UnityEngine;
 
 public class NeverDestroy : MonoBehaviour
 {
+    #region Instance
     public static NeverDestroy Instance;
-    
     private void Awake()
     {
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        
         life = 6;
+        
+        
     }
+    #endregion
 
     public GameManager.Effect firstEffect;
     public GameManager.Effect secondEffect;
@@ -26,12 +31,20 @@ public class NeverDestroy : MonoBehaviour
 
     public float ultimateValue = 0;
 
+    public int Score;
+
+    #region Timer
     private float time;
-    private int minute = 0;
+    public int minute = 0;
     private string minuteText;
     private int second = 0;
     private string secondText;
-    
+    #endregion
+
+    private void Start()
+    {
+        
+    }
 
     private void Update()
     {
@@ -56,5 +69,14 @@ public class NeverDestroy : MonoBehaviour
     {
         ressources += amount;
         if (UIManager.Instance != null) UIManager.Instance.ressourceText.text = "Ressources : " + ressources;
+    }
+    
+    public void SubmitScore(string playerName, int ID)
+    {
+        LootLockerSDKManager.SubmitScore(playerName, Score, ID, (response) =>
+        {
+            if (response.success)Debug.Log("Submit Score");
+            else Debug.Log("Failed Submit Score");
+        });
     }
 }

@@ -15,11 +15,15 @@ public class UIManager : MonoBehaviour {
     public List<Hearth> HeartsLifes;
     public List<Hearth> _HeartsLife;
     public Slider UltSlider;
-    // Start is called before the first frame update
     public static UIManager Instance;
     float maxUltSlider = 100f;
     
+    
+    [Header("----Game Over----")] 
     [SerializeField] private GameObject GameOverPanel;
+    public TMP_InputField PlayerName;
+    public TextMeshProUGUI totalScoreText;
+    
     
     [Header("----Pause----")] 
     [SerializeField] private GameObject pauseMenu;
@@ -46,11 +50,14 @@ public class UIManager : MonoBehaviour {
     {
         Instance = this;
         GameOverPanel.SetActive(false);
+        
     }
     private void Start() {
         CommandConsole RESTART = new CommandConsole("restart", "restart : Restart all the game", null, (_) => { PlayAgain(); });
         CommandConsoleRuntime.Instance.AddCommand(RESTART);
 
+        
+        
         UltSlider.maxValue = GameManager.Instance.maxUltimateValue;
         pauseMenu.SetActive(false);
     }
@@ -87,11 +94,18 @@ public class UIManager : MonoBehaviour {
         GameManager.Instance.gameIsPause = false;
     }
 
+    public void SubmitScoreND(int ID)
+    {
+        if (PlayerName.text == null) NeverDestroy.Instance.SubmitScore("Player", ID);
+        else NeverDestroy.Instance.SubmitScore(PlayerName.text, ID);
+    }
+
     /// <summary>
     /// Show game over panel
     /// </summary>
     public void GameOver()
     {
+        totalScoreText.text = "Final Score : " + NeverDestroy.Instance.Score;
         GameOverPanel.SetActive(true);
         Time.timeScale = 0;
     }

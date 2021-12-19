@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using LootLocker.Requests;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 public class GameManager : MonoBehaviour {
-    #region Singleton
+    #region Instance
 
     public static GameManager Instance;
 
@@ -140,7 +141,13 @@ public class GameManager : MonoBehaviour {
     private void Start() {
         AddCommandConsole();
         
-        
+        //LeaderBoard Setup
+        LootLockerSDKManager.StartSession("Player", (response) =>
+        {
+            if (response.success)Debug.Log("Success");
+            else Debug.Log("Failed");
+        });
+
         if (NeverDestroy.Instance == null) Instantiate(Resources.Load<GameObject>("NeverDestroy"));
         else GetND();
         if (Playercontroller.Instance != null) {
@@ -390,7 +397,9 @@ public class GameManager : MonoBehaviour {
     #endregion END ROOM
 
     #region NeverDestroy
-    private void GetND() {
+    private void GetND()
+    {
+        Score = NeverDestroy.Instance.Score;
         firstEffect = NeverDestroy.Instance.firstEffect;
         secondEffect = NeverDestroy.Instance.secondEffect;
         actualStraw = NeverDestroy.Instance.actualStraw;
@@ -405,6 +414,7 @@ public class GameManager : MonoBehaviour {
         NeverDestroy.Instance.actualStraw = actualStraw;
         NeverDestroy.Instance.life = HealthPlayer.Instance.healthPlayer;
         NeverDestroy.Instance.ultimateValue = ultimateValue;
+        NeverDestroy.Instance.Score = Score;
     }
     #endregion
     
@@ -433,6 +443,7 @@ public class GameManager : MonoBehaviour {
         Score += amount;
         UIManager.Instance.scoreText.text = "Score : " + Score;
     }
+
     
   public  void SetVisualEffect()
     {
