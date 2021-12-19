@@ -245,7 +245,7 @@ public class GameManager : MonoBehaviour {
                         }
                     }
                     break;
-                case Area.startroom:
+                case Area.firstroom:
                     foreach (RoomManager room in Generation.Instance.RoomList) {
                         if (room.runningRoom) {
                             room.runningRoom = false;
@@ -463,4 +463,4 @@ public class GameManager : MonoBehaviour {
   }
 }
 
-public enum Area {lastroom, startroom, hub, train, level01, shop01, level02, shop02, boss}
+public enum Area {lastroom, firstroom, hub, train, level01, shop01, level02, shop02, boss}

@@ -372,55 +372,67 @@ public class EnemyStateManager : MonoBehaviour {
         public Object _object;
     }
 
-    public virtual void OnDeath() {
+    public virtual void OnDeath(bool byFall = false) {
         if (!isDead) {
             GameObject GO = Resources.Load<GameObject>("ressource");
-            
             GameManager.Instance.AddScore(scorePoint);
             int rdm = Random.Range(0, 5);
             for (int i = 0; i < rdm; i++) {
-                Debug.Log("gen Ressources");
                 Instantiate(GO, transform.position, Quaternion.identity);
             }
 
-            collider2D.enabled = false;
+            if (byFall) {
+                collider2D.enabled = false;
 
-            rb.constraints = RigidbodyConstraints2D.FreezePosition;
-            roomParent.ennemiesList.Remove(transform.parent.gameObject);
-            this.enabled = false;
-
-
-            Animator animator = GetComponent<Animator>();
-            if (TryGetComponent(out EnemyFeedBackDeath eventDeath)) {
-                eventDeath.deathEvent.Invoke();
-                return;
+                rb.constraints = RigidbodyConstraints2D.FreezePosition;
+                roomParent.ennemiesList.Remove(transform.parent.gameObject);
+                this.enabled = false;
+                
+                Animator animator = GetComponent<Animator>();
+                animator.Play("FallAnim");
+                
+                StartCoroutine(ShowCurrentClipLength(gameObject.transform.parent.gameObject, animator));
             }
+            else {
+                collider2D.enabled = false;
 
-            try {
-                roomParent.ennemiesList.Remove(gameObject.transform.parent.gameObject);
-                if (enemyFeedBack.stateDeathName != "") {
-                    animator.Play(enemyFeedBack.stateDeathName);
+                rb.constraints = RigidbodyConstraints2D.FreezePosition;
+                roomParent.ennemiesList.Remove(transform.parent.gameObject);
+                this.enabled = false;
 
 
-                    StartCoroutine(ShowCurrentClipLength(gameObject.transform.parent.gameObject, animator));
-                }
-                else {
-                    Destroy(gameObject.transform.parent.gameObject);
-                }
-            }
-            catch (Exception e) {
-                roomParent.ennemiesList.Remove(gameObject);
-
-                if (enemyFeedBack != null && enemyFeedBack.stateDeathName != "") {
-                    animator.Play(enemyFeedBack.stateDeathName);
-                    StartCoroutine(ShowCurrentClipLength(gameObject, animator));
-                }
-                else {
-                    Destroy(gameObject);
+                Animator animator = GetComponent<Animator>();
+                if (TryGetComponent(out EnemyFeedBackDeath eventDeath)) {
+                    eventDeath.deathEvent.Invoke();
+                    return;
                 }
 
+                try {
+                    roomParent.ennemiesList.Remove(gameObject.transform.parent.gameObject);
+                    if (enemyFeedBack.stateDeathName != "") {
+                        animator.Play(enemyFeedBack.stateDeathName);
 
-                isDead = true;
+
+                        StartCoroutine(ShowCurrentClipLength(gameObject.transform.parent.gameObject, animator));
+                    }
+                    else {
+                        Destroy(gameObject.transform.parent.gameObject);
+                    }
+                }
+                catch (Exception e) {
+                    roomParent.ennemiesList.Remove(gameObject);
+
+                    if (enemyFeedBack != null && enemyFeedBack.stateDeathName != "") {
+                        animator.Play(enemyFeedBack.stateDeathName);
+                        StartCoroutine(ShowCurrentClipLength(gameObject, animator));
+                    }
+                    else {
+                        Destroy(gameObject);
+                    }
+
+
+                    isDead = true;
+                }
             }
         }
     }

@@ -67,13 +67,12 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     private void Update() {
         if (loadingBar.value < loadingValue) {
-            loadingBar.value += loadingBar.maxValue * chargeSpeed*0.01f;
+            loadingBar.value += loadingBar.maxValue * chargeSpeed * 0.01f;
         }
-        
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
             Debug.Log((int) 1.78f);
-           if(!GameManager.Instance.gameIsPause) Pause();
+            if (!GameManager.Instance.gameIsPause) Pause();
             else Unpause();
         }
     }
