@@ -24,9 +24,11 @@ public class CameraControllers : MonoBehaviour {
     private Vector3 offSet;
 
     private void Start() {
-        if (useCameraAsRail) cameraMain.transform.position = new Vector3(minPosX.position.x, 0, -10); 
-        CommandConsole COLORBLIND = new CommandConsole("colorblind", "colorblind : change colorblind settings", new List<CommandClass>() {new CommandClass(typeof(ColorblindTypes))}, (value) => { Colorblindness.Instance.Change((int) System.Enum.Parse(typeof(ColorblindTypes), value[0])); });
-        CommandConsoleRuntime.Instance.AddCommand(COLORBLIND);
+        if (useCameraAsRail) cameraMain.transform.position = new Vector3(minPosX.position.x, 0, -10);
+        if (Colorblindness.Instance != null) {
+            CommandConsole COLORBLIND = new CommandConsole("colorblind", "colorblind : change colorblind settings", new List<CommandClass>() {new CommandClass(typeof(ColorblindTypes))}, (value) => { Colorblindness.Instance.Change((int) System.Enum.Parse(typeof(ColorblindTypes), value[0])); });
+            CommandConsoleRuntime.Instance.AddCommand(COLORBLIND);
+        }
     }
 
     private void Update() {

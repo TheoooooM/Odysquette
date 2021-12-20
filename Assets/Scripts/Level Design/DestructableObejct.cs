@@ -20,6 +20,9 @@ public class DestructableObejct : MonoBehaviour {
     [SerializeField] private Transform particlePos = null;
     private bool hasSpawn = false;
 
+    [Header("---- RESSOURCES DROP")] 
+    [SerializeField, Range(0,100)] private int dropRate = 50;
+    [SerializeField, Range(1,5)] private int maxRessources = 3;
 
     private void Start() {
         actualLife = life;
@@ -60,10 +63,12 @@ public class DestructableObejct : MonoBehaviour {
         
         int rdm = Random.Range(0, 100);
 
-        if (rdm>90)
-        {
-            GameObject GO = Resources.Load<GameObject>("ressource");
-            Instantiate(GO, transform.position, Quaternion.identity);
+        if (rdm < dropRate) {
+            int ressourcesNumber = Random.Range(0, maxRessources + 1);
+            for (int i = 0; i < ressourcesNumber; i++) {
+                GameObject GO = Resources.Load<GameObject>("ressource");
+                Instantiate(GO, transform.position, Quaternion.identity);
+            }
         }
         
         if (col != null) col.enabled = false;
