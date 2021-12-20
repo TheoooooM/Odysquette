@@ -25,7 +25,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject main;
     [SerializeField] private GameObject option;
-    
+    public GameObject PauseMenu => pauseMenu;
 
     [Header("----Ressources & Score----")] 
     public TextMeshProUGUI ressourceText;
@@ -77,6 +77,8 @@ public class UIManager : MonoBehaviour {
         GameManager.Instance.gameIsPause = true;
     }
 
+    
+    public void OpenOption() => option.SetActive(true);
     public void Unpause()
     {
         pauseMenu.SetActive(false);
