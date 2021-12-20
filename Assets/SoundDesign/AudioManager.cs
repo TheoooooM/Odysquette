@@ -55,12 +55,4 @@ public class AudioManager : MonoBehaviour
             audioSource.PlayOneShot(kodakFlash,Random.Range(0.9f,1));
         }
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            PlaySoundEffect(3);
-        }
-    }
 }

@@ -292,6 +292,7 @@ GameObject:
   - component: {fileID: 492872804940323633}
   - component: {fileID: 492872804940323634}
   - component: {fileID: 8654570127542962032}
+  - component: {fileID: 492872804813536759}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -413,80 +414,9 @@ MonoBehaviour:
   cameraShake: {fileID: 8654570127542962032}
   _cinemachineVirtualCamera: {fileID: 492872804876775959}
   cameraMain: {fileID: 492872804940323639}
-  speed: 100
-  distanceCurveX:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  distanceCurveY:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   useCameraAsRail: 0
   minPosX: {fileID: 0}
   maxPosX: {fileID: 0}
-  maxDistanceX: 5
-  maxDistanceY: 3.75
-  distXMouseToPlayer: 0
-  distYMouseToPlayer: 0
   currentRectLimitation:
     serializedVersion: 2
     x: -58.65
@@ -506,6 +436,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraShakeOffset: {x: 0, y: 0}
+--- !u!114 &492872804813536759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 492872804940323637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcdee695cf57f3545af7d3a3c6663677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  changeKey: 0
 --- !u!1 &492872805101091262
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,4 +612,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c043619ab0650eb42a14687e38219102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneManager: {fileID: 0}

@@ -1,5 +1,6 @@
-using System;
+using System.Collections.Generic;
 using Cinemachine;
+using SOHNE.Accessibility.Colorblindness;
 using UnityEngine;
 
 public class CameraControllers : MonoBehaviour {
@@ -22,10 +23,16 @@ public class CameraControllers : MonoBehaviour {
     [HideInInspector] public Rect currentRectLimitation;
     private Vector3 offSet;
 
-    private void Start() { if (useCameraAsRail) cameraMain.transform.position = new Vector3(minPosX.position.x, 0, -10); }
+    private void Start() {
+        if (useCameraAsRail) cameraMain.transform.position = new Vector3(minPosX.position.x, 0, -10);
+        if (Colorblindness.Instance != null) {
+            CommandConsole COLORBLIND = new CommandConsole("colorblind", "colorblind : change colorblind settings", new List<CommandClass>() {new CommandClass(typeof(ColorblindTypes))}, (value) => { Colorblindness.Instance.Change((int) System.Enum.Parse(typeof(ColorblindTypes), value[0])); });
+            CommandConsoleRuntime.Instance.AddCommand(COLORBLIND);
+        }
+    }
 
     private void Update() {
-        if (!player.gameObject.activeSelf) return;
+        if (!player.gameObject.activeSelf  || CommandConsoleRuntime.Instance.ObjectChild.activeSelf || UIManager.Instance.PauseMenu.activeSelf) return;
         
         if (!useCameraAsRail) {
             Vector3 mousePos = cameraMain.ScreenToWorldPoint(Input.mousePosition);

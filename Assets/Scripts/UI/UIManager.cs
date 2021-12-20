@@ -29,7 +29,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject main;
     [SerializeField] private GameObject option;
-    
+    public GameObject PauseMenu => pauseMenu;
 
     [Header("----Ressources & Score----")] 
     public TextMeshProUGUI ressourceText;
@@ -70,14 +70,12 @@ public class UIManager : MonoBehaviour {
             loadingBar.value += loadingBar.maxValue * chargeSpeed * 0.01f;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            Debug.Log((int) 1.78f);
-            if (!GameManager.Instance.gameIsPause) Pause();
-            else Unpause();
-        }
+        /*
+         * Open the pause menu is now in the commandConsoleRuntime
+         */
     }
 
-    void Pause()
+    public void Pause()
     {
         pauseMenu.SetActive(true);
         main.SetActive(true);
@@ -86,6 +84,8 @@ public class UIManager : MonoBehaviour {
         GameManager.Instance.gameIsPause = true;
     }
 
+    
+    public void OpenOption() => option.SetActive(true);
     public void Unpause()
     {
         pauseMenu.SetActive(false);
