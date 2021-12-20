@@ -75,42 +75,49 @@ public class Items : MonoBehaviour
    /// <param name="buttonPress"></param>
    private void UseItem(string buttonPress = "E") {
       switch (buttonPress) {
-          case "E":
-             switch (itemType) {
-                case type.straw :
-                   DropStraw();
-                   GameManager.Instance.actualStraw = straw;
-                   break;
-         
-                case  type.juice: 
-                   GameManager.Instance.secondEffect = effect;
-          GameManager.Instance.SetVisualEffect();
-                   break;
-         
-                case type.life : 
-                   //Add life;
-                   break;
-                case type.doubleLife :
-                   
-                   //Add double life;
-                   break;
-                
-             }
-             break;
-          
-          case "A":
-             GameManager.Instance.firstEffect = effect;
-             GameManager.Instance.SetVisualEffect();
-             break;
-          
-          case "F":
-             //Add Ressources
-             break;
-       }
-      Destroy(gameObject);
+         case "E":
+            switch (itemType) {
+               case type.straw:
+                  DropStraw();
+                  GameManager.Instance.actualStraw = straw;
+                  break;
+
+               case type.juice:
+                  GameManager.Instance.secondEffect = effect;
+                  GameManager.Instance.SetVisualEffect();
+                  break;
+
+               case type.life:
+                  //Add life;
+                  break;
+               case type.doubleLife:
+
+                  //Add double life;
+                  break;
+            }
+
+            Destroy(gameObject);
+            break;
+
+         case "A":
+            switch (itemType) {
+               case type.straw: break;
+               case type.juice:
+                  GameManager.Instance.firstEffect = effect;
+                  GameManager.Instance.SetVisualEffect();
+                  Destroy(gameObject);
+                  break;
+
+               case type.life: break;
+
+               case type.doubleLife: break;
+            }
+
+            break;
+      }
    }
 
-   void DropStraw()
+   private void DropStraw()
    {
       GameObject straw = GameManager.Instance.actualStraw switch
       {

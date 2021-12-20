@@ -63,14 +63,12 @@ public class UIManager : MonoBehaviour {
             loadingBar.value += loadingBar.maxValue * chargeSpeed * 0.01f;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            Debug.Log((int) 1.78f);
-            if (!GameManager.Instance.gameIsPause) Pause();
-            else Unpause();
-        }
+        /*
+         * Open the pause menu is now in the commandConsoleRuntime
+         */
     }
 
-    void Pause()
+    public void Pause()
     {
         pauseMenu.SetActive(true);
         main.SetActive(true);

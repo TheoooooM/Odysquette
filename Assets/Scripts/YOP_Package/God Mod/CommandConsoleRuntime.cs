@@ -25,6 +25,7 @@ public class CommandConsoleRuntime : MonoBehaviour {
     [SerializeField] private TMP_InputField inputField = null;
     [SerializeField] private TextMeshProUGUI text = null;
     [SerializeField] private GameObject objectChild = null;
+    public GameObject ObjectChild => objectChild;
     [Space]
     [SerializeField] private Transform textTransformArea = null;
     [SerializeField] private GameObject textPrefab = null;
@@ -67,6 +68,12 @@ public class CommandConsoleRuntime : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.UpArrow) && lastCommand != "") {
                 inputField.text = lastCommand;
                 inputField.caretPosition = inputField.text.Length;
+            }
+        }
+        else {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                if (!GameManager.Instance.gameIsPause) UIManager.Instance.Pause();
+                else UIManager.Instance.Unpause();
             }
         }
 
