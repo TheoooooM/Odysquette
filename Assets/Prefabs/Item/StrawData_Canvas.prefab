@@ -279,10 +279,10 @@ RectTransform:
   m_Father: {fileID: 634015008709608056}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00000020862, y: 0.000000012922}
-  m_SizeDelta: {x: 0.2961, y: 0.3047}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.007799983, y: 0.058399916}
+  m_SizeDelta: {x: -0.2803, y: -0.4126}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6460820841300857788
 CanvasRenderer:
@@ -339,13 +339,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.25
-  m_fontSizeBase: 0.25
+  m_fontSize: 0.82
+  m_fontSizeBase: 0.82
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1045,8 +1045,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.19999999}
-  m_SizeDelta: {x: 0.4, y: 0.39999998}
+  m_AnchoredPosition: {x: 0, y: 0.75}
+  m_SizeDelta: {x: 1.5, y: 1.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6968861890456044189
 CanvasRenderer:
@@ -1998,6 +1998,7 @@ MonoBehaviour:
   shopCostItem: {fileID: 4068267947095484868}
   strawCanvasPrefab: {fileID: 5387136852087691192, guid: 60cb6f382e5bb6c4d8480c5ae2b84981, type: 3}
   transitionArrow: {fileID: 1306661576350512172}
+  PressEGam: {fileID: 8682566369967373455}
   strawName: {fileID: 7865239142968498319}
   strawDesc: {fileID: 6392843365634360565}
   strawSpriteRenderer: {fileID: 0}
@@ -3181,9 +3182,17 @@ PrefabInstance:
       propertyPath: m_PreserveAspect
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4754284166010260287, guid: 72a7041579c9fc64ba8d8d667d11c7bc, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6428724733508264474, guid: 72a7041579c9fc64ba8d8d667d11c7bc, type: 3}
       propertyPath: m_Name
       value: FirstEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428724733508264474, guid: 72a7041579c9fc64ba8d8d667d11c7bc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72a7041579c9fc64ba8d8d667d11c7bc, type: 3}

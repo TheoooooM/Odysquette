@@ -36,10 +36,8 @@ public class Items : MonoBehaviour {
       if (shop) playerInput.Interface.Enable();
       playerInput.Interface.Button.started += ButtonOnperformed;
 
-      if (transform.GetChild(0).GetComponent<SetStrawUI>() == null) {
-         shopCanvas.SetActive(false);
-         groundCanvas.SetActive(false);
-      }
+      groundCanvas.SetActive(false);
+      if (transform.GetChild(0).GetComponent<SetStrawUI>() == null) shopCanvas.SetActive(false);
 
       shop = !ground;
    }

@@ -13,6 +13,7 @@ public class SetStrawUI : MonoBehaviour {
     [SerializeField] private GameObject shopCostItem = null;
     [SerializeField] private GameObject strawCanvasPrefab = null;
     [SerializeField] private GameObject transitionArrow = null;
+    [SerializeField] private GameObject PressEGam = null;
     
     [Header("--- UI OBJECT")]
     [SerializeField] private TextMeshProUGUI strawName = null;
@@ -73,6 +74,7 @@ public class SetStrawUI : MonoBehaviour {
         
         shopCostItem.SetActive(isShop);
         transitionArrow.SetActive(showArrow);
+        PressEGam.SetActive(!showArrow);
     }
 
     /// <summary>
