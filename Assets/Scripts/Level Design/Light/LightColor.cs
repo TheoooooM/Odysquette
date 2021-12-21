@@ -15,6 +15,9 @@ public class LightColor : MonoBehaviour {
     [SerializeField] private List<GameObject> gamColor = new List<GameObject>();
     [SerializeField] private List<GameObject> gamColorLighter = new List<GameObject>();
 
+    public void ChangeLightPink() => ChangeLight(matDataList[1]);
+    public void ChangeLightRed() => ChangeLight(matDataList[2]);
+
     public void ChangeLight(LigthDataSO light) {
         //Dark Color
         foreach (GameObject gam in gamColor) {

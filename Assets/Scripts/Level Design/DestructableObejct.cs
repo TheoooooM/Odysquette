@@ -8,8 +8,10 @@ using Random = UnityEngine.Random;
 public class DestructableObejct : MonoBehaviour {
     [Header("---- OBJECT DATA")] 
     [SerializeField] private List<GameObject> gamToDesactivate = new List<GameObject>();
+    [SerializeField] private List<Collider2D> colliderPathRecalculation = new List<Collider2D>();
     [SerializeField] private BoxCollider2D col = null;
     [SerializeField] private bool useTrigger = false;
+    [SerializeField] private bool recalculatePath = false;
 
     [Header("---- OBJECT LIFE")] 
     [SerializeField] private float life = 0;
@@ -48,19 +50,32 @@ public class DestructableObejct : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D other) {
         if (useTrigger) return;
         if (other.gameObject.CompareTag("Bullet")) {
-            if (other.gameObject.GetComponent<Bullet>() != null) actualLife -= other.gameObject.GetComponent<Bullet>().damage;
-            if(actualLife <= 0) DisableObjects();
+            if (other.gameObject.GetComponent<Bullet>() != null) TakeDamage(other.gameObject.GetComponent<Bullet>().damage);
         }
+    }
+
+    /// <summary>
+    /// Deal damage to the object
+    /// </summary>
+    /// <param name="damage"></param>
+    public void TakeDamage(float damage) {
+        actualLife -= damage;
+        if(actualLife <= 0) DisableObjects();
     }
 
     /// <summary>
     /// Disable all the object
     /// </summary>
     private void DisableObjects() {
+        foreach (Collider2D col2D in colliderPathRecalculation) {
+            Bounds bounds = col2D.bounds;
+            AstarPath.active.UpdateGraphs(bounds);
+        }
+        
         foreach (GameObject gam in gamToDesactivate) {
             gam.SetActive(false);
         }
-        
+
         int rdm = Random.Range(0, 100);
 
         if (rdm < dropRate) {

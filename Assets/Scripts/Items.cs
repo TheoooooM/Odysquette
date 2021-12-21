@@ -2,43 +2,47 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Items : MonoBehaviour
-{
+public class Items : MonoBehaviour {
 
-   public enum type
-   {
-      straw, juice, life, doubleLife
+   public enum type {
+      straw,
+      juice,
+      life,
+      doubleLife
    }
-   
+
    private PlayerMapping playerInput;
 
-   
+
    public bool inRange;
    [SerializeField] private type itemType;
    [SerializeField] private GameManager.Effect effect;
    [SerializeField] private GameManager.Straw straw;
-   [SerializeField] private int healthValue; 
+   [SerializeField] private int healthValue;
    [SerializeField] private int ressourceValue = 5;
    [SerializeField] private int cost = 5;
    [SerializeField] private GameObject shopCanvas;
    [SerializeField] private GameObject groundCanvas;
    [SerializeField] private itemSO SO;
-   
+
    public bool shop;
-   
+
+   /// <summary>
+   /// Spawn the object
+   /// </summary>
+   /// <param name="ground"></param>
    public void SpawnObject(bool ground = false) {
       playerInput = new PlayerMapping();
-      if(shop)playerInput.Interface.Enable();
+      if (shop) playerInput.Interface.Enable();
       playerInput.Interface.Button.started += ButtonOnperformed;
-      
-      shopCanvas.SetActive(false);
+
       groundCanvas.SetActive(false);
-      
+      if (transform.GetChild(0).GetComponent<SetStrawUI>() == null) shopCanvas.SetActive(false);
+
       shop = !ground;
    }
 
-   private void Update()
-   {
+   private void Update() {
       if (Input.GetKeyUp(KeyCode.E) && !shop) playerInput.Interface.Enable();
    }
 
@@ -48,22 +52,18 @@ public class Items : MonoBehaviour
    /// </summary>
    /// <param name="obj"></param>
    private void ButtonOnperformed(InputAction.CallbackContext obj) {
-         Debug.Log("Performed");
-      if (inRange)
-      {
+      Debug.Log("Performed");
+      if (inRange) {
          Debug.Log("in range");
-         if (cost <= NeverDestroy.Instance.ressources && shop)
-         {
+         if (cost <= NeverDestroy.Instance.ressources && shop) {
             Debug.Log("pay " + cost);
             UseItem(obj.control.displayName);
             NeverDestroy.Instance.AddRessource(-cost);
          }
-         else if(!shop)
-         {
+         else if (!shop) {
             UseItem(obj.control.displayName);
          }
-         else
-         {
+         else {
             Debug.Log("can't buy");
          }
       }
@@ -78,6 +78,7 @@ public class Items : MonoBehaviour
          case "E":
             switch (itemType) {
                case type.straw:
+                  transform.GetChild(0).GetComponent<SetStrawUI>().DestroyActualStrawData();
                   DropStraw();
                   GameManager.Instance.actualStraw = straw;
                   break;
@@ -117,23 +118,36 @@ public class Items : MonoBehaviour
       }
    }
 
-   private void DropStraw()
-   {
-      GameObject straw = GameManager.Instance.actualStraw switch
-      {
+   /// <summary>
+   /// Drop the actual straw on the ground
+   /// </summary>
+   private void DropStraw() {
+      GameObject newStrawToSpawn = GameManager.Instance.actualStraw switch {
          GameManager.Straw.basic => SO.basicStraw,
          GameManager.Straw.bubble => SO.bubbleStraw,
          GameManager.Straw.sniper => SO.snipStraw,
          GameManager.Straw.helix => SO.eightStraw,
          GameManager.Straw.tri => SO.triStraw,
          GameManager.Straw.riffle => SO.mitraStraw,
+         _ => throw new ArgumentOutOfRangeException()
       };
 
-     GameObject GO = Instantiate(straw, transform.position, Quaternion.identity);
-     GO.GetComponent<Items>().SpawnObject(true);
+      GameObject GO = Instantiate(newStrawToSpawn, transform.position, Quaternion.identity);
+      GO.GetComponent<Items>().SpawnObject(true);
+      GO.transform.GetChild(0).GetComponent<SetStrawUI>().setData(GameManager.Instance.actualStraw, false, true);
    }
    
-   
+   /// <summary>
+   /// Set a new straw called by SetStrawUI script
+   /// </summary>
+   /// <param name="newStraw"></param>
+   public void SetNewStraw(GameManager.Straw newStraw) {
+      itemType = type.straw;
+      straw = newStraw;
+   }
+
+   #region PLAYER DETECTION
+
    /// <summary>
    /// When the player enter in the trigger of the item
    /// </summary>
@@ -142,22 +156,35 @@ public class Items : MonoBehaviour
       if (other.transform.CompareTag("Player")) {
          GetComponent<SpriteRenderer>().color = Color.yellow;
          inRange = true;
-         if(shop) shopCanvas.SetActive(true);
-         else groundCanvas.SetActive(true);
+         if (itemType == type.straw) {
+            groundCanvas.SetActive(true);
+            transform.GetChild(0).GetComponent<SetStrawUI>().ShowActualStrawData();
+         }
+         else {
+            if (shop) shopCanvas.SetActive(true);
+            else groundCanvas.SetActive(true);
+         }
       }
    }
-   
+
    /// <summary>
    /// When the player exit the trigger of the item
    /// </summary>
    /// <param name="other"></param>
    private void OnTriggerExit2D(Collider2D other) {
-      if (other.transform.CompareTag("Player"))
-      {
+      if (other.transform.CompareTag("Player")) {
          inRange = false;
          GetComponent<SpriteRenderer>().color = Color.white;
-         if(shop) shopCanvas.SetActive(false);
-         else groundCanvas.SetActive(false);
+         if (itemType == type.straw) {
+            groundCanvas.SetActive(false);
+            transform.GetChild(0).GetComponent<SetStrawUI>().DestroyActualStrawData();
+         }
+         else {
+            if (shop) shopCanvas.SetActive(false);
+            else groundCanvas.SetActive(false);
+         }
       }
    }
+
+   #endregion PLAYER DETECTION
 }
