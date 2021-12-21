@@ -55,13 +55,12 @@ public class Explosion : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-      
-        if (other.CompareTag("Enemy"))
-        {
-      
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.CompareTag("Enemy")) {
             other.GetComponent<EnemyStateManager>().TakeDamage(damage, rb.position, knockUpValue, true, true);
+        }
+        else if (other.CompareTag("Walls") && other.GetComponent<DestructableObejct>()) {
+            other.GetComponent<DestructableObejct>().TakeDamage(damage);
         }
     }
 }

@@ -8,7 +8,7 @@ public class CloseRoomEditor : Editor {
         base.OnInspectorGUI();
         
         if (GUILayout.Button("Update Room")) {
-            obj.UpdateCloseRoom(obj.openTop, obj.openRight, obj.openBottom, obj.openLeft);
+            obj.UpdateCloseRoom(obj.openTopTest, obj.openRightTest, obj.openBottomTest, obj.openLeftTest);
         }
     }
 }

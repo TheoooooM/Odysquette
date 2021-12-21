@@ -103,6 +103,8 @@ public class Chest : MonoBehaviour {
                 GameManager.Straw.riffle => SO.mitraStraw,
                 _ => null
             };
+
+            item.transform.GetChild(0).GetComponent<SetStrawUI>().setData(strawSelect, !itemFromChest, true);
         }
         
         InstantiateItem(item);

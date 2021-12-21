@@ -1,15 +1,19 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CloseRoomManager : MonoBehaviour {
     [SerializeField] private CloseRoomClass closeRoom = null;
 
+    [Header("Buildings")] 
+    [SerializeField] private List<LightColor> buildingColors = new List<LightColor>();
+
     [Header("Test")]
-    public bool openTop = false;
-    public bool openRight = false;
-    public bool openBottom = false;
-    public bool openLeft = false;
+    public bool openTopTest = false;
+    public bool openRightTest = false;
+    public bool openBottomTest = false;
+    public bool openLeftTest = false;
     
     
     /// <summary>
@@ -32,6 +36,17 @@ public class CloseRoomManager : MonoBehaviour {
         if(closeRoom.CloseRoomLeft != null) closeRoom.CloseRoomLeft.SetActive(!openLeft);
         foreach (GameObject gam in closeRoom.ObjectToDisableLeft) { gam.SetActive(openLeft); }
 
+        ChangeBuildingLights();
+    }
+
+    private void ChangeBuildingLights() {
+        int randomNumber = Random.Range(0, 4);
+        if(buildingColors.Count == 0) return;
+        
+        for (int i = 0; i < randomNumber; i++) {
+            int randomBuilding = Random.Range(0, buildingColors.Count);
+            buildingColors[randomBuilding].ChangeLightPink();
+        }
     }
 }
 
