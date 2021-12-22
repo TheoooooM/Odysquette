@@ -46,22 +46,23 @@ public class NeverDestroy : MonoBehaviour
         
     }
 
-    private void Update()
-    {
-        time += Time.deltaTime;
-        second = (int) time;
-        if (second == 60)
-        {
-            time = 0;
-            minute++;
+    private void Update() {
+        if (UIManager.Instance != null) {
+            time += Time.deltaTime;
+            second = (int) time;
+            if (second == 60)
+            {
+                time = 0;
+                minute++;
+            }
+            
+            if (minute < 10) minuteText = "0" + minute;
+            else minuteText = minute.ToString();
+            if (second < 10) secondText = "0" + second;
+            else secondText = second.ToString();
+            
+            UIManager.Instance.Timer.text = minuteText + " : " + secondText;
         }
-
-        if (minute < 10) minuteText = "0" + minute;
-        else minuteText = minute.ToString();
-        if (second < 10) secondText = "0" + second;
-        else secondText = second.ToString();
-
-        UIManager.Instance.Timer.text = minuteText + " : " + secondText;
     }
 
 
