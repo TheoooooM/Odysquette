@@ -32,7 +32,7 @@ public class CameraControllers : MonoBehaviour {
     }
 
     private void Update() {
-        if (!player.gameObject.activeSelf  || CommandConsoleRuntime.Instance.ObjectChild.activeSelf || UIManager.Instance.PauseMenu.activeSelf) return;
+        if (!player.gameObject.activeSelf  || (CommandConsoleRuntime.Instance != null && CommandConsoleRuntime.Instance.ObjectChild.activeSelf) || (UIManager.Instance != null && UIManager.Instance.PauseMenu.activeSelf)) return;
         
         if (!useCameraAsRail) {
             Vector3 mousePos = cameraMain.ScreenToWorldPoint(Input.mousePosition);
