@@ -28,6 +28,7 @@ public class Explosion : MonoBehaviour
 
     void OnEnable()
     {
+        AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Explosion, transform.position);
         collider2D.enabled = true;
         timerCollider = 0;
         timer = 0; 

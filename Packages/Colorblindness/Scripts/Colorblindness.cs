@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace SOHNE.Accessibility.Colorblindness
 {
-    public enum ColorblindTypes
-    {
+    public enum ColorblindTypes {
         Normal = 0,
         Protanopia,
         Protanomaly,
@@ -43,26 +42,14 @@ namespace SOHNE.Accessibility.Colorblindness
 
         void SearchVolumes() => volumes = GameObject.FindObjectsOfType<Volume>();
 
-        #region Enable/Disable
-        private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
-        #endregion
-
         public static Colorblindness Instance { get; private set; }
-
-        [UnityEditor.Callbacks.DidReloadScripts]
-        private static void OnScriptsReloaded()
-        {
-#if !RENDERPIPELINE
-            Debug.LogError("There is no type of <b>SRP</b> included in this project.");
-#endif
-        }
 
         void Awake()
         {
             if (Instance == null)
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
+                //DontDestroyOnLoad(gameObject);
             }
             else if (Instance != this)
             {
@@ -71,9 +58,10 @@ namespace SOHNE.Accessibility.Colorblindness
             }
 
             maxType = (int) System.Enum.GetValues(typeof(ColorblindTypes)).Cast<ColorblindTypes>().Last();
+            OnSceneLoaded();
         }
 
-        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        void OnSceneLoaded()
         {
             SearchVolumes();
 

@@ -374,13 +374,15 @@ public class EnemyStateManager : MonoBehaviour {
 
     public virtual void OnDeath(bool byFall = false) {
         if (!isDead) {
+            isDead = true;
+            
             GameObject GO = Resources.Load<GameObject>("ressource");
             GameManager.Instance.AddScore(scorePoint);
             int rdm = Random.Range(0, 5);
             for (int i = 0; i < rdm; i++) {
                 Instantiate(GO, transform.position, Quaternion.identity);
             }
-
+            
             if (byFall) {
                 collider2D.enabled = false;
 
@@ -394,6 +396,8 @@ public class EnemyStateManager : MonoBehaviour {
                 StartCoroutine(ShowCurrentClipLength(gameObject.transform.parent.gameObject, animator));
             }
             else {
+                AudioManager.Instance.PlayEnemySound(AudioManager.EnemySoundEnum.Death, gameObject);
+
                 collider2D.enabled = false;
 
                 rb.constraints = RigidbodyConstraints2D.FreezePosition;
@@ -429,9 +433,6 @@ public class EnemyStateManager : MonoBehaviour {
                     else {
                         Destroy(gameObject);
                     }
-
-
-                    isDead = true;
                 }
             }
         }
@@ -448,6 +449,7 @@ public class EnemyStateManager : MonoBehaviour {
             OnDeath();
         }
         else {
+            AudioManager.Instance.PlayEnemySound(AudioManager.EnemySoundEnum.Damage, gameObject);
             Knockup(position, knockUpValue, knockup, isExplosion);
             health -= damage;
         }

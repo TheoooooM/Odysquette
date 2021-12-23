@@ -111,7 +111,7 @@ public class Bullet : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("DestructableObject")) return;
         if (isColliding) return;
-
+        
         isColliding = true;
         // Rest of the code
         StartCoroutine(Reset());
@@ -153,17 +153,19 @@ public class Bullet : MonoBehaviour {
                 DesactiveBullet();
             }
         }
-
         else if (!other.CompareTag("Walls")) {
+            if (GameManager.Instance.firstEffect != GameManager.Effect.explosive && GameManager.Instance.secondEffect != GameManager.Effect.explosive) AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact, transform.position);
             DesactiveBullet();
         }
     }
 
-  public virtual void OnCollisionEnter2D(Collision2D other)
-    {
+    public virtual void OnCollisionEnter2D(Collision2D other) {
         colliding = true;
-        Debug.Log("collide with " + rb.velocity);
-        if (_bounceCount > 0 && other.gameObject.CompareTag("Walls") && lastVelocity.x!=0 && lastVelocity.y!=0) {
+        //Debug.Log("collide with " + rb.velocity);
+        
+        if (_bounceCount > 0 && other.gameObject.CompareTag("Walls") && lastVelocity.x != 0 && lastVelocity.y != 0) {
+            AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact);
+
             _bounceCount--;
             var speed = lastVelocity.magnitude;
             //Debug.Log(lastVelocity);
@@ -173,19 +175,19 @@ public class Bullet : MonoBehaviour {
             lastVelocity = rb.velocity;
             var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
             transform.rotation = Quaternion.Euler(0, 0, angle);
-            
+
 
             isBounce = true;
             Debug.Log(isBounce);
             PoolManager.Instance.SpawnImpactPool(transform);
         }
         else {
+            if(other.gameObject.CompareTag("Walls")) AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact, transform.position);
             DesactiveBullet();
         }
     }
 
-    private void OnCollisionStay2D(Collision2D other)
-    {
+    private void OnCollisionStay2D(Collision2D other) {
         _bounceCount--;
     }
 
