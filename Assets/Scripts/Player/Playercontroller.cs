@@ -68,6 +68,7 @@ public class Playercontroller : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         if(enableMovementAtLaunch) StartInput();
         if (CommandConsoleRuntime.Instance == null) Instantiate(Resources.Load("GodMod/Command"));
+        if (AudioManager.Instance == null) Instantiate(Resources.Load("---- AUDIO MANAGER"));
     }
 
     public void StartInput() {

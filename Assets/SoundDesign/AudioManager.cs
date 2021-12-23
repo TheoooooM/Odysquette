@@ -144,7 +144,7 @@ public class AudioManager : MonoBehaviour {
                     float distanceSubstract = Mathf.Clamp(maxDistanceExplosion - distanceToExplosion, 0.05f, maxDistanceExplosion);
                     float explosionRatio = distanceSubstract / maxDistanceExplosion;
                     
-                    calmSfxAudioSource.PlayOneShot(strawSound.explosion[0], Random.Range(calmSfxAudioSource.volume - .1f, calmSfxAudioSource.volume) * explosionRatio);
+                    calmSfxAudioSource.PlayOneShot(strawSound.explosion[0], Random.Range(calmSfxAudioSource.volume - .2f, calmSfxAudioSource.volume - .1f) * explosionRatio);
                     
                     canExplose = false;
                     explosionTimer = 0;
