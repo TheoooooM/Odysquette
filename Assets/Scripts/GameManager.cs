@@ -264,7 +264,7 @@ public class GameManager : MonoBehaviour {
                     break;
             }
         });
-
+        
         CommandConsoleRuntime.Instance.AddCommand(STRAW);
         CommandConsoleRuntime.Instance.AddCommand(EFFECT);
         CommandConsoleRuntime.Instance.AddCommand(ARSENAL);
@@ -354,7 +354,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        if (isMouse) {
+        if (isMouse && actualStrawClass.StrawName != "") {
             Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x, actualStrawClass.StrawParent.transform.position.y);
             _lookDir = new Vector2(mousepos.x, mousepos.y) - Position;
             angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
@@ -427,8 +427,7 @@ public class GameManager : MonoBehaviour {
     /// Change the actual straw
     /// </summary>
     /// <param name="straw"></param>
-    private void ChangeStraw(Straw straw)
-    {
+    private void ChangeStraw(Straw straw) {
         //dictionnaire
         if (actualStrawClass.StrawParent != null) actualStrawClass.StrawParent.SetActive(false);
         foreach (StrawClass strawC in strawsClass) {

@@ -25,22 +25,20 @@ public class CameraControllers : MonoBehaviour {
 
     private void Start() {
         if (useCameraAsRail) cameraMain.transform.position = new Vector3(minPosX.position.x, 0, -10);
-        if (Colorblindness.Instance != null) {
+        if (Colorblindness.Instance != null && CommandConsoleRuntime.Instance != null) {
             CommandConsole COLORBLIND = new CommandConsole("colorblind", "colorblind : change colorblind settings", new List<CommandClass>() {new CommandClass(typeof(ColorblindTypes))}, (value) => { Colorblindness.Instance.Change((int) System.Enum.Parse(typeof(ColorblindTypes), value[0])); });
             CommandConsoleRuntime.Instance.AddCommand(COLORBLIND);
         }
     }
 
     private void Update() {
-        if (!player.gameObject.activeSelf  || (CommandConsoleRuntime.Instance != null && CommandConsoleRuntime.Instance.ObjectChild.activeSelf) || (UIManager.Instance != null && UIManager.Instance.PauseMenu.activeSelf)) return;
+        if (!player.gameObject.activeSelf  || (CommandConsoleRuntime.Instance != null && CommandConsoleRuntime.Instance.ObjectChild.activeSelf) || ((UIManager.Instance != null && UIManager.Instance.PauseMenu.activeSelf) && GetComponent<HubCamera>() == null)) return;
         
         if (!useCameraAsRail) {
             Vector3 mousePos = cameraMain.ScreenToWorldPoint(Input.mousePosition);
 
             float camPosX = (mousePos.x - cameraMain.transform.position.x) * 1 / 3;
             float camPosY = (mousePos.y - cameraMain.transform.position.y) * 1 / 3;
-            
-            
             
             if (GameManager.Instance == null) {
                 offSet = new Vector3(player.position.x, player.position.y, -10) + cameraShake.CameraShakeOffset;

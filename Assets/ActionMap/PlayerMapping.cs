@@ -212,7 +212,7 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""09543617-a00a-4249-b9e4-d1420d305343"",
-                    ""path"": ""<XInputController>/leftShoulder"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -223,7 +223,7 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4e28b0b7-24c9-4bcb-b8e2-7de550b21445"",
-                    ""path"": ""<XInputController>/rightShoulder"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -267,6 +267,15 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""InteractBtn"",
+                    ""type"": ""Value"",
+                    ""id"": ""1c3efa28-bb21-4c3f-8d92-bd04f0ebf017"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -289,6 +298,17 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Button"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""27ba39f8-9d1b-42d6-be0e-c9c912b18b87"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractBtn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -339,6 +359,7 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
         // Interface
         m_Interface = asset.FindActionMap("Interface", throwIfNotFound: true);
         m_Interface_Button = m_Interface.FindAction("Button", throwIfNotFound: true);
+        m_Interface_InteractBtn = m_Interface.FindAction("InteractBtn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -496,11 +517,13 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Interface;
     private IInterfaceActions m_InterfaceActionsCallbackInterface;
     private readonly InputAction m_Interface_Button;
+    private readonly InputAction m_Interface_InteractBtn;
     public struct InterfaceActions
     {
         private @PlayerMapping m_Wrapper;
         public InterfaceActions(@PlayerMapping wrapper) { m_Wrapper = wrapper; }
         public InputAction @Button => m_Wrapper.m_Interface_Button;
+        public InputAction @InteractBtn => m_Wrapper.m_Interface_InteractBtn;
         public InputActionMap Get() { return m_Wrapper.m_Interface; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -513,6 +536,9 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                 @Button.started -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnButton;
                 @Button.performed -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnButton;
                 @Button.canceled -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnButton;
+                @InteractBtn.started -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnInteractBtn;
+                @InteractBtn.performed -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnInteractBtn;
+                @InteractBtn.canceled -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnInteractBtn;
             }
             m_Wrapper.m_InterfaceActionsCallbackInterface = instance;
             if (instance != null)
@@ -520,6 +546,9 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                 @Button.started += instance.OnButton;
                 @Button.performed += instance.OnButton;
                 @Button.canceled += instance.OnButton;
+                @InteractBtn.started += instance.OnInteractBtn;
+                @InteractBtn.performed += instance.OnInteractBtn;
+                @InteractBtn.canceled += instance.OnInteractBtn;
             }
         }
     }
@@ -557,5 +586,6 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
     public interface IInterfaceActions
     {
         void OnButton(InputAction.CallbackContext context);
+        void OnInteractBtn(InputAction.CallbackContext context);
     }
 }
