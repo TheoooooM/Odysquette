@@ -52,10 +52,12 @@ public static class ExtensionMethods
     public enum PhaseBoss
     {
         Begin,
+        
         First,
         Second,
         Third,
         Four,
+        EndBegin,
 
     }
 

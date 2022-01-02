@@ -9,6 +9,8 @@ using Random = UnityEngine.Random;
 
 public class PlayerDetector : MonoBehaviour
 {
+    [SerializeField] private Collider2D detectEnemyArea;
+
     private EnemyStateManager ESM;
     public float range = 1;
     [SerializeField]
@@ -22,10 +24,12 @@ public class PlayerDetector : MonoBehaviour
     [SerializeField] private UnityEvent patrolEvent;
 
 
+
     
    
     void Start()
     {
+  
         ESM = GetComponent<EnemyStateManager>();
     }
 
@@ -53,6 +57,7 @@ public class PlayerDetector : MonoBehaviour
     {
         Gizmos.color = Color.red;
        Gizmos.DrawWireSphere(transform.position, range);
+ 
         
     }
 
@@ -64,13 +69,9 @@ public class PlayerDetector : MonoBehaviour
         int rand = Random.Range(0, patrol.directionPatrol.Length);
      
         destination =  patrol.directionPatrol[rand]* length;
-         
-
+        
         GraphNode node = AstarPath.active.GetNearest((Vector2)ESM.spawnPosition +destination).node;
            
-           
-      
-        
         if (node.Walkable)
         {
             aimPatrol.position =  (Vector2)ESM.spawnPosition+ destination; 
@@ -106,12 +107,10 @@ public class PlayerDetector : MonoBehaviour
     {
         float distance = Vector2.Distance(transform.position, GameManager.Instance.Player.transform.position);
         if (distance <= range && ESM.roomParent.runningRoom)
-        {
-          EndDetection();
+        { EndDetection();
         }
         else if(patrol != null && canPatrol)
-        {
-            PlayPatrol();  
+        { PlayPatrol();  
         }
     }
 
@@ -120,9 +119,8 @@ public class PlayerDetector : MonoBehaviour
         ESM.isActivate = true;
         enabled = false;
         
-        
+        //      detectEnemyArea.enabled = false;
         if (patrol != null)
-            
             enemyMovement.enabled = false;
     }
 }

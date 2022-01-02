@@ -73,7 +73,7 @@ public class StateShootBasic : StateShootSO
             {
              
                
-                GameObject bullet = PoolManager.Instance.SpawnEnnemyShoot(enemyTypeShoot, prefabBullet, parentBulletTF);
+                GameObject bullet = EnemySpawnerManager.Instance.SpawnEnnemyShoot(enemyTypeShoot, prefabBullet, parentBulletTF);
                 bullet.SetActive(true);  
                 if (basePosition.Length != 0)
                 {
@@ -121,7 +121,7 @@ public class StateShootBasic : StateShootSO
              for (int i = 0; i < directions.Length; i++)
                     {
                       
-                        GameObject bullet = PoolManager.Instance.SpawnEnnemyShoot(enemyTypeShoot, prefabBullet, parentBulletTF);
+                        GameObject bullet = EnemySpawnerManager.Instance.SpawnEnnemyShoot(enemyTypeShoot, prefabBullet, parentBulletTF);
                    
                         bullet.SetActive(true);  
                         if (basePosition.Length != 0)

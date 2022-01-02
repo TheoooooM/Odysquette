@@ -13,6 +13,7 @@ public class Playercontroller : MonoBehaviour {
     public GameObject gun;
     private PlayerMapping playerInput;
     public Transform strawTransform;
+    
 
 
     [Header("---- MOVEMENT")] 
@@ -46,6 +47,14 @@ public class Playercontroller : MonoBehaviour {
     public bool isInFlash;
     private bool isInEffectFlash;
     private float timerInEffectFlash;
+    private float timerKnockBack;
+    private bool inKnockback;
+    private float currentKnockbackDistance;
+    private float timeKnockback;
+    private AnimationCurve curveSpeedKnockback;
+    private float speedKnockback;
+    private bool contactWall;
+    private Vector2 currentDirectionKnockback;
     
     [SerializeField] private bool isInWind;
     [SerializeField] Vector2 windDirection;
@@ -103,6 +112,19 @@ public class Playercontroller : MonoBehaviour {
     }
     private void Update() {
         if (playerInput == null) return;
+        if (inKnockback)
+        {
+            if (timerKnockBack < timeKnockback)
+            {
+                              timerKnockBack += Time.deltaTime;
+                            rb.velocity = currentDirectionKnockback * curveSpeedKnockback.Evaluate(timerKnockBack/timeKnockback) * speedKnockback;
+            }
+            else ResetKnockack(); 
+            if (contactWall)
+                ResetKnockack();
+            return;
+        }
+           
         moveVector = Vector2.zero;
 
         if(GameManager.Instance != null) GameManager.Instance.isMouse = true;
@@ -148,7 +170,11 @@ public class Playercontroller : MonoBehaviour {
             timerBetweenDash += Time.deltaTime;
         }
     }
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
+
+        if (inKnockback)
+            return;
         if (!InDash) {
             if (TryDash && timerBetweenDash >= timeBetweenDash && !isInEffectFlash) {
                 InDash = true;
@@ -160,6 +186,7 @@ public class Playercontroller : MonoBehaviour {
             }
 
             if (isInWind || isConvey) rb.velocity = (moveVector * MouvementSpeed + windDirection + conveyorBeltSpeed);
+            
             else rb.velocity = (moveVector * MouvementSpeed);
         }
         else if (timerDash <= timeDash) {
@@ -233,6 +260,27 @@ public class Playercontroller : MonoBehaviour {
     //FALL
     private Vector3 dir;
     private Vector3 dashPos;
+    
+    public void KnockBack(float time, Vector3 direction, AnimationCurve curveSpeed, float speed)
+    {
+        inKnockback = true;
+        currentDirectionKnockback = direction;
+        speedKnockback = speed;
+        curveSpeedKnockback = curveSpeed;
+        timeKnockback = time;
+
+    }
+
+    void ResetKnockack()
+    {
+        currentDirectionKnockback = Vector2.zero;
+        curveSpeedKnockback = null;
+        speedKnockback = 0;
+        timeKnockback = 0;
+        timerKnockBack = 0;
+        contactWall = false;
+        inKnockback = false; 
+    }
     
     #region FALL
     /// <summary>
@@ -308,6 +356,19 @@ public class Playercontroller : MonoBehaviour {
                 break;
         }
     }
+
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        if (inKnockback)
+        {
+                   if (other.gameObject.CompareTag("Walls"))
+                       contactWall = true;
+
+        }
+
+
+    }
+
     #endregion COLLISION
     
     /// <summary>

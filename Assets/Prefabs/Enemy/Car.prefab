@@ -178,6 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d29982ec27ce94f94b8e5f480cce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scorePoint: 3
   enemyFeedBack: {fileID: 0}
   isActivate: 0
   isContactWall: 0
@@ -205,6 +206,7 @@ MonoBehaviour:
     _object: {fileID: 5175634095495853138}
   - objectInStateManager: 16
     _object: {fileID: 232972612538494193}
+  collider2D: {fileID: 0}
   isInWind: 0
   windDirection: {x: 0, y: 0}
   windSpeed: 0
@@ -322,6 +324,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  rangeForOtherEnemy: 16.8
 --- !u!95 &4215050213622555486
 Animator:
   serializedVersion: 3
@@ -550,8 +553,10 @@ MonoBehaviour:
   isTrigger: 0
   lastImageposition: {x: 0, y: 0, z: 0}
   distanceBetweenImage: 1
+  direction: {x: 0, y: 0}
   firstGhost: 0
   contactWall: 0
+  contact: {x: 0, y: 0}
 --- !u!61 &5397051491870573342
 BoxCollider2D:
   m_ObjectHideFlags: 0

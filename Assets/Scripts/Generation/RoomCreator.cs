@@ -25,6 +25,7 @@ public class RoomCreator : MonoBehaviour {
     public Room[] partList;
 
     [SerializeField] private List<GameObject> _ennemiiList;
+    
     public List<GameObject> ennemiList => _ennemiiList;
 
     public Transform exit;

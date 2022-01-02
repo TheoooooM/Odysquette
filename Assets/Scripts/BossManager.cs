@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossManager : MonoBehaviour
 {
@@ -10,9 +11,11 @@ public class BossManager : MonoBehaviour
   [SerializeField]
   private ParticleSystem bossParticleSystem;
   private int currentIndexEnabledTurret;
-
+  [SerializeField]
+  private Slider healthBar;
   [SerializeField]
  float timeBetweenShootTurret;
+ 
 
  [SerializeField] private float timeOffset;
   [SerializeField]
@@ -26,6 +29,10 @@ public ExtensionMethods.PhaseBoss currentBossPhase;
 [SerializeField]
 private List<HealthCondition> healthConditionList = new List<HealthCondition>();
 private int currentMaxEnabledTurret;
+private PlayerDetector playerDetector;
+private float beginTimer;
+[SerializeField]
+private float beginTime;
   private void Awake()
   {
     if (instance == null)
@@ -37,13 +44,38 @@ private int currentMaxEnabledTurret;
 
   private void Start()
   {
-    
-    enemyStateManager = GetComponent<EnemyStateManager>();
-   
+    playerDetector = GetComponent<PlayerDetector>();
+    enemyStateManager = GetComponent<EnemyStateManager>();         
+    bossParticleSystem.gameObject.SetActive(true);
+                                                                      
+    healthBar.gameObject.SetActive(false);   
+                                                                      
+    healthBar.maxValue = enemyStateManager.EMainStatsSo.maxHealth;
+    healthBar.value = healthBar.maxValue;
+
   }
 
   private void Update()
   {
+    if (currentBossPhase == ExtensionMethods.PhaseBoss.Begin)
+    {
+      if (beginTime > beginTimer)
+      {
+                beginTimer += Time.deltaTime;  
+   
+      }
+      else
+      {
+        currentBossPhase = ExtensionMethods.PhaseBoss.EndBegin;
+         healthBar.maxValue = enemyStateManager.EMainStatsSo.maxHealth;
+         playerDetector.enabled = true;
+         healthBar.gameObject.SetActive(true);   
+         bossParticleSystem.gameObject.SetActive(false);
+       
+      }
+     
+      
+    }
     if (enemyStateManager.isActivate)
     {
          if (!healthConditionList[0].firstUse)
@@ -92,13 +124,14 @@ private int currentMaxEnabledTurret;
 
      currentMaxEnabledTurret =(int) phaseBoss;
      currentIndexEnabledTurret = 0;
+     enemyStateManager.collider2D.enabled = false;
  
      
      for (int i = 0; i < currentMaxEnabledTurret; i++)
      {
    
      baseturrets[i].enabled = true;    Debug.Log( baseturrets[i].enabled);
-     baseturrets[i].boxCollider2D.enabled = true;
+     
        
        baseturrets[i].GetComponent<TurretStateManager>().timerCondition.Remove(0);
        baseturrets[i].GetComponent<TurretStateManager>().timerCondition[0] =
@@ -107,10 +140,16 @@ private int currentMaxEnabledTurret;
 
 
        if (i != 0)
-       { EffectInvincible[i].gameObject.SetActive(true);
+       { 
+         EffectInvincible[i].gameObject.SetActive(true);
          ParticleSystem.MainModule mainModule = EffectInvincible[i].main;
          mainModule.startColor = baseturrets[0].FxColor;
 
+       }
+       else if (i == 0)
+       {
+         Debug.Log("testaa");
+         baseturrets[i].boxCollider2D.enabled = true;
        }
       
      }
@@ -134,11 +173,12 @@ private int currentMaxEnabledTurret;
     
       if (currentIndexEnabledTurret == currentMaxEnabledTurret)
       {
-        
+        enemyStateManager.collider2D.enabled = true;
         bossParticleSystem.gameObject.SetActive(false);
         return;
       }
       EffectInvincible[currentIndexEnabledTurret].gameObject.SetActive(false);
+      baseturrets[currentIndexEnabledTurret].boxCollider2D.enabled = true;
       for (int i = currentIndexEnabledTurret; i < currentMaxEnabledTurret; i++)
     {
       var mainModuleTurret = EffectInvincible[i].main;
@@ -157,5 +197,10 @@ private int currentMaxEnabledTurret;
     public ExtensionMethods.PhaseBoss phaseBoss;
     public bool firstUse;
     public int healthTrigger;
+  }
+
+  public void UpdateSlider(float value)
+  {
+    healthBar.value = value;
   }
 }

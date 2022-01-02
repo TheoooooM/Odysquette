@@ -34,7 +34,7 @@ public class HealthPlayer : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         if (UIManager.Instance != null) {
             for (int i = 0; i < healthPlayer / 2; i++) {
-                Debug.Log("i");
+         
                 UIManager.Instance._HeartsLife.Add(UIManager.Instance.HeartsLifes[i]);
                 UIManager.Instance._HeartsLife[i].gameObject.SetActive(true);
             }
