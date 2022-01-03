@@ -206,14 +206,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 046fbadd66136a74c9c9c66fd50aef0a, type: 2}
   gamLightList:
     gamLightA: []
-    gamLightB:
-    - {fileID: 4023816480304627315}
+    gamLightB: []
     gamLightC: []
     gamLightD: []
   flickerGam: []
   gamColor: []
-  gamColorLighter:
-  - {fileID: 4023816480304627315}
+  gamColorLighter: []
 --- !u!1 &451333662254904884
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,7 +402,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &451333663118207365
 Transform:
   m_ObjectHideFlags: 0
@@ -863,11 +861,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2489101802916744860, guid: a54159917766f3e4f8ce6bc2f12662e0, type: 3}
   m_PrefabInstance: {fileID: 451333662323579707}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4023816480304627315 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3572482973138838856, guid: a54159917766f3e4f8ce6bc2f12662e0, type: 3}
-  m_PrefabInstance: {fileID: 451333662323579707}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &451333662499883095
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1002,6 +995,10 @@ PrefabInstance:
     - target: {fileID: 8643844961872354748, guid: 2e07b71249e8b034d852980a82328638, type: 3}
       propertyPath: m_Name
       value: RedPanel  _  Theo
+      objectReference: {fileID: 0}
+    - target: {fileID: 8643844961872354748, guid: 2e07b71249e8b034d852980a82328638, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8643844961872354750, guid: 2e07b71249e8b034d852980a82328638, type: 3}
       propertyPath: m_RootOrder

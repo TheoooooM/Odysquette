@@ -61,33 +61,26 @@ public class PlayerDetector : MonoBehaviour
         
     }
 
-    void BeginPatrol()
-    {
+    private void BeginPatrol() {
         Vector2 destination;
         aimPatrol.position = rb.position;
         float length = Random.Range(patrol.minDistance, patrol.maxDistance);
         int rand = Random.Range(0, patrol.directionPatrol.Length);
-     
         destination =  patrol.directionPatrol[rand]* length;
-        
         GraphNode node = AstarPath.active.GetNearest((Vector2)ESM.spawnPosition +destination).node;
-           
-        if (node.Walkable)
-        {
-            aimPatrol.position =  (Vector2)ESM.spawnPosition+ destination; 
-            PlayPatrol();
-        }
-        else
-        {
-            return;
-        }
+            
+            if(PathUtilities.IsPathPossible(AstarPath.active.GetNearest(rb.position).node, node) && node.Walkable) {
+                aimPatrol.position = (Vector2) ESM.spawnPosition + destination;
+                PlayPatrol();
+            }
+            else {
+                return;
+            }
     }
 
-    void PlayPatrol()
-    {
-       
+    void PlayPatrol() {
         enemyMovement.enabled = true;
-        enemyMovement.speed = patrol.speed;
+        enemyMovement.speed = patrol.speed / 2;
         enemyMovement.destination = aimPatrol.position;
         patrolEvent.Invoke();
         if (Vector2.Distance(rb.position, enemyMovement.destination) < 0.1f)
