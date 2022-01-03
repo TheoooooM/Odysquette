@@ -20,7 +20,7 @@ public class StateShootSO : StateEnemySO
     public bool hasRange;
     public bool dontCollideWithWall;
     public ExtensionMethods.EnemyTypeShoot enemyTypeShoot;
-    
+ 
     public bool isDelayBetweenShoot;
     
     public bool isDelayBetweenWaveShoot;
@@ -49,7 +49,7 @@ public class StateShootSO : StateEnemySO
 
     public override bool CheckCondition(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary)
     {
-        Debug.Log(objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyPlayer]);
+   
         Rigidbody2D rbPlayer = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyPlayer];
         Rigidbody2D rbEnemy = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyEnemy];
  
@@ -62,7 +62,7 @@ public class StateShootSO : StateEnemySO
                direction.normalized, direction.magnitude, layerMaskRay);
            
           ExtDebug.DrawBoxCastBox(rbEnemy.position, extentsRangeDetection/2, Quaternion.identity, direction.normalized, direction.magnitude, Color.red);
-          Debug.Log(hit.collider.name);
+
            if(hit.collider.gameObject.layer == 9 )
            {
                return true;

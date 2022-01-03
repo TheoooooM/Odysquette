@@ -61,7 +61,7 @@ public class EnemyBullet : MonoBehaviour
         {
             gameObject.SetActive(false); 
 
-            PoolManager.Instance.enemypoolDictionary[enemyTypeShoot].Enqueue(gameObject);
+            EnemySpawnerManager.Instance.enemypoolDictionary[enemyTypeShoot].Enqueue(gameObject);
             isDesactive = true;
         }
         

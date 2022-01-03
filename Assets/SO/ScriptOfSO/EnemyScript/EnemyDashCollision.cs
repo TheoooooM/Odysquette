@@ -11,17 +11,35 @@ public class EnemyDashCollision : MonoBehaviour
     [SerializeField]
     private float distanceBetweenImage;
 
+
+
+    public Vector2 direction;
+
     public bool firstGhost;
     public bool contactWall;
+    public Vector2 contact;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (inDash)
         {
-            isTrigger = true;
-
-
+            if (other.CompareTag("Player"))
+            {
+                
+               contact =  other.ClosestPoint(transform.position);
+              
+                direction =  (Vector3)contact -transform.position;
+               
+                 isTrigger = true;
+            }
         }
     }
+    public void InstantiateFX()
+    {
+    GameObject  fxPrefab =  EnemySpawnerManager.Instance.SpawnFxDash(contact);
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        fxPrefab.transform.rotation = Quaternion.Euler(0,0,angle);
+    }
+    
 
 
 

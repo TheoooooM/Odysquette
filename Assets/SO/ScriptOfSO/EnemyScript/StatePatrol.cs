@@ -70,14 +70,14 @@ public class StatePatrol : StateEnemySO {
 
     Vector2 SetUpDestination(Vector3 direction, float length) {
         Vector2 destination = new Vector2();
-        Debug.Log(direction);
+
         float anglePlayer = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         int rand = Random.Range(0, addAngleList.Length);
         rand = addAngleList[rand];
-        Debug.Log(anglePlayer);
+
 
         anglePlayer += rand;
-        Debug.Log(anglePlayer);
+
         anglePlayer *= Mathf.Deg2Rad;
 
         destination = new Vector2(Mathf.Cos(anglePlayer), Mathf.Sin(anglePlayer)).normalized * length;

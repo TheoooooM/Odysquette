@@ -16,7 +16,6 @@ public class EnemyStateManager : MonoBehaviour {
     public bool isContactWall;
     public EMainStatsSO EMainStatsSo;
     private PlayerDetector playerDetector;
-
     // Variable for Set Value and Object in States
     public Vector2 forceApply;
     public List<BaseObject> baseObjectListCondition = new List<BaseObject>();
@@ -28,7 +27,7 @@ public class EnemyStateManager : MonoBehaviour {
     public Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionaryState =
         new Dictionary<ExtensionMethods.ObjectInStateManager, Object>();
 
-    private Collider2D collider2D;
+    public Collider2D collider2D;
 
     public bool isInWind;
     public Vector2 windDirection;
@@ -443,7 +442,7 @@ public class EnemyStateManager : MonoBehaviour {
         Destroy(gameObjectToDestroy, animator.GetCurrentAnimatorStateInfo(0).length);
     }
 
-    public void TakeDamage(float damage, Vector2 position, float knockUpValue, bool knockup, bool isExplosion) {
+    public virtual void TakeDamage(float damage, Vector2 position, float knockUpValue, bool knockup, bool isExplosion) {
         if(playerDetector != null) playerDetector.EndDetection();
         if (health - damage <= 0) {
             OnDeath();

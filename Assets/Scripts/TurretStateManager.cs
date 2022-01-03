@@ -18,7 +18,7 @@ public class TurretStateManager : EnemyStateManager
  
   enemyFeedBack = GetComponent<EnemyFeedBack>();
   spriteRenderer = GetComponent<SpriteRenderer>();
-  boxCollider2D.enabled = true;
+
   spawnPosition = transform.position;
   rb = GetComponent<Rigidbody2D>();
   for (int i = 0; i < EMainStatsSo.stateEnnemList.Count; i++)

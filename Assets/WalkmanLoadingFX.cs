@@ -20,7 +20,7 @@ public class WalkmanLoadingFX : MonoBehaviour
          
       { 
          gameObject.SetActive(false);
-         PoolManager.Instance.enemypoolDictionary[ExtensionMethods.EnemyTypeShoot.WalkmanLoading].Enqueue(gameObject);
+         EnemySpawnerManager.Instance.enemypoolDictionary[ExtensionMethods.EnemyTypeShoot.WalkmanLoading].Enqueue(gameObject);
       }
    }
 }

@@ -15,7 +15,7 @@ public class PoolManager : MonoBehaviour {
     public Queue<GameObject> explosionQueue;
     public GameObject explosionPrefab;
 
-    public Dictionary<ExtensionMethods.EnemyTypeShoot, Queue<GameObject>> enemypoolDictionary;
+   
 
 
     #region Singleton
@@ -61,21 +61,6 @@ public class PoolManager : MonoBehaviour {
                 //---------------------------------------------------------------------------------------
                 poolDictionary.Add(pol.StrawType, new[] {objectPool, ultimatePool});
             }
-        }
-
-        enemypoolDictionary = new Dictionary<ExtensionMethods.EnemyTypeShoot, Queue<GameObject>>();
-        foreach (EnemyShootPool enemyShootPool in EnemySpawnerManager.Instance.enemyShootPools) {
-            Queue<GameObject> objectPool = new Queue<GameObject>();
-
-            for (int i = 0; i < enemyShootPool.sizePool; i++)
-            {
-                GameObject obj = Instantiate(enemyShootPool.bulletPrefab, transform); 
-                obj.name = enemyShootPool.enemyTypeShoot+" "+i;
-                obj.SetActive(false);
-                objectPool.Enqueue(obj);
-            }
-
-            enemypoolDictionary.Add(enemyShootPool.enemyTypeShoot, objectPool);
         }
     }
 
@@ -131,6 +116,7 @@ public class PoolManager : MonoBehaviour {
     {
         SpawnEffectBulletPool(bullet, impactQueue, impactPrefab);
     }
+    
 
     public  GameObject SpawnEffectBulletPool(Transform bullet, Queue<GameObject> QueueEffect, GameObject prefabBullet)
     {
@@ -147,23 +133,6 @@ public class PoolManager : MonoBehaviour {
         return obj;
     }
 
-    public GameObject SpawnEnnemyShoot(ExtensionMethods.EnemyTypeShoot enemyTypeShoot, GameObject prefabBullet, Transform parentBulletTF) {
-        GameObject obj;
-        if (enemypoolDictionary[enemyTypeShoot].Count == 0) // Instancie une balle si il n'y en a plus dans la queue
-        {
-            obj = Instantiate(prefabBullet,  parentBulletTF.transform.position, parentBulletTF.rotation, transform);
-         
-        }
-        else // Sinon active la première balle se trouvant dans la queue
-        {
-            obj = enemypoolDictionary[enemyTypeShoot].Dequeue();
 
-            obj.transform.position = parentBulletTF.position;
-
-            obj.transform.rotation = parentBulletTF.rotation;
-            // Debug.Log(obj.name);
-        }
-
-        return obj;
-    }
+   
 }

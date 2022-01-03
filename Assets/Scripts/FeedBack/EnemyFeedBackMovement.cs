@@ -81,7 +81,7 @@ public class EnemyFeedBackMovement : MonoBehaviour
                                 if (currentInputAngle >=  multipleAnimationList.angleAnimation[i].angleMin &&
                                     currentInputAngle <=  multipleAnimationList.angleAnimation[i].angleMax)
                                 {
-                                           Debug.Log(multipleAnimationList.angleAnimation[i].stateName);   
+                      
                                     PlayAnimation(multipleAnimationList.angleAnimation[i].stateName, index, true);
                                     AnimationStatesListOneTime[index].ApplyState = true;
                                 }

@@ -18,10 +18,11 @@ public class CurveBullet : Bullet {
 
     public override void OnEnable() {
         base.OnEnable();
+        colliding = false;
         for (int i = 0; i < trajectories.Count; i++) {
             trajectories[i] += transform.position;
         }
-
+        Debug.Log("enable");
         transform.position = trajectories[0];
 
         for (int i = 0; i < trajectories.Count; i++) {
@@ -89,9 +90,9 @@ public class CurveBullet : Bullet {
         base.Update();
         if (!isBounce && !colliding) {
             if (isCurve) {
-               
+                Debug.Log("is curve ");
                 if (Vector3.Distance(transform.position, currentListWaypoint[currentStepPoint]) < 0.1f) {
-                  
+                    Debug.Log("a distance");
                     if (currentListWaypoint[currentStepPoint] == currentListWaypoint[currentListWaypoint.Count - 1] && pointsForBezierCurve[currentWaypoint] != pointsForBezierCurve[pointsForBezierCurve.Count - 1]) {
                         currentWaypoint += 2; 
                         currentStepPoint = 1;
@@ -103,30 +104,13 @@ public class CurveBullet : Bullet {
                     else {
                       
                         if (currentListWaypoint[currentStepPoint] == currentListWaypoint[currentListWaypoint.Count - 1]) {
-                            speed = 0;
-                            Debug.Log("end curve");
-
-                         
-                            if (rateMode == StrawSO.RateMode.Ultimate)
-                                PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][1].Enqueue(gameObject);
-                            else {
-                                PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][0].Enqueue(gameObject);
-                            }
-
-                            trajectories = new List<Vector3>();
-
-                            pointsForBezierCurve = new List<PointsForBezierCurve>();
-
-
-                            currentListWaypoint = new List<Vector3>();  gameObject.SetActive(false);
+                            DesactiveBullet();
+                            Debug.Log("desacti ou lave");
                             return;
                         }
                         else {
                             currentStepPoint++;
-                            
-                          
-                        
-                         
+                           
                         }
                     }
                    
@@ -144,7 +128,7 @@ public class CurveBullet : Bullet {
     {
         colliding = true;
       
-        if (_bounceCount > 0 && other.gameObject.CompareTag("Walls")) {
+        if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls")||other.gameObject.CompareTag("ShieldEnemy"))) {
             
             _bounceCount--;
             
@@ -162,7 +146,10 @@ public class CurveBullet : Bullet {
             PoolManager.Instance.SpawnImpactPool(transform);
         }
         else {
-            DesactiveBullet();
+            if(other.gameObject.CompareTag("Walls"))
+Debug.Log("desactive");
+DesactiveBullet();
+
         }
     }
 }

@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d29982ec27ce94f94b8e5f480cce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scorePoint: 3
   enemyFeedBack: {fileID: 0}
   isActivate: 0
   isContactWall: 0
@@ -133,6 +134,7 @@ MonoBehaviour:
     _object: {fileID: 3120177988508136464}
   - objectInStateManager: 1
     _object: {fileID: 243450507285515242}
+  collider2D: {fileID: 0}
   isInWind: 0
   windDirection: {x: 0, y: 0}
   windSpeed: 0
@@ -250,6 +252,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  rangeForOtherEnemy: 6.35
 --- !u!95 &5148572880405207474
 Animator:
   serializedVersion: 3

@@ -37,14 +37,14 @@ public class StateMouvementSO : StateEnemySO
             if (Vector2.Distance(rbEnemy.position, spawnerTransform.position)<0.1f)
             {
                 enemyMovement.enabled = false;
-                Debug.Log("baa");
+           
                 _endstep = true;
             }
            
         }
         else
         { 
-            Debug.Log("Set speed");
+            
             enemyMovement.enabled = true;
             enemyMovement.destination = rbPlayer.position;
             _endstep = false; 

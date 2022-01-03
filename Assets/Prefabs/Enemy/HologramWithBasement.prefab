@@ -234,6 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d29982ec27ce94f94b8e5f480cce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scorePoint: 3
   enemyFeedBack: {fileID: 0}
   isActivate: 0
   isContactWall: 0
@@ -257,6 +258,7 @@ MonoBehaviour:
     _object: {fileID: 6353946708976870036}
   - objectInStateManager: 0
     _object: {fileID: 0}
+  collider2D: {fileID: 0}
   isInWind: 0
   windDirection: {x: 0, y: 0}
   windSpeed: 0
@@ -388,6 +390,7 @@ MonoBehaviour:
   patrolEvent:
     m_PersistentCalls:
       m_Calls: []
+  rangeForOtherEnemy: 10
 --- !u!95 &7896108724452965943
 Animator:
   serializedVersion: 3

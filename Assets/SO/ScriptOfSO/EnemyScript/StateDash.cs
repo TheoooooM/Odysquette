@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -7,7 +8,11 @@ public class StateDash : StateEnemySO {
     public AnimationCurve animationCurve;
     public float maxspeed;
     public float rangeDetection;
+    public float distanceDash;
 
+    public float timeKnockback;
+    public float speedKnockback;
+    public AnimationCurve curveKnockback;
 
     public Vector3 extentsRangeDetection;
     public LayerMask layerMask;
@@ -22,7 +27,7 @@ public class StateDash : StateEnemySO {
 
             if (hit.collider.gameObject.layer == 9) {
                 Transform target = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.AimDash];
-                target.position = rbPlayer.position;
+                target.position = rb.position + (direction.normalized) * distanceDash;
                 target.gameObject.SetActive(true);
 
 
@@ -48,16 +53,23 @@ public class StateDash : StateEnemySO {
             (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyEnemy];
         EnemyDashCollision enemyDashCollision = (EnemyDashCollision) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyDashCollision];
         Vector2 direction = ((Vector2) transformDash.position - rb.position);
-        float factorSpeed = direction.magnitude / rangeDetection;
+        float factorSpeed =  (distanceDash-direction.magnitude)/distanceDash ;
+        
         float speed = animationCurve.Evaluate(factorSpeed) * maxspeed;
+        
 
-        CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.BeginPlayState);
-
+        CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.BeginPlayState); 
+     
         rb.velocity = direction.normalized * speed;
+
         enemyDashCollision.inDash = true;
         if (enemyDashCollision.isTrigger) {
-            
+            Playercontroller.Instance.KnockBack(timeKnockback, enemyDashCollision.direction, curveKnockback, speedKnockback);
             CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.CollideDuringPlayState);
+            enemyDashCollision.direction = Vector2.zero;
+            enemyDashCollision.contact = Vector2.zero;
+            enemyDashCollision.isTrigger = false;
+            Debug.Log("je suis lu là");
         }
 
   
@@ -66,8 +78,11 @@ public class StateDash : StateEnemySO {
             CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.EndPlayState);
             enemyDashCollision.inDash = false;
             transformDash.gameObject.SetActive(false);
+            Debug.Log(Vector2.Distance(rb.position, transformDash.position) < 0.2f);
+           Debug.Log(enemyDashCollision.contactWall); 
             rb.velocity = Vector2.zero;
             endStep = true;
+            Debug.Log("je suis lu là 2 ");
             enemyDashCollision.contactWall = false;
 
             return;

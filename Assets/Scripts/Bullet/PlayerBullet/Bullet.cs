@@ -163,7 +163,7 @@ public class Bullet : MonoBehaviour {
         colliding = true;
         //Debug.Log("collide with " + rb.velocity);
         
-        if (_bounceCount > 0 && other.gameObject.CompareTag("Walls") && lastVelocity.x != 0 && lastVelocity.y != 0) {
+        if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls")||other.gameObject.CompareTag("ShieldEnemy")) && lastVelocity.x != 0 && lastVelocity.y != 0) {
             AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact);
 
             _bounceCount--;
@@ -223,6 +223,7 @@ public class Bullet : MonoBehaviour {
             StopAllCoroutines();
             gameObject.SetActive(false);
             PoolManager.Instance.SpawnImpactPool(transform);
+            isEnable = false;
             //if(GameManager.Instance.firstEffect == GameManager.Effect.explosion && GameManager.Instance.secondEffect == GameManager.Effect.explosion) PoolManager.Instance.SpawnExplosionPool(transform);
             if (rateMode == StrawSO.RateMode.Ultimate) {
                 PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][1].Enqueue(gameObject);
@@ -230,6 +231,8 @@ public class Bullet : MonoBehaviour {
             else {
                 PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][0].Enqueue(gameObject);
             }
+
+            colliding = false;
 
             isDesactive = true;
         }
