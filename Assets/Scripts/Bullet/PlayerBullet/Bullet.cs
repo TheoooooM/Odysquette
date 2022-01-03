@@ -113,10 +113,6 @@ public class Bullet : MonoBehaviour {
             return;
         }
         
-        isColliding = true;
-        // Rest of the code
-        StartCoroutine(Reset());
-        
         switch (GameManager.Instance.firstEffect) {
             case GameManager.Effect.explosive:
                 Explosion();
@@ -160,12 +156,17 @@ public class Bullet : MonoBehaviour {
         }
     }
 
+
     public virtual void OnCollisionEnter2D(Collision2D other) {
         //Debug.Log("collide with " + rb.velocity);
+        
+        isColliding = true;
         
         if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls")||other.gameObject.CompareTag("ShieldEnemy"))){ 
             AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact);
 
+            StartCoroutine(DestroyBulletIfStuck());
+            
             _bounceCount--;
             var speed = lastVelocity.magnitude;
             //Debug.Log(lastVelocity);
@@ -187,18 +188,20 @@ public class Bullet : MonoBehaviour {
             DesactiveBullet();
         }
     }
-
-    private void OnCollisionStay2D(Collision2D other) {
-        //_bounceCount--;
-    }
-
+    
     private void OnCollisionExit2D(Collision2D other)
     {
         Debug.Log(rb.velocity);
         rb.velocity = lastVelocity;
         Debug.Log(rb.velocity);
+        isColliding = false;
     }
 
+
+    IEnumerator  DestroyBulletIfStuck() {
+        yield return new WaitForSeconds(0.15f);
+        if(isColliding || rb.velocity.magnitude <= .025f) DesactiveBullet();
+    }
 
     private float maxDistance = 15;
     void Explosion() {
@@ -221,7 +224,7 @@ public class Bullet : MonoBehaviour {
         isEnable = true;
     }
 
-   public void DesactiveBullet() {
+    public void DesactiveBullet() {
         if (isDesactive == false) {
             StopAllCoroutines();
             gameObject.SetActive(false);
@@ -237,10 +240,5 @@ public class Bullet : MonoBehaviour {
 
             isDesactive = true;
         }
-    }
-
-    IEnumerator Reset() {
-        yield return new WaitForEndOfFrame();
-        isColliding = false;
     }
 }
