@@ -69,19 +69,16 @@ public class Bullet : MonoBehaviour {
     public virtual void Update() {
         if (hasRange) {
             if (Vector3.Distance(basePosition, transform.position) >= range) {
+                if(GameManager.Instance.firstEffect == GameManager.Effect.explosive || GameManager.Instance.secondEffect == GameManager.Effect.explosive) Explosion();
                 DesactiveBullet();
             }
         }
 
 
         if (rb.velocity.magnitude <= 0.1 && rb.drag > 0 && isEnable) {
+            if(GameManager.Instance.firstEffect == GameManager.Effect.explosive || GameManager.Instance.secondEffect == GameManager.Effect.explosive) Explosion();
             DesactiveBullet();
         }
-
-        // transform.rotation = Quaternion.Euler(0f, 0f, GameManager.Instance.angle);
-
-
-       
     }
 
     private void FixedUpdate() {

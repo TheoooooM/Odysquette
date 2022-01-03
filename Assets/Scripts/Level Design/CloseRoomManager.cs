@@ -40,7 +40,7 @@ public class CloseRoomManager : MonoBehaviour {
     }
 
     private void ChangeBuildingLights() {
-        int randomNumber = Random.Range(0, 4);
+        int randomNumber = Random.Range(2, 4);
         if(buildingColors.Count == 0) return;
         
         for (int i = 0; i < randomNumber; i++) {

@@ -136,8 +136,8 @@ public class Generation : MonoBehaviour {
                 
                 if(OutsideRoom.Count != 0) StartCoroutine(GenerateOutsideRooms());
 
-                    yield return new WaitForSeconds(3);
-                ReGeneratePath();
+                    yield return new WaitForSeconds(0.05f);
+                    ReGeneratePath();
                 
                 foreach (RoomManager room in roomList)
                 {
@@ -472,9 +472,9 @@ public class Generation : MonoBehaviour {
             for (int i = 0; i < room.transform.childCount; i++) {
                 mapPos = new Vector2Int((int) room.transform.GetChild(i).GetComponent<RoomContainer>().roomMapPos.x, (int) room.transform.GetChild(i).GetComponent<RoomContainer>().roomMapPos.y);
                 SearchNeighboorForInstanatiation(mapPos, room.transform.GetChild(i).transform.position);
-                yield return new WaitForSeconds(0.05f);
             }
         }
+        yield return null;
     }
 
     /// <summary>

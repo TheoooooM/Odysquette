@@ -559,6 +559,7 @@ GameObject:
   - component: {fileID: 6722917988245404979}
   - component: {fileID: 6722917988245404978}
   - component: {fileID: 6722917986784810274}
+  - component: {fileID: 6340870695959053093}
   m_Layer: 10
   m_Name: Building 32 Blue
   m_TagString: Walls
@@ -674,6 +675,30 @@ PolygonCollider2D:
       - {x: 7.9398193, y: 4.094692}
       - {x: 4.0065002, y: 4.1011505}
       - {x: 4.007904, y: 6.038311}
+--- !u!114 &6340870695959053093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6722917988245404977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f78c0196c09c46d4386e0fd4876c1ae2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  matDataList:
+  - {fileID: 11400000, guid: 3597dfb6b35d5a444a7b8b61661dba68, type: 2}
+  - {fileID: 11400000, guid: 955b67d757c5ff14bb59e4e7170e7d90, type: 2}
+  - {fileID: 11400000, guid: 046fbadd66136a74c9c9c66fd50aef0a, type: 2}
+  gamLightList:
+    gamLightA: []
+    gamLightB: []
+    gamLightC: []
+    gamLightD: []
+  flickerGam: []
+  gamColor: []
+  gamColorLighter: []
 --- !u!1 &6722917988292205844
 GameObject:
   m_ObjectHideFlags: 0

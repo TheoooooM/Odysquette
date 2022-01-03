@@ -9,7 +9,8 @@ public class LightColor : MonoBehaviour {
     public List<LigthDataSO> MatDataList => matDataList;
 
     [Space]
-    [SerializeField] private gameobjectLightList gamLightList = null;
+    [SerializeField] private List<GameObject> doorLight = null;
+    [SerializeField] private List<GameObject> windowLight = null;
     [SerializeField] private List<GameObject> flickerGam = null;
     [Space]
     [SerializeField] private List<GameObject> gamColor = new List<GameObject>();
@@ -34,24 +35,14 @@ public class LightColor : MonoBehaviour {
             gam.GetComponent<SpriteRenderer>().material = light.FlickerMat;
         }
         
-        //GameObject Light A
-        foreach (GameObject gam in gamLightList.GamLightA) {
+        //Door Light
+        foreach (GameObject gam in doorLight) {
             gam.GetComponent<SpriteRenderer>().material = light.ColorMat.MatA;
         }
         
-        //GameObject Light B
-        foreach (GameObject gam in gamLightList.GamLightB) {
+        //Window Light
+        foreach (GameObject gam in windowLight) {
             gam.GetComponent<SpriteRenderer>().material = light.ColorMat.MatB;
-        }
-        
-        //GameObject Light C
-        foreach (GameObject gam in gamLightList.GamLightC) {
-            gam.GetComponent<SpriteRenderer>().material = light.ColorMat.MatC;
-        }
-        
-        //GameObject Light D
-        foreach (GameObject gam in gamLightList.GamLightD) {
-            gam.GetComponent<SpriteRenderer>().material = light.ColorMat.MatD;
         }
     }
 }
@@ -63,26 +54,6 @@ public class LightColor : MonoBehaviour {
 public class MaterialList {
     [SerializeField] private Material matA = null;
     [SerializeField] private Material matB = null;
-    [SerializeField] private Material matC = null;
-    [SerializeField] private Material matD = null;
     public Material MatA => matA;
     public Material MatB => matB;
-    public Material MatC => matC;
-    public Material MatD => matD;
-}
-
-/// <summary>
-/// List of the lights
-/// </summary>
-[Serializable]
-public class gameobjectLightList {
-    [SerializeField] private List<GameObject> gamLightA = null;
-    [SerializeField] private List<GameObject> gamLightB = null;
-    [SerializeField] private List<GameObject> gamLightC = null;
-    [SerializeField] private List<GameObject> gamLightD = null;
-
-    public List<GameObject> GamLightA => gamLightA;
-    public List<GameObject> GamLightB => gamLightB;
-    public List<GameObject> GamLightC => gamLightC;
-    public List<GameObject> GamLightD => gamLightD;
 }
