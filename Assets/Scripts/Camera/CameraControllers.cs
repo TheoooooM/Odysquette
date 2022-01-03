@@ -19,7 +19,13 @@ public class CameraControllers : MonoBehaviour {
     [Header("CAMERA RAIL")] 
     [SerializeField] private bool useCameraAsRail = false;
     [SerializeField] private Transform minPosX, maxPosX = null;
-    
+
+    [Space] 
+    [SerializeField] private GameObject reportGam = null;
+    public GameObject ReportGam => reportGam;
+    [SerializeField] private GameObject reporScreenshottGam = null;
+    public GameObject ReporScreenshottGam => reporScreenshottGam;
+
     [HideInInspector] public Rect currentRectLimitation;
     private Vector3 offSet;
 
@@ -32,7 +38,7 @@ public class CameraControllers : MonoBehaviour {
     }
 
     private void Update() {
-        if (!player.gameObject.activeSelf  || (CommandConsoleRuntime.Instance != null && CommandConsoleRuntime.Instance.ObjectChild.activeSelf) || ((UIManager.Instance != null && UIManager.Instance.PauseMenu.activeSelf) && GetComponent<HubCamera>() == null)) return;
+        if (!player.gameObject.activeSelf  || (CommandConsoleRuntime.Instance != null && CommandConsoleRuntime.Instance.ObjectChild.activeSelf) || ((UIManager.Instance != null && UIManager.Instance.PauseMenu.activeSelf) && GetComponent<HubCamera>() == null) || reportGam.activeSelf || reporScreenshottGam.activeSelf) return;
         
         if (!useCameraAsRail) {
             Vector3 mousePos = cameraMain.ScreenToWorldPoint(Input.mousePosition);

@@ -81,7 +81,7 @@ namespace ReportRequest
 
             screenShotManager = GetComponent<ScreenShotManager>();
         }
-
+        
         public void OpenRequestReportPanel()
         {
             if (!screenShotManager.isOpenScreenShotPanel)
