@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
     public bool isBounce;
-    public bool colliding;
     public bool hasRange;
     public float damage;
     public float range;
@@ -15,7 +14,7 @@ public class Bullet : MonoBehaviour {
     public float knockUpValue;
     public StrawSO.RateMode rateMode;
     public Vector3 oldPositionPoison;
-    [SerializeField] private bool isColliding;
+    public bool isColliding;
     public Rigidbody2D rb;
     public Vector3 lastVelocity;
 
@@ -55,7 +54,7 @@ public class Bullet : MonoBehaviour {
         basePosition = transform.position;
         _pierceCount = pierceCount;
         //canBounce = false; 
-        lastVelocity = rb.velocity;
+        //lastVelocity = rb.velocity;
         Invoke(nameof(DelayforDrag), 0.5f);
 
         if (GameManager.Instance.firstEffect == GameManager.Effect.piercing || GameManager.Instance.secondEffect == GameManager.Effect.piercing) _pierceCount = pierceCount;
@@ -102,12 +101,17 @@ public class Bullet : MonoBehaviour {
                 _poisonCooldown = poisonCooldown;
             }*/
         }
-        if(!isColliding)lastVelocity = rb.velocity;
+
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("DestructableObject")) return;
-        if (isColliding) return;
+        if (isColliding)
+        {
+            DesactiveBullet();
+            return;
+        }
         
         isColliding = true;
         // Rest of the code
@@ -157,10 +161,9 @@ public class Bullet : MonoBehaviour {
     }
 
     public virtual void OnCollisionEnter2D(Collision2D other) {
-        colliding = true;
         //Debug.Log("collide with " + rb.velocity);
         
-        if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls")||other.gameObject.CompareTag("ShieldEnemy")) && lastVelocity.x != 0 && lastVelocity.y != 0) {
+        if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls")||other.gameObject.CompareTag("ShieldEnemy"))){ 
             AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact);
 
             _bounceCount--;
@@ -170,6 +173,7 @@ public class Bullet : MonoBehaviour {
             var direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
             rb.velocity = direction * Mathf.Max(speed, 0f);
             lastVelocity = rb.velocity;
+            
             var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
             transform.rotation = Quaternion.Euler(0, 0, angle);
 
@@ -185,12 +189,14 @@ public class Bullet : MonoBehaviour {
     }
 
     private void OnCollisionStay2D(Collision2D other) {
-        _bounceCount--;
+        //_bounceCount--;
     }
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        colliding = false;
+        Debug.Log(rb.velocity);
+        rb.velocity = lastVelocity;
+        Debug.Log(rb.velocity);
     }
 
 
@@ -228,8 +234,6 @@ public class Bullet : MonoBehaviour {
             else {
                 PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][0].Enqueue(gameObject);
             }
-
-            colliding = false;
 
             isDesactive = true;
         }
