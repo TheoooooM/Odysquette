@@ -142,11 +142,12 @@ public class GameManager : MonoBehaviour {
         AddCommandConsole();
         
         //LeaderBoard Setup
-        LootLockerSDKManager.StartSession("Player", (response) =>
+        /*LootLockerSDKManager.StartSession("Player", (response) =>
         {
-            if (response.success)Debug.Log("Success");
-            else Debug.Log("Failed");
-        });
+            while (!response.success) {
+                Debug.Log("ok");
+            }
+        });*/
 
         if (NeverDestroy.Instance == null) Instantiate(Resources.Load<GameObject>("NeverDestroy"));
         else GetND();

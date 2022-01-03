@@ -80,7 +80,7 @@ public class PlayerDetector : MonoBehaviour
 
     void PlayPatrol() {
         enemyMovement.enabled = true;
-        enemyMovement.speed = patrol.speed / 2;
+        enemyMovement.speed = patrol.speed / 3;
         enemyMovement.destination = aimPatrol.position;
         patrolEvent.Invoke();
         if (Vector2.Distance(rb.position, enemyMovement.destination) < 0.1f)
