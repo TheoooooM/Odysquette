@@ -6,7 +6,19 @@ using UnityEngine.UI;
 
 public class BossManager : MonoBehaviour
 {
+
+
+  [SerializeField] private DoubleString[] transitionAnimationList;
+  [SerializeField] private ArrayString[] moveAnimationList;
+  [SerializeField] private ArrayString[] spinAnimationList;
+  [SerializeField] private string[] beginShootAnimationList;
+  [SerializeField] private string[] beginSpinAnimationList;
+  [SerializeField] private string[] shootAnimationList;
+  [SerializeField] private ArrayString[] endSpinAnimationList;
+  
+//---------------------
   [SerializeField]
+  
   private TurretStateManager[] baseturrets = new TurretStateManager[4];
   [SerializeField]
   private ParticleSystem bossParticleSystem;
@@ -203,4 +215,20 @@ private float beginTime;
   {
     healthBar.value = value;
   }
+
+  [Serializable]
+  public class DoubleString
+  {
+    
+    public string firstString;
+    public string secondString;
+  }
+  
+  [Serializable]
+  public class ArrayString
+  {
+    public int index; 
+    public string[] stringList;
+  }
+  
 }
