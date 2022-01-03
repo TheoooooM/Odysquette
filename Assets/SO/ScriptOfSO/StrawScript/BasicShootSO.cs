@@ -17,6 +17,8 @@ public class BasicShootSO : StrawSO
         
     }
 #endif
+
+    private Bullet bulletScript;
     
     public override void Shoot(Transform parentBulletTF,MonoBehaviour script, float currentTimeValue = 1 ) 
     {
@@ -25,6 +27,7 @@ public class BasicShootSO : StrawSO
             for (int i = 0; i < directions.Length; i++)
             {
                 GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode );
+                bulletScript = bullet.GetComponent<Bullet>();
                 bullet.SetActive(true);
                 Vector3 rotation = Vector3.zero;
  
@@ -49,10 +52,13 @@ public class BasicShootSO : StrawSO
                    
                 }
          
-                bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                bullet.GetComponent<Rigidbody2D>().AddForce(rotation* (speedBullet + speedParameter * currentTimeValue),
-                    ForceMode2D.Force);
+                bulletScript.rb.velocity = Vector2.zero;
+                bulletScript.rb.AddForce(rotation* (speedBullet + speedParameter * currentTimeValue),
+                   ForceMode2D.Force);
                 SetParameter(bullet, currentTimeValue,null);
+                script.StartCoroutine(SetVelocity());
+                /*bulletScript.lastVelocity = bulletScript.rb.velocity;
+                Debug.Log("lastVelocity = " +bulletScript.lastVelocity + " rb.velocity = " + bulletScript.rb.velocity);*/
             }
         }
         else
@@ -62,7 +68,12 @@ public class BasicShootSO : StrawSO
       
     }
 
- 
+    IEnumerator SetVelocity()
+    {
+        yield return new WaitForSeconds(0.1f);
+        bulletScript.lastVelocity = bulletScript.rb.velocity;
+        //Debug.Log("lastVelocity = " +bulletScript.lastVelocity + " rb.velocity = " + bulletScript.rb.velocity);
+    }
 
     public override IEnumerator ShootDelay(Transform parentBulletTF, float currentTimeValue)
     {

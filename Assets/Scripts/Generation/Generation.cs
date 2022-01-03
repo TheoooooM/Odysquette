@@ -484,42 +484,42 @@ public class Generation : MonoBehaviour {
     /// <param name="pos"></param>
     private void SearchNeighboorForInstanatiation(Vector2Int mapPos, Vector3 pos) {
         if (map[mapPos.x + 1, mapPos.y] == null && !outsideMap[mapPos.x + 1, mapPos.y]) {
-            Debug.Log(map[mapPos.x + 1, mapPos.y]);
+            //Debug.Log(map[mapPos.x + 1, mapPos.y]);
             SpawnOutsideRoom(RoomDirection.West, pos, new Vector2Int(mapPos.x + 1, mapPos.y));
         }
 
         if (map[mapPos.x - 1, mapPos.y] == null && !outsideMap[mapPos.x - 1, mapPos.y]) {
-            Debug.Log(map[mapPos.x - 1, mapPos.y]);
+            //Debug.Log(map[mapPos.x - 1, mapPos.y]);
             SpawnOutsideRoom(RoomDirection.East, pos, new Vector2Int(mapPos.x - 1, mapPos.y));
         }
 
         if (map[mapPos.x, mapPos.y + 1] == null && !outsideMap[mapPos.x, mapPos.y + 1]) {
-            Debug.Log(map[mapPos.x, mapPos.y + 1]);
+            //Debug.Log(map[mapPos.x, mapPos.y + 1]);
             SpawnOutsideRoom(RoomDirection.North, pos, new Vector2Int(mapPos.x, mapPos.y + 1));
         }
 
         if (map[mapPos.x, mapPos.y - 1] == null && !outsideMap[mapPos.x, mapPos.y - 1]) {
-            Debug.Log(map[mapPos.x, mapPos.y - 1]);
+            //Debug.Log(map[mapPos.x, mapPos.y - 1]);
             SpawnOutsideRoom(RoomDirection.South, pos, new Vector2Int(mapPos.x, mapPos.y - 1));
         }
 
         if (map[mapPos.x + 1, mapPos.y + 1] == null && !outsideMap[mapPos.x + 1, mapPos.y + 1]) {
-            Debug.Log(map[mapPos.x + 1, mapPos.y + 1]);
+            //Debug.Log(map[mapPos.x + 1, mapPos.y + 1]);
             SpawnOutsideRoom(RoomDirection.NorthWest, pos, new Vector2Int(mapPos.x + 1, mapPos.y + 1));
         }
 
         if (map[mapPos.x - 1, mapPos.y + 1] == null && !outsideMap[mapPos.x - 1, mapPos.y + 1]) {
-            Debug.Log(map[mapPos.x - 1, mapPos.y + 1]);
+            //Debug.Log(map[mapPos.x - 1, mapPos.y + 1]);
             SpawnOutsideRoom(RoomDirection.NorthEast, pos, new Vector2Int(mapPos.x - 1, mapPos.y + 1));
         }
 
         if (map[mapPos.x + 1, mapPos.y - 1] == null && !outsideMap[mapPos.x + 1, mapPos.y - 1]) {
-            Debug.Log(map[mapPos.x + 1, mapPos.y - 1]);
+            //Debug.Log(map[mapPos.x + 1, mapPos.y - 1]);
             SpawnOutsideRoom(RoomDirection.SouthWest, pos, new Vector2Int(mapPos.x + 1, mapPos.y - 1));
         }
 
         if (map[mapPos.x - 1, mapPos.y - 1] == null && !outsideMap[mapPos.x - 1, mapPos.y - 1]) {
-            Debug.Log(map[mapPos.x - 1, mapPos.y - 1]);
+            //Debug.Log(map[mapPos.x - 1, mapPos.y - 1]);
             SpawnOutsideRoom(RoomDirection.SouthEast, pos, new Vector2Int(mapPos.x - 1, mapPos.y - 1));
         }
     }

@@ -18,7 +18,7 @@ public class CurveBullet : Bullet {
 
     public override void OnEnable() {
         base.OnEnable();
-        colliding = false;
+        isColliding = false;
         for (int i = 0; i < trajectories.Count; i++) {
             trajectories[i] += transform.position;
         }
@@ -88,7 +88,7 @@ public class CurveBullet : Bullet {
 
     public override void Update() {
         base.Update();
-        if (!isBounce && !colliding) {
+        if (!isBounce && !isColliding) {
             if (isCurve) {
                 Debug.Log("is curve ");
                 if (Vector3.Distance(transform.position, currentListWaypoint[currentStepPoint]) < 0.1f) {
@@ -126,7 +126,7 @@ public class CurveBullet : Bullet {
 
     public override void OnCollisionEnter2D(Collision2D other)
     {
-        colliding = true;
+        isColliding = true;
       
         if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls")||other.gameObject.CompareTag("ShieldEnemy"))) {
             

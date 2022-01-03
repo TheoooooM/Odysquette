@@ -12,9 +12,14 @@ public class RandomShootSO : StrawSO
     [SerializeField]
     private bool probabilityDiscount;
 
+    private Bullet bulletScript;
+    private MonoBehaviour scriptVar;
+
     public int[] possibleDirectionsParameter;
 
-    public override void Shoot(Transform parentBulletTF, MonoBehaviour script, float currentTimeValue = 1) {
+    public override void Shoot(Transform parentBulletTF, MonoBehaviour script, float currentTimeValue = 1)
+    {
+        scriptVar = script;
         if (!isDelayBetweenShoot && !isDelayBetweenWaveShoot) {
 
             List<angleRandom> currentListProbability = new List<angleRandom>();
@@ -38,7 +43,8 @@ public class RandomShootSO : StrawSO
 
                 Debug.Log(index + "index");
                 GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode);
-                bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                bulletScript = bullet.GetComponent<Bullet>();
+                bulletScript.rb.velocity = Vector2.zero;
                 bullet.SetActive(true);
                 Vector3 rotation = Vector3.zero;
 
@@ -68,7 +74,7 @@ public class RandomShootSO : StrawSO
                 }
                 //save pool
 
-                bullet.GetComponent<Rigidbody2D>().AddForce(rotation * (speedBullet + speedParameter * currentTimeValue), ForceMode2D.Force);
+                bulletScript.rb.AddForce(rotation * (speedBullet + speedParameter * currentTimeValue), ForceMode2D.Force);
                 SetParameter(bullet, currentTimeValue, null);
 
                 if (probabilityDiscount) {
@@ -84,7 +90,7 @@ public class RandomShootSO : StrawSO
     }
 
     
-    public override IEnumerator ShootDelay(Transform parentBulletTF, float currentTimeValue) {
+    public override IEnumerator ShootDelay(Transform parentBulletTF, float currentTimeValue ) {
       for (int j = 0; j < numberWaveShoot; j++) {
           List<angleRandom> currentListProbability = new List<angleRandom>();
           currentListProbability.AddRange(possibleDirections);
@@ -96,7 +102,7 @@ public class RandomShootSO : StrawSO
               int index = 0;
 
               while (rand > 0) {
-                  Debug.Log(rand);
+                  //Debug.Log(rand);
                   rand -= currentListProbability[index].probability;
                   index++;
                   if (index == currentListProbability.Count) {
@@ -105,9 +111,10 @@ public class RandomShootSO : StrawSO
                   }
               }
 
-              Debug.Log(index + "index");
+              //Debug.Log(index + "index");
               GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode);
-              bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+              bulletScript = bullet.GetComponent<Bullet>();
+              bulletScript.rb.velocity = Vector2.zero;
               bullet.SetActive(true);
               Vector3 rotation = Vector3.zero;
 
@@ -139,7 +146,8 @@ public class RandomShootSO : StrawSO
               }
               //save pool
 
-              bullet.GetComponent<Rigidbody2D>().AddForce(rotation * (speedBullet + speedParameter * currentTimeValue), ForceMode2D.Force);
+              bulletScript.rb.AddForce(rotation * (speedBullet + speedParameter * currentTimeValue), ForceMode2D.Force);
+              scriptVar.StartCoroutine(SetVelocity());
               SetParameter(bullet, currentTimeValue, null);
 
               if (probabilityDiscount) {
@@ -153,6 +161,13 @@ public class RandomShootSO : StrawSO
 
           if (isDelayBetweenWaveShoot)
               yield return new WaitForSeconds(delayBetweenShoot);
+      }
+      
+      IEnumerator SetVelocity()
+      {
+          yield return new WaitForSeconds(0.1f);
+          bulletScript.lastVelocity = bulletScript.rb.velocity;
+          //Debug.Log("lastVelocity = " +bulletScript.lastVelocity + " rb.velocity = " + bulletScript.rb.velocity);
       }
   }
 
