@@ -202,14 +202,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3597dfb6b35d5a444a7b8b61661dba68, type: 2}
   - {fileID: 11400000, guid: 955b67d757c5ff14bb59e4e7170e7d90, type: 2}
   - {fileID: 11400000, guid: 046fbadd66136a74c9c9c66fd50aef0a, type: 2}
-  gamLightList:
-    gamLightA: []
-    gamLightB: []
-    gamLightC: []
-    gamLightD: []
+  doorLight:
+  - {fileID: 551812864981399463}
+  windowLight: []
   flickerGam: []
-  gamColor: []
-  gamColorLighter: []
+  gamColor:
+  - {fileID: 504696547306339520}
+  gamColorLighter:
+  - {fileID: 551812864981399463}
 --- !u!1 &504696546080881431
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,8 +478,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3105983558723129174}
+  - {fileID: 2995354759895816306}
   - {fileID: 504696547306339523}
+  - {fileID: 3105983558723129174}
   m_Father: {fileID: 504696545758303319}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -494,7 +495,7 @@ GameObject:
   - component: {fileID: 504696547306339523}
   - component: {fileID: 504696547306339522}
   m_Layer: 0
-  m_Name: FrontLight
+  m_Name: Door Front Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -508,7 +509,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 504696547306339520}
   m_LocalRotation: {x: -0, y: -0, z: -0.65748, w: 0.75347203}
-  m_LocalPosition: {x: 1.48, y: -0.97, z: 0}
+  m_LocalPosition: {x: 1.916, y: -1.213, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 504696547116501984}
@@ -532,7 +533,7 @@ MonoBehaviour:
   m_Color: {r: 0, g: 0.8666667, b: 1, a: 1}
   m_Intensity: 1.82
   m_LightVolumeOpacity: 0
-  m_ApplyToSortingLayers: 000000008f2ba8a6c3538c40237556146d183db99dca5689cd457faa
+  m_ApplyToSortingLayers: 000000008f2ba8a6c3538c40237556146d183db99dca5689
   m_LightCookieSprite: {fileID: 0}
   m_UseNormalMap: 0
   m_LightOrder: 0
@@ -541,8 +542,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 3.4978602
+  m_PointLightInnerRadius: 0.51
+  m_PointLightOuterRadius: 2.01
   m_PointLightDistance: 3
   m_PointLightQuality: 1
   m_ShapeLightParametricSides: 5
@@ -623,6 +624,78 @@ Transform:
   m_Father: {fileID: 504696545758303319}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1851012021283146010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2995354759895816306}
+  - component: {fileID: 3321912923029738868}
+  m_Layer: 0
+  m_Name: Panel Front Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2995354759895816306
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851012021283146010}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.18, y: 0.823, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 504696547116501984}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3321912923029738868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851012021283146010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightType: 1
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.461
+  m_Color: {r: 0, g: 0.8666667, b: 1, a: 1}
+  m_Intensity: 0.75
+  m_LightVolumeOpacity: 0
+  m_ApplyToSortingLayers: 000000008f2ba8a6c3538c40237556146d183db99dca5689cd457faa
+  m_LightCookieSprite: {fileID: 0}
+  m_UseNormalMap: 0
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_ShadowIntensity: 0
+  m_ShadowVolumeIntensity: 0
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 1.1442162
+  m_PointLightDistance: 3
+  m_PointLightQuality: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.9
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -1.54245, y: 0.33249664, z: 0}
+  - {x: -1.548172, y: -0.4792862, z: 0}
+  - {x: 2.4527206, y: -0.4715767, z: 0}
+  - {x: 2.4560165, y: 0.33649826, z: 0}
 --- !u!1001 &504696545383851811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1540,7 +1613,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: bee5c5be299098c42b67bbe8e4805fba, type: 2}
     - target: {fileID: 3178311271099701598, guid: f60b2258d6952a147b246f80f7f36689, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3178311271099701598, guid: f60b2258d6952a147b246f80f7f36689, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1672,12 +1745,13 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.7411765
       objectReference: {fileID: 0}
-    - target: {fileID: 2050717593372112269, guid: 0ed9c8be9b71a7c47b8e1562991a2fca, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: bee5c5be299098c42b67bbe8e4805fba, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ed9c8be9b71a7c47b8e1562991a2fca, type: 3}
+--- !u!1 &551812864981399463 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 47679451598325057, guid: 0ed9c8be9b71a7c47b8e1562991a2fca, type: 3}
+  m_PrefabInstance: {fileID: 504696546947658470}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &72107394910853931 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 432670602176326093, guid: 0ed9c8be9b71a7c47b8e1562991a2fca, type: 3}

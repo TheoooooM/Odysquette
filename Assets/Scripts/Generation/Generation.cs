@@ -277,9 +277,9 @@ public class Generation : MonoBehaviour {
         }
 
         if (lastRoomId != -1) validRooms.Remove(lastRoomId);
-
-        lastRoomId = validRooms[Random.Range(0, validRooms.Count)];
-        RoomCreator newRoom = normalRoom[lastRoomId];
+        
+        int newRoomID = validRooms[Random.Range(0, validRooms.Count)];
+        RoomCreator newRoom = normalRoom[newRoomID];
 
         if (newRoom.exitDicitonnary.Count == 0) {
             newRoom.DictionaryUpdate();
@@ -387,25 +387,25 @@ public class Generation : MonoBehaviour {
                                             case open.top:
                                                 RC.exitTop = true;
                                                 RC.room.exitGO = RC.closeTop.gameObject;
-                                                Debug.Log("set exit top at room n°" + i);
+                                                //Debug.Log("set exit top at room n°" + i);
                                                 break;
 
                                             case open.left:
                                                 RC.exitLeft = true;
                                                 RC.room.exitGO = RC.closeLeft.gameObject;
-                                                Debug.Log("set exit left at room n°" + i);
+                                                //Debug.Log("set exit left at room n°" + i);
                                                 break;
 
                                             case open.right:
                                                 RC.exitRight = true;
                                                 RC.room.exitGO = RC.closeRight.gameObject;
-                                                Debug.Log("set exit right at room n°" + i);
+                                                //Debug.Log("set exit right at room n°" + i);
                                                 break;
 
                                             case open.bot:
                                                 RC.exitBot = true;
                                                 RC.room.exitGO = RC.closeBot.gameObject;
-                                                Debug.Log("set exit bot at room n°" + i);
+                                                //Debug.Log("set exit bot at room n°" + i);
                                                 break;
                                         }
                                     }
@@ -445,6 +445,7 @@ public class Generation : MonoBehaviour {
                                 needOpen = exitSide switch {open.top => open.bot, open.left => open.right, open.right => open.left, open.bot => open.top, _ => needOpen};
                                 currentPos = new Vector2((int) (exitPart.roomPos.x - enterPart.roomPos.x + currentPos.x + movePos.x), (int) (exitPart.roomPos.y - enterPart.roomPos.y + currentPos.y + movePos.y));
                                 ready = true;
+                                lastRoomId = newRoomID;
                                 break;
                             }
                         }
@@ -484,42 +485,42 @@ public class Generation : MonoBehaviour {
     /// <param name="pos"></param>
     private void SearchNeighboorForInstanatiation(Vector2Int mapPos, Vector3 pos) {
         if (map[mapPos.x + 1, mapPos.y] == null && !outsideMap[mapPos.x + 1, mapPos.y]) {
-            Debug.Log(map[mapPos.x + 1, mapPos.y]);
+            //Debug.Log(map[mapPos.x + 1, mapPos.y]);
             SpawnOutsideRoom(RoomDirection.West, pos, new Vector2Int(mapPos.x + 1, mapPos.y));
         }
 
         if (map[mapPos.x - 1, mapPos.y] == null && !outsideMap[mapPos.x - 1, mapPos.y]) {
-            Debug.Log(map[mapPos.x - 1, mapPos.y]);
+            //Debug.Log(map[mapPos.x - 1, mapPos.y]);
             SpawnOutsideRoom(RoomDirection.East, pos, new Vector2Int(mapPos.x - 1, mapPos.y));
         }
 
         if (map[mapPos.x, mapPos.y + 1] == null && !outsideMap[mapPos.x, mapPos.y + 1]) {
-            Debug.Log(map[mapPos.x, mapPos.y + 1]);
+            //Debug.Log(map[mapPos.x, mapPos.y + 1]);
             SpawnOutsideRoom(RoomDirection.North, pos, new Vector2Int(mapPos.x, mapPos.y + 1));
         }
 
         if (map[mapPos.x, mapPos.y - 1] == null && !outsideMap[mapPos.x, mapPos.y - 1]) {
-            Debug.Log(map[mapPos.x, mapPos.y - 1]);
+            //Debug.Log(map[mapPos.x, mapPos.y - 1]);
             SpawnOutsideRoom(RoomDirection.South, pos, new Vector2Int(mapPos.x, mapPos.y - 1));
         }
 
         if (map[mapPos.x + 1, mapPos.y + 1] == null && !outsideMap[mapPos.x + 1, mapPos.y + 1]) {
-            Debug.Log(map[mapPos.x + 1, mapPos.y + 1]);
+            //Debug.Log(map[mapPos.x + 1, mapPos.y + 1]);
             SpawnOutsideRoom(RoomDirection.NorthWest, pos, new Vector2Int(mapPos.x + 1, mapPos.y + 1));
         }
 
         if (map[mapPos.x - 1, mapPos.y + 1] == null && !outsideMap[mapPos.x - 1, mapPos.y + 1]) {
-            Debug.Log(map[mapPos.x - 1, mapPos.y + 1]);
+            //Debug.Log(map[mapPos.x - 1, mapPos.y + 1]);
             SpawnOutsideRoom(RoomDirection.NorthEast, pos, new Vector2Int(mapPos.x - 1, mapPos.y + 1));
         }
 
         if (map[mapPos.x + 1, mapPos.y - 1] == null && !outsideMap[mapPos.x + 1, mapPos.y - 1]) {
-            Debug.Log(map[mapPos.x + 1, mapPos.y - 1]);
+            //Debug.Log(map[mapPos.x + 1, mapPos.y - 1]);
             SpawnOutsideRoom(RoomDirection.SouthWest, pos, new Vector2Int(mapPos.x + 1, mapPos.y - 1));
         }
 
         if (map[mapPos.x - 1, mapPos.y - 1] == null && !outsideMap[mapPos.x - 1, mapPos.y - 1]) {
-            Debug.Log(map[mapPos.x - 1, mapPos.y - 1]);
+            //Debug.Log(map[mapPos.x - 1, mapPos.y - 1]);
             SpawnOutsideRoom(RoomDirection.SouthEast, pos, new Vector2Int(mapPos.x - 1, mapPos.y - 1));
         }
     }
@@ -577,6 +578,8 @@ public class Generation : MonoBehaviour {
         poolGam.transform.parent = transform;
         roomPool = poolGam.transform;
         roomPool.name = "RoomPool";
+        
+        roomList.Clear();
         
         map = new RoomContainer[mapSize, mapSize];
         outsideMap = new bool[mapSize, mapSize];

@@ -16,7 +16,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   postExposure:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: -0.2
   contrast:
     m_OverrideState: 1
     m_Value: 15
@@ -54,6 +54,31 @@ MonoBehaviour:
   - {fileID: 1408558839146993657}
   - {fileID: -1907305895259591063}
   - {fileID: 2221441319944810483}
+  - {fileID: 625944268315253068}
+--- !u!114 &625944268315253068
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 221518ef91623a7438a71fef23660601, type: 3}
+  m_Name: WhiteBalance
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  temperature:
+    m_OverrideState: 1
+    m_Value: 15
+    min: -100
+    max: 100
+  tint:
+    m_OverrideState: 0
+    m_Value: 0
+    min: -100
+    max: 100
 --- !u!114 &1408558839146993657
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -70,11 +95,11 @@ MonoBehaviour:
   m_AdvancedMode: 0
   threshold:
     m_OverrideState: 1
-    m_Value: 1.7
+    m_Value: 1.4
     min: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 7.89
+    m_Value: 3.3
     min: 0
   scatter:
     m_OverrideState: 0
