@@ -2,23 +2,34 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class BossManager : MonoBehaviour
 {
+  private EnemyFeedBack enemyFeedBack;
+ 
+  private EnemyFeedBackMovement enemyFeedBackMovement;
 
+  private const string bossName = "BOSS_";
+  private const string transitionName = "_TRANSITIONTO";
+  private const string baseName = "BASE";
+  private const string shootName = "_SHOOT";
+  private const string beginShootName = "_BEGINSHOOT";
+  private const string beginSpinName = "_BEGINSPIN";
+    [SerializeField] private string[] colorName;
+  [SerializeField]
+  private string[] walkName;
 
-  [SerializeField] private DoubleString[] transitionAnimationList;
-  [SerializeField] private ArrayString[] moveAnimationList;
-  [SerializeField] private ArrayString[] spinAnimationList;
-  [SerializeField] private string[] beginShootAnimationList;
-  [SerializeField] private string[] beginSpinAnimationList;
-  [SerializeField] private string[] shootAnimationList;
-  [SerializeField] private ArrayString[] endSpinAnimationList;
-  
+  [SerializeField] private string[] spinName;
+  [SerializeField] private string[] endSpinName;
+
+  private Animator animator;
+  private ExtensionMethods.AngleAnimation[] moveFeedback;
+  private ExtensionMethods.AngleAnimation[] spinFeedback;
+  private ExtensionMethods.AngleAnimation[] endSpinFeedback;
 //---------------------
   [SerializeField]
-  
   private TurretStateManager[] baseturrets = new TurretStateManager[4];
   [SerializeField]
   private ParticleSystem bossParticleSystem;
@@ -28,11 +39,10 @@ public class BossManager : MonoBehaviour
   [SerializeField]
  float timeBetweenShootTurret;
  
-
  [SerializeField] private float timeOffset;
   [SerializeField]
   private ParticleSystem[] EffectInvincible = new ParticleSystem[4];
-  private EnemyStateManager enemyStateManager;
+  private BossStateManager enemyStateManager;
   public int[] numberEnabledTurrets;
   [SerializeField]
   private EMainStatsSO turret;
@@ -45,10 +55,22 @@ private PlayerDetector playerDetector;
 private float beginTimer;
 [SerializeField]
 private float beginTime;
+
+[HideInInspector]
+public bool prepareShootAnimation;
+[HideInInspector]
+public bool inShootAnimation  ;
+[HideInInspector]
+public float shootAnimationTimer;
+
+public float shootAnimationTime;
+private float currentTransitionAnimationTimer;
+private float currentTransitionAnimationTime;
   private void Awake()
   {
     if (instance == null)
     {
+      
          instance = this;
     }
  
@@ -56,15 +78,22 @@ private float beginTime;
 
   private void Start()
   {
+    
+    animator = GetComponent<Animator>();
     playerDetector = GetComponent<PlayerDetector>();
-    enemyStateManager = GetComponent<EnemyStateManager>();         
+    enemyStateManager = GetComponent<BossStateManager>();
+    enemyFeedBack = GetComponent<EnemyFeedBack>();
+    enemyFeedBackMovement = GetComponent<EnemyFeedBackMovement>();
     bossParticleSystem.gameObject.SetActive(true);
+    spinFeedback = enemyFeedBackMovement.AnimationStatesList[1].angleAnimation;
+      moveFeedback = enemyFeedBackMovement.AnimationStatesList[0].angleAnimation;
+      endSpinFeedback = enemyFeedBackMovement.AnimationStatesListOneTime[0].angleAnimation;
                                                                       
     healthBar.gameObject.SetActive(false);   
                                                                       
     healthBar.maxValue = enemyStateManager.EMainStatsSo.maxHealth;
     healthBar.value = healthBar.maxValue;
-
+  TransitionFeedback(0, false);
   }
 
   private void Update()
@@ -90,6 +119,24 @@ private float beginTime;
     }
     if (enemyStateManager.isActivate)
     {
+      if (enemyStateManager.inTransition)
+      {
+        currentTransitionAnimationTimer += Time.deltaTime;
+        if (currentTransitionAnimationTime < currentTransitionAnimationTimer)
+          enemyStateManager.inTransition = false;
+      }
+
+      if (prepareShootAnimation)
+      {
+        if (shootAnimationTimer < shootAnimationTime)
+          shootAnimationTimer += Time.deltaTime;
+        else
+        {
+          inShootAnimation = true;
+          prepareShootAnimation = false;
+          shootAnimationTimer = 0;
+        }
+      }
          if (!healthConditionList[0].firstUse)
           {
                 if (healthConditionList[0].healthTrigger >= enemyStateManager.health)
@@ -160,11 +207,15 @@ private float beginTime;
        }
        else if (i == 0)
        {
+         
          Debug.Log("testaa");
          baseturrets[i].boxCollider2D.enabled = true;
+         
        }
       
      }
+
+     TransitionFeedback(1,  false);
      ParticleSystem.MainModule main = bossParticleSystem.main;
      
      var mainModuleBoss = bossParticleSystem.main;
@@ -185,6 +236,7 @@ private float beginTime;
     
       if (currentIndexEnabledTurret == currentMaxEnabledTurret)
       {
+        TransitionFeedback(currentIndexEnabledTurret, true);
         enemyStateManager.collider2D.enabled = true;
         bossParticleSystem.gameObject.SetActive(false);
         return;
@@ -197,11 +249,51 @@ private float beginTime;
       mainModuleTurret.startColor =
         baseturrets[currentIndexEnabledTurret].FxColor;
     }
+      TransitionFeedback(currentIndexEnabledTurret,  false);
 
     var mainModule = bossParticleSystem.main;
     mainModule.startColor=
       baseturrets[currentIndexEnabledTurret].FxColor;
  
+  }
+
+  void TransitionFeedback(int index,  bool toBaseState)
+  {
+    string currentColorName = bossName+colorName[index];
+   
+    for (int i = 0; i <moveFeedback.Length; i++)
+      moveFeedback[i].stateName = currentColorName+walkName[i];
+
+      for (int i = 0; i < spinFeedback.Length; i++)
+     spinFeedback[i].stateName = currentColorName+spinName[i];
+
+         for (int i = 0; i <  endSpinFeedback.Length; i++)
+      endSpinFeedback[i].stateName =  currentColorName+endSpinName[i];
+         
+    enemyFeedBack.animationList[0] = currentColorName+beginShootName;
+    enemyFeedBack.animationList[1] = currentColorName+shootName;
+    enemyFeedBack.animationList[2] = currentColorName+beginSpinName;
+
+    if (toBaseState)
+    {
+      animator.Play(currentColorName+transitionName+colorName[0]);
+    }
+    else
+    {
+      animator.Play(currentColorName+transitionName+colorName[currentIndexEnabledTurret+1]);
+    }
+    StartCoroutine(ShowCurrentClipLength());
+    //gestion du timer
+
+  }
+
+  IEnumerator ShowCurrentClipLength()
+  {
+    yield return new WaitForEndOfFrame();
+ currentTransitionAnimationTime=  animator.GetCurrentAnimatorStateInfo(0).length;
+ currentTransitionAnimationTimer = 0; 
+  enemyStateManager.inTransition = true;
+
   }
 [Serializable]
   public class HealthCondition
@@ -220,14 +312,14 @@ private float beginTime;
   public class DoubleString
   {
     
-    public string firstString;
-    public string secondString;
+    public string baseName;
+    public string secondName;
   }
   
   [Serializable]
   public class ArrayString
   {
-    public int index; 
+    
     public string[] stringList;
   }
   

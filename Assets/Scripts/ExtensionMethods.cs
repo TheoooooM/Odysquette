@@ -35,7 +35,8 @@ public static class ExtensionMethods
         PlayerController,
         PreviousTransformPlayer,
         EnemyDashCollision,
-        AimPatrol
+        AimPatrol,
+        AimFastMove
     }
 
     public enum EnemyTypeShoot
@@ -73,7 +74,8 @@ public static class ExtensionMethods
         SecondPosition,
         StartFirstPosition,
         StartSecondPosition,
-        CollideDuringPlayState
+        CollideDuringPlayState,
+        EndFastMove
         
     }
 

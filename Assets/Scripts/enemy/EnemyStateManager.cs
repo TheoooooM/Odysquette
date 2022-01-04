@@ -148,7 +148,7 @@ public class EnemyStateManager : MonoBehaviour {
         if (EMainStatsSo.baseState != null) UpdateDictionaries(EMainStatsSo.baseState);
     }
 
-    private void Update() {
+    public virtual void Update() {
         if (isActivate && !isDead) {
             #region CheckStates
 
@@ -232,7 +232,7 @@ public class EnemyStateManager : MonoBehaviour {
     }
 
 
-    private void FixedUpdate() {
+    public virtual void FixedUpdate() {
         if (isActivate && !isDead) {
             ApplyState();
 

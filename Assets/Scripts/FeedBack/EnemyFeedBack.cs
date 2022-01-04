@@ -8,8 +8,15 @@ public class EnemyFeedBack : MonoBehaviour
     public FeedBackEventClassListClass[] feedBackEvent;
     private Animator animator;
     public string stateDeathName;
+    public string[] animationList;
+    
 
-  
+    public void LaunchAnimationWithVariable(int index)
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(animationList[index]))
+            return;
+        animator.Play(animationList[index]);
+    }
 
 
     private void Start()

@@ -26,14 +26,21 @@ public class StateMouvEditor : StateSOEditor
       {
        
       EditorGUILayout.Space(4f);
+      EditorGUILayout.PropertyField(serializedObject.FindProperty("moveSpeed"));
+
+
+
       using (new GUILayout.HorizontalScope())
       {
-       EditorGUILayout.PropertyField(serializedObject.FindProperty("moveSpeed"));
-       GUILayout.FlexibleSpace();
-       EditorGUILayout.PropertyField(serializedObject.FindProperty("isMovementToSpawn"), new GUIContent("To Spawn"));
-  
+       EditorGUILayout.Space(4f);
+       eStateMouvementSO.isFastRun = EditorGUILayout.Toggle("Is Fast Run",eStateMouvementSO.isFastRun);
+       if (eStateMouvementSO.isFastRun)
+       {
+        GUILayout.FlexibleSpace();
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("endFastMove"));
+       }
       }
-     
+
       EditorGUILayout.Space(4f);
      }
   

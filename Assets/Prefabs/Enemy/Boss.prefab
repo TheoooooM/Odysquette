@@ -68,7 +68,7 @@ RectTransform:
   m_Children:
   - {fileID: 8336399845108154345}
   m_Father: {fileID: 4512851392882639276}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -136,6 +136,36 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &4057613590875165249
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1005208095594679101}
+  m_Layer: 8
+  m_Name: AimFastMove
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1005208095594679101
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4057613590875165249}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.2599983, y: 0.19000053, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4512851392882639276}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4512851392810320157
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,6 +223,7 @@ Transform:
   m_LocalPosition: {x: -42.414265, y: 19.222641, z: -8.937716}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1005208095594679101}
   - {fileID: 4512851393308249715}
   - {fileID: 4512851393080758033}
   - {fileID: 4512851394618652995}
@@ -336,6 +367,8 @@ GameObject:
   - component: {fileID: 8565142783127015580}
   - component: {fileID: 2105533335983440603}
   - component: {fileID: 235117669260147664}
+  - component: {fileID: 8990596252497438745}
+  - component: {fileID: 4838588593146391215}
   m_Layer: 8
   m_Name: Boss
   m_TagString: Enemy
@@ -357,7 +390,7 @@ Transform:
   - {fileID: 4512851394486423831}
   - {fileID: 4512851394052730264}
   m_Father: {fileID: 4512851392882639276}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4512851393080758032
 SpriteRenderer:
@@ -407,7 +440,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &4512851393080758038
@@ -509,6 +542,8 @@ MonoBehaviour:
     _object: {fileID: 8086248065315409854}
   - objectInStateManager: 0
     _object: {fileID: 0}
+  - objectInStateManager: 17
+    _object: {fileID: 1005208095594679101}
   collider2D: {fileID: 235117669260147664}
   isInWind: 0
   windDirection: {x: 0, y: 0}
@@ -529,6 +564,7 @@ MonoBehaviour:
   timerCurrentState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
+  inTransition: 0
 --- !u!114 &4512851393080758042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -541,6 +577,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11d60a33e2c50154d9aec4ed729b6886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorName:
+  - BASE
+  - BLUE
+  - RED
+  - YELLOW
+  - GREEN
+  walkName:
+  - _WALKBACKRIGHT
+  - _WALKBACKLEFT
+  - _WALKFRONTRIGHT
+  - _WALKFRONTLEFT
+  spinName:
+  - _SPININBACK
+  - _SPININBACKRIGHT
+  - _SPININBACKLEFT
+  - _SPININFRONT
+  - _SPININFRONTRIGHT
+  - _SPININFRONTLEFT
+  endSpinName:
+  - _ENDSPINBACKRIGHT
+  - _ENDSPINBACKLEFT
+  - _ENDSPINFRONTRIGHT
+  - _ENDSPINFRONTLEFT
   baseturrets:
   - {fileID: 4512851394618653116}
   - {fileID: 4512851393999645453}
@@ -584,6 +643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eb8f267594d2034f82913ef06ed7131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectEnemyArea: {fileID: 0}
   range: 19.7
   patrol: {fileID: 0}
   rb: {fileID: 0}
@@ -649,6 +709,191 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.566868, y: 4.649252}
   m_EdgeRadius: 0
+--- !u!114 &8990596252497438745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4512851393080758034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c677380bcc9251418967693b69ec7e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  feedBackEvent:
+  - stateEnemySo: BossMove
+    feedBackEventClassList:
+    - typeFeedBackEvent: 5
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4838588593146391215}
+            m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
+            m_MethodName: UpdatePosition
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  - stateEnemySo: BossFastMove
+    feedBackEventClassList:
+    - typeFeedBackEvent: 5
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4838588593146391215}
+            m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
+            m_MethodName: UpdatePosition
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 1
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - typeFeedBackEvent: 11
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4838588593146391215}
+            m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
+            m_MethodName: UpdatePositionOnTime
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - typeFeedBackEvent: 4
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 8990596252497438745}
+            m_TargetAssemblyTypeName: EnemyFeedBack, Assembly-CSharp
+            m_MethodName: LaunchAnimationWithVariable
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 2
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  - stateEnemySo: BossShootFinal
+    feedBackEventClassList:
+    - typeFeedBackEvent: 4
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 8990596252497438745}
+            m_TargetAssemblyTypeName: EnemyFeedBack, Assembly-CSharp
+            m_MethodName: LaunchAnimationWithVariable
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - typeFeedBackEvent: 5
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 8990596252497438745}
+            m_TargetAssemblyTypeName: EnemyFeedBack, Assembly-CSharp
+            m_MethodName: LaunchAnimationWithVariable
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 1
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  stateDeathName: 
+  animationList:
+  - 
+  - 
+  - 
+--- !u!114 &4838588593146391215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4512851393080758034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87e011968b9e03f409f5a57d17753f7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimationStatesList:
+  - currentStatePlayed: 
+    angleAnimation:
+    - angleMin: 0
+      angleMax: 90
+      stateName: 
+    - angleMin: 91
+      angleMax: 179
+      stateName: 
+    - angleMin: 270
+      angleMax: 359
+      stateName: 
+    - angleMin: 180
+      angleMax: 260
+      stateName: 
+  - currentStatePlayed: 
+    angleAnimation:
+    - angleMin: 61
+      angleMax: 120
+      stateName: 
+    - angleMin: 0
+      angleMax: 60
+      stateName: 
+    - angleMin: 121
+      angleMax: 180
+      stateName: 
+    - angleMin: 241
+      angleMax: 300
+      stateName: 
+    - angleMin: 301
+      angleMax: 359
+      stateName: 
+    - angleMin: 181
+      angleMax: 240
+      stateName: 
+  AnimationStatesListOneTime:
+  - ApplyState: 0
+    destination: {fileID: 1005208095594679101}
+    angleAnimation:
+    - angleMin: 0
+      angleMax: 90
+      stateName: 
+    - angleMin: 91
+      angleMax: 179
+      stateName: 
+    - angleMin: 270
+      angleMax: 359
+      stateName: 
+    - angleMin: 180
+      angleMax: 260
+      stateName: 
+  animationForSpecificPositionsList: []
+  transformPatrol: {fileID: 0}
 --- !u!1 &4512851393255716662
 GameObject:
   m_ObjectHideFlags: 0
@@ -686,7 +931,7 @@ Transform:
   - {fileID: 4512851393539177315}
   - {fileID: 4512851394842105113}
   m_Father: {fileID: 4512851392882639276}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4512851393255716664
 SpriteRenderer:
@@ -910,7 +1155,7 @@ Transform:
   m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children: []
   m_Father: {fileID: 4512851392882639276}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4512851393308249712
 SpriteRenderer:
@@ -1087,7 +1332,7 @@ Transform:
   - {fileID: 4512851394571066720}
   - {fileID: 4512851394574263880}
   m_Father: {fileID: 4512851392882639276}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4512851393769003420
 SpriteRenderer:
@@ -1319,7 +1564,7 @@ Transform:
   - {fileID: 4512851392912843385}
   - {fileID: 4512851394194436668}
   m_Father: {fileID: 4512851392882639276}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4512851393999645458
 SpriteRenderer:
@@ -21012,7 +21257,7 @@ Transform:
   - {fileID: 4512851392962713232}
   - {fileID: 4512851394419274405}
   m_Father: {fileID: 4512851392882639276}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4512851394618652994
 SpriteRenderer:

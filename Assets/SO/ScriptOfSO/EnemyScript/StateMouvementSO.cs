@@ -10,7 +10,8 @@ using Pathfinding;
 public class StateMouvementSO : StateEnemySO
 {
     public float moveSpeed;
-    public bool isMovementToSpawn;
+    public bool isFastRun;
+    public float endFastMove;
 
     public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
     {
@@ -29,30 +30,29 @@ public class StateMouvementSO : StateEnemySO
 
         bool _endstep = false;
         enemyMovement.speed = moveSpeed;
-        if (isMovementToSpawn)
-        {  Transform spawnerTransform =
-                      (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.Spawner]; Rigidbody2D rbEnemy = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyEnemy];
-            enemyMovement.enabled = true;
-            enemyMovement.destination = spawnerTransform.position;
-            if (Vector2.Distance(rbEnemy.position, spawnerTransform.position)<0.1f)
+        if (isFastRun)
+        {
+            EnemyStateManager enemyStateManager =
+                (EnemyStateManager) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyStateManager];
+         
+          
+           
+            if (enemyStateManager.timerCurrentState > endFastMove)
             {
-                enemyMovement.enabled = false;
-           
-                _endstep = true;
-            }
-           
+                endStep = false;
+                CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.EndFastMove);
+                return;
+            }  
+            Transform aimFastMove =
+                (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.AimFastMove];
+            aimFastMove.position = rbPlayer.position;
+
         }
-        else
-        { 
-            
-            enemyMovement.enabled = true;
+        enemyMovement.enabled = true;
             enemyMovement.destination = rbPlayer.position;
             _endstep = false; 
             CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringPlayState);
-        }
-
-
-        endStep = _endstep;
+            endStep = _endstep;
     }
 
 

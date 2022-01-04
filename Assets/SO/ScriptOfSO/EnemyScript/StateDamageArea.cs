@@ -15,17 +15,28 @@ public class StateDamageArea : StateEnemySO
     public int totalProbability;
  
     public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
-    { 
+    {
+        BossManager.instance.prepareShootAnimation = true;
+        if(BossManager.instance.shootAnimationTime == 0)
+        BossManager.instance.shootAnimationTime = startTime;
+        if (!BossManager.instance.inShootAnimation)
+        {
+            CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringStartState);
+            endStep = false;
+            return;
+        }
+        
         Transform transformPlayer = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformPlayer];
        EnemyStateManager enemyStateManager = (EnemyStateManager) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyStateManager];
        enemyStateManager.StartCoroutine(DelayShoot(transformPlayer.position));
+     
         // dure une frame pour launche animation et faire tout le bordel
         endStep = true;  
     }
 
     public override void PlayState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
-    {
-      // dure 2d secondes mais il y a pas de fonction 
+    {  BossManager.instance.inShootAnimation = false;
+        CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringPlayState);
       endStep = false;
     }
 
