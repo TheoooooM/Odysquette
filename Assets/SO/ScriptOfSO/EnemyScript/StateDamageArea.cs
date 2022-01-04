@@ -18,7 +18,7 @@ public class StateDamageArea : StateEnemySO
     {
         BossManager.instance.prepareShootAnimation = true;
         if(BossManager.instance.shootAnimationTime == 0)
-        BossManager.instance.shootAnimationTime = startTime;
+        BossManager.instance.shootAnimationTime = startTime-0.02f;
         if (!BossManager.instance.inShootAnimation)
         {
             CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringStartState);

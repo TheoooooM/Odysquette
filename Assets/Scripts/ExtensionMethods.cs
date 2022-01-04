@@ -37,6 +37,7 @@ public static class ExtensionMethods
         EnemyDashCollision,
         AimPatrol,
         AimFastMove
+        
     }
 
     public enum EnemyTypeShoot

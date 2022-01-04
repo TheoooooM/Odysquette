@@ -135,7 +135,7 @@ CheckAngle(direction, index);
     {  
         if (animator.GetCurrentAnimatorStateInfo(0).IsName(stateName))
                 return; 
-        
+Debug.Log(stateName);        
             animator.Play(stateName);
         
             if(!animationOneTime)

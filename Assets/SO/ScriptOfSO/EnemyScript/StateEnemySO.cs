@@ -61,6 +61,7 @@ public class StateEnemySO : ScriptableObject
                             {
                                 if(feedBackEventClass[j].typeFeedBackEvent == feedBackEnum)
                                  
+                                    
                                     feedBackEventClass[j].feedBackEvent.Invoke();
                             }
                         }

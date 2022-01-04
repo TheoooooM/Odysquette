@@ -12,13 +12,38 @@ public class StateMouvementSO : StateEnemySO
     public float moveSpeed;
     public bool isFastRun;
     public float endFastMove;
+    public float startSpinAnimationTime;
 
+    public Vector2 defaultSizeCollider;
+    public Vector2 fastMoveSizeCollider;
     public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
     {
-     
-        EnemyMovement enemyMovement = (EnemyMovement) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyMovement];
+        if (isFastRun)
+        {
+            BossManager.instance.isBeginSpin = true;
+
+            if (BossManager.instance.inSpinAnimationTime == 0)
+            {
+                  BossManager.instance.inSpinAnimationTime = startSpinAnimationTime;
+                  Debug.Log("test");
+            }
+              
+            if (BossManager.instance.inSpinAnimationTimer > startSpinAnimationTime)
+            {
+                Debug.Log("tesfdsfqdsfdqsfdqsfdsqfdsqfdsqfdsqfdsqft");
+                CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.BeginStartState);
+                BossManager.instance.enemyStateManager.collider2D.size = fastMoveSizeCollider;
+
+                endStep = true;
+                
+             
+                
+                return;
+            }
+        }
         CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringStartState);
-        enemyMovement.enabled = true;
+        
+    
      
         endStep = true;
     }
@@ -31,7 +56,8 @@ public class StateMouvementSO : StateEnemySO
         bool _endstep = false;
         enemyMovement.speed = moveSpeed;
         if (isFastRun)
-        {
+        {BossManager.instance.inSpinAnimationTimer = 0;
+            BossManager.instance.isBeginSpin = false;
             EnemyStateManager enemyStateManager =
                 (EnemyStateManager) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyStateManager];
          
@@ -41,6 +67,7 @@ public class StateMouvementSO : StateEnemySO
             {
                 endStep = false;
                 CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.EndFastMove);
+                BossManager.instance.enemyStateManager.collider2D.size = defaultSizeCollider;
                 return;
             }  
             Transform aimFastMove =

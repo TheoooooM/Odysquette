@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class BossManager : MonoBehaviour
 {
   private EnemyFeedBack enemyFeedBack;
- 
+  
   private EnemyFeedBackMovement enemyFeedBackMovement;
 
   private const string bossName = "BOSS_";
@@ -17,16 +17,19 @@ public class BossManager : MonoBehaviour
   private const string shootName = "_SHOOT";
   private const string beginShootName = "_BEGINSHOOT";
   private const string beginSpinName = "_BEGINSPIN";
+  
     [SerializeField] private string[] colorName;
   [SerializeField]
   private string[] walkName;
 
+  [SerializeField] private string[] inSpinName;
   [SerializeField] private string[] spinName;
   [SerializeField] private string[] endSpinName;
 
   private Animator animator;
   private ExtensionMethods.AngleAnimation[] moveFeedback;
   private ExtensionMethods.AngleAnimation[] spinFeedback;
+  private ExtensionMethods.AngleAnimation[] inSpinFeedback;
   private ExtensionMethods.AngleAnimation[] endSpinFeedback;
 //---------------------
   [SerializeField]
@@ -38,11 +41,13 @@ public class BossManager : MonoBehaviour
   private Slider healthBar;
   [SerializeField]
  float timeBetweenShootTurret;
+
+
  
  [SerializeField] private float timeOffset;
   [SerializeField]
   private ParticleSystem[] EffectInvincible = new ParticleSystem[4];
-  private BossStateManager enemyStateManager;
+ public BossStateManager enemyStateManager;
   public int[] numberEnabledTurrets;
   [SerializeField]
   private EMainStatsSO turret;
@@ -63,6 +68,9 @@ public bool inShootAnimation  ;
 [HideInInspector]
 public float shootAnimationTimer;
 
+public bool isBeginSpin;
+public float inSpinAnimationTime;
+public float inSpinAnimationTimer;
 public float shootAnimationTime;
 private float currentTransitionAnimationTimer;
 private float currentTransitionAnimationTime;
@@ -87,7 +95,8 @@ private float currentTransitionAnimationTime;
     bossParticleSystem.gameObject.SetActive(true);
     spinFeedback = enemyFeedBackMovement.AnimationStatesList[1].angleAnimation;
       moveFeedback = enemyFeedBackMovement.AnimationStatesList[0].angleAnimation;
-      endSpinFeedback = enemyFeedBackMovement.AnimationStatesListOneTime[0].angleAnimation;
+       inSpinFeedback = enemyFeedBackMovement.AnimationStatesListOneTime[0].angleAnimation;
+      endSpinFeedback = enemyFeedBackMovement.AnimationStatesListOneTime[1].angleAnimation;
                                                                       
     healthBar.gameObject.SetActive(false);   
                                                                       
@@ -136,6 +145,17 @@ private float currentTransitionAnimationTime;
           prepareShootAnimation = false;
           shootAnimationTimer = 0;
         }
+      }
+
+      if (isBeginSpin)
+      {
+
+        if (inSpinAnimationTimer < inSpinAnimationTime)
+        {
+          inSpinAnimationTimer += Time.deltaTime;
+          Debug.Log("testsz");
+        }
+        
       }
          if (!healthConditionList[0].firstUse)
           {
@@ -269,6 +289,9 @@ private float currentTransitionAnimationTime;
 
          for (int i = 0; i <  endSpinFeedback.Length; i++)
       endSpinFeedback[i].stateName =  currentColorName+endSpinName[i];
+         
+         for (int i = 0; i < inSpinFeedback.Length; i++) 
+           inSpinFeedback[i].stateName =  currentColorName+inSpinName[i];
          
     enemyFeedBack.animationList[0] = currentColorName+beginShootName;
     enemyFeedBack.animationList[1] = currentColorName+shootName;

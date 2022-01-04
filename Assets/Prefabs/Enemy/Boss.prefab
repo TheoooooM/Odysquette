@@ -384,7 +384,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4512851393080758034}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.26, y: 0.19, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4512851394486423831}
@@ -437,7 +437,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 8, y: 8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -588,13 +588,18 @@ MonoBehaviour:
   - _WALKBACKLEFT
   - _WALKFRONTRIGHT
   - _WALKFRONTLEFT
-  spinName:
-  - _SPININBACK
+  inSpinName:
   - _SPININBACKRIGHT
   - _SPININBACKLEFT
-  - _SPININFRONT
   - _SPININFRONTRIGHT
   - _SPININFRONTLEFT
+  spinName:
+  - _SPINBACK
+  - _SPINBACKRIGHT
+  - _SPINBACKLEFT
+  - _SPINFRONT
+  - _SPINFRONTRIGHT
+  - _SPINFRONTLEFT
   endSpinName:
   - _ENDSPINBACKRIGHT
   - _ENDSPINBACKLEFT
@@ -614,6 +619,7 @@ MonoBehaviour:
   - {fileID: 4512851394194437571}
   - {fileID: 4512851394842105116}
   - {fileID: 4512851394574263887}
+  enemyStateManager: {fileID: 0}
   numberEnabledTurrets: 
   turret: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
   currentBossPhase: 0
@@ -631,6 +637,13 @@ MonoBehaviour:
     firstUse: 0
     healthTrigger: 500
   beginTime: 3
+  prepareShootAnimation: 0
+  inShootAnimation: 0
+  shootAnimationTimer: 0
+  isBeginSpin: 0
+  inSpinAnimationTime: 0
+  inSpinAnimationTimer: 0
+  shootAnimationTime: 0
 --- !u!114 &867352224232273417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -696,18 +709,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.823267, y: -1.050374}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 14, y: 6.75}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 8, y: 8}
+    newSize: {x: 8, y: 8}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.566868, y: 4.649252}
+  m_Size: {x: 4.7667093, y: 4.3040714}
   m_EdgeRadius: 0
 --- !u!114 &8990596252497438745
 MonoBehaviour:
@@ -758,6 +771,18 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+          - m_Target: {fileID: 4838588593146391215}
+            m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
+            m_MethodName: CancelBoolOneTime
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
     - typeFeedBackEvent: 11
       feedBackEvent:
         m_PersistentCalls:
@@ -769,7 +794,7 @@ MonoBehaviour:
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
+              m_IntArgument: 1
               m_FloatArgument: 0
               m_StringArgument: 
               m_BoolArgument: 0
@@ -786,6 +811,34 @@ MonoBehaviour:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
               m_IntArgument: 2
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - typeFeedBackEvent: 0
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4838588593146391215}
+            m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
+            m_MethodName: UpdatePositionOnTime
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 4838588593146391215}
+            m_TargetAssemblyTypeName: EnemyFeedBackMovement, Assembly-CSharp
+            m_MethodName: CancelBoolOneTime
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 1
               m_FloatArgument: 0
               m_StringArgument: 
               m_BoolArgument: 0
@@ -877,6 +930,21 @@ MonoBehaviour:
       angleMax: 240
       stateName: 
   AnimationStatesListOneTime:
+  - ApplyState: 0
+    destination: {fileID: 0}
+    angleAnimation:
+    - angleMin: 0
+      angleMax: 90
+      stateName: 
+    - angleMin: 91
+      angleMax: 179
+      stateName: 
+    - angleMin: 270
+      angleMax: 359
+      stateName: 
+    - angleMin: 180
+      angleMax: 260
+      stateName: 
   - ApplyState: 0
     destination: {fileID: 1005208095594679101}
     angleAnimation:

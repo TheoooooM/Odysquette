@@ -27,7 +27,7 @@ public class EnemyStateManager : MonoBehaviour {
     public Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionaryState =
         new Dictionary<ExtensionMethods.ObjectInStateManager, Object>();
 
-    public Collider2D collider2D;
+    public BoxCollider2D collider2D;
 
     public bool isInWind;
     public Vector2 windDirection;
@@ -82,7 +82,7 @@ public class EnemyStateManager : MonoBehaviour {
     {
         
             playerDetector = GetComponent<PlayerDetector>();
-            collider2D = GetComponent<Collider2D>();
+            collider2D = GetComponent<BoxCollider2D>();
         enemyFeedBack = GetComponent<EnemyFeedBack>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         spawnPosition = transform.position;
