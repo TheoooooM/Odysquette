@@ -51,11 +51,13 @@ public class Generation : MonoBehaviour {
     private Vector2 currentPos;
     private open needOpen;
 
+    [Header("---- SCENE MANAGER")] public SceneManager sceneMan;
     [Header("---- CAMERA")] public Rect BasicRect;
 
     #endregion VARIABLES
 
     private void Start() {
+        sceneMan.StartIdleOpen();
         AddCommandToConsole();
         
         lastRoomId = -1;
@@ -171,6 +173,7 @@ public class Generation : MonoBehaviour {
         nR.transform.parent = roomPool;
         currentRoom = nR.GetComponent<RoomManager>();
         firstRoom = currentRoom;
+        if(GameManager.Instance != null && GameManager.Instance.Player != null) GameManager.Instance.Player.transform.position = firstRoom.transform.position;
 
         currentRoom.name = "First Room";
         currentRoom.runningRoom = true;
@@ -596,5 +599,6 @@ public class Generation : MonoBehaviour {
         UIManager UI = UIManager.Instance;
         if (value > UI.loadingBar.value) UI.loadingValue = value;
         if (endGeneration) UI.LoadingScreen.SetActive(false);
+        sceneMan.OpenScene();
     }
 }

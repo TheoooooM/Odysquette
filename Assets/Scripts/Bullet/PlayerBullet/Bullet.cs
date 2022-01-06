@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour {
     public float ammountUltimate;
 
     [Header("==============Effects Stat===============")]
-    public int pierceCount = 2;
+    public int pierceCount = 3;
 
     private int _pierceCount;
 
@@ -35,7 +35,8 @@ public class Bullet : MonoBehaviour {
 
     public float distance;
     private SpriteRenderer bulletSpriteRenderer;
-
+    private GameObject lastEnemyHit = null;
+    
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
         if (GameManager.Instance.firstEffect == GameManager.Effect.piercing || GameManager.Instance.secondEffect == GameManager.Effect.piercing) _pierceCount = pierceCount;
@@ -140,13 +141,13 @@ public class Bullet : MonoBehaviour {
                 GameManager.Instance.ultimateValue += enemyStateManager.EMainStatsSo.coeifficentUltimateStrawPoints * ammountUltimate;
             }
             
-            if (_pierceCount > 0) {
+            if (_pierceCount > 0 && lastEnemyHit != other.gameObject) {
                 _pierceCount--;
                 PoolManager.Instance.SpawnPiercePool(transform);
-                PoolManager.Instance.SpawnImpactPool(transform);
+                lastEnemyHit = other.gameObject;
+                //PoolManager.Instance.SpawnImpactPool(transform);
             }
-            else {
-                
+            else if(pierceCount == 0){
                 DesactiveBullet();
             }
         }
@@ -203,7 +204,7 @@ public class Bullet : MonoBehaviour {
         if(isColliding || rb.velocity.magnitude <= .025f) DesactiveBullet();
     }
 
-    private float maxDistance = 15;
+    private float maxDistance = 20;
     void Explosion() {
         PoolManager.Instance.SpawnExplosionPool(transform);
         if (Camera.main != null) {

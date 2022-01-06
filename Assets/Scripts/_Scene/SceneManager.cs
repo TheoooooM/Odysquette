@@ -26,4 +26,7 @@ public class SceneManager : MonoBehaviour {
     /// </summary>
     /// <param name="scene"></param>
     public void LoadScene() => Manager.LoadScene(nextSceneName);
+
+    public void StartIdleOpen() => sceneTransitionGam.GetComponent<Animator>().Play("Scene_IdleOpen");
+    public void OpenScene() => sceneTransitionGam.GetComponent<Animator>().SetTrigger("OpenIdle");
 }

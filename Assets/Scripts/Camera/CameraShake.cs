@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class CameraShake : MonoBehaviour
@@ -20,6 +21,7 @@ public class CameraShake : MonoBehaviour
             cameraShakeOffset = new Vector2(x, y);
             timePassed += Time.deltaTime;
 
+            yield return null;
             yield return null;
         }
         

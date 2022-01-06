@@ -28,6 +28,7 @@ public class CameraControllers : MonoBehaviour {
 
     [HideInInspector] public Rect currentRectLimitation;
     private Vector3 offSet;
+    private float baseCamY = 0;
 
     private void Start() {
         if (useCameraAsRail) cameraMain.transform.position = new Vector3(minPosX.position.x, 0, -10);
@@ -35,6 +36,8 @@ public class CameraControllers : MonoBehaviour {
             CommandConsole COLORBLIND = new CommandConsole("colorblind", "colorblind : change colorblind settings", new List<CommandClass>() {new CommandClass(typeof(ColorblindTypes))}, (value) => { Colorblindness.Instance.Change((int) System.Enum.Parse(typeof(ColorblindTypes), value[0])); });
             CommandConsoleRuntime.Instance.AddCommand(COLORBLIND);
         }
+
+        baseCamY = cameraMain.transform.position.y;
     }
 
     private void Update() {
@@ -55,7 +58,7 @@ public class CameraControllers : MonoBehaviour {
             }
         }
         else {
-            offSet = new Vector3(Mathf.Clamp(player.transform.position.x, minPosX.position.x, maxPosX.position.x), cameraMain.transform.position.y, -10);
+            offSet = new Vector3(Mathf.Clamp(player.transform.position.x, minPosX.position.x, maxPosX.position.x), baseCamY, -10) + cameraShake.CameraShakeOffset;
         }
         
         cameraMain.transform.position = offSet;
