@@ -121,7 +121,7 @@ public class TurretStateManager : EnemyStateManager
   if (!isDead)
   {
    spriteRenderer.color = FxColor;
-   BossManager.instance.UpdateDuringPhase();
+   BossManager.instance.inUpdatePhase = true;
 
 //  GetComponent<Animator>().Play(enemyFeedBack.stateDeathName);
    isDead = true;

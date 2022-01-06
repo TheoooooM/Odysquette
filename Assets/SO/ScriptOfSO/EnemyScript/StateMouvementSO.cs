@@ -25,12 +25,12 @@ public class StateMouvementSO : StateEnemySO
             if (BossManager.instance.inSpinAnimationTime == 0)
             {
                   BossManager.instance.inSpinAnimationTime = startSpinAnimationTime;
-                  Debug.Log("test");
+             
             }
               
             if (BossManager.instance.inSpinAnimationTimer > startSpinAnimationTime)
             {
-                Debug.Log("tesfdsfqdsfdqsfdqsfdsqfdsqfdsqfdsqfdsqft");
+            
                 CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.BeginStartState);
                 BossManager.instance.enemyStateManager.collider2D.size = fastMoveSizeCollider;
 

@@ -42,6 +42,9 @@ public class BossManager : MonoBehaviour
   [SerializeField]
  float timeBetweenShootTurret;
 
+ public bool inSetPhase;
+ public bool inUpdatePhase;
+
 
  
  [SerializeField] private float timeOffset;
@@ -72,8 +75,8 @@ public bool isBeginSpin;
 public float inSpinAnimationTime;
 public float inSpinAnimationTimer;
 public float shootAnimationTime;
-private float currentTransitionAnimationTimer;
-private float currentTransitionAnimationTime;
+
+
   private void Awake()
   {
     if (instance == null)
@@ -128,12 +131,6 @@ private float currentTransitionAnimationTime;
     }
     if (enemyStateManager.isActivate)
     {
-      if (enemyStateManager.inTransition)
-      {
-        currentTransitionAnimationTimer += Time.deltaTime;
-        if (currentTransitionAnimationTime < currentTransitionAnimationTimer)
-          enemyStateManager.inTransition = false;
-      }
 
       if (prepareShootAnimation)
       {
@@ -157,43 +154,26 @@ private float currentTransitionAnimationTime;
         }
         
       }
-         if (!healthConditionList[0].firstUse)
-          {
-                if (healthConditionList[0].healthTrigger >= enemyStateManager.health)
-                {
-                  Debug.Log("test");
-                  SetPhase(ExtensionMethods.PhaseBoss.First);
-                  healthConditionList[0].firstUse = true;
-                }
-          }
-         else if (!healthConditionList[1].firstUse)
-          {
-            if (healthConditionList[1].healthTrigger >= enemyStateManager.health)
-            {
-              SetPhase(ExtensionMethods.PhaseBoss.Second);
-              healthConditionList[1].firstUse = true;
-            }
-          }
-      
-          else if (!healthConditionList[2].firstUse)
-          {
-            if (healthConditionList[2].healthTrigger >= enemyStateManager.health)
-            {
-              SetPhase(ExtensionMethods.PhaseBoss.Third);
-              healthConditionList[2].firstUse = true;
-            }
-          }
-      
-          else if (!healthConditionList[3].firstUse)
-          {
-            if (healthConditionList[3].healthTrigger >= enemyStateManager.health)
-            {
-              SetPhase(ExtensionMethods.PhaseBoss.Four);
-              healthConditionList[3].firstUse = true;
-            }
-          }
+
+      for (int i = 0; i < healthConditionList.Count; i++)
+      {
+        CheckSetPhase(i);
+      }
     }
  
+  }
+
+  void CheckSetPhase(int i)
+  {
+   if (!healthConditionList[i].firstUse)
+    {
+      if (healthConditionList[i].healthTrigger >= enemyStateManager.health)
+      {
+        currentBossPhase = healthConditionList[i].phaseBoss;
+        healthConditionList[i].firstUse = true;
+        inSetPhase = true;
+      }
+    }
   }
 
 
@@ -209,7 +189,7 @@ private float currentTransitionAnimationTime;
      for (int i = 0; i < currentMaxEnabledTurret; i++)
      {
    
-     baseturrets[i].enabled = true;    Debug.Log( baseturrets[i].enabled);
+     baseturrets[i].enabled = true;    
      
        
        baseturrets[i].GetComponent<TurretStateManager>().timerCondition.Remove(0);
@@ -228,7 +208,7 @@ private float currentTransitionAnimationTime;
        else if (i == 0)
        {
          
-         Debug.Log("testaa");
+       
          baseturrets[i].boxCollider2D.enabled = true;
          
        }
@@ -241,9 +221,8 @@ private float currentTransitionAnimationTime;
      var mainModuleBoss = bossParticleSystem.main;
      mainModuleBoss.startColor = baseturrets[0].FxColor;
      bossParticleSystem.gameObject.SetActive(true);
-
-      currentBossPhase = phaseBoss;
-
+     inSetPhase = false;
+     
 
   }
 
@@ -274,7 +253,7 @@ private float currentTransitionAnimationTime;
     var mainModule = bossParticleSystem.main;
     mainModule.startColor=
       baseturrets[currentIndexEnabledTurret].FxColor;
- 
+    inUpdatePhase = false;
   }
 
   void TransitionFeedback(int index,  bool toBaseState)
@@ -297,27 +276,26 @@ private float currentTransitionAnimationTime;
     enemyFeedBack.animationList[1] = currentColorName+shootName;
     enemyFeedBack.animationList[2] = currentColorName+beginSpinName;
 
-    if (toBaseState)
+    if (index != 0)
     {
-      animator.Play(currentColorName+transitionName+colorName[0]);
+          if (toBaseState)
+          {
+            Debug.Log(currentColorName+transitionName+colorName[0]);
+            animator.Play(currentColorName+transitionName+colorName[0]);
+          }
+          else
+          {
+            Debug.Log(bossName+colorName[index-1]+transitionName+colorName[index]);
+            animator.Play(bossName+colorName[index-1]+transitionName+colorName[index]);
+          }
     }
-    else
-    {
-      animator.Play(currentColorName+transitionName+colorName[currentIndexEnabledTurret+1]);
-    }
-    StartCoroutine(ShowCurrentClipLength());
+
+
     //gestion du timer
 
   }
 
-  IEnumerator ShowCurrentClipLength()
-  {
-    yield return new WaitForEndOfFrame();
- currentTransitionAnimationTime=  animator.GetCurrentAnimatorStateInfo(0).length;
- currentTransitionAnimationTimer = 0; 
-  enemyStateManager.inTransition = true;
 
-  }
 [Serializable]
   public class HealthCondition
   {

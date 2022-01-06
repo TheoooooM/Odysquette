@@ -4,27 +4,24 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "StateInvincible", menuName = "Boss/StateInvincibleSO", order = 0)]
 public class StateInvincible : StateEnemySO
 {
-    public ExtensionMethods.PhaseBoss phaseBoss;
+   
 
     public override bool CheckCondition(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary)
-    { 
-        if (BossManager.instance.currentBossPhase != phaseBoss)
-        {  Debug.Log("je foncitonne");
+    {
+        if (BossManager.instance.inSetPhase || BossManager.instance.inUpdatePhase)
             return true;
-          
-        }
-        else
-        {
-              return false;
-        }
-      
-      
+        return false;
+
+
     }
 
     public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
     {
-       
         
+        if(BossManager.instance.inSetPhase)
+            BossManager.instance.SetPhase(BossManager.instance.currentBossPhase);
+        if (BossManager.instance.inUpdatePhase)
+            BossManager.instance.UpdateDuringPhase();
      
       endStep =  false;
     
@@ -33,7 +30,6 @@ public class StateInvincible : StateEnemySO
 
     public override void PlayState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
     {
-          BossManager.instance.SetPhase(phaseBoss);
-        endStep = true;  Debug.Log("setphase"+phaseBoss);
+        endStep = true;
     }
 }

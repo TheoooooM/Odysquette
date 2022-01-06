@@ -170,7 +170,7 @@ public class EnemyStateManager : MonoBehaviour {
                                 IsCurrentStartPlayed = true;
                                 if (EMainStatsSo.stateEnnemList[i].oneStartState)
                                     IsFirstStartPlayed = true;
-                                Debug.Log(i);
+                      
                             }
                             else {
                                 CurrentUpdateState += EMainStatsSo.stateEnnemList[i].PlayState;
