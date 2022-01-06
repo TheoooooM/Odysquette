@@ -49,7 +49,7 @@ public class fallScript : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerStay2D(Collider2D other) {
         if (other.CompareTag("Hole") && !controller.InDash && !triggered) {
-            controller.StartFall(true, this);
+            controller.StartFall(true,this);
             triggered = true;
         }
     }
@@ -62,5 +62,12 @@ public class fallScript : MonoBehaviour
         if (other.CompareTag("Hole")) {
             if (playerShadow != null) playerShadow.SetActive(true);
         }
+    }
+
+    private IEnumerator WaitForfall()
+    {
+        yield return null;
+        controller.StartFall(true, this);
+        triggered = true;
     }
 }

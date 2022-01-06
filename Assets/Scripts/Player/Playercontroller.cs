@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,6 +14,7 @@ public class Playercontroller : MonoBehaviour {
     public GameObject gun;
     private PlayerMapping playerInput;
     public Transform strawTransform;
+    public float currentInputAngle;
     
 
 
@@ -20,6 +22,8 @@ public class Playercontroller : MonoBehaviour {
     [SerializeField] private bool enableMovementAtLaunch = true;
     [SerializeField] float MouvementSpeed = 0.01f;
     public bool falling;
+    private bool canMove = true;
+    private bool startFallAnim;
     
     private CapsuleCollider2D capsuleCollider2D;
     private Rigidbody2D rb;
@@ -42,6 +46,10 @@ public class Playercontroller : MonoBehaviour {
     bool shootIsPress;
     private bool ultimateIsPress;
     private Vector3 lastImagePosition;
+    
+    [Space] public bool scaleModif = true;
+    [SerializeField] private AnimationCurve dashScaleX;
+    [SerializeField] private AnimationCurve dashScaleY;
     
     [Header("---- OTHER")]
     public bool isInFlash;
@@ -128,12 +136,12 @@ public class Playercontroller : MonoBehaviour {
         moveVector = Vector2.zero;
 
         if(GameManager.Instance != null) GameManager.Instance.isMouse = true;
-        if (playerInput.Player.Movement.ReadValue<Vector2>() != Vector2.zero && !falling) {
+        if (playerInput.Player.Movement.ReadValue<Vector2>() != Vector2.zero && canMove) {
             moveVector = playerInput.Player.Movement.ReadValue<Vector2>();
             lastMoveVector = moveVector;
             if(canPlayAnim) CheckForPlayAnimation(moveVector, true);
         }
-        else if (playerInput.Player.MovementGamepad.ReadValue<Vector2>() != Vector2.zero && !falling) {
+        else if (playerInput.Player.MovementGamepad.ReadValue<Vector2>() != Vector2.zero && canMove) {
             moveVector = playerInput.Player.MovementGamepad.ReadValue<Vector2>();
             lastMoveVector = moveVector;
             if(GameManager.Instance != null) GameManager.Instance.isMouse = false;
@@ -191,7 +199,14 @@ public class Playercontroller : MonoBehaviour {
         }
         else if (timerDash <= timeDash) {
             float factorTime = timerDash / timeDash;
-            rb.velocity = dashDirection * dashSpeedCurve.Evaluate(factorTime) * maxDashSpeed;
+            rb.velocity = dashDirection * dashSpeedCurve.Evaluate(factorTime) * maxDashSpeed; // 45 , 135 , 225 , 315
+
+
+            if (scaleModif)
+            {
+                if(currentInputAngle <= 45 || (currentInputAngle > 135 && currentInputAngle < 225) || currentInputAngle >= 315) transform.localScale = new Vector3(dashScaleX.Evaluate(factorTime),dashScaleY.Evaluate(factorTime),0);
+                else transform.localScale = new Vector3(dashScaleY.Evaluate(factorTime),dashScaleX.Evaluate(factorTime),0);
+            }
         }
         else if (timerDash > timeDash) {
             InDash = false;
@@ -211,8 +226,12 @@ public class Playercontroller : MonoBehaviour {
 
         if (GameManager.Instance != null && !GameManager.Instance.isMouse) GameManager.Instance.ViewPad = playerInput.Player.ViewPad.ReadValue<Vector2>();
 
-        if (falling) {
+        if (falling && startFallAnim) {
             rb.velocity = dir.normalized * 1.5f;
+        }
+        else if (falling)
+        {
+            rb.velocity = Vector2.zero;
         }
     }
     
@@ -292,7 +311,13 @@ public class Playercontroller : MonoBehaviour {
         dir = rb.velocity;
         dashPos = fl !=null && Indash ? fl.dashPos : Vector3.zero;
         falling = true;
+        canMove = false;
         if(canPlayAnim) playerAnimator.Play("fall"); 
+    }
+
+    public void moveAnimFall()
+    {
+        startFallAnim = true;
     }
 
     /// <summary>
@@ -301,13 +326,26 @@ public class Playercontroller : MonoBehaviour {
     public void EndFall() {
         if(enableMovementAtLaunch) GetComponent<HealthPlayer>().TakeDamagePlayer(1);
         falling = false;
+        startFallAnim = false;
+        StartCoroutine(FreezeAfterFall());
         if (dashPos == Vector3.zero) {
             transform.position -= dir.normalized * 2.5f;
         }
         else {
             transform.position = dashPos;
         }
+        
+        
     }
+    
+    IEnumerator FreezeAfterFall()
+    {
+        Debug.Log("start Freeze");
+        yield return new WaitForSeconds(0.3f);
+        canMove = true;
+        Debug.Log("canMove :" + canMove);
+    }
+    
     #endregion FALL
     
     #region COLLISION
@@ -419,7 +457,7 @@ public class Playercontroller : MonoBehaviour {
     /// <param name="input"></param>
     /// <param name="move"></param>
     private void CheckForPlayAnimation(Vector3 input, bool move) {
-        float currentInputAngle = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg;
+        currentInputAngle = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg;
         if (Math.Abs(Mathf.Sign(currentInputAngle) - (-1)) < 0.05f) {
             currentInputAngle = 360 + currentInputAngle;
         }
