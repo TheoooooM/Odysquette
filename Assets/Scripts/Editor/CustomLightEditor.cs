@@ -5,20 +5,20 @@ using UnityEditor;
 using UnityEngine;
 
 [CanEditMultipleObjects]
-[CustomEditor(typeof(LightColor))]
+[CustomEditor(typeof(LightCol))]
 public class CustomLightEditor : Editor
 {
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
 
-        for (int i = 0; i < ((LightColor) target).MatDataList.Count(); i++) {
-            if (GUILayout.Button(((LightColor) target).MatDataList[i].name)) {
-                ((LightColor) target).ChangeLight(((LightColor) target).MatDataList[i]);
+        for (int i = 0; i < ((LightCol) target).MatDataList.Count(); i++) {
+            if (GUILayout.Button(((LightCol) target).MatDataList[i].name)) {
+                ((LightCol) target).ChangeLight(((LightCol) target).MatDataList[i]);
             }
         }
         GUILayout.Space(4);
         if (GUILayout.Button("RANDOM")) {
-            ((LightColor) target).ChangeLight(((LightColor) target).MatDataList[Random.Range(0, ((LightColor) target).MatDataList.Count)]);
+            ((LightCol) target).ChangeLight(((LightCol) target).MatDataList[Random.Range(0, ((LightCol) target).MatDataList.Count)]);
         }
     }
 }

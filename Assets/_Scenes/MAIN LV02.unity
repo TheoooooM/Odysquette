@@ -696,6 +696,10 @@ PrefabInstance:
       propertyPath: reporScreenshottGam
       value: 
       objectReference: {fileID: 406326763}
+    - target: {fileID: 492872805101091263, guid: 70acb8bed26a74c41bf032877a82a1e2, type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: af3c0eadf19575f4c899eb89d8dd5558, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70acb8bed26a74c41bf032877a82a1e2, type: 3}
 --- !u!1 &492872804813536757 stripped
@@ -982,9 +986,41 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8730241956978092250, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
-      propertyPath: disableNeighboor
-      value: 0
+      propertyPath: endpathRoom
+      value: 
+      objectReference: {fileID: 6571765372856781281, guid: a0939d094323a7144b63bf77c0afa55f, type: 3}
+    - target: {fileID: 8730241956978092250, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
+      propertyPath: StartingRoom
+      value: 
+      objectReference: {fileID: 6592826870758152331, guid: 470adb2cc16db274494bb32d5aa73a12, type: 3}
+    - target: {fileID: 8730241956978092250, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
+      propertyPath: forceRedLight
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8730241956978092250, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
+      propertyPath: disableNeighboor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8730241956978092250, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
+      propertyPath: normalRoom.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8730241956978092250, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
+      propertyPath: normalRoom.Array.data[0]
+      value: 
+      objectReference: {fileID: 2178715203969850272, guid: 6c57a0741a445e542a7823ad57a87bd6, type: 3}
+    - target: {fileID: 8730241956978092250, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
+      propertyPath: normalRoom.Array.data[1]
+      value: 
+      objectReference: {fileID: 6868213979548787099, guid: 978620d68a1996a47a7c98d5e65826c6, type: 3}
+    - target: {fileID: 8730241956978092250, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
+      propertyPath: normalRoom.Array.data[2]
+      value: 
+      objectReference: {fileID: 1499031214255302118, guid: 0061ef73b51a8fa41accde7403a37275, type: 3}
+    - target: {fileID: 8730241956978092250, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
+      propertyPath: normalRoom.Array.data[3]
+      value: 
+      objectReference: {fileID: 1027425271377955494, guid: 13f63c40b834b0e4b9edfa1deecc908a, type: 3}
     - target: {fileID: 8730241956978092252, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
       propertyPath: m_Name
       value: ---- ROOM GENERATION ----

@@ -7,7 +7,7 @@ public class CloseRoomManager : MonoBehaviour {
     [SerializeField] private CloseRoomClass closeRoom = null;
 
     [Header("Buildings")] 
-    [SerializeField] private List<LightColor> buildingColors = new List<LightColor>();
+    [SerializeField] private List<LightCol> buildingColors = new List<LightCol>();
 
     [Header("Test")]
     public bool openTopTest = false;
@@ -23,7 +23,7 @@ public class CloseRoomManager : MonoBehaviour {
     /// <param name="openRight"></param>
     /// <param name="openBottom"></param>
     /// <param name="openLeft"></param>
-    public void UpdateCloseRoom(bool openTop, bool openRight, bool openBottom, bool openLeft) {
+    public void UpdateCloseRoom(bool openTop, bool openRight, bool openBottom, bool openLeft, bool changeLight = true, bool isLevelTwo = false) {
         if(closeRoom.CloseRoomTop != null) closeRoom.CloseRoomTop.SetActive(!openTop);
         foreach (GameObject gam in closeRoom.ObjectToDisableTop) { gam.SetActive(openTop); }
         
@@ -36,16 +36,40 @@ public class CloseRoomManager : MonoBehaviour {
         if(closeRoom.CloseRoomLeft != null) closeRoom.CloseRoomLeft.SetActive(!openLeft);
         foreach (GameObject gam in closeRoom.ObjectToDisableLeft) { gam.SetActive(openLeft); }
 
-        ChangeBuildingLights();
+        if (changeLight) {
+            if (isLevelTwo) ChangeRandomBuildingsLightLV2();
+            else ChangeRandomBuildingsLightLV1();
+        }
     }
 
-    private void ChangeBuildingLights() {
+    /// <summary>
+    /// Change the color of some buidling to pink
+    /// </summary>
+    private void ChangeRandomBuildingsLightLV1() {
         int randomNumber = Random.Range(2, 4);
         if(buildingColors.Count == 0) return;
         
         for (int i = 0; i < randomNumber; i++) {
             int randomBuilding = Random.Range(0, buildingColors.Count);
             buildingColors[randomBuilding].ChangeLightPink();
+        }
+    }
+    
+    /// <summary>
+    /// Change the color of some buidling to pink
+    /// </summary>
+    private void ChangeRandomBuildingsLightLV2() {
+        foreach (LightCol building in buildingColors) {
+            building.ChangeLightRed();
+        }
+    }
+    
+    /// <summary>
+    /// Change the color of all building to blue
+    /// </summary>
+    public void MakeEveryBuildingBlue() {
+        foreach (LightCol building in buildingColors) {
+            building.ChangeLightBlue();
         }
     }
 }

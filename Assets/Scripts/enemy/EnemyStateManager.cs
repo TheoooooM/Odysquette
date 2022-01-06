@@ -474,9 +474,13 @@ public class EnemyStateManager : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (!HealthPlayer.Instance.playerController.InDash)
-            if (other.gameObject.CompareTag("Player"))
-                HealthPlayer.Instance.TakeDamagePlayer(1);
+        if (!HealthPlayer.Instance.playerController.InDash) if (other.gameObject.CompareTag("Player")) HealthPlayer.Instance.TakeDamagePlayer(1);
+
+        if (other.CompareTag("Hole")) {
+            OnDeath(true);
+        }
+        
+        
         if (other.CompareTag("Wind")) {
             StateWind stateWind = other.GetComponent<WindParticleManager>().StateWind;
             windDirection += stateWind.direction * stateWind.speedWind;

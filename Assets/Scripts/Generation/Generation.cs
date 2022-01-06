@@ -25,6 +25,7 @@ public class Generation : MonoBehaviour {
 
     [Header("--- GENERATION")]
     [SerializeField] private bool generateRandomLevel = false;
+    [SerializeField] private bool forceRedLight = false;
     public int seed = 0;
     public bool disableNeighboor = false;
     [HideInInspector] public bool endGeneration;
@@ -45,7 +46,7 @@ public class Generation : MonoBehaviour {
     private bool[,] outsideMap;
     private RoomManager currentRoom;
     [SerializeField] private int lastRoomId = -1;
-
+    
 
     private Vector2 currentPos;
     private open needOpen;
@@ -192,7 +193,7 @@ public class Generation : MonoBehaviour {
                 firstRC.exitTop = true;
                 needOpen = open.bot;
                 firstRC.UpdatePart();
-                firstRC.closeRoom.UpdateCloseRoom(true, false, false, false);
+                firstRC.closeRoom.UpdateCloseRoom(true, false, false, false, true, NeverDestroy.Instance.level == 2 || forceRedLight);
                 currentPos.y++;
 
                 break;
@@ -201,7 +202,7 @@ public class Generation : MonoBehaviour {
                 firstRC.exitLeft = true;
                 needOpen = open.right;
                 firstRC.UpdatePart();
-                firstRC.closeRoom.UpdateCloseRoom(false, false, false, true);
+                firstRC.closeRoom.UpdateCloseRoom(false, false, false, true, true, NeverDestroy.Instance.level == 2 || forceRedLight);
                 currentPos.x--;
                 break;
 
@@ -209,7 +210,7 @@ public class Generation : MonoBehaviour {
                 firstRC.exitRight = true;
                 needOpen = open.left;
                 firstRC.UpdatePart();
-                firstRC.closeRoom.UpdateCloseRoom(false, true, false, false);
+                firstRC.closeRoom.UpdateCloseRoom(false, true, false, false, true, NeverDestroy.Instance.level == 2 || forceRedLight);
                 currentPos.x++;
                 break;
 
@@ -217,7 +218,7 @@ public class Generation : MonoBehaviour {
                 firstRC.exitBot = true;
                 needOpen = open.top;
                 firstRC.UpdatePart();
-                firstRC.closeRoom.UpdateCloseRoom(false, false, true, false);
+                firstRC.closeRoom.UpdateCloseRoom(false, false, true, false, true, NeverDestroy.Instance.level == 2 || forceRedLight);
                 currentPos.y--;
                 break;
         }
@@ -248,19 +249,19 @@ public class Generation : MonoBehaviour {
         switch (needOpen) {
             case open.right:
                 RC.exitRight = true;
-                RC.closeRoom.UpdateCloseRoom(false, true, false, false);
+                RC.closeRoom.UpdateCloseRoom(false, true, false, false, true, NeverDestroy.Instance.level == 2 || forceRedLight);
                 break;
             case open.left:
                 RC.exitLeft = true;
-                RC.closeRoom.UpdateCloseRoom(false, false, false, true);
+                RC.closeRoom.UpdateCloseRoom(false, false, false, true, true, NeverDestroy.Instance.level == 2 || forceRedLight);
                 break;
             case open.bot:
                 RC.exitBot = true;
-                RC.closeRoom.UpdateCloseRoom(false, false, true, false);
+                RC.closeRoom.UpdateCloseRoom(false, false, true, false, true, NeverDestroy.Instance.level == 2 || forceRedLight);
                 break;
             case open.top:
                 RC.exitTop = true;
-                RC.closeRoom.UpdateCloseRoom(true, false, false, false);
+                RC.closeRoom.UpdateCloseRoom(true, false, false, false, true, NeverDestroy.Instance.level == 2 || forceRedLight);
                 break;
         }
 
@@ -415,25 +416,25 @@ public class Generation : MonoBehaviour {
                                             case open.top:
                                                 RC.exitTop = true;
                                                 RC.room.enterGO = RC.closeTop.gameObject;
-                                                RC.closeRoom.UpdateCloseRoom(true, exitSide == open.right, exitSide == open.bot, exitSide == open.left);
+                                                RC.closeRoom.UpdateCloseRoom(true, exitSide == open.right, exitSide == open.bot, exitSide == open.left, true, NeverDestroy.Instance.level == 2 || forceRedLight);
                                                 break;
 
                                             case open.left:
                                                 RC.exitLeft = true;
                                                 RC.room.enterGO = RC.closeLeft.gameObject;
-                                                RC.closeRoom.UpdateCloseRoom(exitSide == open.top, exitSide == open.right, exitSide == open.bot, true);
+                                                RC.closeRoom.UpdateCloseRoom(exitSide == open.top, exitSide == open.right, exitSide == open.bot, true, true, NeverDestroy.Instance.level == 2 || forceRedLight);
                                                 break;
 
                                             case open.right:
                                                 RC.exitRight = true;
                                                 RC.room.enterGO = RC.closeRight.gameObject;
-                                                RC.closeRoom.UpdateCloseRoom(exitSide == open.top, true, exitSide == open.bot, exitSide == open.left);
+                                                RC.closeRoom.UpdateCloseRoom(exitSide == open.top, true, exitSide == open.bot, exitSide == open.left, true, NeverDestroy.Instance.level == 2 || forceRedLight);
                                                 break;
 
                                             case open.bot:
                                                 RC.exitBot = true;
                                                 RC.room.enterGO = RC.closeBot.gameObject;
-                                                RC.closeRoom.UpdateCloseRoom(exitSide == open.top, exitSide == open.right, true, exitSide == open.left);
+                                                RC.closeRoom.UpdateCloseRoom(exitSide == open.top, exitSide == open.right, true, exitSide == open.left, true, NeverDestroy.Instance.level == 2 || forceRedLight);
                                                 break;
                                         }
                                     }
@@ -560,7 +561,12 @@ public class Generation : MonoBehaviour {
                 break;
         }
         GameObject outsideR = Instantiate(OutsideRoom[randomRoom], finalRoomPos, Quaternion.identity, roomPool);
-        if(outsideR != null) outsideMap[mapPos.x, mapPos.y] = true;
+        RoomContainer RC = outsideR.GetComponent<RoomContainer>();
+        RC.Generator = this;
+        if (outsideR != null) {
+            outsideMap[mapPos.x, mapPos.y] = true;
+            map[mapPos.x, mapPos.y] = RC;
+        }
     }
     #endregion ROOM GENERATION
     
