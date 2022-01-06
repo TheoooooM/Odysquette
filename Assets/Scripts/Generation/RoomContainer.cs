@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Pathfinding;
 using UnityEngine;
 
@@ -13,7 +14,8 @@ public class RoomContainer : MonoBehaviour {
     private bool playerIn = false;
     [HideInInspector] public bool firstRoom = false;
 
-
+    [Space]
+    [SerializeField] private bool outsideRoom = false;
     #region Generation Variables
 
     public bool playerInRoom;
@@ -52,7 +54,8 @@ public class RoomContainer : MonoBehaviour {
     #endregion
 
     [Space] public CloseRoomManager closeRoom = null;
-
+    private bool hasDisable = false;
+    
     private void Awake() {
         exitBool = new Dictionary<Generation.open, bool>();
         exitBool.Add(Generation.open.top, exitTop);
@@ -64,10 +67,16 @@ public class RoomContainer : MonoBehaviour {
     }
 
     private void Update() {
-        if (!neighbor && !room.runningRoom && Generator.endGeneration && !playerIn && Generator.disableNeighboor) gameObject.SetActive(false);
-        if (firstRoom && Generator.endGeneration) {
-            ActivateNeighbor(true);
-            firstRoom = false;
+        if (!outsideRoom) {
+            if (!neighbor && !room.runningRoom && Generator.endGeneration && !playerIn && Generator.disableNeighboor) gameObject.SetActive(false);
+            if (firstRoom && Generator.endGeneration) {
+                ActivateNeighbor(true);
+                firstRoom = false;
+            }
+        }
+        else if(Generator.disableNeighboor && !hasDisable){
+            gameObject.SetActive(false);
+            hasDisable = true;
         }
     }
 
