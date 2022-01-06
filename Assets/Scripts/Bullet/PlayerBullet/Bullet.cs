@@ -53,9 +53,9 @@ public class Bullet : MonoBehaviour {
         isEnable = false;
         basePosition = transform.position;
         _pierceCount = pierceCount;
-        //canBounce = false; 
-        //lastVelocity = rb.velocity;
         Invoke(nameof(DelayforDrag), 0.5f);
+
+        StartCoroutine(WaitForDestroy());
 
         if (GameManager.Instance.firstEffect == GameManager.Effect.piercing || GameManager.Instance.secondEffect == GameManager.Effect.piercing) _pierceCount = pierceCount;
         else _pierceCount = 0;
@@ -240,5 +240,10 @@ public class Bullet : MonoBehaviour {
 
             isDesactive = true;
         }
+    }
+
+    private IEnumerator WaitForDestroy() {
+        yield return new WaitForSeconds(10);
+        DesactiveBullet();
     }
 }
