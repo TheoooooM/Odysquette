@@ -6,9 +6,10 @@ using UnityEngine;
 public class Poison : MonoBehaviour
 {
     public float Timer;
-    public float _Timer;
+    private float _Timer;
     public float speed;
-    public Rigidbody2D rbBullet;
+    public Transform bulletTransform;
+    public Vector2 hit;
     [SerializeField]
     private float damage = 1 ;
    

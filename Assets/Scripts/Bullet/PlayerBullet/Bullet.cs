@@ -13,7 +13,6 @@ public class Bullet : MonoBehaviour {
     Vector3 basePosition;
     public float knockUpValue;
     public StrawSO.RateMode rateMode;
-    public Vector3 oldPositionPoison;
     public bool isColliding;
     public Rigidbody2D rb;
     public Vector3 lastVelocity;
@@ -28,8 +27,6 @@ public class Bullet : MonoBehaviour {
     public int bounceCount = 2;
     public int _bounceCount;
 
-    public float poisonCooldown = 5;
-    float _poisonCooldown = 0;
     public bool isEnable;
     public bool isDesactive = false;
 
@@ -80,30 +77,6 @@ public class Bullet : MonoBehaviour {
         }
     }
 
-    private void FixedUpdate() {
-        if (GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison) {
-            /*if (_poisonCooldown < distance / rb.velocity.magnitude) {
-                _poisonCooldown += Time.fixedDeltaTime;
-            }*/
-            // v= d/t => t = d/v => d = vt
-            
-            
-            if (Vector2.Distance(oldPositionPoison, transform.position) > distance) {
-                oldPositionPoison = transform.position;
-                PoolManager.Instance.SpawnPoisonPool(transform);
-                //_poisonCooldown = poisonCooldown;
-            }
-            
-            /*else {
-                oldPositionPoison = transform.position;
-                //Debug.Log(_poisonCooldown);
-                PoolManager.Instance.SpawnPoisonPool(transform);
-                _poisonCooldown = poisonCooldown;
-            }*/
-        }
-
-        
-    }
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("DestructableObject")) return;
@@ -118,19 +91,15 @@ public class Bullet : MonoBehaviour {
                 Explosion();
                 break;
 
-            /*case GameManager.Effect.ice:
-                Ice(other.gameObject);
-                break;*/
+            
         }
 
         switch (GameManager.Instance.secondEffect) {
             case GameManager.Effect.explosive:
                 Explosion();
                 break;
-
-            /*case GameManager.Effect.ice:
-                Ice(other.gameObject);
-                break;*/
+            
+          
         }
 
         if (other.CompareTag("Enemy")) {
@@ -184,7 +153,14 @@ public class Bullet : MonoBehaviour {
             PoolManager.Instance.SpawnImpactPool(transform);
         }
         else {
-            if(other.gameObject.CompareTag("Walls")) AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact, transform.position);
+            if (other.gameObject.CompareTag("Walls"))
+            {
+                AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact, transform.position);
+                if (GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison)
+                {
+                    PoolManager.Instance.SpawnPoisonPool(transform, other.contacts[0].normal);
+                }
+            }
             DesactiveBullet();
         }
     }
