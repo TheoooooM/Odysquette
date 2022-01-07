@@ -42,6 +42,7 @@ public class RandomShootSO : StrawSO
                 }
 
                 Debug.Log(index + "index");
+                AudioManager.Instance.PlayShootStraw(typeSoundShoot, shootSoundScale);
                 GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode);
                 bulletScript = bullet.GetComponent<Bullet>();
                 bulletScript.rb.velocity = Vector2.zero;
@@ -112,6 +113,7 @@ public class RandomShootSO : StrawSO
               }
 
               //Debug.Log(index + "index");
+              AudioManager.Instance.PlayShootStraw(typeSoundShoot, shootSoundScale);
               GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode);
               bulletScript = bullet.GetComponent<Bullet>();
               bulletScript.rb.velocity = Vector2.zero;

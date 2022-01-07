@@ -152,7 +152,7 @@ public class Bullet : MonoBehaviour {
             }
         }
         else if (!other.CompareTag("Walls")) {
-            if (GameManager.Instance.firstEffect != GameManager.Effect.explosive && GameManager.Instance.secondEffect != GameManager.Effect.explosive) AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact, transform.position);
+            if (GameManager.Instance.firstEffect != GameManager.Effect.explosive && GameManager.Instance.secondEffect != GameManager.Effect.explosive) //AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact, transform.position);
             DesactiveBullet();
         }
     }
@@ -164,11 +164,12 @@ public class Bullet : MonoBehaviour {
         isColliding = true;
         
         if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls")||other.gameObject.CompareTag("ShieldEnemy"))){ 
-            AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact);
+     //       AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact);
 
             StartCoroutine(DestroyBulletIfStuck());
             
             _bounceCount--;
+            AudioManager.Instance.PlayImpactStraw(AudioManager.StrawSoundEnum.Bounce, transform.position);
             var speed = lastVelocity.magnitude;
             //Debug.Log(lastVelocity);
 
@@ -185,16 +186,16 @@ public class Bullet : MonoBehaviour {
             PoolManager.Instance.SpawnImpactPool(transform);
         }
         else {
-            if(other.gameObject.CompareTag("Walls")) AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact, transform.position);
+         //   if(other.gameObject.CompareTag("Walls")) AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact, transform.position);
             DesactiveBullet();
         }
     }
     
     private void OnCollisionExit2D(Collision2D other)
     {
-        Debug.Log(rb.velocity);
+
         rb.velocity = lastVelocity;
-        Debug.Log(rb.velocity);
+      
         isColliding = false;
     }
 
@@ -238,6 +239,9 @@ public class Bullet : MonoBehaviour {
             else {
                 PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][0].Enqueue(gameObject);
             }
+            AudioManager.Instance.PlayImpactStraw(AudioManager.StrawSoundEnum.Impact, transform.position);
+                
+                
 
             isDesactive = true;
         }

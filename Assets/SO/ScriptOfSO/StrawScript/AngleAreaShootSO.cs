@@ -18,7 +18,7 @@ public class AngleAreaShootSO : StrawSO {
     public override void Shoot(Transform parentBulletTF, MonoBehaviour script, float currentTimeValue = 1) {
         if (!isDelayBetweenShoot && !isDelayBetweenWaveShoot) {
             for (int i = 0; i < angleDivision + 2 + Mathf.RoundToInt(angleDivisionParameter * currentTimeValue); i++) {
-                
+                AudioManager.Instance.PlayShootStraw(typeSoundShoot, shootSoundScale);
                 bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode);
                 bullet.SetActive(true);
                 bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -75,6 +75,7 @@ public class AngleAreaShootSO : StrawSO {
     public override IEnumerator ShootDelay(Transform parentBulletTF, float currentTimeValue) {
         for (int j = 0; j < numberWaveShoot; j++) {
             for (int i = 0; i < angleDivision + 2; i++) {
+                AudioManager.Instance.PlayShootStraw(typeSoundShoot, shootSoundScale);
                 GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode);
                 bullet.SetActive(true);
                 bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;

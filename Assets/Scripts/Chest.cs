@@ -21,7 +21,11 @@ public class Chest : MonoBehaviour {
     }
 
     public virtual void Update() {
-        if (Input.GetKeyDown(KeyCode.E) && canOpen) Generate();
+        if (Input.GetKeyDown(KeyCode.E) && canOpen)
+        {
+            AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.OpenChest);
+            Generate();
+        }
     }
 
     protected virtual void Generate() {

@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour {
 
     [Header("---- JUICES")] [SerializeField]
     public Effect firstEffect;
+    
 
     [SerializeField] public Effect secondEffect;
    public CombinaisonColorEffect[] colorEffectsList;
@@ -297,7 +298,7 @@ public class GameManager : MonoBehaviour {
 
                     if (shootLoading >= actualStrawClass.strawSO.timeValue) {
                         actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
-                        AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Shoot);
+                       
                         shootLoading = 0;
                         snipStrawFx.SetActive(false);
                         EndLoading = false;
@@ -311,12 +312,12 @@ public class GameManager : MonoBehaviour {
                         shootCooldown = 0;
                         if (countShootRate == actualStrawClass.strawSO.effectAllNumberShoot && (actualStrawClass.strawSO.rateMainParameter || actualStrawClass.strawSO.rateSecondParameter)) {
                             actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, 1);
-                            AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Shoot);
+                       
                             countShootRate = 0;
                         }
                         else {
                             actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
-                            AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Shoot);
+                         
                             countShootRate++;
                         }
                     }
@@ -329,7 +330,7 @@ public class GameManager : MonoBehaviour {
         if (actualStrawClass.ultimateStrawSO != null && actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate && !disableStraw) {
             if (ultimateValue >= 100) {
                 actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
-                AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Shoot);
+            
                 isUltimate = true;
                 ultimateValue -= 100;
             }
@@ -340,7 +341,7 @@ public class GameManager : MonoBehaviour {
         if (!shooting && !disableStraw) {
             if (EndLoading) {
                 actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
-                AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Shoot);
+             
                 shootLoading = 0;
                 snipStrawFx.SetActive(false);
                 EndLoading = false;

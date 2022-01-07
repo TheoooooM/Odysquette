@@ -1,9 +1,12 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
 public class StrawSO : ScriptableObject {
     public bool hasRange;
-  
+
+    public AudioManager.StrawSoundEnum typeSoundShoot;
+    public float shootSoundScale;
     public string strawName;
     public Sprite strawRenderer;
     public float damage = 1;
@@ -47,6 +50,7 @@ public class StrawSO : ScriptableObject {
     #endif
     
     public virtual void Shoot(Transform parentBulletTF, MonoBehaviour script, float currentTimeValue = 1) {
+        
     }
 
     public virtual IEnumerator ShootDelay(Transform parentBulletTF, float currentTimeValue = 1) {
@@ -86,10 +90,12 @@ public class StrawSO : ScriptableObject {
 
         scriptBullet.knockUpValue = knockUp;
     }
+    
 
     public enum RateMode {
         Ultimate,
         FireRate,
         FireLoading
     }
+
 }

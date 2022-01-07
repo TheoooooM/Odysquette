@@ -18,19 +18,23 @@ public class AudioManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
     #endregion INSTANCE
-    
+
+    [Header("----Player SOUND")] [SerializeField]
+    private PlayerSoundData playerSound = null;
     [Header("----STRAW SOUND")]
     [SerializeField] private StrawSoundData strawSound = null;
+   
 
-    public enum StrawSoundEnum { Shoot, Impact, Explosion };
+    public enum StrawSoundEnum { BasicShoot, BubbleShoot, SniperShoot, Impact, Explosion, Pierce, Bounce, Poison };
 
+    public enum PlayerSoundEnum { Move, Death, Damage, Dash, Fall, TakeItem, OpenChest}
     [Header("----ENNEMY SOUND")]
     public AudioClip ennemiDeath;
     public AudioClip kodakFlash;
     public AudioClip damageTaken;
 
 
-    public enum EnemySoundEnum { Death, KodakFlash, Damage };
+    public enum EnemySoundEnum { Death, KodakFlash, Damage,  };
     
     [Header("----MUSIC SOUND")]
     [SerializeField] private MusicSoundData musicSound = null;
@@ -39,34 +43,55 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] private AudioSource musicAudioSource;
     [SerializeField] private AudioSource sfxAudioSource;
     [SerializeField] private AudioSource calmSfxAudioSource;
+public  AudioSource playerMovementAudioSource;
     
     [Header("----SOUND DATA")]
     [SerializeField] private float timeBetweentwoExplosions = 0.075f;
     [SerializeField] private float timeBetweentwoDamages = 0.07f;
     [SerializeField] private float timeBetweentwoImpact = 0.07f;
+    [SerializeField] private float timeBetweentwoPoison = 0.07f;
+    [SerializeField] private float timeBetweentwoBounce = 0.07f;
+    [SerializeField] private float timeBetweentwoPierce = 0.07f;
+    [SerializeField] private float timeBetweenTwoShoot = 0.1f;
     [Space]
     [SerializeField] private float maxDistanceExplosion = 15;
     [SerializeField] private float maxDistanceImpact = 15;
+    [SerializeField] private float maxDistanceBounce = 35;
+    [SerializeField] private float maxDistancePierce = 35;
+    [SerializeField] private float maxDistancePoison = 45;
+    
     
     #endregion VARIABLES
 
     private GameObject lastDeathGam = null;
-    //EXPLOSION
-    private bool canExplose = true;
-    private float explosionTimer = 0;
+
+
     
     //DAMAGE
     private bool canDamage = true;
     private float damageTimer = 0;
-
+    
     //IMPACT
     private bool canImpact = true;
+    private bool canExplosion = true;
+    private bool canBounce = true;
+    private bool canPierce = true;
+    private bool canPoison = true;
     private float impactTimer = 0;
+    private float poisonTimer = 0;
+    private float pierceTimer = 0;
+    private float bounceTimer = 0;
+    private float explosionTimer = 0;
+    
+    
+    //SHOOT
+    private bool canShoot = true;
+    private float shootTimer;
     
     private void Update() {
-        if (canExplose == false) {
+        if (canExplosion == false) {
             explosionTimer += Time.deltaTime;
-            if (explosionTimer >= timeBetweentwoExplosions) canExplose = true;
+            if (explosionTimer >= timeBetweentwoExplosions) canExplosion = true;
         }
         
         if (canDamage == false) {
@@ -77,6 +102,25 @@ public class AudioManager : MonoBehaviour {
         if (canImpact == false) {
             impactTimer += Time.deltaTime;
             if (impactTimer >= timeBetweentwoImpact) canImpact = true;
+        }
+        if (canPoison == false) {
+            poisonTimer += Time.deltaTime;
+            if (poisonTimer >= timeBetweentwoPoison) canPoison = true;
+        }
+        if (canBounce == false) {
+            bounceTimer += Time.deltaTime;
+            if (bounceTimer >= timeBetweentwoBounce) canBounce = true;
+        }
+        if (canPierce == false) {
+            pierceTimer += Time.deltaTime;
+            if (pierceTimer >= timeBetweentwoPierce) canPierce = true;
+        }
+
+        if (!canShoot)
+        {
+            
+            shootTimer += Time.deltaTime;
+            if (shootTimer >= timeBetweenTwoShoot) canShoot = true;
         }
     }
 
@@ -113,45 +157,195 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Play a sound link to a straw/bullet
-    /// </summary>
-    /// <param name="sound"></param>
-    /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public void PlayStrawSound(StrawSoundEnum sound, Vector3 pos = new  Vector3()) {
-        switch (sound) {
-            case StrawSoundEnum.Shoot:
-                //if(strawSound.shootPlayer[0] != null) calmSfxAudioSource.PlayOneShot(strawSound.shootPlayer[0], Random.Range(calmSfxAudioSource.volume - .1f, calmSfxAudioSource.volume + .1f));
-                break;
-            case StrawSoundEnum.Impact:
-                if (strawSound.impactShoot[0] != null && canImpact) {
-                    float distanceToImpact = Mathf.Abs(Vector3.Distance(pos, Playercontroller.Instance.transform.position));
-                    float distanceSubstract = Mathf.Clamp(maxDistanceImpact - distanceToImpact, 0.05f, maxDistanceImpact);
-                    float impactRatio = distanceSubstract / maxDistanceImpact;
-                    
-                    calmSfxAudioSource.PlayOneShot(strawSound.impactShoot[0], Random.Range(calmSfxAudioSource.volume - .1f, calmSfxAudioSource.volume) * impactRatio);
-                                        
-                    canImpact = false;
-                    impactTimer = 0;
-                    
+    public void PlayPlayerSound(PlayerSoundEnum sound)
+    {
+        switch (sound)
+        {
+            case PlayerSoundEnum.Move:
+            {
+                if (!playerMovementAudioSource.isPlaying)
+                {
+                    playerMovementAudioSource.PlayOneShot(playerSound.moveSound);
                 }
+            }
+                break;
+            case PlayerSoundEnum.Death:
+            {
+                calmSfxAudioSource.PlayOneShot(playerSound.deathSound);
+            }
+                break;
+            case PlayerSoundEnum.Damage:
+            {
+                calmSfxAudioSource.PlayOneShot(playerSound.damageSound);
+            }
+                break;
+            case PlayerSoundEnum.Dash:
+            {
+                calmSfxAudioSource.PlayOneShot(playerSound.dashSound);
+            }
+                break;
+            case PlayerSoundEnum.Fall:
+            {
+                calmSfxAudioSource.PlayOneShot(playerSound.fallSound);
+            }
+                break;
+            case PlayerSoundEnum.TakeItem:
+            {
+                calmSfxAudioSource.PlayOneShot(playerSound.takeItem);
+            }
+                break;
+            case PlayerSoundEnum.OpenChest:
+            {
+                calmSfxAudioSource.PlayOneShot(playerSound.openChest);
+            }
+                break;
+        }
+    }
+    public void PlayShootStraw(StrawSoundEnum sound,  float soundScale, Vector3 pos = new  Vector3())
+    {
+        if (canShoot)
+        {
+       
+        switch (sound)
+        {
+            
+            case StrawSoundEnum.BasicShoot:
+                calmSfxAudioSource.PlayOneShot(strawSound.basicShoot[Random.Range(0, strawSound.basicShoot.Count - 1)],
+                    soundScale*calmSfxAudioSource.volume); 
+             
+                break;
+            case StrawSoundEnum.BubbleShoot:
+                calmSfxAudioSource.PlayOneShot(strawSound.bubbleShoot[Random.Range(0, strawSound.bubbleShoot.Count - 1)],
+                    soundScale*calmSfxAudioSource.volume); 
+                Debug.Log("test st jqdfjqsf bublek");
+                break;
+            case StrawSoundEnum.SniperShoot:
+                calmSfxAudioSource.PlayOneShot(strawSound.snipShoot,
+                    soundScale*calmSfxAudioSource.volume); 
+                break;
+            
+            default: throw new ArgumentOutOfRangeException(nameof(sound), sound, null);
+        }
+        }
+    }
+
+
+    void ImpactSound(AudioClip _impact, bool _canImpact, float _maxDistanceSound, Vector3 pos = new Vector3())
+    {
+        if (_impact != null && _canImpact)
+        {
+          
+            float distanceToImpact =
+                Mathf.Abs(Vector3.Distance(pos, Playercontroller.Instance.transform.position));
+            float distanceSubstract =
+                Mathf.Clamp(_maxDistanceSound - distanceToImpact, 0.05f, _maxDistanceSound);
+            float impactRatio = distanceSubstract / maxDistanceImpact;
+
+            calmSfxAudioSource.PlayOneShot(_impact,
+                Random.Range(calmSfxAudioSource.volume - .1f, calmSfxAudioSource.volume) * impactRatio);
+
+
+        }
+    }
+
+    public void PlayImpactStraw(StrawSoundEnum sound, Vector3 pos = new Vector3())
+    {
+        switch (sound)
+        {
+
+            case StrawSoundEnum.Impact:
+            {
+                if (GameManager.Instance.firstEffect == GameManager.Effect.none &&
+                    GameManager.Instance.secondEffect == GameManager.Effect.none)
+                {
+                    
+                    ImpactSound(strawSound.basicImpact, canImpact,  maxDistanceImpact);
+                              canImpact = false;
+                                        impactTimer = 0;
+                }
+       
+
+                }
+        
                 break;
             case StrawSoundEnum.Explosion:
                 //Base the volume on the distance of the explosion
-                if (strawSound.explosion[0] != null && canExplose == true) {
-                    float distanceToExplosion = Mathf.Abs(Vector3.Distance(pos, Playercontroller.Instance.transform.position));
-                    float distanceSubstract = Mathf.Clamp(maxDistanceExplosion - distanceToExplosion, 0.05f, maxDistanceExplosion);
-                    float explosionRatio = distanceSubstract / maxDistanceExplosion;
+              
+                    if (strawSound.explosion[0] != null && canExplosion == true)
+                    {
+
+                        float distanceToExplosion =
+                            Mathf.Abs(Vector3.Distance(pos, Playercontroller.Instance.transform.position));
+                        float distanceSubstract = Mathf.Clamp(maxDistanceExplosion - distanceToExplosion, 0.05f,
+                            maxDistanceExplosion);
+                        float explosionRatio = distanceSubstract / maxDistanceExplosion;
+                        calmSfxAudioSource.PlayOneShot(strawSound.explosion[0],
+                            Random.Range(calmSfxAudioSource.volume - .2f, calmSfxAudioSource.volume - .1f) *
+                            explosionRatio);
+                        canExplosion = false;
+                        explosionTimer = 0;
                     
-                    calmSfxAudioSource.PlayOneShot(strawSound.explosion[0], Random.Range(calmSfxAudioSource.volume - .2f, calmSfxAudioSource.volume - .1f) * explosionRatio);
-                    
-                    canExplose = false;
-                    explosionTimer = 0;
                 }
+
                 break;
+            
+            
+            
+            case StrawSoundEnum.Poison:
+                //Base the volume on the distance of the explosion
+                if (GameManager.Instance.firstEffect == GameManager.Effect.explosive ||
+                    GameManager.Instance.secondEffect == GameManager.Effect.explosive)
+                {
+                    if (strawSound.poisonImpact != null && canPoison == true)
+                    {
+                        ImpactSound(strawSound.poisonImpact, canPoison, maxDistancePoison);
+                        canPoison = false;
+                        poisonTimer = 0;
+                    }
+                }
+
+                break;
+            
+            case StrawSoundEnum.Bounce:
+                //Base the volume on the distance of the explosion
+                if (GameManager.Instance.firstEffect == GameManager.Effect.explosive ||
+                    GameManager.Instance.secondEffect == GameManager.Effect.explosive ||
+                    GameManager.Instance.secondEffect == GameManager.Effect.poison ||
+                    GameManager.Instance.firstEffect == GameManager.Effect.poison)
+                {
+                    if (strawSound.bounceImpact != null && canBounce == true)
+                    {
+
+                        ImpactSound(strawSound.bounceImpact, canBounce, maxDistanceBounce);
+                        canBounce = false;
+                        bounceTimer = 0;
+                    }
+                }
+
+                break;
+            
+            case StrawSoundEnum.Pierce:
+                //Base the volume on the distance of the explosion
+                if (GameManager.Instance.firstEffect == GameManager.Effect.explosive ||
+                    GameManager.Instance.secondEffect == GameManager.Effect.explosive ||
+                    GameManager.Instance.secondEffect == GameManager.Effect.poison ||
+                    GameManager.Instance.firstEffect == GameManager.Effect.poison)
+                {
+                    if (strawSound.pierceImpact != null && canPierce == true)
+                    {
+                        ImpactSound(strawSound.pierceImpact, canPierce, maxDistancePierce);
+                        canPierce = false;
+                        explosionTimer = 0;
+                    }
+                }
+
+                break;
+            
+            
             default: throw new ArgumentOutOfRangeException(nameof(sound), sound, null);
         }
     }
+
 
     /// <summary>
     /// Play a sound link to an enemy
@@ -183,10 +377,27 @@ public class AudioManager : MonoBehaviour {
 
 [System.Serializable]
 public class StrawSoundData {
-    public List<AudioClip> shootPlayer = new List<AudioClip>();
-    public List<AudioClip> impactShoot = new List<AudioClip>();
+    public List<AudioClip> basicShoot = new List<AudioClip>();
+    public List<AudioClip> bubbleShoot = new List<AudioClip>();
+    public AudioClip snipShoot ;
+    public AudioClip basicImpact;
+    public AudioClip poisonImpact;
+    public AudioClip pierceImpact;
+    public AudioClip bounceImpact;
     public List<AudioClip> explosion = new List<AudioClip>();
 }
+
+[System.Serializable]
+public class PlayerSoundData {
+    public AudioClip moveSound ;
+    public AudioClip damageSound;
+    public AudioClip deathSound;
+    public AudioClip dashSound;
+    public AudioClip fallSound;
+    public AudioClip openChest;
+    public AudioClip takeItem;
+}
+
 
 
 [System.Serializable]
