@@ -27,8 +27,7 @@ public class UIManager : MonoBehaviour {
     
     [Header("----Pause----")] 
     [SerializeField] private GameObject pauseMenu;
-    [SerializeField] private GameObject main;
-    [SerializeField] private GameObject option;
+    [SerializeField] private GameObject inGameMenu;
     public GameObject PauseMenu => pauseMenu;
 
     [Header("----Ressources & Score----")] 
@@ -60,6 +59,7 @@ public class UIManager : MonoBehaviour {
         
         UltSlider.maxValue = GameManager.Instance.maxUltimateValue;
         pauseMenu.SetActive(false);
+        inGameMenu.SetActive(true);
     }
 
     /// <summary>
@@ -75,21 +75,23 @@ public class UIManager : MonoBehaviour {
          */
     }
 
-    public void Pause()
-    {
+    /// <summary>
+    /// Pause the game
+    /// </summary>
+    public void Pause() {
+        inGameMenu.SetActive(false);
         pauseMenu.SetActive(true);
-        main.SetActive(true);
-        option.SetActive(false);
         Time.timeScale = 0f;
         GameManager.Instance.gameIsPause = true;
     }
-
     
-    public void OpenOption() => option.SetActive(true);
-    public void Unpause()
-    {
-        pauseMenu.SetActive(false);
+    /// <summary>
+    /// Unpause the game
+    /// </summary>
+    public void Unpause() {
         Time.timeScale = 1f;
+        inGameMenu.SetActive(true);
+        pauseMenu.SetActive(false);
         GameManager.Instance.gameIsPause = false;
     }
 

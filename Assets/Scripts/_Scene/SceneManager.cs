@@ -5,10 +5,17 @@ using Manager = UnityEngine.SceneManagement.SceneManager;
 
 public class SceneManager : MonoBehaviour {
     public static SceneManager instance = null;
-    private void Awake(){ if(instance == null) instance = this; }
 
-        [SerializeField] private GameObject sceneTransitionGam = null;
+    private void Awake() {
+        if(instance == null) instance = this;
+        if(shop) StartIdleOpen();
+    }
+
+    [SerializeField] private GameObject sceneTransitionGam = null;
+    [SerializeField] private bool shop = false;
     private string nextSceneName = "";
+    
+    private void Start() { if(shop) OpenScene(); }
 
 
     /// <summary>
@@ -26,4 +33,7 @@ public class SceneManager : MonoBehaviour {
     /// </summary>
     /// <param name="scene"></param>
     public void LoadScene() => Manager.LoadScene(nextSceneName);
+
+    public void StartIdleOpen() => sceneTransitionGam.GetComponent<Animator>().Play("Scene_IdleOpen");
+    public void OpenScene() => sceneTransitionGam.GetComponent<Animator>().SetTrigger("OpenIdle");
 }

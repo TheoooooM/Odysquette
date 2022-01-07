@@ -375,7 +375,7 @@ public class EnemyStateManager : MonoBehaviour {
         if (!isDead) {
             isDead = true;
             
-            GameObject GO = Resources.Load<GameObject>("ressource");
+            GameObject GO = Resources.Load<GameObject>("Resource");
             GameManager.Instance.AddScore(scorePoint);
             int rdm = Random.Range(0, 5);
             for (int i = 0; i < rdm; i++) {

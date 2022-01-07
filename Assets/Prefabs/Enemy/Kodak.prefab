@@ -233,6 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eb8f267594d2034f82913ef06ed7131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectEnemyArea: {fileID: 0}
   range: 6.35
   patrol: {fileID: 11400000, guid: 1a5e71f4ee653b244a10f5b078c899b3, type: 2}
   rb: {fileID: 0}
@@ -252,7 +253,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  rangeForOtherEnemy: 6.35
 --- !u!95 &5148572880405207474
 Animator:
   serializedVersion: 3
@@ -668,10 +668,6 @@ PrefabInstance:
     - target: {fileID: 6715641839360329331, guid: 02c6c0bd6c6446e469d7b3dcabb911bf, type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6715641839360329334, guid: 02c6c0bd6c6446e469d7b3dcabb911bf, type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6715641839360329334, guid: 02c6c0bd6c6446e469d7b3dcabb911bf, type: 3}
       propertyPath: CustomDataModule.vector0_0.maxCurve.m_Curve.Array.size
