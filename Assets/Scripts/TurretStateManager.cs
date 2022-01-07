@@ -6,7 +6,6 @@ using UnityEngine;
 public class TurretStateManager : EnemyStateManager
 {
  public BoxCollider2D boxCollider2D;
- public Color FxColor;
 
  private void Awake()
  {
@@ -15,7 +14,7 @@ public class TurretStateManager : EnemyStateManager
 
  public override void Start()
  {
- 
+
   enemyFeedBack = GetComponent<EnemyFeedBack>();
   spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -120,7 +119,7 @@ public class TurretStateManager : EnemyStateManager
  {
   if (!isDead)
   {
-   spriteRenderer.color = FxColor;
+
    BossManager.instance.inUpdatePhase = true;
 
 //  GetComponent<Animator>().Play(enemyFeedBack.stateDeathName);
@@ -136,7 +135,7 @@ public class TurretStateManager : EnemyStateManager
     ;
 
    }
-   else if(IsCurrentStatePlayed)
+   else if (IsCurrentStatePlayed)
    {
     if (EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate)
      CurrentFixedState -= EMainStatsSo.stateEnnemList[indexCurrentState].PlayState;
@@ -144,11 +143,15 @@ public class TurretStateManager : EnemyStateManager
      CurrentUpdateState -= EMainStatsSo.stateEnnemList[indexCurrentState].PlayState;
     IsCurrentStatePlayed = false;
    }
+
    objectDictionaryState.Clear();
    timerCurrentState = 0;
    timerCondition[indexCurrentState] = 0;
+   boxCollider2D.enabled = false;
    timerCurrentStartState = 0;
    indexCurrentState = 0;
   }
  }
+
+
 }

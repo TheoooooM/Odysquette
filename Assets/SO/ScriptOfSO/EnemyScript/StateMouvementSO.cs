@@ -9,6 +9,7 @@ using Pathfinding;
 [CreateAssetMenu(fileName = "StateMouvementSO", menuName = "EnnemyState/StateMouvementSO", order = 0)]
 public class StateMouvementSO : StateEnemySO
 {
+    
     public float moveSpeed;
     public bool isFastRun;
     public float endFastMove;
@@ -16,6 +17,15 @@ public class StateMouvementSO : StateEnemySO
 
     public Vector2 defaultSizeCollider;
     public Vector2 fastMoveSizeCollider;
+    public override bool CheckCondition(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary)
+    {
+   
+        if (!BossManager.instance.inSetPhase && !BossManager.instance.inUpdatePhase)
+            return true;
+        return false;
+    
+    }
+
     public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
     {
         if (isFastRun)
@@ -45,7 +55,7 @@ public class StateMouvementSO : StateEnemySO
         
     
      
-        endStep = true;
+        endStep = false;
     }
 
     public override void PlayState( Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)

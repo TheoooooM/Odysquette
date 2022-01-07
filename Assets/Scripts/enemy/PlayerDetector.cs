@@ -11,6 +11,7 @@ public class PlayerDetector : MonoBehaviour
 {
     [SerializeField] private Collider2D detectEnemyArea;
 
+    [SerializeField]
     private EnemyStateManager ESM;
     public float range = 1;
     [SerializeField]

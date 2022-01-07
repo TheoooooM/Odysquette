@@ -12,12 +12,14 @@ public class BossManager : MonoBehaviour
   private EnemyFeedBackMovement enemyFeedBackMovement;
 
   private const string bossName = "BOSS_";
+  private const string shieldName = "SHIELD_";
+  private const string transitionShield = "TO";
   private const string transitionName = "_TRANSITIONTO";
   private const string baseName = "BASE";
   private const string shootName = "_SHOOT";
   private const string beginShootName = "_BEGINSHOOT";
   private const string beginSpinName = "_BEGINSPIN";
-  
+  private const string baseShieldTransition = shieldName + "BASE" + transitionShield + "BLUE";
     [SerializeField] private string[] colorName;
   [SerializeField]
   private string[] walkName;
@@ -34,8 +36,7 @@ public class BossManager : MonoBehaviour
 //---------------------
   [SerializeField]
   private TurretStateManager[] baseturrets = new TurretStateManager[4];
-  [SerializeField]
-  private ParticleSystem bossParticleSystem;
+  [SerializeField] public Animator shieldBoss;
   private int currentIndexEnabledTurret;
   [SerializeField]
   private Slider healthBar;
@@ -49,7 +50,7 @@ public class BossManager : MonoBehaviour
  
  [SerializeField] private float timeOffset;
   [SerializeField]
-  private ParticleSystem[] EffectInvincible = new ParticleSystem[4];
+  private Animator[] shieldTurrets= new Animator[4];
  public BossStateManager enemyStateManager;
   public int[] numberEnabledTurrets;
   [SerializeField]
@@ -95,7 +96,7 @@ public float shootAnimationTime;
     enemyStateManager = GetComponent<BossStateManager>();
     enemyFeedBack = GetComponent<EnemyFeedBack>();
     enemyFeedBackMovement = GetComponent<EnemyFeedBackMovement>();
-    bossParticleSystem.gameObject.SetActive(true);
+
     spinFeedback = enemyFeedBackMovement.AnimationStatesList[1].angleAnimation;
       moveFeedback = enemyFeedBackMovement.AnimationStatesList[0].angleAnimation;
        inSpinFeedback = enemyFeedBackMovement.AnimationStatesListOneTime[0].angleAnimation;
@@ -123,7 +124,7 @@ public float shootAnimationTime;
          healthBar.maxValue = enemyStateManager.EMainStatsSo.maxHealth;
          playerDetector.enabled = true;
          healthBar.gameObject.SetActive(true);   
-         bossParticleSystem.gameObject.SetActive(false);
+        
        
       }
      
@@ -150,7 +151,7 @@ public float shootAnimationTime;
         if (inSpinAnimationTimer < inSpinAnimationTime)
         {
           inSpinAnimationTimer += Time.deltaTime;
-          Debug.Log("testsz");
+      
         }
         
       }
@@ -183,7 +184,7 @@ public float shootAnimationTime;
 
      currentMaxEnabledTurret =(int) phaseBoss;
      currentIndexEnabledTurret = 0;
-     enemyStateManager.collider2D.enabled = false;
+     
  
      
      for (int i = 0; i < currentMaxEnabledTurret; i++)
@@ -200,27 +201,23 @@ public float shootAnimationTime;
 
        if (i != 0)
        { 
-         EffectInvincible[i].gameObject.SetActive(true);
-         ParticleSystem.MainModule mainModule = EffectInvincible[i].main;
-         mainModule.startColor = baseturrets[0].FxColor;
+        
+         shieldTurrets[i].Play(baseShieldTransition);
 
        }
        else if (i == 0)
        {
          
-       
+     
          baseturrets[i].boxCollider2D.enabled = true;
-         
+          shieldBoss.Play(baseShieldTransition);
        }
       
      }
 
      TransitionFeedback(1,  false);
-     ParticleSystem.MainModule main = bossParticleSystem.main;
-     
-     var mainModuleBoss = bossParticleSystem.main;
-     mainModuleBoss.startColor = baseturrets[0].FxColor;
-     bossParticleSystem.gameObject.SetActive(true);
+   
+    
      inSetPhase = false;
      
 
@@ -231,70 +228,84 @@ public float shootAnimationTime;
     Debug.Log("aled");
     baseturrets[currentIndexEnabledTurret].enabled = false;
     baseturrets[currentIndexEnabledTurret].boxCollider2D.enabled = false;
+ 
     currentIndexEnabledTurret++;
     
       if (currentIndexEnabledTurret == currentMaxEnabledTurret)
-      {
+      { 
+        shieldBoss.Play(shieldName+colorName[currentIndexEnabledTurret]+transitionShield+colorName[0]);
         TransitionFeedback(currentIndexEnabledTurret, true);
-        enemyStateManager.collider2D.enabled = true;
-        bossParticleSystem.gameObject.SetActive(false);
+       
+  
+        inUpdatePhase = false;
         return;
       }
-      EffectInvincible[currentIndexEnabledTurret].gameObject.SetActive(false);
+       shieldTurrets[currentIndexEnabledTurret].Play(shieldName+colorName[currentIndexEnabledTurret]+transitionShield+colorName[0]);
       baseturrets[currentIndexEnabledTurret].boxCollider2D.enabled = true;
-      for (int i = currentIndexEnabledTurret; i < currentMaxEnabledTurret; i++)
-    {
-      var mainModuleTurret = EffectInvincible[i].main;
-      mainModuleTurret.startColor =
-        baseturrets[currentIndexEnabledTurret].FxColor;
-    }
-      TransitionFeedback(currentIndexEnabledTurret,  false);
-
-    var mainModule = bossParticleSystem.main;
-    mainModule.startColor=
-      baseturrets[currentIndexEnabledTurret].FxColor;
+      for (int i = currentIndexEnabledTurret+1; i < currentMaxEnabledTurret; i++)
+      {
+        shieldTurrets[i].Play(shieldName+colorName[currentIndexEnabledTurret]+transitionShield+colorName[currentIndexEnabledTurret+1]);
+      }
+     
+      shieldBoss.Play(shieldName+colorName[currentIndexEnabledTurret]+transitionShield+colorName[currentIndexEnabledTurret+1]);
+      TransitionFeedback(currentIndexEnabledTurret+1,  false);
+      
     inUpdatePhase = false;
   }
 
   void TransitionFeedback(int index,  bool toBaseState)
   {
-    string currentColorName = bossName+colorName[index];
+string currentColorName = bossName+colorName[index];
+
    
-    for (int i = 0; i <moveFeedback.Length; i++)
-      moveFeedback[i].stateName = currentColorName+walkName[i];
-
-      for (int i = 0; i < spinFeedback.Length; i++)
-     spinFeedback[i].stateName = currentColorName+spinName[i];
-
-         for (int i = 0; i <  endSpinFeedback.Length; i++)
-      endSpinFeedback[i].stateName =  currentColorName+endSpinName[i];
-         
-         for (int i = 0; i < inSpinFeedback.Length; i++) 
-           inSpinFeedback[i].stateName =  currentColorName+inSpinName[i];
-         
-    enemyFeedBack.animationList[0] = currentColorName+beginShootName;
-    enemyFeedBack.animationList[1] = currentColorName+shootName;
-    enemyFeedBack.animationList[2] = currentColorName+beginSpinName;
-
-    if (index != 0)
-    {
           if (toBaseState)
           {
-            Debug.Log(currentColorName+transitionName+colorName[0]);
-            animator.Play(currentColorName+transitionName+colorName[0]);
+            UpdateStateName(0, bossName+colorName[0]);
+            if (index != 0)
+            {
+
+              Debug.Log(currentColorName + transitionName + colorName[0]);
+              animator.Play(currentColorName + transitionName + colorName[0]);
+            }
           }
           else
           {
-            Debug.Log(bossName+colorName[index-1]+transitionName+colorName[index]);
-            animator.Play(bossName+colorName[index-1]+transitionName+colorName[index]);
+            UpdateStateName(index, currentColorName);
+            if (index != 0)
+            {
+            
+
+              Debug.Log(bossName + colorName[index-1] + transitionName + colorName[index]);
+              animator.Play(bossName + colorName[index-1] + transitionName + colorName[index]);
+            }
           }
-    }
+    
 
 
     //gestion du timer
 
   }
 
+  void UpdateStateName(int index, string currentColorName)
+  {
+        
+       
+        for (int i = 0; i <moveFeedback.Length; i++)
+          moveFeedback[i].stateName = currentColorName+walkName[i];
+    
+          for (int i = 0; i < spinFeedback.Length; i++)
+         spinFeedback[i].stateName = currentColorName+spinName[i];
+    
+             for (int i = 0; i <  endSpinFeedback.Length; i++)
+          endSpinFeedback[i].stateName =  currentColorName+endSpinName[i];
+             
+             for (int i = 0; i < inSpinFeedback.Length; i++) 
+               inSpinFeedback[i].stateName =  currentColorName+inSpinName[i];
+             
+        enemyFeedBack.animationList[0] = currentColorName+beginShootName;
+        enemyFeedBack.animationList[1] = currentColorName+shootName;
+        enemyFeedBack.animationList[2] = currentColorName+beginSpinName;
+  }
 
 [Serializable]
   public class HealthCondition

@@ -56,7 +56,9 @@ public class Explosion : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        
         if (other.CompareTag("Enemy")) {
             other.GetComponent<EnemyStateManager>().TakeDamage(damage, rb.position, knockUpValue, true, true);
         }

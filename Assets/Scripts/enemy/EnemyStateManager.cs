@@ -303,7 +303,7 @@ public class EnemyStateManager : MonoBehaviour {
                 }
 
 
-                if (CheckTimer(timerCurrentStartState, EMainStatsSo.stateEnnemList[indexCurrentState].startTime)) {
+                if (_endstep || CheckTimer(timerCurrentStartState, EMainStatsSo.stateEnnemList[indexCurrentState].startTime)) {
                     if (EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate) {
                         if (!EMainStatsSo.stateEnnemList[indexCurrentState].oneStartState)
                             CurrentFixedState -= EMainStatsSo.stateEnnemList[indexCurrentState].StartState;

@@ -12,14 +12,13 @@ public class BossBullet : MonoBehaviour
   public float damageTime;
    float damageTimer;
    private Transform child;
-   private SpriteRenderer spriteRenderer;
+
    private float speed;
    private float basePos; 
    private void Start()
    {
      child = transform.GetChild(0);
-     spriteRenderer = GetComponent<SpriteRenderer>();
-     spriteRenderer.color = Color.white;
+ 
      basePos =Vector2.Distance(transform.position, child.position);
      speed = (basePos / baseTime)*Time.deltaTime;
     
@@ -55,12 +54,12 @@ public class BossBullet : MonoBehaviour
       isImpact = true;
       if (damageTime > damageTimer)
         {
-          spriteRenderer.color = Color.red;
+        
           damageTimer +=Time.deltaTime;
         }
         else
         {
-          spriteRenderer.color = Color.white;
+      
           isImpact = false;
           EnemySpawnerManager.Instance.bossShootQueue.Enqueue(gameObject);
           gameObject.SetActive(false);
