@@ -39,7 +39,6 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] private AudioSource musicAudioSource;
     [SerializeField] private AudioSource sfxAudioSource;
     [SerializeField] private AudioSource calmSfxAudioSource;
-    [SerializeField] private AudioSource mediumSfxAudioSource;
     
     [Header("----SOUND DATA")]
     [SerializeField] private float timeBetweentwoExplosions = 0.075f;
