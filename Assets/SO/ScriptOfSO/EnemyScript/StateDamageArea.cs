@@ -13,25 +13,44 @@ public class StateDamageArea : StateEnemySO
     public DelayAtSpecificNumberShoot[] delayList;
     public int numberShoot;
     public int totalProbability;
- 
+    public bool aimPlayer;
+    public override bool CheckCondition(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary)
+    {
+        if (!BossManager.instance.inSetPhase && !BossManager.instance.inUpdatePhase)
+            return true;
+        return false;
+    }
+
     public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
-    { 
+    {
+        BossManager.instance.prepareShootAnimation = true;
+        if(BossManager.instance.shootAnimationTime == 0)
+        BossManager.instance.shootAnimationTime = startTime-0.02f;
+        if (!BossManager.instance.inShootAnimation)
+        {
+            CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringStartState);
+            endStep = false;
+            return;
+        }
+        
+        
         Transform transformPlayer = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformPlayer];
        EnemyStateManager enemyStateManager = (EnemyStateManager) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyStateManager];
-       enemyStateManager.StartCoroutine(DelayShoot(transformPlayer.position));
+       enemyStateManager.StartCoroutine(DelayShoot(transformPlayer));
+     
         // dure une frame pour launche animation et faire tout le bordel
         endStep = true;  
     }
 
     public override void PlayState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
-    {
-      // dure 2d secondes mais il y a pas de fonction 
+    {  BossManager.instance.inShootAnimation = false;
+        CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringPlayState);
       endStep = false;
     }
 
-    IEnumerator DelayShoot(Vector3 playerPosition)
+    IEnumerator DelayShoot(Transform playerPosition)
     {
-        List<Vector3> previousPosition = new List<Vector3>();
+       
         
 
         for (int i = 0; i < numberShoot; i++)
@@ -77,7 +96,7 @@ public class StateDamageArea : StateEnemySO
                             float finalDistance = Random.Range(intervalDistancesList[index].minDistance,
                                 intervalDistancesList[index].maxDistance);
                             Vector2 positionNormalized = Random.insideUnitCircle;
-                    finalPosition = playerPosition+((Vector3)positionNormalized)*finalDistance ;
+                    finalPosition = playerPosition.position+((Vector3)positionNormalized)*finalDistance ;
 
 
                     if (AstarPath.active.GetNearest(finalPosition).node.Walkable)
@@ -89,6 +108,7 @@ public class StateDamageArea : StateEnemySO
                         
                     }
             }
+ 
             
             
             

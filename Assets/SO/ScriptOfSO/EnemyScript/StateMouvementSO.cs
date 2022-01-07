@@ -9,17 +9,53 @@ using Pathfinding;
 [CreateAssetMenu(fileName = "StateMouvementSO", menuName = "EnnemyState/StateMouvementSO", order = 0)]
 public class StateMouvementSO : StateEnemySO
 {
+    
     public float moveSpeed;
-    public bool isMovementToSpawn;
+    public bool isFastRun;
+    public float endFastMove;
+    public float startSpinAnimationTime;
+
+    public Vector2 defaultSizeCollider;
+    public Vector2 fastMoveSizeCollider;
+    public override bool CheckCondition(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary)
+    {
+   
+        if (!BossManager.instance.inSetPhase && !BossManager.instance.inUpdatePhase)
+            return true;
+        return false;
+    
+    }
 
     public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
     {
-     
-        EnemyMovement enemyMovement = (EnemyMovement) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyMovement];
+        if (isFastRun)
+        {
+            BossManager.instance.isBeginSpin = true;
+
+            if (BossManager.instance.inSpinAnimationTime == 0)
+            {
+                  BossManager.instance.inSpinAnimationTime = startSpinAnimationTime;
+             
+            }
+              
+            if (BossManager.instance.inSpinAnimationTimer > startSpinAnimationTime)
+            {
+            
+                CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.BeginStartState);
+                BossManager.instance.enemyStateManager.collider2D.size = fastMoveSizeCollider;
+
+                endStep = true;
+                
+             
+                
+                return;
+            }
+        }
         CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringStartState);
-        enemyMovement.enabled = true;
+        
+    
      
-        endStep = true;
+        endStep = false;
     }
 
     public override void PlayState( Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
@@ -29,30 +65,31 @@ public class StateMouvementSO : StateEnemySO
 
         bool _endstep = false;
         enemyMovement.speed = moveSpeed;
-        if (isMovementToSpawn)
-        {  Transform spawnerTransform =
-                      (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.Spawner]; Rigidbody2D rbEnemy = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyEnemy];
-            enemyMovement.enabled = true;
-            enemyMovement.destination = spawnerTransform.position;
-            if (Vector2.Distance(rbEnemy.position, spawnerTransform.position)<0.1f)
+        if (isFastRun)
+        {BossManager.instance.inSpinAnimationTimer = 0;
+            BossManager.instance.isBeginSpin = false;
+            EnemyStateManager enemyStateManager =
+                (EnemyStateManager) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyStateManager];
+         
+          
+           
+            if (enemyStateManager.timerCurrentState > endFastMove)
             {
-                enemyMovement.enabled = false;
-           
-                _endstep = true;
-            }
-           
+                endStep = false;
+                CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.EndFastMove);
+                BossManager.instance.enemyStateManager.collider2D.size = defaultSizeCollider;
+                return;
+            }  
+            Transform aimFastMove =
+                (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.AimFastMove];
+            aimFastMove.position = rbPlayer.position;
+
         }
-        else
-        { 
-            
-            enemyMovement.enabled = true;
+        enemyMovement.enabled = true;
             enemyMovement.destination = rbPlayer.position;
             _endstep = false; 
             CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringPlayState);
-        }
-
-
-        endStep = _endstep;
+            endStep = _endstep;
     }
 
 

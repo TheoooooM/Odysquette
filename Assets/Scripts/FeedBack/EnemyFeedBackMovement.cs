@@ -123,10 +123,8 @@ CheckAngle(direction, index);
                     if (currentInputAngle >=  multipleAnimationList.angleAnimation[i].angleMin &&
                         currentInputAngle <=  multipleAnimationList.angleAnimation[i].angleMax)
                     {
-                                          
                         PlayAnimation(multipleAnimationList.angleAnimation[i].stateName, index, false);
-                        
-                                
+                               
                     }
                 } 
     }

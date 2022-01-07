@@ -19,15 +19,11 @@ public class EnemyFeedBackShader : MonoBehaviour
   material.SetFloat(propertyNameWithValuesList[index].propertyName, currentvalue+speed);
 
  }
-
-
-
  public  void SetMaterialProperty(int index)
  {
    material.SetFloat(propertyNameWithValuesList[index].propertyName, propertyNameWithValuesList[index].value);
   
  }
-
  [Serializable]
  public class PropertyNameWithValue
  {

@@ -27,7 +27,7 @@ public class EnemyStateManager : MonoBehaviour {
     public Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionaryState =
         new Dictionary<ExtensionMethods.ObjectInStateManager, Object>();
 
-    public Collider2D collider2D;
+    public BoxCollider2D collider2D;
 
     public bool isInWind;
     public Vector2 windDirection;
@@ -82,7 +82,7 @@ public class EnemyStateManager : MonoBehaviour {
     {
         
             playerDetector = GetComponent<PlayerDetector>();
-            collider2D = GetComponent<Collider2D>();
+            collider2D = GetComponent<BoxCollider2D>();
         enemyFeedBack = GetComponent<EnemyFeedBack>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         spawnPosition = transform.position;
@@ -148,7 +148,7 @@ public class EnemyStateManager : MonoBehaviour {
         if (EMainStatsSo.baseState != null) UpdateDictionaries(EMainStatsSo.baseState);
     }
 
-    private void Update() {
+    public virtual void Update() {
         if (isActivate && !isDead) {
             #region CheckStates
 
@@ -170,7 +170,7 @@ public class EnemyStateManager : MonoBehaviour {
                                 IsCurrentStartPlayed = true;
                                 if (EMainStatsSo.stateEnnemList[i].oneStartState)
                                     IsFirstStartPlayed = true;
-                                Debug.Log(i);
+                      
                             }
                             else {
                                 CurrentUpdateState += EMainStatsSo.stateEnnemList[i].PlayState;
@@ -232,7 +232,7 @@ public class EnemyStateManager : MonoBehaviour {
     }
 
 
-    private void FixedUpdate() {
+    public virtual void FixedUpdate() {
         if (isActivate && !isDead) {
             ApplyState();
 
@@ -303,7 +303,7 @@ public class EnemyStateManager : MonoBehaviour {
                 }
 
 
-                if (CheckTimer(timerCurrentStartState, EMainStatsSo.stateEnnemList[indexCurrentState].startTime)) {
+                if (_endstep || CheckTimer(timerCurrentStartState, EMainStatsSo.stateEnnemList[indexCurrentState].startTime)) {
                     if (EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate) {
                         if (!EMainStatsSo.stateEnnemList[indexCurrentState].oneStartState)
                             CurrentFixedState -= EMainStatsSo.stateEnnemList[indexCurrentState].StartState;

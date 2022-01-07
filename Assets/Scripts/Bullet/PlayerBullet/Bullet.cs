@@ -135,6 +135,7 @@ public class Bullet : MonoBehaviour {
 
         if (other.CompareTag("Enemy")) {
             EnemyStateManager enemyStateManager = other.GetComponent<EnemyStateManager>();
+            if(enemyStateManager.enabled)
             enemyStateManager.TakeDamage(damage, rb.position, knockUpValue, true, false);
             if (rateMode != StrawSO.RateMode.Ultimate) {
                 GameManager.Instance.ultimateValue += enemyStateManager.EMainStatsSo.coeifficentUltimateStrawPoints * ammountUltimate;
