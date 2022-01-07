@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class HandlerSlider : MonoBehaviour, IDragHandler {
+public class HandlerSlider : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownHandler {
     [SerializeField] private CustomSliderUI slider = null;
     [Space]
     [SerializeField] private Transform pointA = null;
@@ -20,4 +21,10 @@ public class HandlerSlider : MonoBehaviour, IDragHandler {
         value = ((pointB.transform.position.x - pointA.transform.position.x) - (pointB.transform.position.x - pos.x)) / ((pointB.transform.position.x - pointA.transform.position.x));
         slider.updateSliderAmountFromHandler(value);
     }
+    
+    private void SetDarkerhandler() => GetComponent<Image>().color = Color.gray;
+    private void SetLighterHandler() => GetComponent<Image>().color = Color.white;
+    
+    public void OnEndDrag(PointerEventData eventData) => SetLighterHandler();
+    public void OnPointerDown(PointerEventData eventData) => SetDarkerhandler();
 }

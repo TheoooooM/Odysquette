@@ -192,9 +192,9 @@ public class Bullet : MonoBehaviour {
     
     private void OnCollisionExit2D(Collision2D other)
     {
-        Debug.Log(rb.velocity);
+        //Debug.Log(rb.velocity);
         rb.velocity = lastVelocity;
-        Debug.Log(rb.velocity);
+        //Debug.Log(rb.velocity);
         isColliding = false;
     }
 
