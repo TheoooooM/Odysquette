@@ -73,7 +73,8 @@ public class Items : MonoBehaviour {
    /// When the player press a key
    /// </summary>
    /// <param name="buttonPress"></param>
-   private void UseItem(string buttonPress = "E") {
+   private void UseItem(string buttonPress = "E") { 
+      
       switch (buttonPress) {
          case "E":
             switch (itemType) {
@@ -81,6 +82,7 @@ public class Items : MonoBehaviour {
                   transform.GetChild(0).GetComponent<SetStrawUI>().DestroyActualStrawData();
                   DropStraw();
                   GameManager.Instance.actualStraw = straw;
+                  
                   break;
 
                case type.juice:
@@ -96,7 +98,7 @@ public class Items : MonoBehaviour {
                   //Add double life;
                   break;
             }
-
+            AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.TakeItem);
             Destroy(gameObject);
             break;
 
@@ -113,7 +115,7 @@ public class Items : MonoBehaviour {
 
                case type.doubleLife: break;
             }
-
+            AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.TakeItem);
             break;
       }
    }

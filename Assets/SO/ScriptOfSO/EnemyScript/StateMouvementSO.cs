@@ -44,7 +44,7 @@ public class StateMouvementSO : StateEnemySO
                 CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.BeginStartState);
                 BossManager.instance.enemyStateManager.collider2D.size = fastMoveSizeCollider;
 
-                endStep = true;
+                endStep = false;
                 
              
                 

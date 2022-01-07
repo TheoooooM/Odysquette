@@ -131,7 +131,7 @@ public class CurveBullet : Bullet {
         if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls")||other.gameObject.CompareTag("ShieldEnemy"))) {
             
             _bounceCount--;
-            
+            AudioManager.Instance.PlayImpactStraw(AudioManager.StrawSoundEnum.Bounce, transform.position);
             Debug.Log(currentDirection);
 
             var direction = Vector3.Reflect(currentDirection, other.contacts[0].normal);

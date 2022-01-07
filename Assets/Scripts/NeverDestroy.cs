@@ -19,7 +19,8 @@ public class NeverDestroy : MonoBehaviour
     }
     #endregion
 
-    public GameManager.Effect firstEffect;
+    public GameManager.Effect firstEffect; 
+    
     public GameManager.Effect secondEffect;
 
     public GameManager.Straw actualStraw;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class HealthPlayer : MonoBehaviour {
@@ -85,7 +86,8 @@ public class HealthPlayer : MonoBehaviour {
     public void TakeDamagePlayer(int damage) {
         if (!isInvincible) {
             if (healthPlayer - damage <= 0) OnDeathPlayer();
-
+            
+            AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Damage);
             healthPlayer -= damage;
             if(cameraShake != null) cameraShake.CreateCameraShake(.15f, .4f);
             
@@ -119,6 +121,7 @@ public class HealthPlayer : MonoBehaviour {
         if (GameManager.Instance != null) GameManager.Instance.enabled = false;
         gameObject.SetActive(false);
         if (UIManager.Instance != null) UIManager.Instance.GameOver();
+        AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Death);
     }
 
     private void OnTriggerStay2D(Collider2D other) {

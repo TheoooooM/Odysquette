@@ -448,6 +448,7 @@ public class EnemyStateManager : MonoBehaviour {
             OnDeath();
         }
         else {
+            // pas deson icic
             AudioManager.Instance.PlayEnemySound(AudioManager.EnemySoundEnum.Damage, gameObject);
             Knockup(position, knockUpValue, knockup, isExplosion);
             health -= damage;

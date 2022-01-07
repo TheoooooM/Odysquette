@@ -109,6 +109,7 @@ public class PoolManager : MonoBehaviour {
     }
     public void SpawnPiercePool(Transform bullet)
     {
+        AudioManager.Instance.PlayImpactStraw(AudioManager.StrawSoundEnum.Pierce, transform.position);
        GameObject obj = SpawnEffectBulletPool(bullet, pierceQueue, piercePrefab);
         obj.transform.rotation = bullet.rotation;
     }

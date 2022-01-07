@@ -381,6 +381,133 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &5332685053378599318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2931588523659339532}
+  - component: {fileID: 2455117808464367454}
+  m_Layer: 0
+  m_Name: PlayerMove Audio Source
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2931588523659339532
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5332685053378599318}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5233931782087560096}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &2455117808464367454
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5332685053378599318}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.4
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6960355917623347400
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,6 +539,7 @@ Transform:
   - {fileID: 1410901687}
   - {fileID: 316111470}
   - {fileID: 1266016835}
+  - {fileID: 2931588523659339532}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -427,11 +555,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 361666e4fcf00d14188a0310a439c3f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSound:
+    moveSound: {fileID: 8300000, guid: a0326ffc81ac35242a368ab33556a98d, type: 3}
+    damageSound: {fileID: 8300000, guid: 589a7f88caf96ca47a9b5dfbb166cbab, type: 3}
+    deathSound: {fileID: 8300000, guid: 6712bcda078aa7049a6daf33f75e57c1, type: 3}
+    dashSound: {fileID: 8300000, guid: db3fe2043b889c5439f240e7e071f793, type: 3}
+    fallSound: {fileID: 8300000, guid: cf7583b5722045a489b4172ec4226653, type: 3}
+    openChest: {fileID: 8300000, guid: 7ec6fcd1306ab0e44bea05bb648c5891, type: 3}
+    takeItem: {fileID: 8300000, guid: 36b50f4a45ef95a4fb1fc801405fbaef, type: 3}
   strawSound:
-    shootPlayer:
-    - {fileID: 0}
-    impactShoot:
-    - {fileID: 8300000, guid: 968e01dc8163ed045aabbcd7e74f4bd5, type: 3}
+    basicShoot:
+    - {fileID: 8300000, guid: 6b4f80efb37128f4688d9b7ce0ddb9ef, type: 3}
+    - {fileID: 8300000, guid: 4a33b3424e8dc8542859adcd2fdfbc6c, type: 3}
+    - {fileID: 8300000, guid: d92f12896bed23e4bb5d309c9ab7f242, type: 3}
+    - {fileID: 8300000, guid: 6d00620dd13daf640a98f39812d8e8c3, type: 3}
+    - {fileID: 8300000, guid: c5a2f2872745452459ab302adb5468a4, type: 3}
+    bubbleShoot:
+    - {fileID: 8300000, guid: b4c35263035471e469caed3eab2e9540, type: 3}
+    - {fileID: 8300000, guid: 7b32131e849c0a043b53d7038ad97608, type: 3}
+    - {fileID: 8300000, guid: d5e51debc33f634419a0384d887d5d0a, type: 3}
+    - {fileID: 8300000, guid: cd312d290eb456d47b9953365ba431d2, type: 3}
+    - {fileID: 8300000, guid: 19163fdeb83dc07439c6d51839d40116, type: 3}
+    snipShoot: {fileID: 8300000, guid: 99eb7c7d065c186469516646671c20a5, type: 3}
+    basicImpact: {fileID: 8300000, guid: 968e01dc8163ed045aabbcd7e74f4bd5, type: 3}
+    poisonImpact: {fileID: 8300000, guid: b8c71383a98bf2d469b7fe57e37a0f19, type: 3}
+    pierceImpact: {fileID: 8300000, guid: f469d2bcf2d47b14ea66cb715dba5645, type: 3}
+    bounceImpact: {fileID: 8300000, guid: ec7cef8d685e4a248917dad9f3b76103, type: 3}
     explosion:
     - {fileID: 8300000, guid: 0473549c8ce8a4145abc0841889faa7a, type: 3}
   ennemiDeath: {fileID: 8300000, guid: 1ab179156c1ed0b43a4cb0b510c59d6a, type: 3}
@@ -456,8 +605,16 @@ MonoBehaviour:
   musicAudioSource: {fileID: 8288724470549631958}
   sfxAudioSource: {fileID: 8023882384151283343}
   calmSfxAudioSource: {fileID: 5918340926514982470}
+  playerMovementAudioSource: {fileID: 2455117808464367454}
   timeBetweentwoExplosions: 0.1
   timeBetweentwoDamages: 0.07
   timeBetweentwoImpact: 0.1
+  timeBetweentwoPoison: 0.07
+  timeBetweentwoBounce: 0.07
+  timeBetweentwoPierce: 0.07
+  timeBetweenTwoShoot: 0.1
   maxDistanceExplosion: 35
   maxDistanceImpact: 45
+  maxDistanceBounce: 35
+  maxDistancePierce: 35
+  maxDistancePoison: 45

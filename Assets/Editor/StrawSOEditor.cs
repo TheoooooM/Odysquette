@@ -249,6 +249,12 @@ public class StrawSOEditor : Editor
                        EditorGUILayout.Space(2f);
                        EditorGUILayout.PropertyField(serializedObject.FindProperty("knockUp"));
                        EditorGUILayout.Space(2f);
+                       
+                       EditorGUILayout.PropertyField(serializedObject.FindProperty("typeSoundShoot"));
+                       EditorGUILayout.Space(2f);
+                       EditorGUILayout.PropertyField(serializedObject.FindProperty("shootSoundScale"));
+                       EditorGUILayout.Space(2f);
+                       
                    }
 
                   

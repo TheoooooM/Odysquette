@@ -26,6 +26,7 @@ public class BasicShootSO : StrawSO
         {
             for (int i = 0; i < directions.Length; i++)
             {
+                AudioManager.Instance.PlayShootStraw(typeSoundShoot, shootSoundScale);
                 GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode );
                 bulletScript = bullet.GetComponent<Bullet>();
                 bullet.SetActive(true);
@@ -83,6 +84,7 @@ public class BasicShootSO : StrawSO
                     {
                         
                   
+                        AudioManager.Instance.PlayShootStraw(typeSoundShoot, shootSoundScale);
                         GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode);
                         bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                         bullet.SetActive(true);

@@ -138,11 +138,13 @@ public class Playercontroller : MonoBehaviour {
         if(GameManager.Instance != null) GameManager.Instance.isMouse = true;
         if (playerInput.Player.Movement.ReadValue<Vector2>() != Vector2.zero && canMove) {
             moveVector = playerInput.Player.Movement.ReadValue<Vector2>();
+            AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Move);
             lastMoveVector = moveVector;
             if(canPlayAnim) CheckForPlayAnimation(moveVector, true);
         }
         else if (playerInput.Player.MovementGamepad.ReadValue<Vector2>() != Vector2.zero && canMove) {
             moveVector = playerInput.Player.MovementGamepad.ReadValue<Vector2>();
+            AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Move);
             lastMoveVector = moveVector;
             if(GameManager.Instance != null) GameManager.Instance.isMouse = false;
             if(canPlayAnim) CheckForPlayAnimation(moveVector, true);
@@ -151,6 +153,7 @@ public class Playercontroller : MonoBehaviour {
             if(canPlayAnim) CheckForPlayAnimation(lastMoveVector.normalized, true);
         }
         else if(!falling){
+            AudioManager.Instance.playerMovementAudioSource.Stop();
             if(canPlayAnim) CheckForPlayAnimation(lastMoveVector.normalized, false);
         }
 
@@ -187,6 +190,8 @@ public class Playercontroller : MonoBehaviour {
             if (TryDash && timerBetweenDash >= timeBetweenDash && !isInEffectFlash) {
                 InDash = true;
                 timerBetweenDash = 0;
+                AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Dash);
+                AudioManager.Instance.playerMovementAudioSource.Stop();
                 dashDirection = lastMoveVector.normalized;
                 rb.velocity = Vector2.zero;
                 PlayerAfterImagePool.Instance.GetFromPool();
@@ -312,6 +317,7 @@ public class Playercontroller : MonoBehaviour {
         dashPos = fl !=null && Indash ? fl.dashPos : Vector3.zero;
         falling = true;
         canMove = false;
+        AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Fall);
         if(canPlayAnim) playerAnimator.Play("fall"); 
     }
 

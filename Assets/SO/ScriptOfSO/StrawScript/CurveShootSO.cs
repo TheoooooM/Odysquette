@@ -32,6 +32,7 @@ public class CurveShootSO : StrawSO
                 if (stepOfCurve != null)
                 {
                     Vector3 currentBasePosition = new Vector3();
+                    AudioManager.Instance.PlayShootStraw(typeSoundShoot, shootSoundScale);
                     GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode);
                     bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                     indexBullet = i;
@@ -85,6 +86,7 @@ public class CurveShootSO : StrawSO
 
                 if (stepOfCurve != null)
                 {
+                    AudioManager.Instance.PlayShootStraw(typeSoundShoot, shootSoundScale);
                     Vector3 currentBasePosition = new Vector3();
                     GameObject bullet = PoolManager.Instance.SpawnFromPool(parentBulletTF, prefabBullet, rateMode);
                     bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
