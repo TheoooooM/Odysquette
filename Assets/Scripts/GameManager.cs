@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour {
     [Header("---- MOUSE")] [SerializeField]
     private float offsetPadViewFinder;
 
-    private Vector2 mousepos; //position de la souris sur l'écran
+    [HideInInspector] public Vector2 mousepos; //position de la souris sur l'écran
     public float angle; //angle pour orienter la paille
     public float viewFinderDistance;
     [SerializeField] private Camera main;
