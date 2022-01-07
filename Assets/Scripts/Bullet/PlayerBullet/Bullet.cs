@@ -141,13 +141,13 @@ public class Bullet : MonoBehaviour {
                 GameManager.Instance.ultimateValue += enemyStateManager.EMainStatsSo.coeifficentUltimateStrawPoints * ammountUltimate;
             }
             
-            if (_pierceCount > 0 && lastEnemyHit != other.gameObject) {
+            if (_pierceCount > 0 && lastEnemyHit != other.gameObject && (GameManager.Instance.firstEffect == GameManager.Effect.piercing || GameManager.Instance.secondEffect == GameManager.Effect.piercing)) {
                 _pierceCount--;
                 PoolManager.Instance.SpawnPiercePool(transform);
                 lastEnemyHit = other.gameObject;
                 //PoolManager.Instance.SpawnImpactPool(transform);
             }
-            else if(pierceCount == 0){
+            else if(pierceCount == 0 || (GameManager.Instance.firstEffect != GameManager.Effect.piercing && GameManager.Instance.secondEffect != GameManager.Effect.piercing)){
                 DesactiveBullet();
             }
         }

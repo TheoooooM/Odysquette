@@ -81,7 +81,7 @@ public class DestructableObejct : MonoBehaviour {
         if (rdm < dropRate) {
             int ressourcesNumber = Random.Range(0, maxRessources + 1);
             for (int i = 0; i < ressourcesNumber; i++) {
-                GameObject GO = Resources.Load<GameObject>("ressource");
+                GameObject GO = Resources.Load<GameObject>("Resource");
                 Instantiate(GO, transform.position, Quaternion.identity);
             }
         }
