@@ -89,7 +89,9 @@ public class AudioManager : MonoBehaviour {
     /// </summary>
     /// <param name="scene"></param>
     /// <param name="mode"></param>
-    private void ChangeMusicForNewScene(Scene scene, LoadSceneMode mode){
+    private void ChangeMusicForNewScene(Scene scene, LoadSceneMode mode) {
+        if (musicAudioSource == null) return; 
+        
         musicAudioSource.Stop();
 
         //HUB

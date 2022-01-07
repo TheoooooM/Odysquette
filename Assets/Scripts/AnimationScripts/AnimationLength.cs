@@ -2,19 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationLength : StateMachineBehaviour
-{
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+public class AnimationLength : StateMachineBehaviour {
+    /// <summary>
+    /// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+    /// </summary>
+    /// <param name="animator"></param>
+    /// <param name="stateInfo"></param>
+    /// <param name="layerIndex"></param>
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-        animator.SetFloat("Multiplier", Random.Range(0.25f, 0.75f));
+        animator.SetFloat("Multiplier", Random.Range(0.15f, 0.95f));
     }
-
-    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
-
+    
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{

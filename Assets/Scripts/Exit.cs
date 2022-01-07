@@ -47,4 +47,6 @@ public class Exit : MonoBehaviour {
         yield return new WaitForSeconds(1f);
         open = true;
     }
+    
+    public void OpenNewScene() => sceneManager.StartLoadScene(sceneToLoad);
 }
