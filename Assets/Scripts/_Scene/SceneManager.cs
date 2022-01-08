@@ -23,6 +23,7 @@ public class SceneManager : MonoBehaviour {
     /// </summary>
     /// <param name="sceneName"></param>
     public void StartLoadScene(string sceneName) {
+        GameManager.Instance.SetND();
         nextSceneName = sceneName;
         sceneTransitionGam.GetComponent<Animator>().Play("Scene_CloseScene");
     }

@@ -68,8 +68,7 @@ public class GameManager : MonoBehaviour {
         get { return _ultimateValue; }
         set {
             _ultimateValue = Mathf.Clamp(value, 0, maxUltimateValue);
-
-            if(UIManager.Instance != null) UIManager.Instance.UltSlider.value = _ultimateValue;
+            if(UIManager.Instance != null) UIManager.Instance.ultimateValue = _ultimateValue / maxUltimateValue;
         }
     }
 
@@ -404,14 +403,14 @@ public class GameManager : MonoBehaviour {
     #endregion END ROOM
 
     #region NeverDestroy
-    private void GetND()
-    {
-        Score = NeverDestroy.Instance.Score;
+    private void GetND() {
+        AddScore(NeverDestroy.Instance.Score);
         firstEffect = NeverDestroy.Instance.firstEffect;
         secondEffect = NeverDestroy.Instance.secondEffect;
+        SetVisualEffect();
         actualStraw = NeverDestroy.Instance.actualStraw;
         ultimateValue = NeverDestroy.Instance.ultimateValue;
-        UIManager.Instance.UltSlider.value = _ultimateValue;
+        UIManager.Instance.ultimateValue = _ultimateValue / maxUltimateValue;
         NeverDestroy.Instance.AddRessource(0);
     }
 
@@ -420,7 +419,7 @@ public class GameManager : MonoBehaviour {
         NeverDestroy.Instance.secondEffect = secondEffect;
         NeverDestroy.Instance.actualStraw = actualStraw;
         NeverDestroy.Instance.life = HealthPlayer.Instance.healthPlayer;
-        NeverDestroy.Instance.ultimateValue = ultimateValue;
+        NeverDestroy.Instance.ultimateValue = _ultimateValue;
         NeverDestroy.Instance.Score = Score;
     }
     #endregion
@@ -444,15 +443,13 @@ public class GameManager : MonoBehaviour {
     }
 
 
-    public void AddScore(int amount = 1)
-    {
+    public void AddScore(int amount = 1) {
         Score += amount;
-        UIManager.Instance.scoreText.text = "Score : " + Score;
+        UIManager.Instance.scoreText.text = Score.ToString();
     }
 
     
-  public  void SetVisualEffect()
-    {
+  public  void SetVisualEffect() {
                 for (int i = 0; i < colorEffectsList.Length; i++) {
                     if (colorEffectsList[i].firstEffect == firstEffect && colorEffectsList[i].secondEffect == secondEffect
                         || colorEffectsList[i].firstEffect == secondEffect && colorEffectsList[i].secondEffect == firstEffect) {

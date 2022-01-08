@@ -14,7 +14,13 @@ public class UIManager : MonoBehaviour {
     public GameObject cursor;
     public List<Hearth> HeartsLifes;
     public List<Hearth> _HeartsLife;
-    public Slider UltSlider;
+    [Space] 
+    [SerializeField] private Image ultimateImg = null;
+    [SerializeField] private Animator ultimateAnim = null;
+    [HideInInspector] public float ultimateValue = 0;
+    [Space] 
+    [SerializeField] private CanvasGroup informationPanel = null;
+    [Space] 
     public static UIManager Instance;
     float maxUltSlider = 100f;
     
@@ -54,12 +60,9 @@ public class UIManager : MonoBehaviour {
     private void Start() {
         CommandConsole RESTART = new CommandConsole("restart", "restart : Restart all the game", null, (_) => { PlayAgain(); });
         CommandConsoleRuntime.Instance.AddCommand(RESTART);
-
-        
-        
-        UltSlider.maxValue = GameManager.Instance.maxUltimateValue;
         pauseMenu.SetActive(false);
         inGameMenu.SetActive(true);
+        informationPanel.alpha = 0;
     }
 
     /// <summary>
@@ -70,9 +73,14 @@ public class UIManager : MonoBehaviour {
             loadingBar.value += loadingBar.maxValue * chargeSpeed * 0.01f;
         }
 
-        /*
-         * Open the pause menu is now in the commandConsoleRuntime
-         */
+        UltimateImageData data = ultimateImg.GetComponent<UltimateImageData>();
+        ultimateAnim.SetInteger("UltimateProcent", (int) ultimateValue * 100);
+        float posY = Mathf.Clamp(data.MinPosY + Mathf.Abs(data.MinPosY - data.MaxPosY) * ultimateValue, data.MinPosY, data.MaxPosY);
+        float height = Mathf.Clamp((data.MaxHeight - data.MinHeight) * ultimateValue, data.MinHeight, data.MaxHeight);
+        ultimateImg.GetComponent<RectTransform>().localPosition = new Vector3(ultimateImg.GetComponent<RectTransform>().localPosition.x, posY, ultimateImg.GetComponent<RectTransform>().localPosition.z);
+        ultimateImg.GetComponent<RectTransform>().sizeDelta = new Vector2(ultimateImg.GetComponent<RectTransform>().sizeDelta.x, height);
+
+        informationPanel.alpha += Input.GetKey(KeyCode.LeftControl) ? .1f : -.1f;
     }
 
     /// <summary>
@@ -80,6 +88,7 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void Pause() {
         inGameMenu.SetActive(false);
+        cursor.SetActive(false);
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         GameManager.Instance.gameIsPause = true;
@@ -91,6 +100,7 @@ public class UIManager : MonoBehaviour {
     public void Unpause() {
         Time.timeScale = 1f;
         inGameMenu.SetActive(true);
+        cursor.SetActive(true);
         pauseMenu.SetActive(false);
         GameManager.Instance.gameIsPause = false;
     }
