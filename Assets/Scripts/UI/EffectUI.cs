@@ -14,25 +14,21 @@ public class EffectUI : MonoBehaviour
 
     private void Start()
     {
-        image = GetComponent<Image>();
+        image = transform.GetChild(0).GetComponent<Image>();
         basicSprite = image.sprite;
     }
 
-    private void Update()
-    {
-        if (GameManager.Instance != null)
-        {
+    private void Update() {
+        if (GameManager.Instance != null) {
             if (firstEffect)
-                image.sprite = GameManager.Instance.firstEffect switch
-                {
+                image.sprite = GameManager.Instance.firstEffect switch {
                     GameManager.Effect.bouncing => SO.bounceSprite,
                     GameManager.Effect.piercing => SO.pierceSprite,
                     GameManager.Effect.explosive => SO.explosionSprite,
                     GameManager.Effect.poison => SO.poisonSprite,
                     _ => basicSprite,
                 };
-            else image.sprite = GameManager.Instance.secondEffect switch
-                {
+            else image.sprite = GameManager.Instance.secondEffect switch {
                     GameManager.Effect.bouncing => SO.bounceSprite,
                     GameManager.Effect.piercing => SO.pierceSprite,
                     GameManager.Effect.explosive => SO.explosionSprite,

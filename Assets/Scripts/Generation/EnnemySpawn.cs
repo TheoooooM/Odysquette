@@ -7,12 +7,12 @@ using Random = UnityEngine.Random;
 public class EnnemySpawn : MonoBehaviour
 {
     [Serializable]
-    public class Spawn
-    {
+    public class Spawn {
         public GameObject ennemy;
         public float spawnRate;
     }
-    //private EnnemyVar.Ennemies ennemyType;
+    
+    //private Enemy.Enemies enemyType;
     private GameObject MobToSpawn;
     public Spawn[] SpawnerList;
     private float rate;
@@ -20,8 +20,8 @@ public class EnnemySpawn : MonoBehaviour
     
 
     [SerializeField] private RoomContainer part;
-    
-    void Start()
+
+    private void Start()
     {
        
             int randomMax = 0;
@@ -47,11 +47,6 @@ public class EnnemySpawn : MonoBehaviour
         GameObject GO = Instantiate(MobToSpawn, transform.position, Quaternion.identity, part.transform);
         part.room.ennemiesList.Add(GO);
         GO.GetComponentInChildren<EnemyStateManager>().roomParent = part.room;
-        
-    }
-
-    void Update()
-    {
         
     }
 }

@@ -22,6 +22,8 @@ public class Exit : MonoBehaviour {
         else if(isHubTransition) sceneToLoad = "YOP_Basic";
         else sceneToLoad = "Shop";
         
+        if(!isShop && ! isHubTransition) NeverDestroy.Instance.StartTimer();
+        else if(isShop || isHubTransition) NeverDestroy.Instance.PauseTimer();
     }
 
     private void Update() => ePress = Input.GetKey(KeyCode.E);
@@ -35,6 +37,7 @@ public class Exit : MonoBehaviour {
     private void OnTriggerStay2D(Collider2D other) {
         if (ePress) {
             GameManager.Instance.SetND();
+            if(!isShop && ! isHubTransition) NeverDestroy.Instance.PauseTimer();
             if (other.CompareTag("Player")) sceneManager.StartLoadScene(sceneToLoad);
         }
     }

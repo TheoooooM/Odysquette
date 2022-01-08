@@ -28,6 +28,7 @@ public class Generation : MonoBehaviour {
     [SerializeField] private bool forceRedLight = false;
     public int seed = 0;
     public bool disableNeighboor = false;
+    public bool loopGeneration = false;
     [HideInInspector] public bool endGeneration;
 
     [Header("--- ROOMS")] public GameObject StartingRoom;
@@ -161,6 +162,12 @@ public class Generation : MonoBehaviour {
 
         endGeneration = true;
         UIUpdate();
+
+        if (loopGeneration) {
+            yield return new WaitForSeconds(.25f);
+            ResetGen();
+            GenerateLevel();
+        }
     }
     
     #region ROOM GENERATION

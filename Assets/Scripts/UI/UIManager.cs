@@ -39,10 +39,12 @@ public class UIManager : MonoBehaviour {
     [Header("----Ressources & Score----")] 
     public TextMeshProUGUI ressourceText;
     public TextMeshProUGUI scoreText;
+    
+    [Header("----Timer----")] 
     public TextMeshProUGUI Timer;
-    
-    
-    
+    [SerializeField] private Image timerImg = null;
+    [SerializeField] private Sprite chronoSpirte = null;
+    [SerializeField] private Sprite pauseSprite = null;
     
     [Header("----Generation----")] 
     public GameObject LoadingScreen;
@@ -135,6 +137,20 @@ public class UIManager : MonoBehaviour {
         Application.Quit();
     }
     
+    #region Timer
+
+    public void PauseTimer() {
+        timerImg.sprite = pauseSprite;
+        Timer.color = Color.gray;
+    }
+
+    public void StartTimer() {
+        timerImg.sprite = chronoSpirte;
+        Timer.color = Color.white;
+    }
+
+    #endregion Timer
+
 
     // Update is called once per frame
 
