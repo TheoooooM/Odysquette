@@ -528,6 +528,7 @@ MonoBehaviour:
   enemyFeedBack: {fileID: 0}
   isActivate: 0
   isContactWall: 0
+  inSoundCurrentState: 0
   EMainStatsSo: {fileID: 11400000, guid: e6a387d1bac6de3428663017dbf73ccd, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -608,20 +609,20 @@ MonoBehaviour:
   - _ENDSPINFRONTLEFT
   baseturrets:
   - {fileID: 4512851394618653116}
-  - {fileID: 4512851393999645453}
   - {fileID: 4512851393255716667}
   - {fileID: 4512851393769003423}
-  shieldBoss: {fileID: 0}
+  - {fileID: 4512851393999645453}
+  shieldBoss: {fileID: 158932809303083842}
   healthBar: {fileID: 2275768115075306327}
   timeBetweenShootTurret: 3
   inSetPhase: 0
   inUpdatePhase: 0
   timeOffset: 3
   shieldTurrets:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8107312819490778123}
+  - {fileID: 539512842679196437}
+  - {fileID: 6580762663057769329}
+  - {fileID: 8773889119698058807}
   enemyStateManager: {fileID: 0}
   numberEnabledTurrets: 
   turret: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
@@ -629,16 +630,16 @@ MonoBehaviour:
   healthConditionList:
   - phaseBoss: 1
     firstUse: 0
-    healthTrigger: 42500
+    healthTrigger: 425
   - phaseBoss: 2
     firstUse: 0
-    healthTrigger: 30000
+    healthTrigger: 300
   - phaseBoss: 3
     firstUse: 0
-    healthTrigger: 17500
+    healthTrigger: 175
   - phaseBoss: 4
     firstUse: 0
-    healthTrigger: 5000
+    healthTrigger: 50
   beginTime: 3
   prepareShootAnimation: 0
   inShootAnimation: 0
@@ -865,6 +866,18 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+          - m_Target: {fileID: 4512851393080758042}
+            m_TargetAssemblyTypeName: BossManager, Assembly-CSharp
+            m_MethodName: CancelSoundBossShoot
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
     - typeFeedBackEvent: 5
       feedBackEvent:
         m_PersistentCalls:
@@ -877,6 +890,18 @@ MonoBehaviour:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
               m_IntArgument: 1
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 4512851393080758042}
+            m_TargetAssemblyTypeName: BossManager, Assembly-CSharp
+            m_MethodName: PlaySound
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: 
               m_BoolArgument: 0
@@ -1009,8 +1034,10 @@ GameObject:
   - component: {fileID: 4512851393255716661}
   - component: {fileID: 4512851393255716660}
   - component: {fileID: 1214578225403730302}
+  - component: {fileID: 1234538057883559824}
+  - component: {fileID: 3055461430946641158}
   m_Layer: 8
-  m_Name: Turret
+  m_Name: RedTurret
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1025,7 +1052,7 @@ Transform:
   m_GameObject: {fileID: 4512851393255716662}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 15.52, y: 1.27, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4512851392810320162}
   - {fileID: 4512851393539177315}
@@ -1073,8 +1100,8 @@ SpriteRenderer:
   m_SortingLayerID: -1990800739
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 6218567562344730315, guid: 51a2682eba3d16f4aac7609f35110071, type: 3}
-  m_Color: {r: 0, g: 0.14966917, b: 1, a: 1}
+  m_Sprite: {fileID: 5967670151295135797, guid: ccafb712dd904bd478ae9bf91081b2be, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1100,6 +1127,7 @@ MonoBehaviour:
   enemyFeedBack: {fileID: 0}
   isActivate: 1
   isContactWall: 0
+  inSoundCurrentState: 0
   EMainStatsSo: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -1137,6 +1165,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   spriteRenderer: {fileID: 4512851393255716664}
   boxCollider2D: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!50 &4512851393255716666
 Rigidbody2D:
   serializedVersion: 4
@@ -1203,7 +1232,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.6875, y: 0.5625}
+    oldSize: {x: 4, y: 4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1225,6 +1254,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: {fileID: 0}
+--- !u!95 &1234538057883559824
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4512851393255716662}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8c36b6768cf9ff842b88f19c0f3dcea9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3055461430946641158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4512851393255716662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c677380bcc9251418967693b69ec7e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  feedBackEvent:
+  - stateEnemySo: ShootTurret
+    feedBackEventClassList:
+    - typeFeedBackEvent: 4
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 3055461430946641158}
+            m_TargetAssemblyTypeName: EnemyFeedBack, Assembly-CSharp
+            m_MethodName: LaunchAnimation
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Attack
+              m_BoolArgument: 0
+            m_CallState: 2
+  stateDeathName: Desactivation
+  animationList: []
 --- !u!1 &4512851393308249714
 GameObject:
   m_ObjectHideFlags: 0
@@ -1409,8 +1490,10 @@ GameObject:
   - component: {fileID: 4512851393769003417}
   - component: {fileID: 4512851393769003416}
   - component: {fileID: 8156060461099689828}
+  - component: {fileID: 6389868228936092578}
+  - component: {fileID: 6665431268961952440}
   m_Layer: 8
-  m_Name: Turret
+  m_Name: YellowTurret
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1425,7 +1508,7 @@ Transform:
   m_GameObject: {fileID: 4512851393769003418}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3.92, y: -6.82, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4512851394436821256}
   - {fileID: 4512851394571066720}
@@ -1473,8 +1556,8 @@ SpriteRenderer:
   m_SortingLayerID: -1990800739
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 6218567562344730315, guid: 51a2682eba3d16f4aac7609f35110071, type: 3}
-  m_Color: {r: 1, g: 0.6255317, b: 0, a: 1}
+  m_Sprite: {fileID: 6030835352149489727, guid: 5e21665f7bd0274439f5cbc110eb7f34, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1500,6 +1583,7 @@ MonoBehaviour:
   enemyFeedBack: {fileID: 0}
   isActivate: 1
   isContactWall: 0
+  inSoundCurrentState: 0
   EMainStatsSo: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -1537,6 +1621,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   spriteRenderer: {fileID: 4512851393769003420}
   boxCollider2D: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!50 &4512851393769003422
 Rigidbody2D:
   serializedVersion: 4
@@ -1603,7 +1688,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.6875, y: 0.5625}
+    oldSize: {x: 8, y: 4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1625,6 +1710,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: {fileID: 0}
+--- !u!95 &6389868228936092578
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4512851393769003418}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a0777e7a6d80bb74096294c6485f357d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6665431268961952440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4512851393769003418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c677380bcc9251418967693b69ec7e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  feedBackEvent:
+  - stateEnemySo: ShootTurret
+    feedBackEventClassList:
+    - typeFeedBackEvent: 4
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 6665431268961952440}
+            m_TargetAssemblyTypeName: EnemyFeedBack, Assembly-CSharp
+            m_MethodName: LaunchAnimation
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Attack
+              m_BoolArgument: 0
+            m_CallState: 2
+  stateDeathName: Desactivation
+  animationList: []
 --- !u!1 &4512851393999645448
 GameObject:
   m_ObjectHideFlags: 0
@@ -1640,8 +1777,10 @@ GameObject:
   - component: {fileID: 4512851393999645455}
   - component: {fileID: 4512851393999645454}
   - component: {fileID: 176144073031690107}
+  - component: {fileID: 6306676679905258320}
+  - component: {fileID: 4649843597144407096}
   m_Layer: 8
-  m_Name: Turret
+  m_Name: GreenTurret
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1656,7 +1795,7 @@ Transform:
   m_GameObject: {fileID: 4512851393999645448}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 4.22, y: 10.83, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4512851394311591329}
   - {fileID: 4512851392912843385}
@@ -1704,8 +1843,8 @@ SpriteRenderer:
   m_SortingLayerID: -1990800739
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 6218567562344730315, guid: 51a2682eba3d16f4aac7609f35110071, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: -900971950112480751, guid: f301027ccad340945a88139c5e2ad353, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1731,6 +1870,7 @@ MonoBehaviour:
   enemyFeedBack: {fileID: 0}
   isActivate: 1
   isContactWall: 0
+  inSoundCurrentState: 0
   EMainStatsSo: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -1768,6 +1908,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   spriteRenderer: {fileID: 4512851393999645458}
   boxCollider2D: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!50 &4512851393999645452
 Rigidbody2D:
   serializedVersion: 4
@@ -1834,7 +1975,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.6875, y: 0.5625}
+    oldSize: {x: 4, y: 4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1856,6 +1997,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: {fileID: 0}
+--- !u!95 &6306676679905258320
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4512851393999645448}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3e240410326ef9e47993caa56c2d5d23, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4649843597144407096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4512851393999645448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c677380bcc9251418967693b69ec7e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  feedBackEvent:
+  - stateEnemySo: ShootTurret
+    feedBackEventClassList:
+    - typeFeedBackEvent: 4
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4649843597144407096}
+            m_TargetAssemblyTypeName: EnemyFeedBack, Assembly-CSharp
+            m_MethodName: LaunchAnimation
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Attack
+              m_BoolArgument: 0
+            m_CallState: 2
+  stateDeathName: Desactivation
+  animationList: []
 --- !u!1 &4512851394311591328
 GameObject:
   m_ObjectHideFlags: 0
@@ -2018,8 +2211,10 @@ GameObject:
   - component: {fileID: 4512851394618653118}
   - component: {fileID: 4512851394618653113}
   - component: {fileID: 6423815352019209404}
+  - component: {fileID: 7488090399896520069}
+  - component: {fileID: 1311816224640817978}
   m_Layer: 8
-  m_Name: Turret
+  m_Name: BlueTurret
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2034,7 +2229,7 @@ Transform:
   m_GameObject: {fileID: 4512851394618653112}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -13.34, y: 1.1273594, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4512851393532707552}
   - {fileID: 4512851392962713232}
@@ -2082,8 +2277,8 @@ SpriteRenderer:
   m_SortingLayerID: -1990800739
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 6218567562344730315, guid: 51a2682eba3d16f4aac7609f35110071, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.008023262, a: 1}
+  m_Sprite: {fileID: -8801518146535471480, guid: 985ba03d696c3cc42a2e4f7e3212fbea, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2109,6 +2304,7 @@ MonoBehaviour:
   enemyFeedBack: {fileID: 0}
   isActivate: 1
   isContactWall: 0
+  inSoundCurrentState: 0
   EMainStatsSo: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -2146,6 +2342,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   spriteRenderer: {fileID: 4512851394618652994}
   boxCollider2D: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!50 &4512851394618653119
 Rigidbody2D:
   serializedVersion: 4
@@ -2212,7 +2409,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.6875, y: 0.5625}
+    oldSize: {x: 4, y: 4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -2234,6 +2431,74 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: {fileID: 0}
+--- !u!95 &7488090399896520069
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4512851394618653112}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 92fe6bbc634c7044ca716e5696631eb4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1311816224640817978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4512851394618653112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c677380bcc9251418967693b69ec7e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  feedBackEvent:
+  - stateEnemySo: ShootTurret
+    feedBackEventClassList:
+    - typeFeedBackEvent: 4
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 1311816224640817978}
+            m_TargetAssemblyTypeName: EnemyFeedBack, Assembly-CSharp
+            m_MethodName: LaunchAnimation
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Attack
+              m_BoolArgument: 0
+            m_CallState: 2
+    - typeFeedBackEvent: 5
+      feedBackEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4512851393080758042}
+            m_TargetAssemblyTypeName: BossManager, Assembly-CSharp
+            m_MethodName: PlaySound
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 1
+              m_FloatArgument: 0
+              m_StringArgument: Attack
+              m_BoolArgument: 0
+            m_CallState: 2
+  stateDeathName: Desactivation
+  animationList: []
 --- !u!1 &6489299987230285552
 GameObject:
   m_ObjectHideFlags: 0
@@ -2270,7 +2535,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 41.5387, y: 49.74646}
+  m_AnchoredPosition: {x: 41.53882, y: 49.74646}
   m_SizeDelta: {x: -715.0886, y: 99.4929}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2275768115075306327
@@ -2657,6 +2922,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4758542098465518415, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758542098465518415, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
@@ -2665,6 +2934,11 @@ PrefabInstance:
 --- !u!4 &539512842679196442 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2751650418755770581, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
+  m_PrefabInstance: {fileID: 2401385520670802895}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &539512842679196437 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2751650418755770586, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
   m_PrefabInstance: {fileID: 2401385520670802895}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2601805109563511704
@@ -2731,11 +3005,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4758542098465518415, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758542098465518415, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
+--- !u!95 &158932809303083842 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2751650418755770586, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
+  m_PrefabInstance: {fileID: 2601805109563511704}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &158932809303083853 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2751650418755770581, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
@@ -2920,11 +3203,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4758542098465518415, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758542098465518415, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
+--- !u!95 &8107312819490778123 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2751650418755770586, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
+  m_PrefabInstance: {fileID: 6245689438568576209}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8107312819490778116 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2751650418755770581, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
@@ -3002,11 +3294,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4758542098465518415, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758542098465518415, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
+--- !u!95 &8773889119698058807 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2751650418755770586, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
+  m_PrefabInstance: {fileID: 6912126925380675309}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8773889119698058808 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2751650418755770581, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
@@ -3084,6 +3385,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4758542098465518415, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758542098465518415, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
@@ -3092,5 +3397,10 @@ PrefabInstance:
 --- !u!4 &6580762663057769342 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2751650418755770581, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
+  m_PrefabInstance: {fileID: 9042176628889246635}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6580762663057769329 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2751650418755770586, guid: 06f0ed3166bcf724b87776712d7afc53, type: 3}
   m_PrefabInstance: {fileID: 9042176628889246635}
   m_PrefabAsset: {fileID: 0}

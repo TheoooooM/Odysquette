@@ -17,17 +17,15 @@ MonoBehaviour:
   openBasePanel: 1
   openDebugPanel: 0
   openSpecPanel: 1
-  timeCondition: 12
+  timeCondition: 9
   editFeedBackList: 1
-  healthCondition: 0
   openKnobDebugPanel: 1
-  useHealthCondition: 0
   useTimeCondition: 1
   isKnockUpInState: 0
   objectInStateManagersCondition: 0100000002000000
   objectInStateManagersState: 00000000080000000600000005000000
   oneStartState: 1
-  startTime: 1
+  startTime: 0.01
   playStateTime: 0
   isFixedUpdate: 0
   haveStartState: 1
@@ -35,8 +33,8 @@ MonoBehaviour:
   rangeForShoot: 3000
   rangeForBullet: 5
   damage: 1
-  speedBullet: 300
-  dragRB: 0.7
+  speedBullet: 600
+  dragRB: 0
   hasRange: 0
   dontCollideWithWall: 0
   enemyTypeShoot: 4
@@ -44,12 +42,14 @@ MonoBehaviour:
   isDelayBetweenWaveShoot: 0
   IsMultipleDelayBetweenShoot: 1
   delayBetweenShootList:
+  - 0.2
+  - 0.3
   - 0
-  - 0.4
+  - 0.3
   - 0
-  - 0.4
+  - 0.3
   - 0
-  - 0.4
+  - 0.3
   - 0
   delayBetweenShoot: 0
   delayBetweenWaveShoot: 2
@@ -67,6 +67,8 @@ MonoBehaviour:
   - 270
   - 60
   - 300
+  - 30
+  - 330
   - 30
   - 330
   - 0

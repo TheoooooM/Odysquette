@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -39,6 +40,8 @@ public class AudioManager : MonoBehaviour {
         Bounce,
         Poison
     };
+    
+    public enum BossSoundEnum     {ShootBoss, ShootTurret, ShieldOn, ShieldOff}
 
     public enum PlayerSoundEnum {
         Move,
@@ -52,13 +55,24 @@ public class AudioManager : MonoBehaviour {
 
     [Header("----ENNEMY SOUND")] public AudioClip ennemiDeath;
     public AudioClip kodakFlash;
-    public AudioClip damageTaken;
+    [SerializeField] private AudioClip carDash;
+    [SerializeField] private AudioClip walkmanShoot;
+    [SerializeField] private AudioClip hologramTP;
+    [SerializeField] private AudioClip hologramShoot;
 
-
+    [Header("----BOSS SOUND")] [SerializeField] AudioClip cancelShieldBoss;
+     [SerializeField] AudioClip activateShieldBoss;
+     [SerializeField] private AudioClip shootBoss;
+     [SerializeField] private AudioClip shootTurret;
+    
     public enum EnemySoundEnum {
         Death,
         KodakFlash,
-        Damage,
+        CarDash,
+        WalkmanShoot, 
+        HologramTP,
+        HologramShoot
+   
     };
 
     [Header("----MUSIC SOUND")] [SerializeField]
@@ -74,6 +88,7 @@ public class AudioManager : MonoBehaviour {
     [Header("----SOUND DATA")] [SerializeField]
     private float timeBetweentwoExplosions = 0.075f;
 
+    [SerializeField] private float delayTimeShootBoss;
     [SerializeField] private float timeBetweentwoDamages = 0.07f;
     [SerializeField] private float timeBetweentwoImpact = 0.07f;
     [SerializeField] private float timeBetweentwoPoison = 0.07f;
@@ -106,6 +121,7 @@ public class AudioManager : MonoBehaviour {
     private float pierceTimer = 0;
     private float bounceTimer = 0;
     private float explosionTimer = 0;
+
 
 
     //SHOOT
@@ -239,6 +255,42 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
+    public void PlayBossSound(BossSoundEnum sound)
+    {
+        switch (sound)
+        {
+            case BossSoundEnum.ShieldOff:
+            {
+                calmSfxAudioSource.PlayOneShot(cancelShieldBoss,  calmSfxAudioSource.volume);
+            }
+                break;
+            case BossSoundEnum.ShieldOn:
+            {
+                calmSfxAudioSource.PlayOneShot(activateShieldBoss,  calmSfxAudioSource.volume);
+            }
+                break;
+            case BossSoundEnum.ShootBoss:
+            {
+                StartCoroutine(PlaySoundDelay(delayTimeShootBoss, shootBoss, calmSfxAudioSource));
+               
+            }
+                break;
+            case BossSoundEnum.ShootTurret:
+            {
+                calmSfxAudioSource.PlayOneShot(shootTurret,  calmSfxAudioSource.volume);
+            }
+                break;
+            
+            
+        }
+    }
+
+    IEnumerator PlaySoundDelay(float delay, AudioClip audioClip, AudioSource audioSource)
+    {
+        yield return new WaitForSeconds(delay); 
+        audioSource.PlayOneShot(audioClip);
+    }
+
 
     private void ImpactSound(AudioClip _impact, bool _canImpact, float _maxDistanceSound, Vector3 pos = new Vector3()) {
         if (_impact != null && _canImpact) {
@@ -333,28 +385,38 @@ public class AudioManager : MonoBehaviour {
     }
 
 
-    /// <summary>
-    /// Play a sound link to an enemy
-    /// </summary>
-    /// <param name="sound"></param>
-    /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public void PlayEnemySound(EnemySoundEnum sound, GameObject objectCall) {
-        switch (sound) {
+  public void  PlayEnemyDeathSound(EnemySoundEnum sound, GameObject objectCall)
+    {
+        switch (sound)
+        {
             case EnemySoundEnum.Death:
                 if (ennemiDeath != null && lastDeathGam != objectCall) sfxAudioSource.PlayOneShot(ennemiDeath);
                 lastDeathGam = objectCall;
                 Debug.LogWarning("death");
                 break;
+        }
+    }
+    /// <summary>
+    /// Play a sound link to an enemy
+    /// </summary>
+    /// <param name="sound"></param>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    public void PlayEnemySound(EnemySoundEnum sound) {
+        switch (sound) {
             case EnemySoundEnum.KodakFlash:
+                sfxAudioSource.PlayOneShot(kodakFlash);
                 break;
-            case EnemySoundEnum.Damage:
-                if (damageTaken != null && canDamage) {
-                    calmSfxAudioSource.PlayOneShot(damageTaken, Random.Range(calmSfxAudioSource.volume, calmSfxAudioSource.volume + .1f));
-
-                    canDamage = false;
-                    damageTimer = 0;
-                }
-
+            case EnemySoundEnum.WalkmanShoot:
+                sfxAudioSource.PlayOneShot(walkmanShoot);
+                break;
+            case EnemySoundEnum.CarDash:
+                sfxAudioSource.PlayOneShot(carDash);
+                break;
+            case EnemySoundEnum.HologramTP:
+                sfxAudioSource.PlayOneShot(hologramTP);
+                break;
+            case EnemySoundEnum.HologramShoot:
+                sfxAudioSource.PlayOneShot(hologramShoot);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(sound), sound, null);

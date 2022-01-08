@@ -7,13 +7,17 @@ public class TurretStateManager : EnemyStateManager
 {
  public BoxCollider2D boxCollider2D;
 
+ public Animator animator;
  private void Awake()
  {
+  enemyFeedBack = GetComponent<EnemyFeedBack>();
   boxCollider2D = GetComponent<BoxCollider2D>();
+  animator = GetComponent<Animator>();
  }
 
  public override void Start()
  {
+
 
   enemyFeedBack = GetComponent<EnemyFeedBack>();
   spriteRenderer = GetComponent<SpriteRenderer>();
@@ -144,6 +148,7 @@ public class TurretStateManager : EnemyStateManager
     IsCurrentStatePlayed = false;
    }
 
+   animator.Play(enemyFeedBack.stateDeathName);
    objectDictionaryState.Clear();
    timerCurrentState = 0;
    timerCondition[indexCurrentState] = 0;

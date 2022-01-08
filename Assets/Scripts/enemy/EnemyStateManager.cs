@@ -14,6 +14,7 @@ public class EnemyStateManager : MonoBehaviour {
     public EnemyFeedBack enemyFeedBack;
     public bool isActivate = false;
     public bool isContactWall;
+    public bool inSoundCurrentState;
     public EMainStatsSO EMainStatsSo;
     private PlayerDetector playerDetector;
     // Variable for Set Value and Object in States
@@ -346,6 +347,7 @@ public class EnemyStateManager : MonoBehaviour {
                     if (EMainStatsSo.baseState != null)
                         UpdateDictionaries(EMainStatsSo.baseState);
                     timerCurrentState = 0;
+                    inSoundCurrentState = false;
                     timerCondition[indexCurrentState] = 0;
                     indexCurrentState = 0;
                 }
@@ -395,7 +397,7 @@ public class EnemyStateManager : MonoBehaviour {
                 StartCoroutine(ShowCurrentClipLength(gameObject.transform.parent.gameObject, animator));
             }
             else {
-                AudioManager.Instance.PlayEnemySound(AudioManager.EnemySoundEnum.Death, gameObject);
+                AudioManager.Instance.PlayEnemyDeathSound(AudioManager.EnemySoundEnum.Death, gameObject);
 
                 collider2D.enabled = false;
 
@@ -448,8 +450,8 @@ public class EnemyStateManager : MonoBehaviour {
             OnDeath();
         }
         else {
-            // pas deson icic
-            AudioManager.Instance.PlayEnemySound(AudioManager.EnemySoundEnum.Damage, gameObject);
+   
+     
             Knockup(position, knockUpValue, knockup, isExplosion);
             health -= damage;
         }
@@ -517,5 +519,14 @@ public class EnemyStateManager : MonoBehaviour {
             windDirection -= stateWind.direction * stateWind.speedWind;
             isInWind = false;
         }
+    }
+
+    public void PlaySound(int soundIndex)
+    {
+        if (inSoundCurrentState)
+            return;
+        AudioManager.EnemySoundEnum sound =(AudioManager.EnemySoundEnum) soundIndex;
+        AudioManager.Instance.PlayEnemySound(sound);
+        inSoundCurrentState = true;
     }
 }

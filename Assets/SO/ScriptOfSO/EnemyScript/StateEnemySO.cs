@@ -60,7 +60,7 @@ public class StateEnemySO : ScriptableObject
                             for (int j = 0; j < feedBackEventClass.Length; j++)
                             {
                                 if(feedBackEventClass[j].typeFeedBackEvent == feedBackEnum)
-                                 
+                            
                                     
                                     feedBackEventClass[j].feedBackEvent.Invoke();
                             }
