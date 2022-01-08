@@ -79,10 +79,10 @@ public class UIManager : MonoBehaviour {
         ultimateAnim.SetInteger("UltimateProcent", (int) ultimateValue * 100);
         float posY = Mathf.Clamp(data.MinPosY + Mathf.Abs(data.MinPosY - data.MaxPosY) * ultimateValue, data.MinPosY, data.MaxPosY);
         float height = Mathf.Clamp((data.MaxHeight - data.MinHeight) * ultimateValue, data.MinHeight, data.MaxHeight);
-        ultimateImg.GetComponent<RectTransform>().localPosition = new Vector3(ultimateImg.GetComponent<RectTransform>().localPosition.x, posY, ultimateImg.GetComponent<RectTransform>().localPosition.z);
-        ultimateImg.GetComponent<RectTransform>().sizeDelta = new Vector2(ultimateImg.GetComponent<RectTransform>().sizeDelta.x, height);
+        ultimateImg.GetComponent<RectTransform>().localPosition = new Vector3(ultimateImg.GetComponent<RectTransform>().localPosition.x, Mathf.Lerp( ultimateImg.GetComponent<RectTransform>().localPosition.y , posY, Time.deltaTime), ultimateImg.GetComponent<RectTransform>().localPosition.z);
+        ultimateImg.GetComponent<RectTransform>().sizeDelta = new Vector2(ultimateImg.GetComponent<RectTransform>().sizeDelta.x,  Mathf.Lerp( ultimateImg.GetComponent<RectTransform>().sizeDelta.y , height, Time.deltaTime));
 
-        informationPanel.alpha += Input.GetKey(KeyCode.LeftControl) ? .1f : -.1f;
+        informationPanel.alpha += Input.GetKey(KeyCode.LeftAlt) ? .1f : -.1f;
     }
 
     /// <summary>
