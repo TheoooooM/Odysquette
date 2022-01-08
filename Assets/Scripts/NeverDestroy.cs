@@ -48,14 +48,17 @@ public class NeverDestroy : MonoBehaviour
 
     private void Update() {
         if (UIManager.Instance != null) {
-            time += Time.deltaTime;
-            second = (int) time;
-            if (second == 60)
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "Shop")
             {
-                time = 0;
-                minute++;
+                time += Time.deltaTime;
+                second = (int) time;
+                if (second == 60)
+                {
+                    time = 0;
+                    minute++;
+                }
             }
-            
+
             if (minute < 10) minuteText = "0" + minute;
             else minuteText = minute.ToString();
             if (second < 10) secondText = "0" + second;

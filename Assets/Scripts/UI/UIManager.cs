@@ -104,7 +104,7 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void GameOver()
     {
-        totalScoreText.text = "Final Score : " + NeverDestroy.Instance.Score;
+        totalScoreText.text = "Final Scote : " + NeverDestroy.Instance.Score;
         GameOverPanel.SetActive(true);
         Time.timeScale = 0;
     }

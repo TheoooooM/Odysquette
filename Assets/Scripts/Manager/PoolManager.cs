@@ -95,10 +95,9 @@ public class PoolManager : MonoBehaviour {
 
     public void SpawnPoisonPool(Transform bullet, Vector2 hit) {
         GameObject obj = SpawnEffectBulletPool(bullet, PoisonQueue, poisonPrefab);
-        Debug.Log(obj);
-        Debug.Log(obj.GetComponent<Poison>());
         obj.GetComponent<Poison>().bulletTransform = bullet;
         obj.GetComponent<Poison>().hit = hit;
+        Debug.Log(obj.GetComponent<Poison>().hit );
         obj.transform.rotation = bullet.rotation;
     }
 

@@ -91,6 +91,9 @@ public class Bullet : MonoBehaviour {
                 Explosion();
                 break;
 
+            case GameManager.Effect.poison :
+                if(!other.CompareTag("Walls"))PoolManager.Instance.SpawnPoisonPool(transform, Vector2.zero);
+                break;
             
         }
 
@@ -99,6 +102,9 @@ public class Bullet : MonoBehaviour {
                 Explosion();
                 break;
             
+            case GameManager.Effect.poison :
+                PoolManager.Instance.SpawnPoisonPool(transform, Vector2.zero);
+                break;
           
         }
 
@@ -127,7 +133,7 @@ public class Bullet : MonoBehaviour {
 
 
     public virtual void OnCollisionEnter2D(Collision2D other) {
-        //Debug.Log("collide with " + rb.velocity);
+        Debug.Log("collide" + other.transform.tag);
         
         isColliding = true;
         
@@ -155,9 +161,11 @@ public class Bullet : MonoBehaviour {
         else {
             if (other.gameObject.CompareTag("Walls"))
             {
+                Debug.Log("Collide with Walls");
                 AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact, transform.position);
                 if (GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison)
                 {
+                    Debug.Log(other.contacts[0].normal);
                     PoolManager.Instance.SpawnPoisonPool(transform, other.contacts[0].normal);
                 }
             }
@@ -167,9 +175,8 @@ public class Bullet : MonoBehaviour {
     
     private void OnCollisionExit2D(Collision2D other)
     {
-        Debug.Log(rb.velocity);
+        //Debug.Log(rb.velocity);
         rb.velocity = lastVelocity;
-        Debug.Log(rb.velocity);
         isColliding = false;
     }
 
