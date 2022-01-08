@@ -162,22 +162,22 @@ public class AudioManager : MonoBehaviour {
         musicAudioSource.Stop();
 
         //HUB
-        if (musicSound.hubMusic.sceneMusic != null && scene.name.ToUpper() == musicSound.hubMusic.sceneMusic.name.ToUpper() && musicSound.hubMusic.music != null) {
+        if (musicSound.hubMusic.sceneMusicName != "" && scene.name.ToUpper() == musicSound.hubMusic.sceneMusicName.ToUpper() && musicSound.hubMusic.music != null) {
             musicAudioSource.clip = musicSound.hubMusic.music;
             musicAudioSource.Play();
         }
         //TRANSITION
-        else if (musicSound.transitionLevelMusic.sceneMusic != null && scene.name.ToUpper() == musicSound.transitionLevelMusic.sceneMusic.name.ToUpper() && musicSound.transitionLevelMusic.music != null) {
+        else if (musicSound.transitionLevelMusic.sceneMusicName != "" && scene.name.ToUpper() == musicSound.transitionLevelMusic.sceneMusicName.ToUpper() && musicSound.transitionLevelMusic.music != null) {
             musicAudioSource.clip = musicSound.transitionLevelMusic.music;
             musicAudioSource.Play();
         }
         //IN LEVEL
-        else if (musicSound.inLevelCalmMusic.sceneMusic != null && scene.name.ToUpper() == musicSound.inLevelCalmMusic.sceneMusic.name.ToUpper() && (musicSound.inLevelCalmMusic.music != null && musicSound.inLevelbattleMusic.music != null)) {
+        else if (musicSound.inLevelCalmMusic.sceneMusicName != "" && scene.name.ToUpper() == musicSound.inLevelCalmMusic.sceneMusicName.ToUpper() && (musicSound.inLevelCalmMusic.music != null && musicSound.inLevelbattleMusic.music != null)) {
             musicAudioSource.clip = musicSound.inLevelCalmMusic.music;
             musicAudioSource.Play();
         }
         //BOSS
-        else if (musicSound.bossMusic.sceneMusic != null && scene.name.ToUpper() == musicSound.bossMusic.sceneMusic.name.ToUpper() && musicSound.bossMusic.music != null) {
+        else if (musicSound.bossMusic.sceneMusicName != "" && scene.name.ToUpper() == musicSound.bossMusic.sceneMusicName.ToUpper() && musicSound.bossMusic.music != null) {
             musicAudioSource.clip = musicSound.bossMusic.music;
             musicAudioSource.Play();
         }
@@ -396,6 +396,6 @@ public class MusicSoundData {
 
 [System.Serializable]
 public class MusicSoundBaseClass {
-    public SceneAsset sceneMusic;
+    public string sceneMusicName;
     public AudioClip music = null;
 }
