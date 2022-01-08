@@ -67,10 +67,9 @@ public class NeverDestroy : MonoBehaviour
     }
 
 
-    public void AddRessource(int amount = 1)
-    {
+    public void AddRessource(int amount = 1) {
         ressources += amount;
-        if (UIManager.Instance != null) UIManager.Instance.ressourceText.text = "Ressources : " + ressources;
+        if (UIManager.Instance != null) UIManager.Instance.ressourceText.text = ressources.ToString();
     }
     
     public void SubmitScore(string playerName, int ID)
