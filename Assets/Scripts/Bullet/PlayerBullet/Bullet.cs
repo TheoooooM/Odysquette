@@ -172,7 +172,7 @@ public class Bullet : MonoBehaviour {
         }
     }
     
-    private void OnCollisionExit2D(Collision2D other)
+    protected virtual void OnCollisionExit2D(Collision2D other)
     {
 
         rb.velocity = lastVelocity;
@@ -181,7 +181,7 @@ public class Bullet : MonoBehaviour {
     }
 
 
-    IEnumerator  DestroyBulletIfStuck() {
+    protected virtual IEnumerator  DestroyBulletIfStuck() {
         yield return new WaitForSeconds(0.15f);
         if(isColliding || rb.velocity.magnitude <= .025f) DesactiveBullet();
     }

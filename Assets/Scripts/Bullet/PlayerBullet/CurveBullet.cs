@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -10,8 +12,9 @@ public class CurveBullet : Bullet {
     public float speedBounce;
     private int currentStepPoint;
     public List<Vector3> currentListWaypoint = new List<Vector3>();
-
+    private bool test;
     public float speed;
+    private bool test1;
     public bool isCurve;
     public bool isParameterTrajectories;
     private Vector2 currentDirection;
@@ -19,6 +22,7 @@ public class CurveBullet : Bullet {
     public override void OnEnable() {
         base.OnEnable();
         isColliding = false;
+        test = false;
         for (int i = 0; i < trajectories.Count; i++) {
             trajectories[i] += transform.position;
         }
@@ -70,6 +74,8 @@ public class CurveBullet : Bullet {
             Handles.DrawLine(pointsForBezierCurve[3].pointsForBezierCurve[i - 1],
                 pointsForBezierCurve[3].pointsForBezierCurve[i]);
         }
+        
+        test1 = false ;
 
         Vector3 vector3 = transform.position;
         Handles.DrawLine(transform.position, new Vector3(transform.position.x + rb.velocity.x, transform.position.y + rb.velocity.y, 0));
@@ -111,35 +117,47 @@ public class CurveBullet : Bullet {
                         else {
                             currentStepPoint++;
                            
-                        }
+                        } 
                     }
                    
                 }
-                if(((Vector2)currentListWaypoint[currentStepPoint]-rb.position).magnitude > 0.3f)
-                    currentDirection = ((Vector2)currentListWaypoint[currentStepPoint]-rb.position).normalized;
+                if( (Vector2) currentListWaypoint[currentStepPoint]-rb.position != Vector2.zero)
+              currentDirection = ((Vector2)currentListWaypoint[currentStepPoint]-rb.position).normalized; 
+              
                  rb.position = Vector2.MoveTowards(rb.position, currentListWaypoint[currentStepPoint], speed );
                  
-            }
+            }    
+        
+               Debug.Log(currentDirection);                                      
         }
-      
+
+        if (isBounce)
+        {
+            rb.velocity = rb.velocity.normalized * speedBounce;
+            currentDirection = rb.velocity.normalized;
+        }
+    
+     
     }
 
     public override void OnCollisionEnter2D(Collision2D other)
     {
         isColliding = true;
-      
+        
         if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls")||other.gameObject.CompareTag("ShieldEnemy"))) {
-            
+            DestroyBulletIfStuck();
             _bounceCount--;
+          
             AudioManager.Instance.PlayImpactStraw(AudioManager.StrawSoundEnum.Bounce, transform.position);
             Debug.Log(currentDirection);
+            
 
             var direction = Vector3.Reflect(currentDirection, other.contacts[0].normal);
             rb.velocity = direction * Mathf.Max(speedBounce, 0f);
-        
+            Debug.Log(rb.velocity);
             var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
             transform.rotation = Quaternion.Euler(0, 0, angle);
-            
+          
 
             isBounce = true;
    
@@ -152,4 +170,62 @@ DesactiveBullet();
 
         }
     }
+
+    protected override void OnCollisionExit2D(Collision2D other)
+    {
+        isColliding = false;  
+    
+    }
+
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        if(other.gameObject.CompareTag("Walls"))
+            
+        DestroyBulletIfStuck();
+    }
+
+    protected override IEnumerator DestroyBulletIfStuck()
+    {
+        yield return new WaitForSeconds(0.5f);
+        test = true;
+        if (isColliding || rb.velocity.magnitude <= .05f)
+        {
+            
+            test1 = true;
+            DesactiveBullet();
+        }
+    }
+    /*
+     * public virtual void OnCollisionEnter2D(Collision2D other) {
+        //Debug.Log("collide with " + rb.velocity);
+        
+        isColliding = true;
+        
+        if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls")||other.gameObject.CompareTag("ShieldEnemy"))){ 
+            AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact);
+
+            StartCoroutine(DestroyBulletIfStuck());
+            
+            _bounceCount--;
+            var speed = lastVelocity.magnitude;
+            //Debug.Log(lastVelocity);
+@ -187,19 +188,21 @@ public class Bullet : MonoBehaviour {
+            DesactiveBullet();
+        }
+    }
+    
+        private void OnCollisionExit2D(Collision2D other)
+    {
+        Debug.Log(rb.velocity);
+        rb.velocity = lastVelocity;
+        Debug.Log(rb.velocity);
+        isColliding = false;
+    }
+
+
+    IEnumerator  DestroyBulletIfStuck() {
+        yield return new WaitForSeconds(0.15f);
+        if(isColliding || rb.velocity.magnitude <= .025f) DesactiveBullet();
+    }
+     */
 }

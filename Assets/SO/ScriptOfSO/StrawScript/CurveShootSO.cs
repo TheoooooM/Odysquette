@@ -10,7 +10,6 @@ using UnityEngine.UIElements;
 public class CurveShootSO : StrawSO
 {
 
-  
     public List<PointsForBezierCurve> trajectories = new List<PointsForBezierCurve>();
     [NamedArray("int", true)]
     public int[] stepOfCurve;
@@ -111,6 +110,8 @@ public class CurveShootSO : StrawSO
         }
 
     }
+
+
 
     public override void SetParameter(GameObject bullet, float currentTimeValue,  Transform PBtransform)
     {

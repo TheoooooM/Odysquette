@@ -7,13 +7,15 @@ using UnityEngine;
 public class HealthPlayer : MonoBehaviour {
     public Rigidbody2D rb;
     [SerializeField] private CameraShake cameraShake;
-
     [SerializeField] public int maxHealth;
     [SerializeField] public int healthPlayer;
     [SerializeField] private float timeInvincible;
     private SpriteRenderer spriteRenderer;
     [SerializeField] private bool isInvincible;
     [SerializeField] private float timerInvincible;
+
+    [SerializeField] private Material defaultMaterial;
+    [SerializeField] private Material ultimateMaterial;
 
     // Start is called before the first frame update
     public static HealthPlayer Instance;
@@ -77,6 +79,14 @@ public class HealthPlayer : MonoBehaviour {
                 //spriteRenderer.color = Color.red;
             }
         }
+        else
+        {
+            if (GameManager.Instance.ultimateValue == 125)
+            {
+                spriteRenderer.material.SetTexture(spriteRenderer.sprite.name, spriteRenderer.sprite.texture);
+                spriteRenderer.material = ultimateMaterial;
+            }
+        }
     }
 
     /// <summary>
@@ -95,12 +105,23 @@ public class HealthPlayer : MonoBehaviour {
             foreach (Hearth hearth in UIManager.Instance._HeartsLife) hearth.LifeUpdate();
             
             for (int i = UIManager.Instance._HeartsLife.Count - 1; i > -1; i--) {
+                if(GameManager.Instance.ultimateValue == 125)
+                    CancelUltimate();
                 spriteRenderer.material.SetFloat("_HitTime", Time.time);
                 if(GameManager.Instance != null && GameManager.Instance.strawSprite != null) GameManager.Instance.strawSprite.material.SetFloat("_HitTime", Time.time);
                 isInvincible = true;
             }
         }
     }
+
+
+    
+
+   public void CancelUltimate()
+   {
+       spriteRenderer.material.SetTexture(spriteRenderer.sprite.name, spriteRenderer.sprite.texture);
+       spriteRenderer.material = defaultMaterial;
+   }
 
     /// <summary>
     /// Heal the player

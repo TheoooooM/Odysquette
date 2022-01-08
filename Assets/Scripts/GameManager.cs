@@ -330,6 +330,7 @@ public class GameManager : MonoBehaviour {
             if (ultimateValue >= 100) {
                 actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
             
+                HealthPlayer.Instance.CancelUltimate();
                 isUltimate = true;
                 ultimateValue -= 100;
             }
