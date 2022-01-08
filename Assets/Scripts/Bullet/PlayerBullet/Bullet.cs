@@ -161,7 +161,6 @@ public class Bullet : MonoBehaviour {
         else {
             if (other.gameObject.CompareTag("Walls"))
             {
-                Debug.Log("Collide with Walls");
                 AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact, transform.position);
                 if (GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison)
                 {
