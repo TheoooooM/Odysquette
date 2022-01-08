@@ -26,22 +26,20 @@ public class AngleAreaShootSO : StrawSO {
                 Vector3 rotation;
                 if (angleDivisionParameter != 0) {
                     if (angleParameter != 0) {
-                        currentAngle = (-angle - angleParameter * currentTimeValue) / 2 + ((angle + angleParameter * currentTimeValue) / ((angleDivision+1) + Mathf.RoundToInt(angleDivisionParameter * currentTimeValue))) * i;
+                        currentAngle = (-angle - angleParameter * currentTimeValue) / 2 + ((angle + angleParameter * currentTimeValue) / ((angleDivision + 1) + Mathf.RoundToInt(angleDivisionParameter * currentTimeValue))) * i;
                     }
                     else {
-                        currentAngle = -angle / 2 + (angle / ((angleDivision+1) + Mathf.RoundToInt(angleDivisionParameter * currentTimeValue))) * i;
+                        currentAngle = -angle / 2 + (angle / ((angleDivision + 1) + Mathf.RoundToInt(angleDivisionParameter * currentTimeValue))) * i;
                     }
                 }
                 else {
                     if (angleParameter != 0) {
-                        currentAngle = (-angle - angleParameter * currentTimeValue) / 2 + ((angle + angleParameter * currentTimeValue) / (angleDivision+1)) * i;
+                        currentAngle = (-angle - angleParameter * currentTimeValue) / 2 + ((angle + angleParameter * currentTimeValue) / (angleDivision + 1)) * i;
                     }
                     else {
-                        currentAngle = -angle / 2 + (angle /(angleDivision+1)) * i;
+                        currentAngle = -angle / 2 + (angle / (angleDivision + 1)) * i;
                     }
                 }
-         
-
 
                 rotation = Quaternion.Euler(0, 0, currentAngle) * parentBulletTF.transform.right;
 
@@ -53,9 +51,7 @@ public class AngleAreaShootSO : StrawSO {
                 }
 
                 //Debug.Log(rotation);
-                bullet.GetComponent<Rigidbody2D>().AddForce(rotation * (speedBullet + speedParameter * currentTimeValue),
-                    ForceMode2D.Force);
-                script.StartCoroutine(SetVelocity());
+                bullet.GetComponent<Rigidbody2D>().AddForce(rotation * (speedBullet + speedParameter * currentTimeValue), ForceMode2D.Force);
                 SetParameter(bullet, currentTimeValue, null);
             }
         }
@@ -63,16 +59,7 @@ public class AngleAreaShootSO : StrawSO {
             script.StartCoroutine(ShootDelay(parentBulletTF, currentTimeValue));
         }
     }
-    
-    IEnumerator SetVelocity()
-    {
-        yield return new WaitForSeconds(0.5f);
-        Debug.Log("Velocity : " + bullet.GetComponent<Bullet>().rb.velocity);
-        bullet.GetComponent<Bullet>().lastVelocity = bullet.GetComponent<Bullet>().rb.velocity;
-        Debug.Log("Set velo at " + bullet.GetComponent<Bullet>().lastVelocity);
-        //Debug.Log("lastVelocity = " +bulletScript.lastVelocity + " rb.velocity = " + bulletScript.rb.velocity);
-    }
-    
+
 
 #if UNITY_EDITOR
     public override void OnValidate() {
@@ -93,17 +80,14 @@ public class AngleAreaShootSO : StrawSO {
                 float currentAngle = 0;
                 Vector3 rotation = new Vector3();
                 if (angleDivisionParameter != 0) {
-                    currentAngle += -angle / 2 +
-                                    (angle / (angleDivision +
-                                              Mathf.RoundToInt(angleDivisionParameter * currentTimeValue))) * i;
+                    currentAngle += -angle / 2 + (angle / (angleDivision + Mathf.RoundToInt(angleDivisionParameter * currentTimeValue))) * i;
                 }
                 else {
                     currentAngle = -angle / 2 + (angle / angleDivision) * i;
                 }
 
                 if (angleParameter != 0) {
-                    rotation = Quaternion.Euler(0, 0, currentAngle + angleParameter * currentTimeValue) *
-                               parentBulletTF.transform.right;
+                    rotation = Quaternion.Euler(0, 0, currentAngle + angleParameter * currentTimeValue) * parentBulletTF.transform.right;
                 }
                 else {
                     rotation = Quaternion.Euler(0, 0, currentAngle) * parentBulletTF.transform.right;
@@ -116,11 +100,9 @@ public class AngleAreaShootSO : StrawSO {
                     }
                 }
 
-                bullet.GetComponent<Rigidbody2D>()
-                    .AddForce(rotation * (speedBullet + speedParameter * currentTimeValue), ForceMode2D.Force);
+                bullet.GetComponent<Rigidbody2D>().AddForce(rotation * (speedBullet + speedParameter * currentTimeValue), ForceMode2D.Force);
                 SetParameter(bullet, currentTimeValue, null);
-                if (isDelayBetweenShoot)
-                    yield return new WaitForSeconds(delayBetweenShoot + delayParameter * currentTimeValue);
+                if (isDelayBetweenShoot) yield return new WaitForSeconds(delayBetweenShoot + delayParameter * currentTimeValue);
             }
 
             if (isDelayBetweenWaveShoot) {
@@ -131,10 +113,8 @@ public class AngleAreaShootSO : StrawSO {
     }
 
     //save pool
-
     //set la cadence de tir
     //set les bangs
-
     public override void SetParameter(GameObject bullet, float currentTimeValue, Transform p) {
         base.SetParameter(bullet, currentTimeValue);
         Bullet scriptBullet = bullet.GetComponent<Bullet>();

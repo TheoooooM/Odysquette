@@ -89,7 +89,6 @@ public class RandomShootSO : StrawSO
             script.StartCoroutine(ShootDelay(parentBulletTF, currentTimeValue));
         }
     }
-
     
     public override IEnumerator ShootDelay(Transform parentBulletTF, float currentTimeValue ) {
       for (int j = 0; j < numberWaveShoot; j++) {
@@ -172,11 +171,8 @@ public class RandomShootSO : StrawSO
           //Debug.Log("lastVelocity = " +bulletScript.lastVelocity + " rb.velocity = " + bulletScript.rb.velocity);
       }
   }
-
-
-
-
-  [Serializable]
+    
+    [Serializable]
     public class angleRandom
     {
         public float angle;

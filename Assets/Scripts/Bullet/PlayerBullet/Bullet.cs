@@ -162,11 +162,8 @@ public class Bullet : MonoBehaviour {
             PoolManager.Instance.SpawnImpactPool(transform);
         }
         else {
-            if (other.gameObject.CompareTag("Walls"))
-            {
-                AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact, transform.position);
-                if (GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison)
-                {
+            if (other.gameObject.CompareTag("Walls")) {
+                if (GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison) {
                     Debug.Log(other.contacts[0].normal);
                     PoolManager.Instance.SpawnPoisonPool(transform, other.contacts[0].normal);
                 }
