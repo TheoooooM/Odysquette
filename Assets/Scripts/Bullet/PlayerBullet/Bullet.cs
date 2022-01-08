@@ -60,7 +60,7 @@ public class Bullet : MonoBehaviour {
 
         if (GameManager.Instance.firstEffect == GameManager.Effect.bouncing || GameManager.Instance.secondEffect == GameManager.Effect.bouncing) _bounceCount = bounceCount;
         else _bounceCount = 0;
-        GetComponent<SpriteRenderer>().color = GameManager.Instance.currentColor;
+        GetComponent<SpriteRenderer>().color = GameManager.Instance.currentColor; 
     }
 
     public virtual void Update() {
@@ -75,7 +75,7 @@ public class Bullet : MonoBehaviour {
         if (rb.velocity.magnitude <= 0.1 && rb.drag > 0 && isEnable) {
             if(GameManager.Instance.firstEffect == GameManager.Effect.explosive || GameManager.Instance.secondEffect == GameManager.Effect.explosive) Explosion();
             DesactiveBullet();
-        }
+        } 
     }
 
 
