@@ -93,12 +93,11 @@ public class PoolManager : MonoBehaviour {
         return obj;
     }
 
-    public void SpawnPoisonPool(Transform bullet) {
+    public void SpawnPoisonPool(Transform bullet, Vector2 hit) {
         GameObject obj = SpawnEffectBulletPool(bullet, PoisonQueue, poisonPrefab);
-        Debug.Log(obj);
-        Debug.Log(obj.GetComponent<Poison>());
-        obj.GetComponent<Poison>().rbBullet = bullet.GetComponent<Rigidbody2D>();
-
+        obj.GetComponent<Poison>().bulletTransform = bullet;
+        obj.GetComponent<Poison>().hit = hit;
+        Debug.Log(obj.GetComponent<Poison>().hit );
         obj.transform.rotation = bullet.rotation;
     }
 

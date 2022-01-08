@@ -6,9 +6,11 @@ using UnityEngine;
 public class Poison : MonoBehaviour
 {
     public float Timer;
-    public float _Timer;
+    private float _Timer;
     public float speed;
-    public Rigidbody2D rbBullet;
+    public Transform bulletTransform;
+    public Vector3 hit;
+    private bool setNormal;
     [SerializeField]
     private float damage = 1 ;
    
@@ -17,12 +19,25 @@ public class Poison : MonoBehaviour
 
     private void OnEnable()
     {AudioManager.Instance.PlayImpactStraw(AudioManager.StrawSoundEnum.Poison, transform.position);
+        setNormal = false;
         _Timer = Timer;
+    }
+
+    private void Update()
+    {
+        if(!setNormal)
+        {
+            if (hit != Vector3.zero)
+            {
+                setNormal = true;
+                Debug.Log("set normal");
+                transform.position += (hit.normalized * 1.3f);
+            }
+        }
     }
 
     void FixedUpdate()
     {
-      
         if (_Timer>0)
         {
             _Timer -= 1;

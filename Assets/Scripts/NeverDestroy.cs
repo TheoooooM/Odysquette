@@ -58,10 +58,15 @@ public class NeverDestroy : MonoBehaviour
             second = (int) time;
             if (second == 60)
             {
-                time = 0;
-                minute++;
+                time += Time.deltaTime;
+                second = (int) time;
+                if (second == 60)
+                {
+                    time = 0;
+                    minute++;
+                }
             }
-            
+
             if (minute < 10) minuteText = "0" + minute;
             else minuteText = minute.ToString();
             if (second < 10) secondText = "0" + second;

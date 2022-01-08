@@ -55,6 +55,7 @@ public class AngleAreaShootSO : StrawSO {
                 //Debug.Log(rotation);
                 bullet.GetComponent<Rigidbody2D>().AddForce(rotation * (speedBullet + speedParameter * currentTimeValue),
                     ForceMode2D.Force);
+                script.StartCoroutine(SetVelocity());
                 SetParameter(bullet, currentTimeValue, null);
             }
         }
@@ -62,6 +63,16 @@ public class AngleAreaShootSO : StrawSO {
             script.StartCoroutine(ShootDelay(parentBulletTF, currentTimeValue));
         }
     }
+    
+    IEnumerator SetVelocity()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("Velocity : " + bullet.GetComponent<Bullet>().rb.velocity);
+        bullet.GetComponent<Bullet>().lastVelocity = bullet.GetComponent<Bullet>().rb.velocity;
+        Debug.Log("Set velo at " + bullet.GetComponent<Bullet>().lastVelocity);
+        //Debug.Log("lastVelocity = " +bulletScript.lastVelocity + " rb.velocity = " + bulletScript.rb.velocity);
+    }
+    
 
 #if UNITY_EDITOR
     public override void OnValidate() {
