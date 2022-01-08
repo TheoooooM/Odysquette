@@ -110,6 +110,7 @@ MonoBehaviour:
   enemyFeedBack: {fileID: 0}
   isActivate: 0
   isContactWall: 0
+  inSoundCurrentState: 0
   EMainStatsSo: {fileID: 11400000, guid: 6689daf8a9ea18e46ae692f9e4247477, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -234,6 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectEnemyArea: {fileID: 0}
+  ESM: {fileID: 0}
   range: 6.35
   patrol: {fileID: 11400000, guid: 1a5e71f4ee653b244a10f5b078c899b3, type: 2}
   rb: {fileID: 0}
@@ -345,6 +347,18 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+          - m_Target: {fileID: 243450507285515241}
+            m_TargetAssemblyTypeName: EnemyStateManager, Assembly-CSharp
+            m_MethodName: PlaySound
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 1
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
   - stateEnemySo: KodakMove
     feedBackEventClassList:
     - typeFeedBackEvent: 5
@@ -364,6 +378,7 @@ MonoBehaviour:
               m_BoolArgument: 0
             m_CallState: 2
   stateDeathName: Death
+  animationList: []
 --- !u!114 &4604958879303727888
 MonoBehaviour:
   m_ObjectHideFlags: 0

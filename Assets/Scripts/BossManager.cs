@@ -1,16 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class BossManager : MonoBehaviour
 {
+  private bool useShootSound;
   private EnemyFeedBack enemyFeedBack;
-  
   private EnemyFeedBackMovement enemyFeedBackMovement;
-
+  private const string turretActivation = "Activation";
+  private const string turretAttack = "Attack";
   private const string bossName = "BOSS_";
   private const string shieldName = "SHIELD_";
   private const string transitionShield = "TO";
@@ -211,7 +213,9 @@ public float shootAnimationTime;
      
          baseturrets[i].boxCollider2D.enabled = true;
           shieldBoss.Play(baseShieldTransition);
+         AudioManager.Instance.PlayBossSound(AudioManager.BossSoundEnum.ShieldOn);
        }
+       baseturrets[i].animator.Play(turretActivation);
       
      }
 
@@ -227,6 +231,7 @@ public float shootAnimationTime;
   {
     Debug.Log("aled");
     baseturrets[currentIndexEnabledTurret].enabled = false;
+   
     baseturrets[currentIndexEnabledTurret].boxCollider2D.enabled = false;
  
     currentIndexEnabledTurret++;
@@ -234,12 +239,12 @@ public float shootAnimationTime;
       if (currentIndexEnabledTurret == currentMaxEnabledTurret)
       { 
         shieldBoss.Play(shieldName+colorName[currentIndexEnabledTurret]+transitionShield+colorName[0]);
+        AudioManager.Instance.PlayBossSound(AudioManager.BossSoundEnum.ShieldOff);
         TransitionFeedback(currentIndexEnabledTurret, true);
-       
-  
         inUpdatePhase = false;
         return;
       }
+      AudioManager.Instance.PlayBossSound(AudioManager.BossSoundEnum.ShieldOff);
        shieldTurrets[currentIndexEnabledTurret].Play(shieldName+colorName[currentIndexEnabledTurret]+transitionShield+colorName[0]);
       baseturrets[currentIndexEnabledTurret].boxCollider2D.enabled = true;
       for (int i = currentIndexEnabledTurret+1; i < currentMaxEnabledTurret; i++)
@@ -333,6 +338,24 @@ string currentColorName = bossName+colorName[index];
   {
     
     public string[] stringList;
+  }
+
+  public void PlaySound(int soundIndex)
+  {
+    
+    
+    AudioManager.BossSoundEnum sound =(AudioManager.BossSoundEnum) soundIndex;
+    if (sound == AudioManager.BossSoundEnum.ShootBoss && useShootSound)
+      return;
+   if (sound == AudioManager.BossSoundEnum.ShootBoss)
+      useShootSound = true;
+      
+    AudioManager.Instance.PlayBossSound(sound);
+  }
+
+  public void CancelSoundBossShoot()
+  {
+    useShootSound = false;
   }
   
 }
