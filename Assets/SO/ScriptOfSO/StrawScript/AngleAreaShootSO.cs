@@ -52,7 +52,7 @@ public class AngleAreaShootSO : StrawSO {
                     }
                 }
 
-                Debug.Log(rotation);
+                //Debug.Log(rotation);
                 bullet.GetComponent<Rigidbody2D>().AddForce(rotation * (speedBullet + speedParameter * currentTimeValue),
                     ForceMode2D.Force);
                 SetParameter(bullet, currentTimeValue, null);

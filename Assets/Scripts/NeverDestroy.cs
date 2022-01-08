@@ -33,22 +33,27 @@ public class NeverDestroy : MonoBehaviour
     public float ultimateValue = 0;
 
     public int Score;
-
-    #region Timer
-    private float time;
+    
+    //TIMER
     public int minute = 0;
-    private string minuteText;
     private int second = 0;
+    
+    private float time;
+    private string minuteText;
     private string secondText;
-    #endregion
+    private bool canTimer = false;
 
-    private void Start()
-    {
-        
+
+    private void Start() {
+        if (minute < 10) minuteText = "0" + minute;
+        else minuteText = minute.ToString();
+        if (second < 10) secondText = "0" + second;
+        else secondText = second.ToString();
+        if(UIManager.Instance != null) UIManager.Instance.Timer.text = minuteText + " : " + secondText;
     }
 
     private void Update() {
-        if (UIManager.Instance != null) {
+        if (UIManager.Instance != null && canTimer) {
             time += Time.deltaTime;
             second = (int) time;
             if (second == 60)
@@ -79,5 +84,21 @@ public class NeverDestroy : MonoBehaviour
             if (response.success)Debug.Log("Submit Score");
             else Debug.Log("Failed Submit Score");
         });
+    }
+
+    public void StartTimer() {
+        canTimer = true;
+        if (UIManager.Instance != null) {
+            UIManager.Instance.StartTimer();
+            UIManager.Instance.Timer.text = minuteText + " : " + secondText;
+        }
+    }
+
+    public void PauseTimer() {
+        canTimer = false;
+        if (UIManager.Instance != null) {
+            UIManager.Instance.PauseTimer();
+            UIManager.Instance.Timer.text = minuteText + " : " + secondText;
+        }
     }
 }

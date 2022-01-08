@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 public class ItemShop : Chest {
     public override void Start() {
@@ -48,41 +51,27 @@ public class ItemShop : Chest {
         GameManager.Straw straw = GameManager.Straw.basic;
 
         int index = 0;
-        while (index == 0 || straw == GameManager.Instance.actualStraw) {
-            index = Random.Range(1, 5);
-            switch (index) {
-                case 0:
-                    item = SO.basicStraw;
-                    straw = GameManager.Straw.basic;
-                    break;
 
-                case 1:
-                    item = SO.mitraStraw;
-                    straw = GameManager.Straw.riffle;
-                    break;
-
-                case 2:
-                    item = SO.bubbleStraw;
-                    straw = GameManager.Straw.bubble;
-                    break;
-
-                case 3:
-                    item = SO.snipStraw;
-                    straw = GameManager.Straw.sniper;
-                    break;
-
-                case 4:
-                    item = SO.eightStraw;
-                    straw = GameManager.Straw.helix;
-                    break;
-
-                case 5:
-                    item = SO.triStraw;
-                    straw = GameManager.Straw.tri;
-                    break;
-            }
+        List<GameManager.Straw> strawPossibleList = new List<GameManager.Straw>();
+        for (int i = 1; i < 5; i++) {
+            strawPossibleList.Add((GameManager.Straw)i);
         }
 
+        strawPossibleList.Remove(GameManager.Instance.actualStraw);
+
+        index = Random.Range(0, strawPossibleList.Count);
+        straw = strawPossibleList[index];
+        item = straw switch {
+            GameManager.Straw.basic => SO.basicStraw,
+            GameManager.Straw.bubble => SO.bubbleStraw,
+            GameManager.Straw.sniper => SO.snipStraw,
+            GameManager.Straw.helix => SO.eightStraw,
+            GameManager.Straw.tri => SO.triStraw,
+            GameManager.Straw.riffle => SO.mitraStraw,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+        
+        item.transform.GetChild(0).GetComponent<SetStrawUI>().setData(straw, true, true);
         InstantiateItem(item);
     }
 
