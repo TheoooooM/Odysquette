@@ -78,11 +78,11 @@ public class StateDash : StateEnemySO {
             CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.EndPlayState);
             enemyDashCollision.inDash = false;
             transformDash.gameObject.SetActive(false);
-           //Debug.Log(Vector2.Distance(rb.position, transformDash.position) < 0.2f);
-           //Debug.Log(enemyDashCollision.contactWall); 
+            Debug.Log(Vector2.Distance(rb.position, transformDash.position) < 0.2f);
+           Debug.Log(enemyDashCollision.contactWall); 
             rb.velocity = Vector2.zero;
             endStep = true;
-            //Debug.Log("je suis lu là 2 ");
+            Debug.Log("je suis lu là 2 ");
             enemyDashCollision.contactWall = false;
 
             return;
