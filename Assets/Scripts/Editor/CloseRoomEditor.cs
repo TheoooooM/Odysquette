@@ -14,6 +14,9 @@ public class CloseRoomEditor : Editor {
         if (GUILayout.Button("Make Blue Buildings")) {
             obj.MakeEveryBuildingBlue();
         }
+        if (GUILayout.Button("Make Red Buildings")) {
+            obj.MakeEveryBuildingRed();
+        }
         GUILayout.EndHorizontal();
     }
 }

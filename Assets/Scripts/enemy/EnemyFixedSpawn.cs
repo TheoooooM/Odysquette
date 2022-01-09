@@ -8,7 +8,7 @@ public class EnemyFixedSpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        part.room.ennemiesList.Add(this.gameObject);
+        part.room.ennemiesList.Add(transform.parent.gameObject);
         GetComponent<EnemyStateManager>().roomParent = part.room;
     }
 }

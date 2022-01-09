@@ -16,8 +16,7 @@ public class Exit : MonoBehaviour {
         if(sceneManager == null) sceneManager = SceneManager.instance;
         
         if (isShop) {
-            if (NeverDestroy.Instance.level == 1) sceneToLoad = "YOP_Basic";
-            else sceneToLoad = "Boss";
+            sceneToLoad = NeverDestroy.Instance.level == 1 ? "Main Level 02" : "Boss";
         }
         else if(isHubTransition) sceneToLoad = "YOP_Basic";
         else sceneToLoad = "Shop";

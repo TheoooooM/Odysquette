@@ -189,6 +189,8 @@ public class Generation : MonoBehaviour {
         currentRoom.cameraRect.x = -BasicRect.x / 2;
         currentRoom.cameraRect.y = -BasicRect.y / 2;
 
+        Debug.Log(0);
+        
         RoomContainer firstRC = Instantiate(StartingRoom, new Vector2((currentPos.x - mapSize / 2) * 62, (currentPos.y - mapSize / 2) * 40), Quaternion.identity, currentRoom.transform).GetComponent<RoomCreator>().partList[0].RoomGO;
         firstRC.room = currentRoom;
         firstRC.Generator = this;
@@ -199,6 +201,8 @@ public class Generation : MonoBehaviour {
 
         int exit = Random.Range(0, 3);
 
+        Debug.Log(1);
+        
         switch (exit) {
             case 0:
                 firstRC.exitTop = true;
@@ -234,6 +238,7 @@ public class Generation : MonoBehaviour {
                 break;
         }
 
+        Debug.Log(2);
     }
 
     /// <summary>
