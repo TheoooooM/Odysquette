@@ -8,73 +8,82 @@ public class BossBullet : MonoBehaviour
   public float baseTime;
   public int damage;
   private float baseTimer;
-  private bool isImpact;
+
   public float damageTime;
    float damageTimer;
-   private Transform child;
-
+   [SerializeField]
+   private Transform impact;
+  
+   private LayerMask currentLayerMask;
    private float speed;
-   private float basePos; 
+   [SerializeField]
+   private Transform rocket;
+   [SerializeField]
+   private Transform basePos; 
+  
    private void Start()
    {
-     child = transform.GetChild(0);
- 
-     basePos =Vector2.Distance(transform.position, child.position);
-     speed = (basePos / baseTime)*Time.deltaTime;
     
+ 
+    
+     speed = (Vector2.Distance(rocket.position, impact.position)/baseTime)*Time.deltaTime;
+     Debug.Log(speed);
+    currentLayerMask = LayerMask.NameToLayer("Player");
 
    }
 
    private void OnEnable()
    {
-     if(child != null)
+     if(speed != 0 )
      {
-       var childPosition = child.localPosition;
-       childPosition.y = basePos/2;
-       child.localPosition = childPosition;
+
+       rocket.position = basePos.position;
      }
 
      baseTimer = 0;
     damageTimer = 0;
-    isImpact = false;
+   
   }
 
-  private void Update()
+   private void OnDrawGizmos()
+   {
+ //    Gizmos.DrawSphere(impact.position, 0.80f);
+   }
+
+   private void Update()
   {
 
     if (baseTime > baseTimer)
     {
-      child.position = Vector2.MoveTowards(child.position, transform.position, speed);
+      rocket.position = Vector2.MoveTowards(rocket.position, 
+        impact.position, speed);
       
       baseTimer +=Time.deltaTime;
       
     }
     else
     {
-      isImpact = true;
+     
       if (damageTime > damageTimer)
+      {
+
+        if(Physics2D.OverlapCircle(impact.position, 0.88f, currentLayerMask ))
         {
-        
+          HealthPlayer.Instance.TakeDamagePlayer(1);
+        }
           damageTimer +=Time.deltaTime;
         }
         else
         {
       
-          isImpact = false;
+         
           EnemySpawnerManager.Instance.bossShootQueue.Enqueue(gameObject);
           gameObject.SetActive(false);
         }
     }
   }
 
-  private void OnTriggerStay2D(Collider2D other)
-  {
-    if (isImpact)
-    {
-      if (other.CompareTag("Player"))
-      {
-        HealthPlayer.Instance.TakeDamagePlayer(damage);
-      }
-    }
-  }
+
+
+
 }
