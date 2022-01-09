@@ -11,6 +11,7 @@ public class CustomSliderUI : MonoBehaviour {
     [SerializeField] private Transform pointB = null;
     [Space]
     [SerializeField, Range(0,1)] private float fillAmount = 0;
+    public float FillAmount => fillAmount;
 
     [Space] 
     [SerializeField] private UnityEvent OnValueChanged = null;

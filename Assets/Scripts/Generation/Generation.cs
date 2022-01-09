@@ -570,12 +570,19 @@ public class Generation : MonoBehaviour {
                 finalRoomPos += new Vector3(-62,40);
                 break;
         }
+        
         GameObject outsideR = Instantiate(OutsideRoom[randomRoom], finalRoomPos, Quaternion.identity, roomPool);
         RoomContainer RC = outsideR.GetComponent<RoomContainer>();
         RC.Generator = this;
         if (outsideR != null) {
             outsideMap[mapPos.x, mapPos.y] = true;
             map[mapPos.x, mapPos.y] = RC;
+        }
+
+        if (outsideR.GetComponent<CloseRoomManager>() is { }) {
+            if (NeverDestroy.Instance.level == 1) outsideR.GetComponent<CloseRoomManager>().ChangeRandomBuildingsLightLV1();
+            else outsideR.GetComponent<CloseRoomManager>().ChangeRandomBuildingsLightLV2();
+                
         }
     }
     #endregion ROOM GENERATION
