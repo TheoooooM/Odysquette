@@ -58,6 +58,7 @@ public class ItemShop : Chest {
         }
 
         strawPossibleList.Remove(GameManager.Instance.actualStraw);
+        strawPossibleList.Remove(GameManager.Straw.sniper);
 
         index = Random.Range(0, strawPossibleList.Count);
         straw = strawPossibleList[index];

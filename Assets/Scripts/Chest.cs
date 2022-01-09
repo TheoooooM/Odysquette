@@ -77,7 +77,7 @@ public class Chest : MonoBehaviour {
         GameManager.Straw strawSelect = GameManager.Straw.basic;
 
         
-        while (item == null) {
+        while (item == null || strawSelect == GameManager.Straw.sniper) {
             index = Random.Range(1, 6);
 
 
