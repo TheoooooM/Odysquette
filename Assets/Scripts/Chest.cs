@@ -13,7 +13,7 @@ public class Chest : MonoBehaviour {
     private float rate;
     private int index;
     private Items.type finalItem;
-
+    [SerializeField] private Color interactableColor;
     private SpriteRenderer sprite;
 
     public virtual void Start() {
@@ -160,14 +160,14 @@ public class Chest : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             canOpen = true;
-            sprite.color = Color.red;
+            sprite.color = interactableColor;
         }
     }
 
     private void OnTriggerExit2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             canOpen = false;
-            sprite.color = Color.white;
+            sprite.color = Color.white ;
         }
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2330284823436761288}
   - component: {fileID: 2618525080405531262}
   - component: {fileID: 9159191622884502534}
-  - component: {fileID: 5850391509669167420}
+  - component: {fileID: 4428858624702592589}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 317904603001697172}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -3.4984, y: -1.1104, z: 0}
-  m_LocalScale: {x: 0.1776, y: 0.1776, z: 0.1776}
+  m_LocalScale: {x: 1, y: 1, z: 0.1776}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: -1990800739
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: -5281422124547630143, guid: 5b10bbf11f289e446a3ebf7dc3448415, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 54d07fad3e3e0314395eb3ba394c6218, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -107,7 +107,8 @@ MonoBehaviour:
   - item: 3
     dropRate: 1.5
   itemFromChest: 1
---- !u!58 &5850391509669167420
+  interactableColor: {r: 1, g: 0.94768775, b: 0.5235849, a: 1}
+--- !u!58 &4428858624702592589
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,6 +121,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.01, y: -2.83}
   serializedVersion: 2
-  m_Radius: 14.38
+  m_Radius: 3.26

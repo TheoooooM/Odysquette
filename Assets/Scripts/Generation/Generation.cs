@@ -9,6 +9,8 @@ using Random = UnityEngine.Random;
 public class Generation : MonoBehaviour {
     #region VARIABLES
 
+    
+    public GameObject drone;
     public static Generation Instance;
 
     private void Awake() {
