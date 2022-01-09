@@ -130,21 +130,21 @@ public class Chest : MonoBehaviour {
             3 => GameManager.Effect.poison,
         };
 
-        if (effectSelect == GameManager.Instance.firstEffect || effectSelect == GameManager.Instance.secondEffect)
-        {
+        if (effectSelect == GameManager.Instance.firstEffect || effectSelect == GameManager.Instance.secondEffect) {
             RdmJuice();
             return;
         }
-        
-        item = effectSelect switch {
-            GameManager.Effect.bouncing => SO.bounceJuice,
-            GameManager.Effect.piercing => SO.pierceJuice,
-            GameManager.Effect.explosive => SO.explosionJuice,
-            GameManager.Effect.poison => SO.poisonJuice,
-            _ => item
-        };
-
-        InstantiateItem(item);
+        else {
+            item = effectSelect switch {
+                GameManager.Effect.bouncing => SO.bounceJuice,
+                GameManager.Effect.piercing => SO.pierceJuice,
+                GameManager.Effect.explosive => SO.explosionJuice,
+                GameManager.Effect.poison => SO.poisonJuice,
+                _ => item
+            };
+            
+            InstantiateItem(item);
+        }
     }
    
     /// <summary>
