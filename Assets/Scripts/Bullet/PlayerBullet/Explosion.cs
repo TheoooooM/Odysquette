@@ -60,6 +60,8 @@ public class Explosion : MonoBehaviour
     {
         
         if (other.CompareTag("Enemy")) {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, (other.transform.position - transform.position).normalized);
+            Debug.Log("hit :" + hit.transform.name + " with " +hit.transform.tag);
             other.GetComponent<EnemyStateManager>().TakeDamage(damage, rb.position, knockUpValue, true, true);
         }
         else if (other.CompareTag("Walls") && other.GetComponent<DestructableObejct>()) {

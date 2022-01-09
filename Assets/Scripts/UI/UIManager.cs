@@ -29,6 +29,9 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject GameOverPanel;
     public TMP_InputField PlayerName;
     public TextMeshProUGUI totalScoreText;
+    [Space] 
+    [SerializeField] private LeaderBoard leaderboard;
+    [SerializeField] private TextMeshProUGUI[] finalScoreText;
     
     
     [Header("----Pause----")] 
@@ -63,6 +66,8 @@ public class UIManager : MonoBehaviour {
         CommandConsole RESTART = new CommandConsole("restart", "restart : Restart all the game", null, (_) => { PlayAgain(); });
         CommandConsoleRuntime.Instance.AddCommand(RESTART);
         pauseMenu.SetActive(false);
+        leaderboard.gameObject.SetActive(false);
+        
         if(!isHUB) inGameMenu.SetActive(true);
         informationPanel.alpha = 0;
     }
@@ -107,11 +112,18 @@ public class UIManager : MonoBehaviour {
         GameManager.Instance.gameIsPause = false;
     }
 
-    public void SubmitScoreND(int ID)
-    {
-        if (PlayerName.text == null) NeverDestroy.Instance.SubmitScore("Player", ID);
-        else NeverDestroy.Instance.SubmitScore(PlayerName.text, ID);
+    #region Score
+    public void SubmitScore() {
+        leaderboard.SetScore(PlayerName.text, NeverDestroy.Instance.Score);
     }
+    
+    public void setLeaderboard(){
+        leaderboard.UpdateArray();
+        for (int i = 0; i < 5; i++) {
+            finalScoreText[i].text = ((i + 1) + ". " + leaderboard.nameArray[i] + " . . . . . . . . . . . . . . . . . . . . . . . . . . . . " + leaderboard.scoreArray[i]);
+        }
+    }
+    #endregion Score
 
     /// <summary>
     /// Show game over panel

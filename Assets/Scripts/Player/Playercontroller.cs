@@ -333,7 +333,7 @@ public class Playercontroller : MonoBehaviour {
         if(enableMovementAtLaunch) GetComponent<HealthPlayer>().TakeDamagePlayer(1);
         falling = false;
         startFallAnim = false;
-        StartCoroutine(FreezeAfterFall());
+        if(gameObject.activeSelf) StartCoroutine(FreezeAfterFall());
         if (dashPos == Vector3.zero) {
             transform.position -= dir.normalized * 2.5f;
         }
@@ -344,7 +344,7 @@ public class Playercontroller : MonoBehaviour {
         
     }
     
-    IEnumerator FreezeAfterFall()
+    private IEnumerator FreezeAfterFall()
     {
         Debug.Log("start Freeze");
         yield return new WaitForSeconds(0.3f);

@@ -187,12 +187,14 @@ public class HealthPlayer : MonoBehaviour {
         StartCoroutine(UpdateLife());
     }
 
-    private void OnDeathPlayer()
-    {
-        if(NeverDestroy.Instance.minute != 0f)GameManager.Instance.Score = GameManager.Instance.Score * (NeverDestroy.Instance.minute/20);  
+    private void OnDeathPlayer() {
+        if(NeverDestroy.Instance.minute != 0f) GameManager.Instance.Score = GameManager.Instance.Score * (NeverDestroy.Instance.minute/20);
         GameManager.Instance.SetND();
+        NeverDestroy.Instance.Score = GameManager.Instance.Score;
+        
         if (GameManager.Instance != null) GameManager.Instance.enabled = false;
         gameObject.SetActive(false);
+        
         if (UIManager.Instance != null) UIManager.Instance.GameOver();
         AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Death);
     }

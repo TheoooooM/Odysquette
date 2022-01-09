@@ -137,8 +137,6 @@ public class Bullet : MonoBehaviour {
 
 
     public virtual void OnCollisionEnter2D(Collision2D other) {
-        Debug.Log("collide" + other.transform.tag);
-        
         isColliding = true;
         
         if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls")||other.gameObject.CompareTag("ShieldEnemy"))){ 

@@ -243,8 +243,7 @@ public class EnemyStateManager : MonoBehaviour {
             }
         }
     }
-
-
+    
     public virtual void FixedUpdate() {
         if (isActivate && !isDead) {
             ApplyState();
@@ -281,13 +280,13 @@ public class EnemyStateManager : MonoBehaviour {
         }
     }
 
-    bool CheckTimer(float timer, float time) {
+    private bool CheckTimer(float timer, float time) {
         if (timer >= time)
             return true;
         return false;
     }
 
-    void ApplyState() {
+    private void ApplyState() {
         if (IsCurrentStartPlayed || IsCurrentStatePlayed) {
             bool _endstep = false;
             if (CurrentFixedState != null) {
