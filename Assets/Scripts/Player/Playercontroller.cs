@@ -333,7 +333,7 @@ public class Playercontroller : MonoBehaviour {
         if(enableMovementAtLaunch) GetComponent<HealthPlayer>().TakeDamagePlayer(1);
         falling = false;
         startFallAnim = false;
-        StartCoroutine(FreezeAfterFall());
+        if(gameObject.active)StartCoroutine(FreezeAfterFall());
         if (dashPos == Vector3.zero) {
             transform.position -= dir.normalized * 2.5f;
         }
