@@ -188,7 +188,7 @@ public class HealthPlayer : MonoBehaviour {
     }
 
     private void OnDeathPlayer() {
-        if(NeverDestroy.Instance.minute != 0f) GameManager.Instance.Score = GameManager.Instance.Score * (NeverDestroy.Instance.minute/20);
+        GameManager.Instance.Score += (20*60/ (NeverDestroy.Instance.minute*60+ NeverDestroy.Instance.second));
         GameManager.Instance.SetND();
         NeverDestroy.Instance.Score = GameManager.Instance.Score;
         

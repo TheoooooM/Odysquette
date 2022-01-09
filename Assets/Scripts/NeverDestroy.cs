@@ -36,7 +36,7 @@ public class NeverDestroy : MonoBehaviour
     
     //TIMER
     public int minute = 0;
-    private int second = 0;
+    public int second = 0;
     
     private float time;
     private string minuteText;
