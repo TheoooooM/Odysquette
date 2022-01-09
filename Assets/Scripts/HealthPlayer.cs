@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class HealthPlayer : MonoBehaviour {
 
     [SerializeField] public int maxHealth;
     [SerializeField] public int healthPlayer;
+    private int lastHealth = 0;
+    
     [SerializeField] private float timeInvincible;
     private SpriteRenderer spriteRenderer;
     [SerializeField] private bool isInvincible;
@@ -32,6 +35,8 @@ public class HealthPlayer : MonoBehaviour {
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (NeverDestroy.Instance != null) healthPlayer = NeverDestroy.Instance.life;
         else healthPlayer = maxHealth;
+        lastHealth = healthPlayer;
+        
         rb = GetComponent<Rigidbody2D>();
         if (UIManager.Instance != null) {
             for (int i = 0; i < healthPlayer / 2; i++) {
@@ -43,7 +48,7 @@ public class HealthPlayer : MonoBehaviour {
             if (healthPlayer % 2 == 1) {
                 UIManager.Instance._HeartsLife.Add(UIManager.Instance.HeartsLifes[UIManager.Instance._HeartsLife.Count]);
                 UIManager.Instance._HeartsLife[UIManager.Instance._HeartsLife.Count - 1].gameObject.SetActive(true);
-                UIManager.Instance._HeartsLife[UIManager.Instance._HeartsLife.Count - 1].setHalf();
+                //UIManager.Instance._HeartsLife[UIManager.Instance._HeartsLife.Count - 1].setHalf();
             }
 
             UIManager.Instance._HeartsLife[UIManager.Instance._HeartsLife.Count - 1].currentHearth = true;
@@ -73,8 +78,6 @@ public class HealthPlayer : MonoBehaviour {
             }
             else {
                 timerInvincible += Time.deltaTime;
-
-                //spriteRenderer.color = Color.red;
             }
         }
     }
@@ -92,7 +95,9 @@ public class HealthPlayer : MonoBehaviour {
             if(cameraShake != null) cameraShake.CreateCameraShake(.15f, .4f);
             
             if (UIManager.Instance == null) return;
-            foreach (Hearth hearth in UIManager.Instance._HeartsLife) hearth.LifeUpdate();
+            StartCoroutine(UpdateLife());
+            
+            //foreach (Hearth hearth in UIManager.Instance._HeartsLife) hearth.LifeUpdate();
             
             for (int i = UIManager.Instance._HeartsLife.Count - 1; i > -1; i--) {
                 spriteRenderer.material.SetFloat("_HitTime", Time.time);
@@ -103,15 +108,56 @@ public class HealthPlayer : MonoBehaviour {
     }
 
     /// <summary>
+    /// Update the life
+    /// </summary>
+    private IEnumerator UpdateLife() {
+        int lifeChange = healthPlayer - lastHealth;
+        int lifeChangeValueTo1 = (lifeChange > 0 ? 1 : -1);
+        
+        for (int i = 0; i < Mathf.Abs(lifeChange); i++) {
+            int oldHeartImg = Mathf.CeilToInt((lastHealth / 2f) - 1);
+            int newHeartImg = Mathf.CeilToInt(((lastHealth + (1 * lifeChangeValueTo1)) / 2f) - 1);
+            Debug.Log(oldHeartImg + " " + newHeartImg);
+            
+            //int newHeartImg = Mathf.CeilToInt((healthPlayer / 2f) - 1);
+
+            if (oldHeartImg == newHeartImg) {
+                UIManager.Instance._HeartsLife[newHeartImg].GetComponent<Animator>().SetFloat("lifeValue", UIManager.Instance._HeartsLife[newHeartImg].GetComponent<Animator>().GetFloat("lifeValue") + (0.5f * lifeChangeValueTo1));
+                for (int j = 0; j < 3; j++) {
+                    if(j != newHeartImg) UIManager.Instance._HeartsLife[j].GetComponent<Animator>().SetTrigger("UpdateLife");
+                }
+                lastHealth += 1 * lifeChangeValueTo1;
+            }
+            else {
+                if (lifeChange > 0) {
+                    UIManager.Instance._HeartsLife[newHeartImg].GetComponent<Animator>().SetFloat("lifeValue", UIManager.Instance._HeartsLife[newHeartImg].GetComponent<Animator>().GetFloat("lifeValue") + (0.5f * lifeChangeValueTo1));
+                    for (int j = 0; j < 3; j++) {
+                        if(j != newHeartImg) UIManager.Instance._HeartsLife[j].GetComponent<Animator>().SetTrigger("UpdateLife");
+                    }
+                }
+                else {
+                    UIManager.Instance._HeartsLife[oldHeartImg].GetComponent<Animator>().SetFloat("lifeValue", UIManager.Instance._HeartsLife[oldHeartImg].GetComponent<Animator>().GetFloat("lifeValue") + (0.5f * lifeChangeValueTo1));
+                    for (int j = 0; j < 3; j++) {
+                        if(j != oldHeartImg) UIManager.Instance._HeartsLife[j].GetComponent<Animator>().SetTrigger("UpdateLife");
+                    }
+                }
+                
+                lastHealth += 1 * lifeChangeValueTo1;
+            }
+
+            yield return new WaitForSeconds(2);
+        }
+    }
+
+
+    /// <summary>
     /// Heal the player
     /// </summary>
     /// <param name="heal"></param>
     public void GiveHealthPlayer(int heal) {
         healthPlayer = Mathf.Clamp(healthPlayer + heal, 0, 6);
-        
-        for (int i = 0; i < healthPlayer; i++) {
-            if (i <= healthPlayer) UIManager.Instance.HeartsLifes[i].gameObject.SetActive(true);
-        }
+
+        StartCoroutine(UpdateLife());
     }
 
     private void OnDeathPlayer()

@@ -67,6 +67,7 @@ public class Bullet : MonoBehaviour {
         if (hasRange) {
             if (Vector3.Distance(basePosition, transform.position) >= range) {
                 if(GameManager.Instance.firstEffect == GameManager.Effect.explosive || GameManager.Instance.secondEffect == GameManager.Effect.explosive) Explosion();
+                if(GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison) PoolManager.Instance.SpawnPoisonPool(transform, Vector2.zero);
                 DesactiveBullet();
             }
         }
@@ -74,6 +75,7 @@ public class Bullet : MonoBehaviour {
 
         if (rb.velocity.magnitude <= 0.1 && rb.drag > 0 && isEnable) {
             if(GameManager.Instance.firstEffect == GameManager.Effect.explosive || GameManager.Instance.secondEffect == GameManager.Effect.explosive) Explosion();
+            if(GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison) PoolManager.Instance.SpawnPoisonPool(transform, Vector2.zero);
             DesactiveBullet();
         } 
     }

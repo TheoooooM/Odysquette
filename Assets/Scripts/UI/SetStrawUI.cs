@@ -21,13 +21,9 @@ public class SetStrawUI : MonoBehaviour {
     [SerializeField] private SpriteRenderer strawSpriteRenderer = null;
     [SerializeField] private Items strawParentItems = null;
     [Space]
-    [SerializeField] private TextMeshProUGUI damageValueTxt = null;
-    [SerializeField] private TextMeshProUGUI fireRateValueTxt = null;
-    [SerializeField] private TextMeshProUGUI numberOfBulletValueTxt = null;
-    [Space]
     [SerializeField] private Image damageValueImg = null;
     [SerializeField] private Image fireRateValueImg = null;
-    [SerializeField] private Image numberOfBulletValueImg = null;
+    [SerializeField] private List<Image> numberOfBulletValueImg = new List<Image>();
 
 
     private float maxDamage = 0;
@@ -53,8 +49,6 @@ public class SetStrawUI : MonoBehaviour {
 
         float damage = possibleStraw[(int) straw].damage;
         float fireRate = possibleStraw[(int) straw].timeValue;
-        damageValueTxt.text = damage.ToString();
-        fireRateValueTxt.text = fireRate.ToString();
 
         int numberOfBullet = straw switch {
             GameManager.Straw.basic => 1,
@@ -65,12 +59,13 @@ public class SetStrawUI : MonoBehaviour {
             GameManager.Straw.riffle => 1,
             _ => throw new ArgumentOutOfRangeException(nameof(straw), straw, null)
         };
-        numberOfBulletValueTxt.text = numberOfBullet.ToString();
 
-        
+
         damageValueImg.fillAmount = damage / maxDamage;
         fireRateValueImg.fillAmount = fireRate / maxFireRate;
-        numberOfBulletValueImg.fillAmount = (float) numberOfBullet / (float) maxNumberOfBullet;
+        for (int i = 0; i < numberOfBulletValueImg.Count; i++) {
+            numberOfBulletValueImg[i].enabled = numberOfBullet >= i + 1;
+        }
         
         shopCostItem.SetActive(isShop);
         transitionArrow.SetActive(showArrow);

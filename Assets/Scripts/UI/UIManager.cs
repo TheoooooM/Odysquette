@@ -63,7 +63,7 @@ public class UIManager : MonoBehaviour {
         CommandConsole RESTART = new CommandConsole("restart", "restart : Restart all the game", null, (_) => { PlayAgain(); });
         CommandConsoleRuntime.Instance.AddCommand(RESTART);
         pauseMenu.SetActive(false);
-        inGameMenu.SetActive(true);
+        if(NeverDestroy.Instance != null) inGameMenu.SetActive(true);
         informationPanel.alpha = 0;
     }
 

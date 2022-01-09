@@ -74,6 +74,13 @@ public class EnemyStateManager : MonoBehaviour {
     public Dictionary<int, bool> healthUse = new Dictionary<int, bool>();
     private int counthealh;
 
+    //Poison
+    private bool isPoisoned = false;
+    private float poisonDamage = 0;
+    private float lastTimePoison = 0;
+    private float poisonTimeLapse = 0.25f;
+    private List<GameObject> poisonGam = new List<GameObject>();
+
     private void OnValidate() {
         //   
         // spriteRenderer.sprite = EMainStatsSo.sprite;
@@ -229,6 +236,11 @@ public class EnemyStateManager : MonoBehaviour {
             #endregion
 
             ApplyState();
+
+            if (isPoisoned && lastTimePoison + poisonTimeLapse <= Time.time) {
+                TakeDamage(poisonDamage, Vector3.zero, 0, false, false, true);
+                lastTimePoison = Time.time;
+            }
         }
     }
 
@@ -444,7 +456,7 @@ public class EnemyStateManager : MonoBehaviour {
         Destroy(gameObjectToDestroy, animator.GetCurrentAnimatorStateInfo(0).length);
     }
 
-    public virtual void TakeDamage(float damage, Vector2 position, float knockUpValue, bool knockup, bool isExplosion) {
+    public virtual void TakeDamage(float damage, Vector2 position, float knockUpValue, bool knockup, bool isExplosion, bool isPoison = false) {
         if(playerDetector != null) playerDetector.EndDetection();
         if (health - damage <= 0) {
             OnDeath();
@@ -455,8 +467,9 @@ public class EnemyStateManager : MonoBehaviour {
             Knockup(position, knockUpValue, knockup, isExplosion);
             health -= damage;
         }
-
-        spriteRenderer.material.SetFloat("_HitTime", Time.time);
+        
+        if(isPoison) spriteRenderer.material.SetFloat("_HitTime", Time.time);
+        else spriteRenderer.material.SetFloat("_HitTime", Time.time);
     }
 
     void Knockup(Vector2 position, float knockUpValue, bool knockUp, bool isExplosion) {
@@ -495,6 +508,12 @@ public class EnemyStateManager : MonoBehaviour {
             conveyBeltSpeed += other.GetComponent<LDConveyorBelt>().direction;
             isConvey = true;
         }
+        
+        if (other.CompareTag("Poison")) {
+            isPoisoned = true;
+            poisonGam.Add(other.gameObject);
+            poisonDamage = other.GetComponent<Poison>().Damage;
+        }
     }
 
     private void OnTriggerStay(Collider other) {
@@ -519,6 +538,11 @@ public class EnemyStateManager : MonoBehaviour {
             windDirection -= stateWind.direction * stateWind.speedWind;
             isInWind = false;
         }
+        
+        if (other.CompareTag("Poison")) {
+            poisonGam.Remove(other.gameObject);
+            if(poisonGam.Count == 0) isPoisoned = false;
+        }
     }
 
     public void PlaySound(int soundIndex)
@@ -529,4 +553,25 @@ public class EnemyStateManager : MonoBehaviour {
         AudioManager.Instance.PlayEnemySound(sound);
         inSoundCurrentState = true;
     }
+
+    
+    #region Poison
+    /// <summary>
+    /// Start Poison Damage
+    /// </summary>
+    /// <param name="damage"></param>
+    /// <param name="PoisonPos"></param>
+    public void StartPoison(float damage) {
+        isPoisoned = true;
+        poisonDamage = damage;
+        TakeDamage(damage, Vector3.zero, 0, false, false, true);
+        lastTimePoison = Time.time;
+    }
+
+    /// <summary>
+    /// End poison Damage
+    /// </summary>
+    public void EndPoison() => isPoisoned = false;
+
+    #endregion Poison
 }

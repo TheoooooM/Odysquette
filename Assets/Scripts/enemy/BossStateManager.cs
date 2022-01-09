@@ -14,7 +14,7 @@ public class BossStateManager : EnemyStateManager
 
   
 
-    public override void TakeDamage(float damage, Vector2 position, float knockUpValue, bool knockup, bool isExplosion)
+    public override void TakeDamage(float damage, Vector2 position, float knockUpValue, bool knockup, bool isExplosion, bool isPoison = false)
    {
        if (!shieldCollider.enabled && BossManager.instance.currentBossPhase != ExtensionMethods.PhaseBoss.Begin)
        {
