@@ -19,7 +19,7 @@ public class ItemShop : Chest {
         GameManager.Effect effect = GameManager.Effect.none;
 
         while (effect == GameManager.Instance.firstEffect || effect == GameManager.Instance.secondEffect || effect == GameManager.Effect.none) {
-            int index = Random.Range(0, 3);
+            int index = Random.Range(0, 4);
             switch (index) {
                 case 0:
                     item = SO.bounceJuice;
@@ -58,6 +58,7 @@ public class ItemShop : Chest {
         }
 
         strawPossibleList.Remove(GameManager.Instance.actualStraw);
+        strawPossibleList.Remove(GameManager.Straw.sniper);
 
         index = Random.Range(0, strawPossibleList.Count);
         straw = strawPossibleList[index];

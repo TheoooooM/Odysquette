@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5230579954827169776}
   m_Layer: 7
   m_Name: poison
-  m_TagString: Untagged
+  m_TagString: Poison
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114,5 +114,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Timer: 200
   speed: 0
-  rbBullet: {fileID: 0}
+  bulletTransform: {fileID: 0}
+  hit: {x: 0, y: 0, z: 0}
   damage: 20

@@ -77,7 +77,7 @@ public class Chest : MonoBehaviour {
         GameManager.Straw strawSelect = GameManager.Straw.basic;
 
         
-        while (item == null) {
+        while (item == null || strawSelect == GameManager.Straw.sniper) {
             index = Random.Range(1, 6);
 
 
@@ -121,7 +121,7 @@ public class Chest : MonoBehaviour {
         GameObject item = null;
         GameManager.Effect effectSelect;
         
-        int index = Random.Range(0, 3);
+        int index = Random.Range(0, 4);
         effectSelect = index switch
         {
             0 => GameManager.Effect.bouncing,

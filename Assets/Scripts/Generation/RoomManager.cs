@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,8 +14,9 @@ public class RoomManager : MonoBehaviour {
     public GameObject enterGO;
 
     public Transform exit;
-
+    [Space]
     public GameObject chest;
+    private int chestProcentDrop = 80;
     
     private bool done = false;
     private bool sendanim = false;
@@ -43,7 +42,8 @@ public class RoomManager : MonoBehaviour {
             if (ennemiesList.Count == 0) {
                 if (!sendanim) {
                     GameManager.Instance.endRoom();
-                    if (chest != null) Instantiate(chest, Playercontroller.Instance.transform.position, Quaternion.identity);
+                    int random = Random.Range(0, 100);
+                    if (chest != null && chestProcentDrop > random) Instantiate(chest, Playercontroller.Instance.transform.position, Quaternion.identity);
                     sendanim = true;
                 }
 

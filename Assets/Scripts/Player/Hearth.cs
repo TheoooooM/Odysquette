@@ -27,8 +27,7 @@ public class Hearth : MonoBehaviour
     }
 
 
-    public void LifeUpdate()
-    {
+    public void LifeUpdate() {
         GetComponent<Animator>().enabled = true;
         if (currentHearth)
         {
@@ -37,21 +36,4 @@ public class Hearth : MonoBehaviour
         }
         else animator.Play("animLifeNoneaffect");
     }
-
-    
-    
-    public void setHalf()
-    {
-        GetComponent<Animator>().enabled = false;
-        image.sprite = halfHearth;
-        Debug.Log(image.sprite.name);
-        isHalf = true;
-    }
-
-    public void DestroyHalf()
-    {
-        UIManager.Instance._HeartsLife.Remove(this);
-        UIManager.Instance._HeartsLife[UIManager.Instance._HeartsLife.Count-1].currentHearth = true;
-        gameObject.SetActive(false);
-    }   
 }

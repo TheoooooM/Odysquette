@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour {
     #region VARIABLES
     public string sceneToLoad;
+    [SerializeField] private bool isHUB = false;
     public GameObject cursor;
     public List<Hearth> HeartsLifes;
     public List<Hearth> _HeartsLife;
@@ -63,7 +64,7 @@ public class UIManager : MonoBehaviour {
         CommandConsole RESTART = new CommandConsole("restart", "restart : Restart all the game", null, (_) => { PlayAgain(); });
         CommandConsoleRuntime.Instance.AddCommand(RESTART);
         pauseMenu.SetActive(false);
-        inGameMenu.SetActive(true);
+        if(!isHUB) inGameMenu.SetActive(true);
         informationPanel.alpha = 0;
     }
 
@@ -101,7 +102,7 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void Unpause() {
         Time.timeScale = 1f;
-        inGameMenu.SetActive(true);
+        if(!isHUB) inGameMenu.SetActive(true);
         cursor.SetActive(true);
         pauseMenu.SetActive(false);
         GameManager.Instance.gameIsPause = false;
@@ -126,8 +127,7 @@ public class UIManager : MonoBehaviour {
     /// <summary>
     /// Restart the game
     /// </summary>
-    public void PlayAgain()
-    {
+    public void PlayAgain() {
         Destroy(NeverDestroy.Instance.gameObject);
         Time.timeScale = 1 ;
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);

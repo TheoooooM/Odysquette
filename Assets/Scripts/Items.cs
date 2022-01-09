@@ -91,11 +91,10 @@ public class Items : MonoBehaviour {
                   break;
 
                case type.life:
-                  //Add life;
+                  if(Playercontroller.Instance != null) Playercontroller.Instance.gameObject.GetComponent<HealthPlayer>().GiveHealthPlayer(1);
                   break;
                case type.doubleLife:
-
-                  //Add double life;
+                  if(Playercontroller.Instance != null) Playercontroller.Instance.gameObject.GetComponent<HealthPlayer>().GiveHealthPlayer(2);
                   break;
             }
             AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.TakeItem);
