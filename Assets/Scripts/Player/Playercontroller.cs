@@ -346,10 +346,10 @@ public class Playercontroller : MonoBehaviour {
     
     private IEnumerator FreezeAfterFall()
     {
-        Debug.Log("start Freeze");
+        ///Debug.Log("start Freeze");
         yield return new WaitForSeconds(0.3f);
         canMove = true;
-        Debug.Log("canMove :" + canMove);
+        //Debug.Log("canMove :" + canMove);
     }
     
     #endregion FALL

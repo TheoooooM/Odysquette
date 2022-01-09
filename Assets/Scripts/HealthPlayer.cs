@@ -144,7 +144,7 @@ public class HealthPlayer : MonoBehaviour {
         for (int i = 0; i < Mathf.Abs(lifeChange); i++) {
             int oldHeartImg = Mathf.CeilToInt((lastHealth / 2f) - 1);
             int newHeartImg = Mathf.CeilToInt(((lastHealth + (1 * lifeChangeValueTo1)) / 2f) - 1);
-            Debug.Log(oldHeartImg + " " + newHeartImg);
+            //Debug.Log(oldHeartImg + " " + newHeartImg);
             
             //int newHeartImg = Mathf.CeilToInt((healthPlayer / 2f) - 1);
 
