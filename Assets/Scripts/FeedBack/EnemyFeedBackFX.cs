@@ -12,7 +12,7 @@ public class EnemyFeedBackFX : MonoBehaviour
     {
         if (!FxOneTimeList[index].isOneTime)
         {
-            Debug.Log("test");
+          //  Debug.Log("test");
           GameObject obj =   EnemySpawnerManager.Instance.SpawnEnnemyShoot(FxOneTimeList[index].enemyTypeShootFX,FxOneTimeList[index].prefab, transform);
           obj.SetActive(true);
              FxOneTimeList[index].isOneTime = true;

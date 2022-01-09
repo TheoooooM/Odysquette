@@ -133,7 +133,6 @@ public class Bullet : MonoBehaviour {
 
 
     public virtual void OnCollisionEnter2D(Collision2D other) {
-        Debug.Log("collide" + other.transform.tag);
         
         isColliding = true;
         
