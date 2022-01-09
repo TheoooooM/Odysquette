@@ -44,7 +44,7 @@ public class StateFlash : StateEnemySO
   
         flashObject.transform.position = transformEnemy.position + direction * offSetDistance;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-    CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringStartState);
+        CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringStartState);
 
        flashObject.transform.rotation = Quaternion.Euler(0,0,angle);
         flashObject.SetActive(true);
