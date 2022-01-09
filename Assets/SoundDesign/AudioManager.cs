@@ -120,12 +120,13 @@ public class AudioManager : MonoBehaviour {
     private float pierceTimer = 0;
     private float bounceTimer = 0;
     private float explosionTimer = 0;
-
-
-
+    
     //SHOOT
     private bool canShoot = true;
     private float shootTimer;
+
+    private float sfxSoundMultiplier = 0;
+    private float musicSoundMultiplier = 0;
 
     private void Update() {
         if (canExplosion == false) {
@@ -162,6 +163,10 @@ public class AudioManager : MonoBehaviour {
             shootTimer += Time.deltaTime;
             if (shootTimer >= timeBetweenTwoShoot) canShoot = true;
         }
+
+        sfxSoundMultiplier = Mathf.Clamp(UIManager.Instance.SfxSlider.FillAmount, 0, .75f);
+        musicSoundMultiplier = Mathf.Clamp(UIManager.Instance.MusicSlider.FillAmount, 0.025f, .65f);
+        musicAudioSource.volume = musicSoundMultiplier;
     }
 
 
@@ -203,32 +208,32 @@ public class AudioManager : MonoBehaviour {
         switch (sound) {
             case PlayerSoundEnum.Move:{
                 if (!playerMovementAudioSource.isPlaying) {
-                    playerMovementAudioSource.PlayOneShot(playerSound.moveSound);
+                    playerMovementAudioSource.PlayOneShot(playerSound.moveSound, playerMovementAudioSource.volume * sfxSoundMultiplier);
                 }
             }
                 break;
             case PlayerSoundEnum.Death:{
-                calmSfxAudioSource.PlayOneShot(playerSound.deathSound);
+                calmSfxAudioSource.PlayOneShot(playerSound.deathSound, calmSfxAudioSource.volume * sfxSoundMultiplier);
             }
                 break;
             case PlayerSoundEnum.Damage:{
-                calmSfxAudioSource.PlayOneShot(playerSound.damageSound);
+                calmSfxAudioSource.PlayOneShot(playerSound.damageSound, calmSfxAudioSource.volume * sfxSoundMultiplier);
             }
                 break;
             case PlayerSoundEnum.Dash:{
-                calmSfxAudioSource.PlayOneShot(playerSound.dashSound, calmSfxAudioSource.volume * .5f);
+                calmSfxAudioSource.PlayOneShot(playerSound.dashSound, calmSfxAudioSource.volume * .5f * sfxSoundMultiplier);
             }
                 break;
             case PlayerSoundEnum.Fall:{
-                calmSfxAudioSource.PlayOneShot(playerSound.fallSound);
+                calmSfxAudioSource.PlayOneShot(playerSound.fallSound, calmSfxAudioSource.volume * sfxSoundMultiplier);
             }
                 break;
             case PlayerSoundEnum.TakeItem:{
-                calmSfxAudioSource.PlayOneShot(playerSound.takeItem);
+                calmSfxAudioSource.PlayOneShot(playerSound.takeItem, calmSfxAudioSource.volume * sfxSoundMultiplier);
             }
                 break;
             case PlayerSoundEnum.OpenChest:{
-                calmSfxAudioSource.PlayOneShot(playerSound.openChest);
+                calmSfxAudioSource.PlayOneShot(playerSound.openChest, calmSfxAudioSource.volume * sfxSoundMultiplier);
             }
                 break;
         }
@@ -238,15 +243,15 @@ public class AudioManager : MonoBehaviour {
         if (canShoot) {
             switch (sound) {
                 case StrawSoundEnum.BasicShoot:
-                    calmSfxAudioSource.PlayOneShot(strawSound.basicShoot[Random.Range(0, strawSound.basicShoot.Count - 1)], soundScale * calmSfxAudioSource.volume);
+                    calmSfxAudioSource.PlayOneShot(strawSound.basicShoot[Random.Range(0, strawSound.basicShoot.Count - 1)], soundScale * calmSfxAudioSource.volume * sfxSoundMultiplier);
 
                     break;
                 case StrawSoundEnum.BubbleShoot:
-                    calmSfxAudioSource.PlayOneShot(strawSound.bubbleShoot[Random.Range(0, strawSound.bubbleShoot.Count - 1)], soundScale * calmSfxAudioSource.volume);
+                    calmSfxAudioSource.PlayOneShot(strawSound.bubbleShoot[Random.Range(0, strawSound.bubbleShoot.Count - 1)], soundScale * calmSfxAudioSource.volume * sfxSoundMultiplier);
                     Debug.Log("test st jqdfjqsf bublek");
                     break;
                 case StrawSoundEnum.SniperShoot:
-                    calmSfxAudioSource.PlayOneShot(strawSound.snipShoot, soundScale * calmSfxAudioSource.volume);
+                    calmSfxAudioSource.PlayOneShot(strawSound.snipShoot, soundScale * calmSfxAudioSource.volume * sfxSoundMultiplier);
                     break;
 
                 default: throw new ArgumentOutOfRangeException(nameof(sound), sound, null);
@@ -260,12 +265,12 @@ public class AudioManager : MonoBehaviour {
         {
             case BossSoundEnum.ShieldOff:
             {
-                calmSfxAudioSource.PlayOneShot(cancelShieldBoss,  calmSfxAudioSource.volume);
+                calmSfxAudioSource.PlayOneShot(cancelShieldBoss,  calmSfxAudioSource.volume * sfxSoundMultiplier);
             }
                 break;
             case BossSoundEnum.ShieldOn:
             {
-                calmSfxAudioSource.PlayOneShot(activateShieldBoss,  calmSfxAudioSource.volume);
+                calmSfxAudioSource.PlayOneShot(activateShieldBoss,  calmSfxAudioSource.volume * sfxSoundMultiplier);
             }
                 break;
             case BossSoundEnum.ShootBoss:
@@ -276,7 +281,7 @@ public class AudioManager : MonoBehaviour {
                 break;
             case BossSoundEnum.ShootTurret:
             {
-                calmSfxAudioSource.PlayOneShot(shootTurret,  calmSfxAudioSource.volume);
+                calmSfxAudioSource.PlayOneShot(shootTurret,  calmSfxAudioSource.volume * sfxSoundMultiplier);
             }
                 break;
             
@@ -287,10 +292,9 @@ public class AudioManager : MonoBehaviour {
     IEnumerator PlaySoundDelay(float delay, AudioClip audioClip, AudioSource audioSource)
     {
         yield return new WaitForSeconds(delay); 
-        audioSource.PlayOneShot(audioClip);
+        audioSource.PlayOneShot(audioClip, audioSource.volume * sfxSoundMultiplier);
     }
-
-
+    
     private void ImpactSound(AudioClip _impact, bool _canImpact, float _maxDistanceSound, Vector3 pos = new Vector3()) {
         if (_impact != null && _canImpact) {
             float distanceToImpact =
@@ -299,8 +303,7 @@ public class AudioManager : MonoBehaviour {
                 Mathf.Clamp(_maxDistanceSound - distanceToImpact, 0.05f, _maxDistanceSound);
             float impactRatio = distanceSubstract / maxDistanceImpact;
 
-            calmSfxAudioSource.PlayOneShot(_impact,
-                Random.Range(calmSfxAudioSource.volume - .1f, calmSfxAudioSource.volume) * impactRatio);
+            calmSfxAudioSource.PlayOneShot(_impact, Random.Range(calmSfxAudioSource.volume - .1f, calmSfxAudioSource.volume) * impactRatio * sfxSoundMultiplier);
         }
     }
 
@@ -382,19 +385,17 @@ public class AudioManager : MonoBehaviour {
             default: throw new ArgumentOutOfRangeException(nameof(sound), sound, null);
         }
     }
-
-
-  public void  PlayEnemyDeathSound(EnemySoundEnum sound, GameObject objectCall)
-    {
-        switch (sound)
-        {
+    
+    public void  PlayEnemyDeathSound(EnemySoundEnum sound, GameObject objectCall) {
+        switch (sound) {
             case EnemySoundEnum.Death:
-                if (ennemiDeath != null && lastDeathGam != objectCall) sfxAudioSource.PlayOneShot(ennemiDeath);
+                if (ennemiDeath != null && lastDeathGam != objectCall) sfxAudioSource.PlayOneShot(ennemiDeath, sfxAudioSource.volume * sfxSoundMultiplier);
                 lastDeathGam = objectCall;
                 Debug.LogWarning("death");
                 break;
         }
     }
+  
     /// <summary>
     /// Play a sound link to an enemy
     /// </summary>
@@ -403,19 +404,19 @@ public class AudioManager : MonoBehaviour {
     public void PlayEnemySound(EnemySoundEnum sound) {
         switch (sound) {
             case EnemySoundEnum.KodakFlash:
-                sfxAudioSource.PlayOneShot(kodakFlash);
+                sfxAudioSource.PlayOneShot(kodakFlash, sfxAudioSource.volume * sfxSoundMultiplier);
                 break;
             case EnemySoundEnum.WalkmanShoot:
-                sfxAudioSource.PlayOneShot(walkmanShoot);
+                sfxAudioSource.PlayOneShot(walkmanShoot, sfxAudioSource.volume * sfxSoundMultiplier);
                 break;
             case EnemySoundEnum.CarDash:
-                sfxAudioSource.PlayOneShot(carDash);
+                sfxAudioSource.PlayOneShot(carDash, sfxAudioSource.volume * sfxSoundMultiplier);
                 break;
             case EnemySoundEnum.HologramTP:
-                sfxAudioSource.PlayOneShot(hologramTP);
+                sfxAudioSource.PlayOneShot(hologramTP, sfxAudioSource.volume * sfxSoundMultiplier);
                 break;
             case EnemySoundEnum.HologramShoot:
-                sfxAudioSource.PlayOneShot(hologramShoot);
+                sfxAudioSource.PlayOneShot(hologramShoot, sfxAudioSource.volume * sfxSoundMultiplier);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(sound), sound, null);

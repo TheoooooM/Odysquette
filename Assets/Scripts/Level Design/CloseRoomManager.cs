@@ -45,7 +45,7 @@ public class CloseRoomManager : MonoBehaviour {
     /// <summary>
     /// Change the color of some buidling to pink
     /// </summary>
-    private void ChangeRandomBuildingsLightLV1() {
+    public void ChangeRandomBuildingsLightLV1() {
         int randomNumber = Random.Range(2, 4);
         if(buildingColors.Count == 0) return;
         
@@ -58,7 +58,7 @@ public class CloseRoomManager : MonoBehaviour {
     /// <summary>
     /// Change the color of some buidling to pink
     /// </summary>
-    private void ChangeRandomBuildingsLightLV2() {
+    public void ChangeRandomBuildingsLightLV2() {
         foreach (LightCol building in buildingColors) {
             building.ChangeLightRed();
         }

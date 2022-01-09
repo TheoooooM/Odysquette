@@ -23,6 +23,12 @@ public class UIManager : MonoBehaviour {
     [Space] 
     public static UIManager Instance;
     float maxUltSlider = 100f;
+    [SerializeField] private CustomSliderUI sfxSlider = null;
+    [SerializeField] private CustomSliderUI musicSlider = null;
+    public CustomSliderUI SfxSlider => sfxSlider;
+    public CustomSliderUI MusicSlider => musicSlider;
+    [Space] 
+    [SerializeField] private UpdateCanvasInfo informationCanvasUI = null;
     
     
     [Header("----Game Over----")] 
@@ -87,6 +93,7 @@ public class UIManager : MonoBehaviour {
         ultimateImg.GetComponent<RectTransform>().localPosition = new Vector3(ultimateImg.GetComponent<RectTransform>().localPosition.x, Mathf.Lerp( ultimateImg.GetComponent<RectTransform>().localPosition.y , posY, Time.deltaTime), ultimateImg.GetComponent<RectTransform>().localPosition.z);
         ultimateImg.GetComponent<RectTransform>().sizeDelta = new Vector2(ultimateImg.GetComponent<RectTransform>().sizeDelta.x,  Mathf.Lerp( ultimateImg.GetComponent<RectTransform>().sizeDelta.y , height, Time.deltaTime));
 
+        if(Input.GetKey(KeyCode.LeftAlt)) informationCanvasUI.UpdateData();
         informationPanel.alpha += Input.GetKey(KeyCode.LeftAlt) ? .1f : -.1f;
     }
 

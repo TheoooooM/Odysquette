@@ -41,7 +41,7 @@ public class CameraControllers : MonoBehaviour {
     }
 
     private void Update() {
-        if (!player.gameObject.activeSelf  || (CommandConsoleRuntime.Instance != null && CommandConsoleRuntime.Instance.ObjectChild.activeSelf) || ((UIManager.Instance != null && UIManager.Instance.PauseMenu.activeSelf) && GetComponent<HubCamera>() == null) || reportGam.activeSelf || reporScreenshottGam.activeSelf) return;
+        if (!player.gameObject.activeSelf  || (CommandConsoleRuntime.Instance != null && CommandConsoleRuntime.Instance.ObjectChild.activeSelf) || ((UIManager.Instance != null && UIManager.Instance.PauseMenu.activeSelf)) || reportGam.activeSelf || reporScreenshottGam.activeSelf) return;
         
         if (!useCameraAsRail) {
             Vector3 mousePos = cameraMain.ScreenToWorldPoint(Input.mousePosition);
