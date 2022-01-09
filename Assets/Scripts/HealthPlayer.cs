@@ -144,7 +144,7 @@ public class HealthPlayer : MonoBehaviour {
         for (int i = 0; i < Mathf.Abs(lifeChange); i++) {
             int oldHeartImg = Mathf.CeilToInt((lastHealth / 2f) - 1);
             int newHeartImg = Mathf.CeilToInt(((lastHealth + (1 * lifeChangeValueTo1)) / 2f) - 1);
-            Debug.Log(oldHeartImg + " " + newHeartImg);
+            //Debug.Log(oldHeartImg + " " + newHeartImg);
             
             //int newHeartImg = Mathf.CeilToInt((healthPlayer / 2f) - 1);
 
@@ -188,7 +188,7 @@ public class HealthPlayer : MonoBehaviour {
     }
 
     private void OnDeathPlayer() {
-        GameManager.Instance.Score += (20*60/ (NeverDestroy.Instance.minute*60+ NeverDestroy.Instance.second));
+        //GameManager.Instance.Score += (20*60/ (NeverDestroy.Instance.minute*60+ NeverDestroy.Instance.second));
         GameManager.Instance.SetND();
         NeverDestroy.Instance.Score = GameManager.Instance.Score;
         
