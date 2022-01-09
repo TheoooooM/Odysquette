@@ -312,7 +312,26 @@ public class Playercontroller : MonoBehaviour {
     /// </summary>
     /// <param name="Indash"></param>
     /// <param name="fl"></param>
-    public void StartFall(bool Indash = false, fallScript fl = null) {
+    public void StartFall(fallScript.Side side, bool Indash = false, fallScript fl = null) {
+        Debug.Log("fall");
+        switch (side)
+        {
+            case fallScript.Side.top:
+                dir = new Vector3(0, 1, 0);
+                break;
+            
+            case fallScript.Side.left:
+                dir = new Vector3(-1, 0, 0);
+                break;
+            
+            case fallScript.Side.right:
+                dir = new Vector3(1, 0, 0);
+                break;
+            
+            case fallScript.Side.bot:
+                dir = new Vector3(0, -1, 0);
+                break;
+        }
         dir = rb.velocity;
         dashPos = fl !=null && Indash ? fl.dashPos : Vector3.zero;
         falling = true;
