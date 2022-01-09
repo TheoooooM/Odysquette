@@ -1468,7 +1468,6 @@ GameObject:
   - component: {fileID: 5679514350000122723}
   - component: {fileID: 2292264497439427880}
   - component: {fileID: 2201854114458306727}
-  - component: {fileID: 892130040651986318}
   m_Layer: 5
   m_Name: LifeImage 03
   m_TagString: Untagged
@@ -1552,21 +1551,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &892130040651986318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 370575244461068476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfd3b4ca453998244a576f6dc516b85a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHearth: 0
-  hearth: {fileID: -8428960806714788917, guid: 4a62f628a9c8ff54489bb8e83b6ce626, type: 3}
-  halfHearth: {fileID: -1605356203577331935, guid: 1992cefa64601ed4bb3c869dbdb5dbc5, type: 3}
 --- !u!1 &381409450487391986
 GameObject:
   m_ObjectHideFlags: 0
@@ -2307,12 +2291,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: HUB
+  isHUB: 0
   cursor: {fileID: 8588562610868285656}
   HeartsLifes:
-  - {fileID: 3877439256120181237}
-  - {fileID: 7244357077033444870}
-  - {fileID: 892130040651986318}
-  _HeartsLife: []
+  - {fileID: 8140704425675226563}
+  - {fileID: 8140704425240213013}
+  - {fileID: 370575244461068476}
   ultimateImg: {fileID: 8588562610929480223}
   ultimateAnim: {fileID: 4793542648059757620}
   ultimateValue: 0
@@ -7563,7 +7547,6 @@ GameObject:
   - component: {fileID: 1087966419243697749}
   - component: {fileID: 4515424476619767796}
   - component: {fileID: 361414517421711309}
-  - component: {fileID: 7244357077033444870}
   m_Layer: 5
   m_Name: LifeImage 02
   m_TagString: Untagged
@@ -7647,21 +7630,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &7244357077033444870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8140704425240213013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfd3b4ca453998244a576f6dc516b85a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHearth: 0
-  hearth: {fileID: -8428960806714788917, guid: 4a62f628a9c8ff54489bb8e83b6ce626, type: 3}
-  halfHearth: {fileID: -1605356203577331935, guid: 1992cefa64601ed4bb3c869dbdb5dbc5, type: 3}
 --- !u!1 &8140704425675226563
 GameObject:
   m_ObjectHideFlags: 0
@@ -7674,7 +7642,6 @@ GameObject:
   - component: {fileID: 9197613619338774684}
   - component: {fileID: 8151805229257843401}
   - component: {fileID: 5514774655783954101}
-  - component: {fileID: 3877439256120181237}
   m_Layer: 5
   m_Name: LifeImage 01
   m_TagString: Untagged
@@ -7758,21 +7725,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3877439256120181237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8140704425675226563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfd3b4ca453998244a576f6dc516b85a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHearth: 0
-  hearth: {fileID: -8428960806714788917, guid: 4a62f628a9c8ff54489bb8e83b6ce626, type: 3}
-  halfHearth: {fileID: -1605356203577331935, guid: 1992cefa64601ed4bb3c869dbdb5dbc5, type: 3}
 --- !u!1 &8216268982188992626
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,8 +13,7 @@ public class UIManager : MonoBehaviour {
     public string sceneToLoad;
     [SerializeField] private bool isHUB = false;
     public GameObject cursor;
-    public List<Hearth> HeartsLifes;
-    public List<Hearth> _HeartsLife;
+    public List<GameObject> HeartsLifes;
     [Space] 
     [SerializeField] private Image ultimateImg = null;
     [SerializeField] private Animator ultimateAnim = null;

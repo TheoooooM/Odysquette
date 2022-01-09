@@ -28,7 +28,7 @@ public class DialogSystem : MonoBehaviour {
 
             if (text.maxVisibleCharacters >= textList[actualTextId].Length) canSkip = true;
             
-            if (Input.GetKeyDown(KeyCode.Space)) {
+            if (Input.GetKeyDown(KeyCode.E)) {
                 if (actualTextId == textList.Count - 1 && text.maxVisibleCharacters >= textList[actualTextId].Length) {
                     dialogAnimator.SetTrigger(endTrigger);
                     Playercontroller.Instance.ChangeInputState(true);
