@@ -57,6 +57,7 @@ public class Playercontroller : MonoBehaviour {
     private float timerInEffectFlash;
     private float timerKnockBack;
     private bool inKnockback;
+    [SerializeField] private GameObject stunFX;
     private float currentKnockbackDistance;
     private float timeKnockback;
     private AnimationCurve curveSpeedKnockback;
@@ -159,11 +160,13 @@ public class Playercontroller : MonoBehaviour {
 
         if (isInEffectFlash) {
             if (timerInEffectFlash >= 0) {
+                stunFX.SetActive(true);
                 timerInEffectFlash -= Time.deltaTime;
             }
             else {
                 timerInEffectFlash = 0;
                 isInEffectFlash = false;
+                stunFX.SetActive(false);
                 MouvementSpeed = defaultSpeed;
             }
         }

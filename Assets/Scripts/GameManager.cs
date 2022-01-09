@@ -327,12 +327,12 @@ public class GameManager : MonoBehaviour {
         }
 
         if (actualStrawClass.ultimateStrawSO != null && actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate && !disableStraw) {
-            if (ultimateValue >= 100) {
+            if (ultimateValue >= 125) {
                 actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
                 HealthPlayer.Instance.ultimateAura.SetActive(true);
                 HealthPlayer.Instance.CancelUltimate();
                 isUltimate = true;
-                ultimateValue -= 100;
+                ultimateValue -= 125;
             }
 
             utlimate = false;
