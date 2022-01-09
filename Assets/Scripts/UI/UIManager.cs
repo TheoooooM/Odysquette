@@ -23,10 +23,12 @@ public class UIManager : MonoBehaviour {
     [Space] 
     public static UIManager Instance;
     float maxUltSlider = 100f;
+    [Space] 
     
     
     [Header("----Game Over----")] 
     [SerializeField] private GameObject GameOverPanel;
+    [SerializeField] private TextMeshProUGUI GameOverText;
     public TMP_InputField PlayerName;
     public TextMeshProUGUI totalScoreText;
     [Space] 
@@ -128,8 +130,10 @@ public class UIManager : MonoBehaviour {
     /// <summary>
     /// Show game over panel
     /// </summary>
-    public void GameOver()
+    public void GameOver(bool end = false)
     {
+        if (end) GameOverText.text = "YOU WIN";
+        else GameOverText.text = "GAME OVER";
         totalScoreText.text = "Final Scote : " + NeverDestroy.Instance.Score;
         GameOverPanel.SetActive(true);
         Time.timeScale = 0;
