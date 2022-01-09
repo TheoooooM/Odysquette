@@ -23,6 +23,9 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject GameOverPanel;
     public TMP_InputField PlayerName;
     public TextMeshProUGUI totalScoreText;
+    [Space] 
+    [SerializeField] private LeaderBoard leaderboard;
+    [SerializeField] private TextMeshProUGUI[] finalScoreText;
     
     
     [Header("----Pause----")] 
@@ -60,6 +63,7 @@ public class UIManager : MonoBehaviour {
         
         UltSlider.maxValue = GameManager.Instance.maxUltimateValue;
         pauseMenu.SetActive(false);
+        leaderboard.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -93,10 +97,18 @@ public class UIManager : MonoBehaviour {
         GameManager.Instance.gameIsPause = false;
     }
 
-    public void SubmitScoreND(int ID)
+    public void SubmitScore()
     {
-        if (PlayerName.text == null) NeverDestroy.Instance.SubmitScore("Player", ID);
-        else NeverDestroy.Instance.SubmitScore(PlayerName.text, ID);
+        leaderboard.SetScore(PlayerName.text, NeverDestroy.Instance.Score);
+    }
+    
+    public void setLeaderboard()
+    {
+        leaderboard.UpdateArray();
+        for (int i = 0; i < 5; i++)
+        {
+           finalScoreText[i].text = ((i + 1) + ". " + leaderboard.nameArray[i] + " . . . . . . . . . . . . . . . . . . . . . . . . . . . . " + leaderboard.scoreArray[i]);
+        }
     }
 
     /// <summary>
