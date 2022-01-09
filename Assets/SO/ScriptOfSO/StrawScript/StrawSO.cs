@@ -87,10 +87,15 @@ public class StrawSO : ScriptableObject {
         }
 
         scriptBullet.knockUpValue = knockUp;
+        if (scriptBullet is CurveBullet)
+            return;
         scriptBullet.StartCoroutine(SetVelocity(scriptBullet));
     }
     
-    private IEnumerator SetVelocity(Bullet bulletScript) {
+    private IEnumerator SetVelocity(Bullet bulletScript)
+    {
+        if (bulletScript is CurveBullet)
+            yield break;
         yield return new WaitForSeconds(0.1f);
         bulletScript.lastVelocity = bulletScript.rb.velocity;
         //Debug.Log("lastVelocity = " +bulletScript.lastVelocity + " rb.velocity = " + bulletScript.rb.velocity);

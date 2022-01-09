@@ -8,7 +8,6 @@ using UnityEngine;
 public class HealthPlayer : MonoBehaviour {
     public Rigidbody2D rb;
     [SerializeField] private CameraShake cameraShake;
-
     [SerializeField] public int maxHealth;
     [SerializeField] public int healthPlayer;
     private int lastHealth = 0;
@@ -18,6 +17,10 @@ public class HealthPlayer : MonoBehaviour {
     [SerializeField] private bool isInvincible;
     [SerializeField] private float timerInvincible;
 
+    [SerializeField] private Material defaultMaterial;
+    [SerializeField] private Material ultimateMaterial;
+
+    public GameObject ultimateAura;
     // Start is called before the first frame update
     public static HealthPlayer Instance;
     public Playercontroller playerController;
@@ -86,6 +89,14 @@ public class HealthPlayer : MonoBehaviour {
                 timerInvincible += Time.deltaTime;
             }
         }
+        else
+        {
+            if (GameManager.Instance.ultimateValue == 125)
+            {
+                spriteRenderer.material.SetTexture(spriteRenderer.sprite.name, spriteRenderer.sprite.texture);
+                spriteRenderer.material = ultimateMaterial;
+            }
+        }
     }
 
     /// <summary>
@@ -103,15 +114,25 @@ public class HealthPlayer : MonoBehaviour {
             if (UIManager.Instance == null) return;
             StartCoroutine(UpdateLife());
             
-            //foreach (Hearth hearth in UIManager.Instance._HeartsLife) hearth.LifeUpdate();
-            
             for (int i = UIManager.Instance.HeartsLifes.Count - 1; i > -1; i--) {
+                if(GameManager.Instance.ultimateValue == 125)
+                    CancelUltimate();
                 spriteRenderer.material.SetFloat("_HitTime", Time.time);
                 if(GameManager.Instance != null && GameManager.Instance.strawSprite != null) GameManager.Instance.strawSprite.material.SetFloat("_HitTime", Time.time);
                 isInvincible = true;
             }
         }
     }
+
+
+    
+
+   public void CancelUltimate()
+   {
+       
+       spriteRenderer.material.SetTexture(spriteRenderer.sprite.name, spriteRenderer.sprite.texture);
+       spriteRenderer.material = defaultMaterial;
+   }
 
     /// <summary>
     /// Update the life
