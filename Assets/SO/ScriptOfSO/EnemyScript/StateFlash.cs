@@ -48,8 +48,8 @@ public class StateFlash : StateEnemySO
 
        flashObject.transform.rotation = Quaternion.Euler(0,0,angle);
         flashObject.SetActive(true);
-     
-        endStep = true;
+
+        endStep = false;
     }
 
     public override void PlayState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)

@@ -85,7 +85,8 @@ public class CurveBullet : Bullet {
     private void OnDisable() {
         isCurve = false;
         trajectories = new List<Vector3>();
-
+ 
+        StopAllCoroutines();
         pointsForBezierCurve = new List<PointsForBezierCurve>();
 
 
@@ -133,6 +134,8 @@ public class CurveBullet : Bullet {
 
         if (isBounce)
         {
+            if(rb.velocity == Vector2.zero)
+                DesactiveBullet();
             rb.velocity = rb.velocity.normalized * speedBounce;
             currentDirection = rb.velocity.normalized;
         }
@@ -146,6 +149,7 @@ public class CurveBullet : Bullet {
         
         if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls")||other.gameObject.CompareTag("ShieldEnemy"))) {
             DestroyBulletIfStuck();
+            test1 = true;
             _bounceCount--;
           
             AudioManager.Instance.PlayImpactStraw(AudioManager.StrawSoundEnum.Bounce, transform.position);
@@ -177,21 +181,16 @@ DesactiveBullet();
     
     }
 
-    private void OnCollisionStay2D(Collision2D other)
-    {
-        if(other.gameObject.CompareTag("Walls"))
-            
-        DestroyBulletIfStuck();
-    }
+
 
     protected override IEnumerator DestroyBulletIfStuck()
-    {
+    {test = true;
         yield return new WaitForSeconds(0.5f);
         test = true;
         if (isColliding || rb.velocity.magnitude <= .05f)
         {
             
-            test1 = true;
+            
             DesactiveBullet();
         }
     }

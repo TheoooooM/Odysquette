@@ -21,11 +21,17 @@ public class BossManager : MonoBehaviour
   private const string shootName = "_SHOOT";
   private const string beginShootName = "_BEGINSHOOT";
   private const string beginSpinName = "_BEGINSPIN";
+  [SerializeField]
+  private Animator sliderLockLife;
   private const string baseShieldTransition = shieldName + "BASE" + transitionShield + "BLUE";
     [SerializeField] private string[] colorName;
   [SerializeField]
   private string[] walkName;
 
+  private const string sliderName = "SLIDER_";
+  private const string idleSliderName = "_IDLE";
+  private const string activationSliderName = "_ACTIVATION"; 
+  private const string desactivationSliderName = "_DESACTIVATION";
   [SerializeField] private string[] inSpinName;
   [SerializeField] private string[] spinName;
   [SerializeField] private string[] endSpinName;
@@ -186,7 +192,7 @@ public float shootAnimationTime;
 
      currentMaxEnabledTurret =(int) phaseBoss;
      currentIndexEnabledTurret = 0;
-     
+     sliderLockLife.Play(sliderName+colorName[1]+activationSliderName);
  
      
      for (int i = 0; i < currentMaxEnabledTurret; i++)
@@ -211,6 +217,7 @@ public float shootAnimationTime;
        {
          
      
+         
          baseturrets[i].boxCollider2D.enabled = true;
           shieldBoss.Play(baseShieldTransition);
          AudioManager.Instance.PlayBossSound(AudioManager.BossSoundEnum.ShieldOn);
@@ -239,6 +246,7 @@ public float shootAnimationTime;
       if (currentIndexEnabledTurret == currentMaxEnabledTurret)
       { 
         shieldBoss.Play(shieldName+colorName[currentIndexEnabledTurret]+transitionShield+colorName[0]);
+        sliderLockLife.Play(sliderName+colorName[currentIndexEnabledTurret]+desactivationSliderName);
         AudioManager.Instance.PlayBossSound(AudioManager.BossSoundEnum.ShieldOff);
         TransitionFeedback(currentIndexEnabledTurret, true);
         inUpdatePhase = false;
@@ -246,6 +254,7 @@ public float shootAnimationTime;
       }
       AudioManager.Instance.PlayBossSound(AudioManager.BossSoundEnum.ShieldOff);
        shieldTurrets[currentIndexEnabledTurret].Play(shieldName+colorName[currentIndexEnabledTurret]+transitionShield+colorName[0]);
+       sliderLockLife.Play(sliderName+colorName[currentIndexEnabledTurret+1]+idleSliderName);
       baseturrets[currentIndexEnabledTurret].boxCollider2D.enabled = true;
       for (int i = currentIndexEnabledTurret+1; i < currentMaxEnabledTurret; i++)
       {

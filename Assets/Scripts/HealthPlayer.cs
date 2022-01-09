@@ -17,6 +17,7 @@ public class HealthPlayer : MonoBehaviour {
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material ultimateMaterial;
 
+    public GameObject ultimateAura;
     // Start is called before the first frame update
     public static HealthPlayer Instance;
     public Playercontroller playerController;
@@ -119,6 +120,7 @@ public class HealthPlayer : MonoBehaviour {
 
    public void CancelUltimate()
    {
+       
        spriteRenderer.material.SetTexture(spriteRenderer.sprite.name, spriteRenderer.sprite.texture);
        spriteRenderer.material = defaultMaterial;
    }
