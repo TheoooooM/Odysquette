@@ -52,6 +52,7 @@ public class Generation : MonoBehaviour {
     private Vector2 currentPos;
     private open needOpen;
 
+    public RoomManager runningroom;
     [Header("---- SCENE MANAGER")] public SceneManager sceneMan;
     [Header("---- CAMERA")] public Rect BasicRect;
 
