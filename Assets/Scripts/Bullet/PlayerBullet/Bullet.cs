@@ -170,7 +170,6 @@ public class Bullet : MonoBehaviour {
         else {
             if (other.gameObject.CompareTag("Walls")) {
                 if (GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison) {
-                    Debug.Log(other.contacts[0].normal);
                     PoolManager.Instance.SpawnPoisonPool(transform, other.contacts[0].normal);
                 }
             }

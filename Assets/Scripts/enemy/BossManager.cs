@@ -287,7 +287,6 @@ string currentColorName = bossName+colorName[index];
             if (index != 0)
             {
 
-              Debug.Log(currentColorName + transitionName + colorName[0]);
               animator.Play(currentColorName + transitionName + colorName[0]);
             }
           }
