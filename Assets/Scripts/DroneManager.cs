@@ -106,7 +106,7 @@ public class DroneManager : MonoBehaviour
    bool GoToDestination(Vector3 destination)
    {
        Debug.Log(Vector3.Distance(transform.position, destination));
-       if (Vector3.Distance(transform.position, destination) > 1f) 
+       if (Vector3.Distance(transform.position, destination) > .05f) 
         {
             Debug.Log("testaa");
             transform.position =
