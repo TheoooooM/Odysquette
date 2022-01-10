@@ -100,7 +100,7 @@ public class Generation : MonoBehaviour {
         int actualSeed = seed;
         if (generateRandomLevel) actualSeed = Random.Range(0, 1000000);
         
-        Random.InitState(actualSeed);
+        //Random.InitState(actualSeed);
         ResetGen();
         StartCoroutine("GeneratePath", nbrOfRoom);
     }

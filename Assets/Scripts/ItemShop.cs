@@ -17,7 +17,8 @@ public class ItemShop : Chest {
     protected override void RdmJuice() {
         GameObject item = null;
         GameManager.Effect effect = GameManager.Effect.none;
-
+        GameManager.Instance.GetND();
+        
         while (effect == GameManager.Instance.firstEffect || effect == GameManager.Instance.secondEffect || effect == GameManager.Effect.none) {
             int index = Random.Range(0, 4);
             switch (index) {
@@ -41,6 +42,7 @@ public class ItemShop : Chest {
                     effect = GameManager.Effect.poison;
                     break;
             }
+            Debug.Log("set " + effect);
         }
 
         InstantiateItem(item);
