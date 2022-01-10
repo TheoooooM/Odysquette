@@ -82,7 +82,7 @@ public class PlayerDetector : MonoBehaviour {
     public void CheckDetection() {
         float distance = Vector2.Distance(transform.position, GameManager.Instance.Player.transform.position);
         
-        if (distance <= range && ESM.roomParent.runningRoom) {
+        if (distance <= range && (ESM.roomParent.runningRoom || Generation.Instance.runningroom.roomFinish == true)) {
             EndDetection();
         }
         else if (patrol != null && canPatrol) {

@@ -34,6 +34,7 @@ public class RoomManager : MonoBehaviour {
             if (!done) {
                 CameraControllers.Instance.currentRectLimitation = cameraRect;
                 if (exitGO != null) exitGO.SetActive(true);
+                Generation.Instance.runningroom = this;
                 //if (enterGO != null) enterGO.SetActive(true);
                 //exitClose.SetActive(true);
                 done = true;

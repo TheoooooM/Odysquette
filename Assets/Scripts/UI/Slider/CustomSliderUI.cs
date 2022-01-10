@@ -4,7 +4,10 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class CustomSliderUI : MonoBehaviour {
+    [SerializeField] private bool sfxSound = false;
+    [Space]
     [SerializeField] private Image sliderImage = null;
+    public Image SliderImage => sliderImage;
     [SerializeField] private GameObject HandleObject = null;
     [Space]
     [SerializeField] private Transform pointA = null;
@@ -16,7 +19,7 @@ public class CustomSliderUI : MonoBehaviour {
     [Space] 
     [SerializeField] private UnityEvent OnValueChanged = null;
     
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
     /// <summary>
     /// Update in Editor
     /// </summary>
@@ -25,13 +28,22 @@ public class CustomSliderUI : MonoBehaviour {
         HandleObject.transform.position = Vector3.Lerp(pointA.position, pointB.position, fillAmount);
     }
 #endif
+*/
 
     /// <summary>
     /// Called at start
     /// </summary>
     private void Start() {
-        HandleObject.GetComponent<RectTransform>().position = pointA.GetComponent<RectTransform>().position;
-        UpdateSliderValue(0);
+        OpenMethod();
+    }
+
+    /// <summary>
+    /// Method to call when opening the settings menu
+    /// </summary>
+    public void OpenMethod() {
+        float value = PlayerPrefs.GetFloat((sfxSound ? "sfx" : "music"), .2f);
+        UpdateSliderValue(value);
+        HandleObject.GetComponent<HandlerSlider>().SetPos(value);
     }
 
     /// <summary>
@@ -40,7 +52,8 @@ public class CustomSliderUI : MonoBehaviour {
     /// <param name="value"></param>
     private void UpdateSliderValue(float value) {
         fillAmount = value;
-        sliderImage.fillAmount = Mathf.Clamp(value, 0,1);
+        sliderImage.fillAmount = Mathf.Clamp(fillAmount, 0,1);
+        PlayerPrefs.SetFloat((sfxSound ? "sfx" : "music"), fillAmount);
         OnValueChanged.Invoke();
     }
 

@@ -17,7 +17,7 @@ public class HealthPlayer : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
     [SerializeField] private bool isInvincible;
     [SerializeField] private float timerInvincible;
-
+    public bool playUltimateSound;
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material ultimateMaterial;
     public bool isDeath;
@@ -94,12 +94,18 @@ public class HealthPlayer : MonoBehaviour {
                     }
                     else
                     {
-                        if (GameManager.Instance.ultimateValue == 125)
-                        {
-                            spriteRenderer.material.SetTexture(spriteRenderer.sprite.name, spriteRenderer.sprite.texture);
-                            spriteRenderer.material = ultimateMaterial;
-                        }
+                            if (GameManager.Instance.ultimateValue == 125)
+            {
+                if (!playUltimateSound)
+                {
+                    AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.UltimateReady);
+                    playUltimateSound = true;
+                }
+                spriteRenderer.material.SetTexture(spriteRenderer.sprite.name, spriteRenderer.sprite.texture);
+                spriteRenderer.material = ultimateMaterial;
+            }
                     }
+
         }
 
     }
@@ -134,7 +140,7 @@ public class HealthPlayer : MonoBehaviour {
 
    public void CancelUltimate()
    {
-       
+     
        spriteRenderer.material.SetTexture(spriteRenderer.sprite.name, spriteRenderer.sprite.texture);
        spriteRenderer.material = defaultMaterial;
    }
@@ -149,7 +155,7 @@ public class HealthPlayer : MonoBehaviour {
         for (int i = 0; i < Mathf.Abs(lifeChange); i++) {
             int oldHeartImg = Mathf.CeilToInt((lastHealth / 2f) - 1);
             int newHeartImg = Mathf.CeilToInt(((lastHealth + (1 * lifeChangeValueTo1)) / 2f) - 1);
-            Debug.Log(oldHeartImg + " " + newHeartImg);
+            //Debug.Log(oldHeartImg + " " + newHeartImg);
             
             //int newHeartImg = Mathf.CeilToInt((healthPlayer / 2f) - 1);
 
@@ -195,6 +201,7 @@ public class HealthPlayer : MonoBehaviour {
     public void OnDeathPlayer() {
         if((NeverDestroy.Instance.minute*60+ NeverDestroy.Instance.second) != 0 )
         GameManager.Instance.Score += (20*60/ (NeverDestroy.Instance.minute*60+ NeverDestroy.Instance.second));
+
         GameManager.Instance.SetND();
         NeverDestroy.Instance.Score = GameManager.Instance.Score;
         

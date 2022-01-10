@@ -8,7 +8,7 @@ public class Chest : MonoBehaviour {
     [SerializeField] public itemSO SO;
     [SerializeField] private ChestDrop[] Drops;
     [SerializeField] private bool itemFromChest = true;
-
+    [SerializeField] private Transform spawner;
     private bool canOpen;
     private float rate;
     private int index;
@@ -152,7 +152,7 @@ public class Chest : MonoBehaviour {
     /// </summary>
     /// <param name="GO"></param>
     protected virtual void InstantiateItem(GameObject GO) {
-        GameObject gam = Instantiate(GO, transform.position, Quaternion.identity, transform.parent);
+        GameObject gam = Instantiate(GO, spawner.transform.position, Quaternion.identity, transform.parent);
         gam.GetComponent<Items>().SpawnObject(itemFromChest);
     }
 

@@ -3,9 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+
 
 
 public class UIManager : MonoBehaviour {
@@ -17,7 +16,7 @@ public class UIManager : MonoBehaviour {
     [Space] 
     [SerializeField] private Image ultimateImg = null;
     [SerializeField] private Animator ultimateAnim = null;
-    [HideInInspector] public float ultimateValue = 0;
+    public float ultimateValue = 0;
     [Space] 
     [SerializeField] private CanvasGroup informationPanel = null;
     [Space] 
@@ -33,6 +32,7 @@ public class UIManager : MonoBehaviour {
     
     [Header("----Game Over----")] 
     [SerializeField] private GameObject GameOverPanel;
+    [SerializeField] private TextMeshProUGUI GameOverText;
     public TMP_InputField PlayerName;
     public TextMeshProUGUI totalScoreText;
     [Space] 
@@ -87,7 +87,7 @@ public class UIManager : MonoBehaviour {
         }
 
         UltimateImageData data = ultimateImg.GetComponent<UltimateImageData>();
-        ultimateAnim.SetInteger("UltimateProcent", (int) ultimateValue * 100);
+        ultimateAnim.SetInteger("UltimateProcent", (int) (ultimateValue * 100));
         float posY = Mathf.Clamp(data.MinPosY + Mathf.Abs(data.MinPosY - data.MaxPosY) * ultimateValue, data.MinPosY, data.MaxPosY);
         float height = Mathf.Clamp((data.MaxHeight - data.MinHeight) * ultimateValue, data.MinHeight, data.MaxHeight);
         ultimateImg.GetComponent<RectTransform>().localPosition = new Vector3(ultimateImg.GetComponent<RectTransform>().localPosition.x, Mathf.Lerp( ultimateImg.GetComponent<RectTransform>().localPosition.y , posY, Time.deltaTime), ultimateImg.GetComponent<RectTransform>().localPosition.z);
@@ -104,6 +104,8 @@ public class UIManager : MonoBehaviour {
         inGameMenu.SetActive(false);
         cursor.SetActive(false);
         pauseMenu.SetActive(true);
+        sfxSlider.OpenMethod();
+        musicSlider.OpenMethod();
         Time.timeScale = 0f;
         GameManager.Instance.gameIsPause = true;
     }
@@ -135,8 +137,10 @@ public class UIManager : MonoBehaviour {
     /// <summary>
     /// Show game over panel
     /// </summary>
-    public void GameOver()
+    public void GameOver(bool end = false)
     {
+        if (end) GameOverText.text = "YOU WIN";
+        else GameOverText.text = "GAME OVER";
         totalScoreText.text = "Final Scote : " + NeverDestroy.Instance.Score;
         GameOverPanel.SetActive(true);
         Time.timeScale = 0;
@@ -149,9 +153,11 @@ public class UIManager : MonoBehaviour {
         Destroy(NeverDestroy.Instance.gameObject);
         Time.timeScale = 1 ;
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
+        AudioManager.Instance.PlayUISound(AudioManager.UISoundEnum.OpenSound);
     }
     public void QuitGame()
     {
+        AudioManager.Instance.PlayUISound(AudioManager.UISoundEnum.CloseSound);
         Application.Quit();
     }
     

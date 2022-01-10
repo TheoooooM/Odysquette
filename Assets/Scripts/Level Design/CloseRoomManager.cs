@@ -72,6 +72,16 @@ public class CloseRoomManager : MonoBehaviour {
             building.ChangeLightBlue();
         }
     }
+
+
+    /// <summary>
+    /// Change the color of all building to blue
+    /// </summary>
+    public void MakeEveryBuildingRed() {
+        foreach (LightCol building in buildingColors) {
+            building.ChangeLightRed();
+        }
+    }
 }
 
 [System.Serializable]
