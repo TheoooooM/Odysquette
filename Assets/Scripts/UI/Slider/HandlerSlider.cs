@@ -13,9 +13,9 @@ public class HandlerSlider : MonoBehaviour, IDragHandler, IEndDragHandler, IPoin
     /// </summary>
     /// <param name="eventData"></param>
     public void OnDrag(PointerEventData eventData) {
-        GetComponent<RectTransform>().position = new Vector3(eventData.position.x, GetComponent<RectTransform>().position.y, GetComponent<RectTransform>().position.z);
+        GetComponent<RectTransform>().position = new Vector3(eventData.position.x, slider.SliderImage.GetComponent<RectTransform>().position.y, 0);
         Vector3 pos = GetComponent<RectTransform>().position;
-        pos = new Vector3(Mathf.Clamp(pos.x, pointA.transform.position.x, pointB.transform.position.x), pos.y, pos.z);
+        pos = new Vector3(Mathf.Clamp(pos.x, pointA.transform.position.x, pointB.transform.position.x), slider.SliderImage.GetComponent<RectTransform>().position.y, 0);
         GetComponent<RectTransform>().position = pos;
         float value = 0;
         value = ((pointB.transform.position.x - pointA.transform.position.x) - (pointB.transform.position.x - pos.x)) / ((pointB.transform.position.x - pointA.transform.position.x));
@@ -27,4 +27,10 @@ public class HandlerSlider : MonoBehaviour, IDragHandler, IEndDragHandler, IPoin
     
     public void OnEndDrag(PointerEventData eventData) => SetLighterHandler();
     public void OnPointerDown(PointerEventData eventData) => SetDarkerhandler();
+
+    public void SetPos(float value) {
+        Vector3 pos = GetComponent<RectTransform>().position;
+        float posX = pointA.position.x + ((pointB.position.x - pointA.position.x) * value);
+        GetComponent<RectTransform>().position = new Vector3(posX, slider.SliderImage.GetComponent<RectTransform>().position.y, 0);
+    }
 }

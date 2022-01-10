@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour {
     [Space] 
     [SerializeField] private Image ultimateImg = null;
     [SerializeField] private Animator ultimateAnim = null;
-    [HideInInspector] public float ultimateValue = 0;
+    public float ultimateValue = 0;
     [Space] 
     [SerializeField] private CanvasGroup informationPanel = null;
     [Space] 
@@ -88,7 +88,7 @@ public class UIManager : MonoBehaviour {
         }
 
         UltimateImageData data = ultimateImg.GetComponent<UltimateImageData>();
-        ultimateAnim.SetInteger("UltimateProcent", (int) ultimateValue * 100);
+        ultimateAnim.SetInteger("UltimateProcent", (int) (ultimateValue * 100));
         float posY = Mathf.Clamp(data.MinPosY + Mathf.Abs(data.MinPosY - data.MaxPosY) * ultimateValue, data.MinPosY, data.MaxPosY);
         float height = Mathf.Clamp((data.MaxHeight - data.MinHeight) * ultimateValue, data.MinHeight, data.MaxHeight);
         ultimateImg.GetComponent<RectTransform>().localPosition = new Vector3(ultimateImg.GetComponent<RectTransform>().localPosition.x, Mathf.Lerp( ultimateImg.GetComponent<RectTransform>().localPosition.y , posY, Time.deltaTime), ultimateImg.GetComponent<RectTransform>().localPosition.z);
@@ -105,6 +105,8 @@ public class UIManager : MonoBehaviour {
         inGameMenu.SetActive(false);
         cursor.SetActive(false);
         pauseMenu.SetActive(true);
+        sfxSlider.OpenMethod();
+        musicSlider.OpenMethod();
         Time.timeScale = 0f;
         GameManager.Instance.gameIsPause = true;
     }

@@ -69,7 +69,6 @@ public class StateDash : StateEnemySO {
             enemyDashCollision.direction = Vector2.zero;
             enemyDashCollision.contact = Vector2.zero;
             enemyDashCollision.isTrigger = false;
-            Debug.Log("je suis lu là");
         }
 
   
