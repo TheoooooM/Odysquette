@@ -444,7 +444,8 @@ public class GameManager : MonoBehaviour {
     #endregion END ROOM
 
     #region NeverDestroy
-    private void GetND() {
+
+    public void GetND() {
         AddScore(NeverDestroy.Instance.Score);
         firstEffect = NeverDestroy.Instance.firstEffect;
         secondEffect = NeverDestroy.Instance.secondEffect;
