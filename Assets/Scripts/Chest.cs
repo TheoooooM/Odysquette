@@ -8,12 +8,12 @@ public class Chest : MonoBehaviour {
     [SerializeField] public itemSO SO;
     [SerializeField] private ChestDrop[] Drops;
     [SerializeField] private bool itemFromChest = true;
-
+    [SerializeField] private Transform spawner;
     private bool canOpen;
     private float rate;
     private int index;
     private Items.type finalItem;
-
+    [SerializeField] private Color interactableColor;
     private SpriteRenderer sprite;
 
     public virtual void Start() {
@@ -152,7 +152,7 @@ public class Chest : MonoBehaviour {
     /// </summary>
     /// <param name="GO"></param>
     protected virtual void InstantiateItem(GameObject GO) {
-        GameObject gam = Instantiate(GO, transform.position, Quaternion.identity, transform.parent);
+        GameObject gam = Instantiate(GO, spawner.transform.position, Quaternion.identity, transform.parent);
         gam.GetComponent<Items>().SpawnObject(itemFromChest);
     }
 
@@ -160,14 +160,14 @@ public class Chest : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             canOpen = true;
-            sprite.color = Color.red;
+            sprite.color = interactableColor;
         }
     }
 
     private void OnTriggerExit2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             canOpen = false;
-            sprite.color = Color.white;
+            sprite.color = Color.white ;
         }
     }
 }

@@ -43,8 +43,8 @@ public class RoomManager : MonoBehaviour {
             if (ennemiesList.Count == 0) {
                 if (!sendanim) {
                     GameManager.Instance.endRoom();
-                    int random = Random.Range(0, 100);
-                    if (chest != null && chestProcentDrop > random) Instantiate(chest, Playercontroller.Instance.transform.position, Quaternion.identity);
+                    if(chest != null)
+                   LaunchDrone();
                     sendanim = true;
                 }
 
@@ -55,5 +55,11 @@ public class RoomManager : MonoBehaviour {
                 //exitClose.SetActive(false);
             }
         }
+    }
+
+    void LaunchDrone()
+    {
+        Generation.Instance.drone.SetActive(true);
+        
     }
 }
