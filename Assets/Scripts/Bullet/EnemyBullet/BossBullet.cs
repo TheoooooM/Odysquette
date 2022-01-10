@@ -69,6 +69,7 @@ public class BossBullet : MonoBehaviour
 
         if(Physics2D.OverlapCircle(impact.position, 0.88f, currentLayerMask ))
         {
+          if(!Playercontroller.Instance.InDash)
           HealthPlayer.Instance.TakeDamagePlayer(1);
         }
           damageTimer +=Time.deltaTime;
