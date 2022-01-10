@@ -164,8 +164,8 @@ public class AudioManager : MonoBehaviour {
             if (shootTimer >= timeBetweenTwoShoot) canShoot = true;
         }
 
-        sfxSoundMultiplier = Mathf.Clamp(UIManager.Instance.SfxSlider.FillAmount, 0, .75f);
-        musicSoundMultiplier = Mathf.Clamp(UIManager.Instance.MusicSlider.FillAmount, 0.025f, .65f);
+        sfxSoundMultiplier = Mathf.Clamp(PlayerPrefs.GetFloat("sfx", .2f), 0, .75f);
+        musicSoundMultiplier = Mathf.Clamp(PlayerPrefs.GetFloat("music", .2f), 0.025f, .65f);
         musicAudioSource.volume = musicSoundMultiplier;
     }
 
