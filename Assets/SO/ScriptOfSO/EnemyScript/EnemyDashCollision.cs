@@ -28,7 +28,7 @@ public class EnemyDashCollision : MonoBehaviour
     {
         if (inDash)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("Player") && !Playercontroller.Instance.InDash)
             {
 
               Vector2  directionPlayer =  (Vector3)contact -transform.position;

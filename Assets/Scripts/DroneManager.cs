@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq.Expressions;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -103,14 +104,17 @@ public class DroneManager : MonoBehaviour
     }
     
    bool GoToDestination(Vector3 destination)
-    {
-        if (transform.position != destination)
+   {
+       Debug.Log(Vector3.Distance(transform.position, destination));
+       if (Vector3.Distance(transform.position, destination) > 1f) 
         {
             Debug.Log("testaa");
             transform.position =
                 Vector3.MoveTowards(transform.position, destination, speed);
             return true;
         }
+       
+       
 
         return false;
 
@@ -118,9 +122,11 @@ public class DroneManager : MonoBehaviour
 
     void LaunchParcel()
     {
-        animator.Play(launchParcel);
-        posForLaunchParcel = Playercontroller.Instance.transform.position;
         beginLaunch = true;
+        animator.Play(launchParcel);
+       
+        posForLaunchParcel = Playercontroller.Instance.transform.position;
+        
     }
 
     public void InstantiateParcel()
