@@ -14,8 +14,13 @@ public class LeaderBoard : MonoBehaviour
     }
     #endregion
 
-    public int[] scoreArray = new int[5];
-    public string[] nameArray = new string[5];
+    public int[] scoreArray = new int[9];
+    public string[] nameArray = new string[9];
+    private string[] nameArrayString = new string[9];
+    public string[] NameArrayString => nameArrayString;
+    private string[] scoreArrayString = new string[9];
+    public string[] ScoreArrayString => scoreArrayString;
+    
     
     private void Start()
     {
@@ -24,22 +29,54 @@ public class LeaderBoard : MonoBehaviour
 
     public void UpdateArray()
     {
-        scoreArray[0] = PlayerPrefs.GetInt("scoreOne");
-        scoreArray[1] = PlayerPrefs.GetInt("scoreTwo");
-        scoreArray[2] = PlayerPrefs.GetInt("scoreThree");
-        scoreArray[3] = PlayerPrefs.GetInt("scoreFour");
-        scoreArray[4] = PlayerPrefs.GetInt("scoreArray[5]");
+        for (int i = 0; i < scoreArray.Length-1; i++) {
+            scoreArray[i] = PlayerPrefs.GetInt(scoreArrayString[i]);
+            nameArray[i] = PlayerPrefs.GetString(nameArrayString[i]);
+        }
+
+        nameArrayString[0] = "nameOne";
+        nameArrayString[1] = "nameTwo";
+        nameArrayString[2] = "nameThree";
+        nameArrayString[3] = "nameFour";
+        nameArrayString[4] = "nameFive";
+        nameArrayString[5] = "nameSix";
+        nameArrayString[6] = "nameSeven";
+        nameArrayString[7] = "nameEight";
+        nameArrayString[8] = "nameNine";
         
-        nameArray[0] = PlayerPrefs.GetString("nameOne");
-        nameArray[1] = PlayerPrefs.GetString("nameTwo");
-        nameArray[2] = PlayerPrefs.GetString("nameThree");
-        nameArray[3] = PlayerPrefs.GetString("nameFour");
-        nameArray[4] = PlayerPrefs.GetString("nameFive");
+        scoreArrayString[0] = "scoreOne";
+        scoreArrayString[1] = "scoreTwo";
+        scoreArrayString[2] = "scoreThree";
+        scoreArrayString[3] = "scoreFour";
+        scoreArrayString[4] = "scoreFive";
+        scoreArrayString[5] = "scoreSix";
+        scoreArrayString[6] = "scoreSeven";
+        scoreArrayString[7] = "scoreEight";
+        scoreArrayString[8] = "scoreNine";
     }
     
-    public void SetScore(string name, int score)
-    {
+    public void SetScore(string name, int score) {
+        for (int i = nameArray.Length - 1; i >= 0; i--) {
+            if (score > scoreArray[i]) {
+                if (i == nameArray.Length - 1) continue;
+                PlayerPrefs.SetInt(scoreArrayString[i + 1], scoreArray[i]);
+                PlayerPrefs.SetString(nameArrayString[i + 1], nameArray[i]);
 
+                if (i == 0) {
+                    PlayerPrefs.SetInt(scoreArrayString[0], score);
+                    PlayerPrefs.SetString(nameArrayString[0], name);
+                }
+            }
+            else {
+                if (i == nameArray.Length - 1) continue;
+                PlayerPrefs.SetInt(scoreArrayString[i + 1], score);
+                PlayerPrefs.SetString(nameArrayString[i + 1], name);
+                break;
+            }
+        }
+        
+        
+        /*
         if (score > scoreArray[4])
         {
             if (score > scoreArray[3])
@@ -90,6 +127,9 @@ public class LeaderBoard : MonoBehaviour
                 PlayerPrefs.SetInt("scoreFive", score);
                 PlayerPrefs.SetString("nameFive", name);
             }
-        }
+        }*/
     }
+
+
+
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq.Expressions;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -16,8 +17,9 @@ public class DroneManager : MonoBehaviour
     private Vector3 posForLaunchParcel;
     [SerializeField]
     private float minLength;
-    [SerializeField]
-    private float maxLength;
+    [SerializeField] private float maxLength;
+    [SerializeField] private float yPlus;
+    
     private bool goToExit;
     private Vector3 destinationToExit;
     private bool nextToPlayer;
@@ -43,7 +45,7 @@ public class DroneManager : MonoBehaviour
             animator.Play(idleWithoutParcel);
         }
 
-        posForLaunchParcel = Playercontroller.Instance.transform.position;
+        posForLaunchParcel = Playercontroller.Instance.transform.position + new Vector3(0, yPlus, 0);
         transform.position = SetRandomPosition();
     }
 
@@ -58,7 +60,7 @@ public class DroneManager : MonoBehaviour
         Debug.Log("testaa");
         Vector2 randomDirection = Random.insideUnitCircle;
         float randomLength = Random.Range(minLength, maxLength);
-        return posForLaunchParcel+ (Vector3) randomDirection * randomLength; 
+        return posForLaunchParcel + (Vector3) randomDirection * randomLength;
     }
 
     private void Update()

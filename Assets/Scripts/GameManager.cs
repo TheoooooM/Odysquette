@@ -180,6 +180,8 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     private void AddCommandConsole() {
         CommandConsole STRAW = new CommandConsole("setstraw", "setstraw : Set the actual Straw of the player", new List<CommandClass>() {new CommandClass(typeof(Straw))}, (value) => { actualStraw = (Straw) Enum.Parse(typeof(Straw), value[0]); });
+        CommandConsole SCORE = new CommandConsole("addScore", "addScore : add value score to the actual score", new List<CommandClass>() {new CommandClass(typeof(int))}, (value) => { AddScore(int.Parse(value[0])); });
+        CommandConsole RESOURCE = new CommandConsole("addResource", "addResource : add value to the actual Resource", new List<CommandClass>() {new CommandClass(typeof(int))}, (value) => { if(NeverDestroy.Instance != null) NeverDestroy.Instance.AddRessource(int.Parse(value[0])); });
         
         CommandConsole EFFECT = new CommandConsole("seteffect", "seteffect : Set the actual Effects of the player", new List<CommandClass>() {new CommandClass(typeof(Effect)), new CommandClass(typeof(Effect))}, (value) => {
             firstEffect = (Effect) Enum.Parse(typeof(Effect), value[0]);
@@ -267,6 +269,9 @@ public class GameManager : MonoBehaviour {
         });
         
         CommandConsoleRuntime.Instance.AddCommand(STRAW);
+        CommandConsoleRuntime.Instance.AddCommand(SCORE);
+        CommandConsoleRuntime.Instance.AddCommand(RESOURCE);
+        
         CommandConsoleRuntime.Instance.AddCommand(EFFECT);
         CommandConsoleRuntime.Instance.AddCommand(ARSENAL);
         CommandConsoleRuntime.Instance.AddCommand(GOTO);
