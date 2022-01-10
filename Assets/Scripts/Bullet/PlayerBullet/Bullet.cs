@@ -88,10 +88,11 @@ public class Bullet : MonoBehaviour {
             DesactiveBullet();
             return;
         }
-        
+
+        bool doExplosion = false;
         switch (GameManager.Instance.firstEffect) {
             case GameManager.Effect.explosive:
-                Explosion();
+                doExplosion = true;
                 break;
 
             case GameManager.Effect.poison :
@@ -102,13 +103,18 @@ public class Bullet : MonoBehaviour {
 
         switch (GameManager.Instance.secondEffect) {
             case GameManager.Effect.explosive:
-                Explosion();
+                doExplosion = true;
                 break;
             
             case GameManager.Effect.poison :
                 PoolManager.Instance.SpawnPoisonPool(transform, Vector2.zero);
                 break;
           
+        }
+
+        if (doExplosion)
+        {
+            Explosion();
         }
 
         if (other.CompareTag("Enemy")) {
