@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.OleDb;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,7 +38,8 @@ public class UIManager : MonoBehaviour {
     public TextMeshProUGUI totalScoreText;
     [Space] 
     [SerializeField] private LeaderBoard leaderboard;
-    [SerializeField] private TextMeshProUGUI[] finalScoreText;
+    [SerializeField] private TextMeshProUGUI[] finalScoreTxt;
+    [SerializeField] private TextMeshProUGUI[] finalNameTxt;
     
     
     [Header("----Pause----")] 
@@ -71,6 +73,10 @@ public class UIManager : MonoBehaviour {
     private void Start() {
         CommandConsole RESTART = new CommandConsole("restart", "restart : Restart all the game", null, (_) => { PlayAgain(); });
         CommandConsoleRuntime.Instance.AddCommand(RESTART);
+        
+        CommandConsole RESETSCORE = new CommandConsole("resetScore", "resetscore : reset all the saves score", null, (_) => { ResetPlayerPrefsLeaderboard(); });
+        CommandConsoleRuntime.Instance.AddCommand(RESETSCORE);
+        
         pauseMenu.SetActive(false);
         leaderboard.gameObject.SetActive(false);
         
@@ -123,13 +129,15 @@ public class UIManager : MonoBehaviour {
 
     #region Score
     public void SubmitScore() {
+        leaderboard.UpdateArray();
         leaderboard.SetScore(PlayerName.text, NeverDestroy.Instance.Score);
     }
     
     public void setLeaderboard(){
         leaderboard.UpdateArray();
-        for (int i = 0; i < 5; i++) {
-            finalScoreText[i].text = ((i + 1) + ". " + leaderboard.nameArray[i] + " . . . . . . . . . . . . . . . . . . . . . . . . . . . . " + leaderboard.scoreArray[i]);
+        for (int i = 0; i < 9; i++) {
+            finalNameTxt[i].text = leaderboard.nameArray[i];
+            finalScoreTxt[i].text = leaderboard.scoreArray[i].ToString();
         }
     }
     #endregion Score
@@ -139,9 +147,11 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void GameOver(bool end = false)
     {
+    /*
         if (end) GameOverText.text = "YOU WIN";
         else GameOverText.text = "GAME OVER";
-        totalScoreText.text = "Final Scote : " + NeverDestroy.Instance.Score;
+        */
+        totalScoreText.text = "Final Score : " + NeverDestroy.Instance.Score;
         GameOverPanel.SetActive(true);
         Time.timeScale = 0;
     }
@@ -174,6 +184,13 @@ public class UIManager : MonoBehaviour {
     }
 
     #endregion Timer
+    
+    public void ResetPlayerPrefsLeaderboard() {
+        for (int i = 0; i < leaderboard.NameArrayString.Length; i++) {
+            PlayerPrefs.SetString(leaderboard.NameArrayString[i], "");
+            PlayerPrefs.SetInt(leaderboard.ScoreArrayString[i], 0);
+        }
+    }
 
 
     // Update is called once per frame
