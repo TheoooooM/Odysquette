@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class DialogSystem : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI text = null;
+    [SerializeField] private GameObject pressEGam = null;
     [Space]
-    [SerializeField] private List<string> textList = new List<string>();
+    [SerializeField, TextArea] private List<string> textList = new List<string>();
     [SerializeField] private float maxCharacterVisible = 0;
     [Space] 
     [SerializeField] private string endTrigger = "";
@@ -17,7 +18,10 @@ public class DialogSystem : MonoBehaviour {
     private int actualTextId = 0;
     
     private void Start() => dialogAnimator = GetComponent<Animator>();
-    public void StartDialog() => isInDialog = true;
+    public void StartDialog() {
+        pressEGam.SetActive(false);
+        isInDialog = true;
+    }
 
     private void Update() {
         if (isInDialog) {
@@ -26,7 +30,10 @@ public class DialogSystem : MonoBehaviour {
             text.maxVisibleCharacters = (int) maxCharacterVisible;
             text.text = textList[actualTextId];
 
-            if (text.maxVisibleCharacters >= textList[actualTextId].Length) canSkip = true;
+            if (text.maxVisibleCharacters >= textList[actualTextId].Length) {
+                canSkip = true;
+                pressEGam.SetActive(true);
+            }
             
             if (Input.GetKeyDown(KeyCode.E)) {
                 if (actualTextId == textList.Count - 1 && text.maxVisibleCharacters >= textList[actualTextId].Length) {
@@ -40,6 +47,7 @@ public class DialogSystem : MonoBehaviour {
                     maxCharacterVisible = 0;
                     text.maxVisibleCharacters = (int) maxCharacterVisible;
                     actualTextId++;
+                    pressEGam.SetActive(false);
                 }
             }
         }

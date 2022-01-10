@@ -45,8 +45,7 @@ public class Items : MonoBehaviour {
    private void Update() {
       if (Input.GetKeyUp(KeyCode.E) && !shop) playerInput.Interface.Enable();
    }
-
-
+   
    /// <summary>
    /// When the player press a button
    /// </summary>

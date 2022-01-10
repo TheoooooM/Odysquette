@@ -79,8 +79,8 @@ public class UIManager : MonoBehaviour {
         
         pauseMenu.SetActive(false);
         leaderboard.gameObject.SetActive(false);
-        
-        if(!isHUB) inGameMenu.SetActive(true);
+
+        inGameMenu.GetComponent<CanvasGroup>().alpha = !isHUB ? 1 : 0;
         informationPanel.alpha = 0;
     }
 
@@ -107,7 +107,7 @@ public class UIManager : MonoBehaviour {
     /// Pause the game
     /// </summary>
     public void Pause() {
-        inGameMenu.SetActive(false);
+        inGameMenu.GetComponent<CanvasGroup>().alpha = 0;
         cursor.SetActive(false);
         pauseMenu.SetActive(true);
         sfxSlider.OpenMethod();
@@ -121,7 +121,7 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void Unpause() {
         Time.timeScale = 1f;
-        if(!isHUB) inGameMenu.SetActive(true);
+        if(!isHUB) inGameMenu.GetComponent<CanvasGroup>().alpha = 1;
         cursor.SetActive(true);
         pauseMenu.SetActive(false);
         GameManager.Instance.gameIsPause = false;

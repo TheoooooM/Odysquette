@@ -504,6 +504,7 @@ public class MusicSoundData {
     public MusicSoundBaseClass hubMusic = null;
     public MusicSoundBaseClass transitionLevelMusic = null;
     public MusicSoundBaseClass inLevelCalmMusic = null;
+    public MusicSoundBaseClass shopMusic = null;
     public MusicSoundBaseClass inLevelbattleMusic = null;
     public MusicSoundBaseClass bossMusic = null;
 }
