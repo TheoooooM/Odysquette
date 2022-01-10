@@ -16,7 +16,7 @@ public class RoomManager : MonoBehaviour {
     public Transform exit;
     [Space]
     public GameObject chest;
-    private int chestProcentDrop = 80;
+    private int chestProcentDrop = 100;
     
     private bool done = false;
     private bool sendanim = false;
