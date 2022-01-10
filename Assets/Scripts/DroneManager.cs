@@ -28,6 +28,7 @@ public class DroneManager : MonoBehaviour
     private bool beginLaunch;
     private void OnEnable()
     {
+        
         AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Drone);
         Debug.Log("testaa");
         int random = Random.Range(0, 100);
@@ -41,6 +42,8 @@ public class DroneManager : MonoBehaviour
             withParcel = false;
             animator.Play(idleWithoutParcel);
         }
+
+        posForLaunchParcel = Playercontroller.Instance.transform.position;
         transform.position = SetRandomPosition();
     }
 
@@ -55,7 +58,7 @@ public class DroneManager : MonoBehaviour
         Debug.Log("testaa");
         Vector2 randomDirection = Random.insideUnitCircle;
         float randomLength = Random.Range(minLength, maxLength);
-        return Playercontroller.Instance.transform.position+ (Vector3) randomDirection * randomLength; 
+        return posForLaunchParcel+ (Vector3) randomDirection * randomLength; 
     }
 
     private void Update()
@@ -66,7 +69,7 @@ public class DroneManager : MonoBehaviour
             {
                 
                 Debug.Log("testaa");
-            if (GoToDestination(Playercontroller.Instance.transform.position)) ;
+            if (GoToDestination(posForLaunchParcel)) ;
             else
             {
                 Debug.Log("testaa");
@@ -125,7 +128,7 @@ public class DroneManager : MonoBehaviour
         beginLaunch = true;
         animator.Play(launchParcel);
        
-        posForLaunchParcel = Playercontroller.Instance.transform.position;
+        
         
     }
 
