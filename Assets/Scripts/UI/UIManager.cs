@@ -3,9 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+
 
 
 public class UIManager : MonoBehaviour {
@@ -149,9 +148,11 @@ public class UIManager : MonoBehaviour {
         Destroy(NeverDestroy.Instance.gameObject);
         Time.timeScale = 1 ;
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
+        AudioManager.Instance.PlayUISound(AudioManager.UISoundEnum.OpenSound);
     }
     public void QuitGame()
     {
+        AudioManager.Instance.PlayUISound(AudioManager.UISoundEnum.CloseSound);
         Application.Quit();
     }
     

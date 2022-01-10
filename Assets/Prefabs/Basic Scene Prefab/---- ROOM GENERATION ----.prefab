@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6688900347754711526
 Transform:
   m_ObjectHideFlags: 0
@@ -115,12 +115,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e6fb3a879e5e5d4ca5f106d5debbcb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 0.3
   animator: {fileID: 3963074653529838924}
   chest: {fileID: 317904603001697172, guid: 031fd7ce5e6bfb449bc236df8598fbc8, type: 3}
   chestProcentDrop: 80
-  minLength: 5
-  maxLength: 10
+  minLength: 30
+  maxLength: 50
 --- !u!1 &8730241956978092252
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,7 +169,7 @@ MonoBehaviour:
   generateRandomLevel: 1
   forceRedLight: 0
   seed: 354
-  disableNeighboor: 1
+  disableNeighboor: 0
   loopGeneration: 0
   endGeneration: 0
   StartingRoom: {fileID: 4595291330530407119, guid: 16b4cac50471b38428589a3e25916356, type: 3}

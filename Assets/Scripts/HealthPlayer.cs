@@ -16,7 +16,7 @@ public class HealthPlayer : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
     [SerializeField] private bool isInvincible;
     [SerializeField] private float timerInvincible;
-
+    public bool playUltimateSound;
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material ultimateMaterial;
 
@@ -93,6 +93,11 @@ public class HealthPlayer : MonoBehaviour {
         {
             if (GameManager.Instance.ultimateValue == 125)
             {
+                if (!playUltimateSound)
+                {
+                    AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.UltimateReady);
+                    playUltimateSound = true;
+                }
                 spriteRenderer.material.SetTexture(spriteRenderer.sprite.name, spriteRenderer.sprite.texture);
                 spriteRenderer.material = ultimateMaterial;
             }
@@ -129,7 +134,7 @@ public class HealthPlayer : MonoBehaviour {
 
    public void CancelUltimate()
    {
-       
+     
        spriteRenderer.material.SetTexture(spriteRenderer.sprite.name, spriteRenderer.sprite.texture);
        spriteRenderer.material = defaultMaterial;
    }

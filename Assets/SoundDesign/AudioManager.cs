@@ -40,7 +40,7 @@ public class AudioManager : MonoBehaviour {
         Poison
     };
     
-    public enum BossSoundEnum     {ShootBoss, ShootTurret, ShieldOn, ShieldOff}
+    public enum BossSoundEnum     {ShootBoss, ShootTurret, ShieldOn, ShieldOff, DashBoss}
 
     public enum PlayerSoundEnum {
         Move,
@@ -49,7 +49,9 @@ public class AudioManager : MonoBehaviour {
         Dash,
         Fall,
         TakeItem,
-        OpenChest
+        OpenChest,
+        Drone, 
+        UltimateReady
     }
 
     [Header("----ENNEMY SOUND")] public AudioClip ennemiDeath;
@@ -63,6 +65,7 @@ public class AudioManager : MonoBehaviour {
      [SerializeField] AudioClip activateShieldBoss;
      [SerializeField] private AudioClip shootBoss;
      [SerializeField] private AudioClip shootTurret;
+     [SerializeField] private AudioClip dashBoss;
     
     public enum EnemySoundEnum {
         Death,
@@ -73,6 +76,12 @@ public class AudioManager : MonoBehaviour {
         HologramShoot
    
     };
+    public enum UISoundEnum {OpenSound, CloseSound}
+
+    [Header("----UI SOUND")] [SerializeField]
+    private AudioClip closeSound;
+
+     [SerializeField]private AudioClip openSound;
 
     [Header("----MUSIC SOUND")] [SerializeField]
     private MusicSoundData musicSound = null;
@@ -99,7 +108,7 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] private float maxDistanceBounce = 35;
     [SerializeField] private float maxDistancePierce = 35;
     [SerializeField] private float maxDistancePoison = 45;
-
+    [SerializeField] float maxDroneSound;
     #endregion VARIABLES
 
     private GameObject lastDeathGam = null;
@@ -204,6 +213,25 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
+    public void  PlayUISound(UISoundEnum sound)
+    {
+        switch (sound) {
+            case  UISoundEnum.OpenSound : {
+               
+                playerMovementAudioSource.PlayOneShot(openSound, calmSfxAudioSource.volume * sfxSoundMultiplier);
+                
+            }
+
+        break;
+            case  UISoundEnum.CloseSound : {
+               
+                playerMovementAudioSource.PlayOneShot(closeSound, calmSfxAudioSource.volume * sfxSoundMultiplier);
+                
+            }
+
+                break;
+        }
+    }
     public void PlayPlayerSound(PlayerSoundEnum sound) {
         switch (sound) {
             case PlayerSoundEnum.Move:{
@@ -234,6 +262,22 @@ public class AudioManager : MonoBehaviour {
                 break;
             case PlayerSoundEnum.OpenChest:{
                 calmSfxAudioSource.PlayOneShot(playerSound.openChest, calmSfxAudioSource.volume * sfxSoundMultiplier);
+            }
+                break;
+            case PlayerSoundEnum.Drone:
+            {
+                
+                calmSfxAudioSource.PlayOneShot(playerSound.droneSound, calmSfxAudioSource.volume * sfxSoundMultiplier);
+                float distanceToDrone =
+                    Mathf.Abs(Vector3.Distance(Generation.Instance.drone.transform.position, Playercontroller.Instance.transform.position));
+                float distanceSubstract = Mathf.Clamp(maxDroneSound - distanceToDrone, 0.05f, maxDroneSound);
+                float droneRatio = distanceSubstract / maxDroneSound;
+                calmSfxAudioSource.PlayOneShot(playerSound.droneSound, droneRatio*maxDroneSound);
+            }
+                break;
+            case PlayerSoundEnum.UltimateReady:
+            {
+                calmSfxAudioSource.PlayOneShot(playerSound.ultimateReadySound, calmSfxAudioSource.volume * sfxSoundMultiplier);
             }
                 break;
         }
@@ -282,6 +326,11 @@ public class AudioManager : MonoBehaviour {
             case BossSoundEnum.ShootTurret:
             {
                 calmSfxAudioSource.PlayOneShot(shootTurret,  calmSfxAudioSource.volume * sfxSoundMultiplier);
+            }
+                break;
+            case BossSoundEnum.DashBoss:
+            {
+                calmSfxAudioSource.PlayOneShot(shootTurret,  calmSfxAudioSource.volume * sfxSoundMultiplier-0.2f);
             }
                 break;
             
@@ -445,6 +494,8 @@ public class PlayerSoundData {
     public AudioClip fallSound;
     public AudioClip openChest;
     public AudioClip takeItem;
+    public AudioClip droneSound;
+    public AudioClip ultimateReadySound;
 }
 
 

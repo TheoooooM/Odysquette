@@ -332,6 +332,7 @@ public class GameManager : MonoBehaviour {
                 HealthPlayer.Instance.ultimateAura.SetActive(true);
                 HealthPlayer.Instance.CancelUltimate();
                 isUltimate = true;
+                HealthPlayer.Instance.playUltimateSound = false;
                 ultimateValue -= 125;
             }
 
