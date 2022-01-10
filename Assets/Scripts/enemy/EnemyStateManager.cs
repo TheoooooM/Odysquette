@@ -121,20 +121,22 @@ public class EnemyStateManager : MonoBehaviour {
             }
         }
 
-        for (int i = 0; i < EMainStatsSo.stateEnnemList.Count; i++) {
-            if (EMainStatsSo.stateEnnemList[i].objectInStateManagersCondition.Count > 0) {
-                foreach (ExtensionMethods.ObjectInStateManager objectInStateManager in EMainStatsSo.stateEnnemList[i].objectInStateManagersCondition) {
-                    if (!objectDictionaryCondition.ContainsKey(objectInStateManager)) {
-                        for (int j = 0; j < baseObjectListCondition.Count; j++) {
-                            if (baseObjectListCondition[j].objectInStateManager == objectInStateManager) {
-                                objectDictionaryCondition.Add(objectInStateManager, baseObjectListCondition[j]._object);
-                            }
-                        }
-                    }
+        for (int i = 0; i < EMainStatsSo.stateEnnemList.Count; i++)
+        {
+            if (EMainStatsSo.stateEnnemList[i].objectInStateManagersCondition.Count <= 0) continue;
+            
+            foreach (ExtensionMethods.ObjectInStateManager objectInStateManager in EMainStatsSo.stateEnnemList[i].objectInStateManagersCondition)
+            {
+                if (objectDictionaryCondition.ContainsKey(objectInStateManager)) continue;
+                
+                for (int j = 0; j < baseObjectListCondition.Count; j++)
+                {
+                    if (baseObjectListCondition[j].objectInStateManager != objectInStateManager) continue;
+                    
+                    objectDictionaryCondition.Add(objectInStateManager, baseObjectListCondition[j]._object);
                 }
             }
         }
-
 
         for (int i = 0; i < baseObjectListState.Count; i++) {
             switch (baseObjectListState[i].objectInStateManager) {
