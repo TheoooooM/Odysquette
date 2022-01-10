@@ -11,7 +11,8 @@ public class HealthPlayer : MonoBehaviour {
     [SerializeField] public int maxHealth;
     [SerializeField] public int healthPlayer;
     private int lastHealth = 0;
-    
+    [SerializeField]
+    private Animator animator;
     [SerializeField] private float timeInvincible;
     private SpriteRenderer spriteRenderer;
     [SerializeField] private bool isInvincible;
@@ -19,7 +20,7 @@ public class HealthPlayer : MonoBehaviour {
     public bool playUltimateSound;
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material ultimateMaterial;
-
+    public bool isDeath;
     public GameObject ultimateAura;
     // Start is called before the first frame update
     public static HealthPlayer Instance;
@@ -79,19 +80,21 @@ public class HealthPlayer : MonoBehaviour {
     }
     
     private void Update() {
-        if (isInvincible) {
-            if (timerInvincible > timeInvincible) {
-                timerInvincible = 0;
-                isInvincible = false;
-                spriteRenderer.color = Color.white;
-            }
-            else {
-                timerInvincible += Time.deltaTime;
-            }
-        }
-        else
+        if (!isDeath)
         {
-            if (GameManager.Instance.ultimateValue == 125)
+                    if (isInvincible) {
+                        if (timerInvincible > timeInvincible) {
+                            timerInvincible = 0;
+                            isInvincible = false;
+                            spriteRenderer.color = Color.white;
+                        }
+                        else {
+                            timerInvincible += Time.deltaTime;
+                        }
+                    }
+                    else
+                    {
+                            if (GameManager.Instance.ultimateValue == 125)
             {
                 if (!playUltimateSound)
                 {
@@ -101,7 +104,10 @@ public class HealthPlayer : MonoBehaviour {
                 spriteRenderer.material.SetTexture(spriteRenderer.sprite.name, spriteRenderer.sprite.texture);
                 spriteRenderer.material = ultimateMaterial;
             }
+                    }
+
         }
+
     }
 
     /// <summary>
@@ -110,7 +116,7 @@ public class HealthPlayer : MonoBehaviour {
     /// <param name="damage"></param>
     public void TakeDamagePlayer(int damage) {
         if (!isInvincible) {
-            if (healthPlayer - damage <= 0) OnDeathPlayer();
+            if (healthPlayer - damage <= 0) StartCoroutine(PlayAnimationDeath());
             
             AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Damage);
             healthPlayer -= damage;
@@ -189,19 +195,40 @@ public class HealthPlayer : MonoBehaviour {
         StartCoroutine(UpdateLife());
     }
 
-    private void OnDeathPlayer() {
-        //GameManager.Instance.Score += (20*60/ (NeverDestroy.Instance.minute*60+ NeverDestroy.Instance.second));
+    public void OnDeathPlayer() {
+        if((NeverDestroy.Instance.minute*60+ NeverDestroy.Instance.second) != 0 )
+        GameManager.Instance.Score += (20*60/ (NeverDestroy.Instance.minute*60+ NeverDestroy.Instance.second));
+
         GameManager.Instance.SetND();
         NeverDestroy.Instance.Score = GameManager.Instance.Score;
         
         if (GameManager.Instance != null) GameManager.Instance.enabled = false;
-        gameObject.SetActive(false);
+      
         
         if (UIManager.Instance != null) UIManager.Instance.GameOver();
         AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Death);
     }
+    
+
+    private IEnumerator PlayAnimationDeath()
+    {
+        isDeath = true;
+        yield return new WaitForEndOfFrame();
+        SetUpDeath();
+        animator.Play("Player_Death");
+        
+    }
+
+    void SetUpDeath()
+    {
+        spriteRenderer.material.SetFloat("_HitTime", -1);
+        rb.velocity = Vector2.zero;
+    }
 
     private void OnTriggerStay2D(Collider2D other) {
-        if (other.CompareTag("ShieldEnemy")) TakeDamagePlayer(1);
+        if (!HealthPlayer.Instance.isDeath)
+        {
+            if (other.CompareTag("ShieldEnemy")) TakeDamagePlayer(1);
+        }
     }
 }

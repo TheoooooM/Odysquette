@@ -15,9 +15,6 @@ public class Playercontroller : MonoBehaviour {
     private PlayerMapping playerInput;
     public Transform strawTransform;
     public float currentInputAngle;
-    
-
-
     [Header("---- MOVEMENT")] 
     [SerializeField] private bool enableMovementAtLaunch = true;
     [SerializeField] float MouvementSpeed = 0.01f;
@@ -119,127 +116,161 @@ public class Playercontroller : MonoBehaviour {
         currentAngleAnimation = baseAngleAnimation[0];
         lastMoveVector = Vector2.right;
     }
-    private void Update() {
-        if (playerInput == null) return;
-        if (inKnockback)
+
+    private void Update()
+    {
+        if (!HealthPlayer.Instance.isDeath)
         {
-            if (timerKnockBack < timeKnockback)
+            if (playerInput == null) return;
+            if (inKnockback)
             {
-                              timerKnockBack += Time.deltaTime;
-                            rb.velocity = currentDirectionKnockback * curveSpeedKnockback.Evaluate(timerKnockBack/timeKnockback) * speedKnockback;
-            }
-            else ResetKnockack(); 
-            if (contactWall)
-                ResetKnockack();
-            return;
-        }
-           
-        moveVector = Vector2.zero;
+                if (timerKnockBack < timeKnockback)
+                {
+                    timerKnockBack += Time.deltaTime;
+                    rb.velocity = currentDirectionKnockback *
+                                  curveSpeedKnockback.Evaluate(timerKnockBack / timeKnockback) * speedKnockback;
+                }
+                else ResetKnockack();
 
-        if(GameManager.Instance != null) GameManager.Instance.isMouse = true;
-        if (playerInput.Player.Movement.ReadValue<Vector2>() != Vector2.zero && canMove) {
-            moveVector = playerInput.Player.Movement.ReadValue<Vector2>();
-            AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Move);
-            lastMoveVector = moveVector;
-            if(canPlayAnim) CheckForPlayAnimation(moveVector, true);
-        }
-        else if (playerInput.Player.MovementGamepad.ReadValue<Vector2>() != Vector2.zero && canMove) {
-            moveVector = playerInput.Player.MovementGamepad.ReadValue<Vector2>();
-            AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Move);
-            lastMoveVector = moveVector;
-            if(GameManager.Instance != null) GameManager.Instance.isMouse = false;
-            if(canPlayAnim) CheckForPlayAnimation(moveVector, true);
-        }
-        else if (InDash && !falling) {
-            if(canPlayAnim) CheckForPlayAnimation(lastMoveVector.normalized, true);
-        }
-        else if(!falling){
-            AudioManager.Instance.playerMovementAudioSource.Stop();
-            if(canPlayAnim) CheckForPlayAnimation(lastMoveVector.normalized, false);
-        }
-
-        if (isInEffectFlash) {
-            if (timerInEffectFlash >= 0) {
-                stunFX.SetActive(true);
-                timerInEffectFlash -= Time.deltaTime;
+                if (contactWall)
+                    ResetKnockack();
+                return;
             }
-            else {
-                timerInEffectFlash = 0;
-                isInEffectFlash = false;
-                stunFX.SetActive(false);
-                MouvementSpeed = defaultSpeed;
-            }
-        }
 
-        if (InDash) {
-            if (Vector3.Distance(transform.position, lastImagePosition) > distanceBetweenImage) {
-                PlayerAfterImagePool.Instance.GetFromPool();
-                lastImagePosition = transform.position; 
-                GameManager.Instance.shooting = false;
-            }
-            timerDash += Time.deltaTime;
-        }
+            moveVector = Vector2.zero;
 
-        if (timerBetweenDash <= timeBetweenDash) {
-            timerBetweenDash += Time.deltaTime;
+            if (GameManager.Instance != null) GameManager.Instance.isMouse = true;
+            if (playerInput.Player.Movement.ReadValue<Vector2>() != Vector2.zero && canMove)
+            {
+                moveVector = playerInput.Player.Movement.ReadValue<Vector2>();
+                AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Move);
+                lastMoveVector = moveVector;
+                if (canPlayAnim) CheckForPlayAnimation(moveVector, true);
+            }
+            else if (playerInput.Player.MovementGamepad.ReadValue<Vector2>() != Vector2.zero && canMove)
+            {
+                moveVector = playerInput.Player.MovementGamepad.ReadValue<Vector2>();
+                AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Move);
+                lastMoveVector = moveVector;
+                if (GameManager.Instance != null) GameManager.Instance.isMouse = false;
+                if (canPlayAnim) CheckForPlayAnimation(moveVector, true);
+            }
+            else if (InDash && !falling)
+            {
+                if (canPlayAnim) CheckForPlayAnimation(lastMoveVector.normalized, true);
+            }
+            else if (!falling)
+            {
+                AudioManager.Instance.playerMovementAudioSource.Stop();
+                if (canPlayAnim) CheckForPlayAnimation(lastMoveVector.normalized, false);
+            }
+
+            if (isInEffectFlash)
+            {
+                if (timerInEffectFlash >= 0)
+                {
+                    stunFX.SetActive(true);
+                    timerInEffectFlash -= Time.deltaTime;
+                }
+                else
+                {
+                    timerInEffectFlash = 0;
+                    isInEffectFlash = false;
+                    stunFX.SetActive(false);
+                    MouvementSpeed = defaultSpeed;
+                }
+            }
+
+            if (InDash)
+            {
+                if (Vector3.Distance(transform.position, lastImagePosition) > distanceBetweenImage)
+                {
+                    PlayerAfterImagePool.Instance.GetFromPool();
+                    lastImagePosition = transform.position;
+                    GameManager.Instance.shooting = false;
+                }
+
+                timerDash += Time.deltaTime;
+            }
+
+            if (timerBetweenDash <= timeBetweenDash)
+            {
+                timerBetweenDash += Time.deltaTime;
+            }
         }
     }
+
     private void FixedUpdate()
     {
-
-        if (inKnockback)
-            return;
-        if (!InDash) {
-            if (TryDash && timerBetweenDash >= timeBetweenDash && !isInEffectFlash) {
-                InDash = true;
-                timerBetweenDash = 0;
-                AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Dash);
-                AudioManager.Instance.playerMovementAudioSource.Stop();
-                dashDirection = lastMoveVector.normalized;
-                rb.velocity = Vector2.zero;
-                PlayerAfterImagePool.Instance.GetFromPool();
-                lastImagePosition = transform.position;
-            }
-
-            if (isInWind || isConvey) rb.velocity = (moveVector * MouvementSpeed + windDirection + conveyorBeltSpeed);
-            
-            else rb.velocity = (moveVector * MouvementSpeed);
-        }
-        else if (timerDash <= timeDash) {
-            float factorTime = timerDash / timeDash;
-            rb.velocity = dashDirection * dashSpeedCurve.Evaluate(factorTime) * maxDashSpeed; // 45 , 135 , 225 , 315
-
-
-            if (scaleModif)
-            {
-                if(currentInputAngle <= 45 || (currentInputAngle > 135 && currentInputAngle < 225) || currentInputAngle >= 315) transform.localScale = new Vector3(dashScaleX.Evaluate(factorTime),dashScaleY.Evaluate(factorTime),0);
-                else transform.localScale = new Vector3(dashScaleY.Evaluate(factorTime),dashScaleX.Evaluate(factorTime),0);
-            }
-        }
-        else if (timerDash > timeDash) {
-            InDash = false;
-            if (shootIsPress)
-            {
-                GameManager.Instance.shooting = true;
-            }
-
-            if (ultimateIsPress)
-            {
-                GameManager.Instance.utlimate= true;
-            }
-           
-            timerDash = 0;
-            dashDirection = Vector2.zero;
-        }
-
-        if (GameManager.Instance != null && !GameManager.Instance.isMouse) GameManager.Instance.ViewPad = playerInput.Player.ViewPad.ReadValue<Vector2>();
-
-        if (falling && startFallAnim) {
-            rb.velocity = dir.normalized * 1.5f;
-        }
-        else if (falling)
+        if (!HealthPlayer.Instance.isDeath)
         {
-            rb.velocity = Vector2.zero;
+            if (inKnockback)
+                return;
+            if (!InDash)
+            {
+                if (TryDash && timerBetweenDash >= timeBetweenDash && !isInEffectFlash)
+                {
+                    InDash = true;
+                    timerBetweenDash = 0;
+                    AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Dash);
+                    AudioManager.Instance.playerMovementAudioSource.Stop();
+                    dashDirection = lastMoveVector.normalized;
+                    rb.velocity = Vector2.zero;
+                    PlayerAfterImagePool.Instance.GetFromPool();
+                    lastImagePosition = transform.position;
+                }
+
+                if (isInWind || isConvey)
+                    rb.velocity = (moveVector * MouvementSpeed + windDirection + conveyorBeltSpeed);
+
+                else rb.velocity = (moveVector * MouvementSpeed);
+            }
+            else if (timerDash <= timeDash)
+            {
+                float factorTime = timerDash / timeDash;
+                rb.velocity =
+                    dashDirection * dashSpeedCurve.Evaluate(factorTime) * maxDashSpeed; // 45 , 135 , 225 , 315
+
+
+                if (scaleModif)
+                {
+                    if (currentInputAngle <= 45 || (currentInputAngle > 135 && currentInputAngle < 225) ||
+                        currentInputAngle >= 315)
+                        transform.localScale = new Vector3(dashScaleX.Evaluate(factorTime),
+                            dashScaleY.Evaluate(factorTime), 0);
+                    else
+                        transform.localScale = new Vector3(dashScaleY.Evaluate(factorTime),
+                            dashScaleX.Evaluate(factorTime), 0);
+                }
+            }
+            else if (timerDash > timeDash)
+            {
+                InDash = false;
+                if (shootIsPress)
+                {
+                    GameManager.Instance.shooting = true;
+                }
+
+                if (ultimateIsPress)
+                {
+                    GameManager.Instance.utlimate = true;
+                }
+
+                timerDash = 0;
+                dashDirection = Vector2.zero;
+            }
+
+            if (GameManager.Instance != null && !GameManager.Instance.isMouse)
+                GameManager.Instance.ViewPad = playerInput.Player.ViewPad.ReadValue<Vector2>();
+
+            if (falling && startFallAnim)
+            {
+                rb.velocity = dir.normalized * 1.5f;
+            }
+            else if (falling)
+            {
+                rb.velocity = Vector2.zero;
+            }
         }
     }
     
@@ -382,21 +413,25 @@ public class Playercontroller : MonoBehaviour {
     /// </summary>
     /// <param name="other"></param>
     private void OnTriggerEnter2D(Collider2D other) {
-        switch (other.tag) {
-            case "Wind" :
-                StateWind stateWind = other.GetComponent<WindParticleManager>().StateWind;
-                windDirection += stateWind.direction * stateWind.speedWind;
-                isInWind = true;
-                break;
-            
-            case "Flash" :
-                isInFlash = true;
-                break;
-            
-            case "Convey" :
-                conveyorBeltSpeed += other.GetComponent<LDConveyorBelt>().direction;
-                isConvey = true;
-                break;
+        if (!HealthPlayer.Instance.isDeath)
+        {
+            switch (other.tag)
+            {
+                case "Wind":
+                    StateWind stateWind = other.GetComponent<WindParticleManager>().StateWind;
+                    windDirection += stateWind.direction * stateWind.speedWind;
+                    isInWind = true;
+                    break;
+
+                case "Flash":
+                    isInFlash = true;
+                    break;
+
+                case "Convey":
+                    conveyorBeltSpeed += other.GetComponent<LDConveyorBelt>().direction;
+                    isConvey = true;
+                    break;
+            }
         }
     }
     
@@ -405,34 +440,41 @@ public class Playercontroller : MonoBehaviour {
     /// </summary>
     /// <param name="other"></param>
     private void OnTriggerExit2D(Collider2D other) {
-        switch (other.tag) {
-            case "Wind" :
-                StateWind stateWind = other.GetComponent<WindParticleManager>().StateWind;
-                windDirection -= stateWind.direction * stateWind.speedWind;
-                isInWind = false;
-                break;
-            
-            case "Flash" :
-                isInFlash = false;
-                break;
-            
-            case "Convey" :
-                isConvey = false;
-                conveyorBeltSpeed -= other.GetComponent<LDConveyorBelt>().direction;
-                break;
+        if (!HealthPlayer.Instance.isDeath)
+        {
+            switch (other.tag)
+            {
+                case "Wind":
+                    StateWind stateWind = other.GetComponent<WindParticleManager>().StateWind;
+                    windDirection -= stateWind.direction * stateWind.speedWind;
+                    isInWind = false;
+                    break;
+
+                case "Flash":
+                    isInFlash = false;
+                    break;
+
+                case "Convey":
+                    isConvey = false;
+                    conveyorBeltSpeed -= other.GetComponent<LDConveyorBelt>().direction;
+                    break;
+            }
         }
     }
 
     private void OnCollisionStay2D(Collision2D other)
     {
-        if (inKnockback)
+        if (!HealthPlayer.Instance.isDeath)
         {
-                   if (other.gameObject.CompareTag("Walls"))
-                       contactWall = true;
+            if (inKnockback)
+            {
+                if (other.gameObject.CompareTag("Walls"))
+                    contactWall = true;
+
+            }
+
 
         }
-
-
     }
 
     #endregion COLLISION

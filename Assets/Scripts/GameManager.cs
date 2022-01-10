@@ -276,118 +276,152 @@ public class GameManager : MonoBehaviour {
         CommandConsoleRuntime.Instance.AddCommand(ARSENAL);
         CommandConsoleRuntime.Instance.AddCommand(GOTO);
     }
-    
-    private void Update() {
-        if (animate) EndRoomAnimation();
-        
-        if (isUltimate && !disableStraw) {
-            if (actualStrawClass.ultimateStrawSO.timeValue > timerUltimate) {
-                timerUltimate += Time.deltaTime;
-            }
-            else {
-                timerUltimate = 0;
-                isUltimate = false;
-            }
-        }
 
-        mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (shooting && !isUltimate && PoolManager.Instance != null && !disableStraw) {
-            switch (actualStrawClass.strawSO.rateMode) {
-                case StrawSO.RateMode.FireLoading:{
-                    shootLoading += Time.deltaTime;
-                    if (shootLoading >= 0.35f) {
-                        EndLoading = true;
-                        snipStrawFx.SetActive(true);
-                    }
+    private void Update()
+    {
+        if (!HealthPlayer.Instance.isDeath)
+        {
+            if (animate) EndRoomAnimation();
 
-                    if (shootLoading >= actualStrawClass.strawSO.timeValue) {
-                        actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
-                       
-                        shootLoading = 0;
-                        snipStrawFx.SetActive(false);
-                        EndLoading = false;
-                    }
-
-
-                    break;
+            if (isUltimate && !disableStraw)
+            {
+                if (actualStrawClass.ultimateStrawSO.timeValue > timerUltimate)
+                {
+                    timerUltimate += Time.deltaTime;
                 }
-                case StrawSO.RateMode.FireRate:{
-                    if (shootCooldown >= actualStrawClass.strawSO.timeValue) {
-                        shootCooldown = 0;
-                        if (countShootRate == actualStrawClass.strawSO.effectAllNumberShoot && (actualStrawClass.strawSO.rateMainParameter || actualStrawClass.strawSO.rateSecondParameter)) {
-                            actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, 1);
-                       
-                            countShootRate = 0;
-                        }
-                        else {
-                            actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
-                         
-                            countShootRate++;
-                        }
-                    }
-
-                    break;
+                else
+                {
+                    timerUltimate = 0;
+                    isUltimate = false;
                 }
             }
-        }
 
-        if (actualStrawClass.ultimateStrawSO != null && actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate && !disableStraw) {
-            if (ultimateValue >= 125) {
-                actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
-                HealthPlayer.Instance.ultimateAura.SetActive(true);
-                HealthPlayer.Instance.CancelUltimate();
-                isUltimate = true;
-                HealthPlayer.Instance.playUltimateSound = false;
-                ultimateValue -= 125;
+            mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if (shooting && !isUltimate && PoolManager.Instance != null && !disableStraw)
+            {
+                switch (actualStrawClass.strawSO.rateMode)
+                {
+                    case StrawSO.RateMode.FireLoading:
+                    {
+                        shootLoading += Time.deltaTime;
+                        if (shootLoading >= 0.35f)
+                        {
+                            EndLoading = true;
+                            snipStrawFx.SetActive(true);
+                        }
+
+                        if (shootLoading >= actualStrawClass.strawSO.timeValue)
+                        {
+                            actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
+
+                            shootLoading = 0;
+                            snipStrawFx.SetActive(false);
+                            EndLoading = false;
+                        }
+
+
+                        break;
+                    }
+                    case StrawSO.RateMode.FireRate:
+                    {
+                        if (shootCooldown >= actualStrawClass.strawSO.timeValue)
+                        {
+                            shootCooldown = 0;
+                            if (countShootRate == actualStrawClass.strawSO.effectAllNumberShoot &&
+                                (actualStrawClass.strawSO.rateMainParameter ||
+                                 actualStrawClass.strawSO.rateSecondParameter))
+                            {
+                                actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, 1);
+
+                                countShootRate = 0;
+                            }
+                            else
+                            {
+                                actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
+
+                                countShootRate++;
+                            }
+                        }
+
+                        break;
+                    }
+                }
             }
 
-            utlimate = false;
-        }
+            if (actualStrawClass.ultimateStrawSO != null &&
+                actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate && !disableStraw)
+            {
+                if (ultimateValue >= 125)
+                {
+                    actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
+                    HealthPlayer.Instance.ultimateAura.SetActive(true);
+                    HealthPlayer.Instance.CancelUltimate();
+                    isUltimate = true;
+                    ultimateValue -= 125;
+                }
 
-        if (!shooting && !disableStraw) {
-            if (EndLoading) {
-                actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
-             
-                shootLoading = 0;
-                snipStrawFx.SetActive(false);
-                EndLoading = false;
+                utlimate = false;
             }
+
+            if (!shooting && !disableStraw)
+            {
+                if (EndLoading)
+                {
+                    actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
+
+                    shootLoading = 0;
+                    snipStrawFx.SetActive(false);
+                    EndLoading = false;
+                }
+            }
+
+            shootCooldown += Time.deltaTime;
+
+            if (actualStrawClass.StrawName != "")
+                shootCooldown = Mathf.Min(shootCooldown, actualStrawClass.strawSO.timeValue);
+
+            if (actualStrawClass.StrawType != actualStraw) ChangeStraw(actualStraw);
         }
-
-        shootCooldown += Time.deltaTime;
-
-        if(actualStrawClass.StrawName != "") shootCooldown = Mathf.Min(shootCooldown, actualStrawClass.strawSO.timeValue);
-
-        if (actualStrawClass.StrawType != actualStraw) ChangeStraw(actualStraw);
     }
 
-    private void FixedUpdate() {
-        if (isMouse && actualStrawClass.StrawName != "") {
-            Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x, actualStrawClass.StrawParent.transform.position.y);
-            _lookDir = new Vector2(mousepos.x, mousepos.y) - Position;
-            angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
-            if (UIManager.Instance != null) UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(mousepos);
+    private void FixedUpdate()
+    {
+        if (!HealthPlayer.Instance.isDeath)
+        {
+            if (isMouse && actualStrawClass.StrawName != "")
+            {
+                Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x,
+                    actualStrawClass.StrawParent.transform.position.y);
+                _lookDir = new Vector2(mousepos.x, mousepos.y) - Position;
+                angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
+                if (UIManager.Instance != null)
+                    UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(mousepos);
 
-            if (angle >= 90 && angle <= 180 || angle <= -90 && angle >= -180) strawSprite.flipY = true;
-            else strawSprite.flipY = false;
+                if (angle >= 90 && angle <= 180 || angle <= -90 && angle >= -180) strawSprite.flipY = true;
+                else strawSprite.flipY = false;
 
-            if (strawTRansform != null) strawTRansform.rotation = Quaternion.Euler(0f, 0f, angle);
-        }
-        else {
-            if (ViewPad.magnitude > 0.5f) {
-                angle = Mathf.Atan2(ViewPad.y, ViewPad.x) * Mathf.Rad2Deg;
-                lastInput = ViewPad.normalized;
-                UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(actualStrawClass.spawnerTransform.position + (Vector3) ViewPad.normalized * viewFinderDistance);
-                lastInput = ViewPad.normalized;
+                if (strawTRansform != null) strawTRansform.rotation = Quaternion.Euler(0f, 0f, angle);
+            }
+            else
+            {
+                if (ViewPad.magnitude > 0.5f)
+                {
+                    angle = Mathf.Atan2(ViewPad.y, ViewPad.x) * Mathf.Rad2Deg;
+                    lastInput = ViewPad.normalized;
+                    UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(
+                        actualStrawClass.spawnerTransform.position + (Vector3) ViewPad.normalized * viewFinderDistance);
+                    lastInput = ViewPad.normalized;
+                }
+
+
+                UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(
+                    actualStrawClass.spawnerTransform.position + (Vector3) lastInput.normalized * viewFinderDistance);
             }
 
-
-            UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(actualStrawClass.spawnerTransform.position + (Vector3) lastInput.normalized * viewFinderDistance);
+            actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
         }
-        
-        actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
-    
+
     #region END ROOM
     /// <summary>
     /// Make bloom in the room when the room end

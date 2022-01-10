@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class BossManager : MonoBehaviour
 {
+  [SerializeField]
+  private List<GameObject> CircleSimonPart;
   private bool useShootSound;
   private EnemyFeedBack enemyFeedBack;
   private EnemyFeedBackMovement enemyFeedBackMovement;
@@ -35,7 +37,7 @@ public class BossManager : MonoBehaviour
   [SerializeField] private string[] inSpinName;
   [SerializeField] private string[] spinName;
   [SerializeField] private string[] endSpinName;
-
+  [SerializeField] private UnityEvent lockDoorEvent;
   private Animator animator;
   private ExtensionMethods.AngleAnimation[] moveFeedback;
   private ExtensionMethods.AngleAnimation[] spinFeedback;
@@ -53,8 +55,12 @@ public class BossManager : MonoBehaviour
 
  public bool inSetPhase;
  public bool inUpdatePhase;
-
-
+ public bool isTriggerDoor;
+ public void LockDoor()
+ {
+   if(isTriggerDoor)
+     lockDoorEvent.Invoke();
+ }
  
  [SerializeField] private float timeOffset;
   [SerializeField]
@@ -208,8 +214,9 @@ public float shootAnimationTime;
 
 
        if (i != 0)
-       { 
-        
+       {
+
+         
          shieldTurrets[i].Play(baseShieldTransition);
 
        }
@@ -217,7 +224,7 @@ public float shootAnimationTime;
        {
          
      
-         
+         CircleSimonPart[0].SetActive(true);
          baseturrets[i].boxCollider2D.enabled = true;
           shieldBoss.Play(baseShieldTransition);
          AudioManager.Instance.PlayBossSound(AudioManager.BossSoundEnum.ShieldOn);
@@ -240,11 +247,12 @@ public float shootAnimationTime;
     baseturrets[currentIndexEnabledTurret].enabled = false;
    
     baseturrets[currentIndexEnabledTurret].boxCollider2D.enabled = false;
- 
+    CircleSimonPart[currentIndexEnabledTurret].SetActive(false);
     currentIndexEnabledTurret++;
     
       if (currentIndexEnabledTurret == currentMaxEnabledTurret)
       { 
+        
         shieldBoss.Play(shieldName+colorName[currentIndexEnabledTurret]+transitionShield+colorName[0]);
         sliderLockLife.Play(sliderName+colorName[currentIndexEnabledTurret]+desactivationSliderName);
         AudioManager.Instance.PlayBossSound(AudioManager.BossSoundEnum.ShieldOff);
@@ -252,6 +260,7 @@ public float shootAnimationTime;
         inUpdatePhase = false;
         return;
       }
+      CircleSimonPart[currentIndexEnabledTurret].SetActive(true);
       AudioManager.Instance.PlayBossSound(AudioManager.BossSoundEnum.ShieldOff);
        shieldTurrets[currentIndexEnabledTurret].Play(shieldName+colorName[currentIndexEnabledTurret]+transitionShield+colorName[0]);
        sliderLockLife.Play(sliderName+colorName[currentIndexEnabledTurret+1]+idleSliderName);
