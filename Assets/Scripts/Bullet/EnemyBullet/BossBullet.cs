@@ -13,7 +13,7 @@ public class BossBullet : MonoBehaviour
    float damageTimer;
    [SerializeField]
    private Transform impact;
-  
+  [SerializeField]
    private LayerMask currentLayerMask;
    private float speed;
    [SerializeField]
@@ -28,7 +28,7 @@ public class BossBullet : MonoBehaviour
     
      speed = (Vector2.Distance(rocket.position, impact.position)/baseTime)*Time.deltaTime;
      Debug.Log(speed);
-    currentLayerMask = LayerMask.NameToLayer("Player");
+ 
 
    }
 
@@ -47,7 +47,7 @@ public class BossBullet : MonoBehaviour
 
    private void OnDrawGizmos()
    {
- //    Gizmos.DrawSphere(impact.position, 0.80f);
+ Gizmos.DrawSphere(impact.position, 0.80f);
    }
 
    private void Update()

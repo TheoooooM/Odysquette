@@ -32,7 +32,7 @@ public class StateEnemySO : ScriptableObject
     public bool duringDefaultState;
     public virtual bool CheckCondition (Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary)
     {
-      
+       
         return true;
     }
 
@@ -69,6 +69,8 @@ public class StateEnemySO : ScriptableObject
         }
 
         }
+
+
 
        
     
