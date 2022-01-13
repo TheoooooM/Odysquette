@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour {
 
     float _ultimateValue;
 
-    public float ultimateValue {
+    [SerializeField] public float ultimateValue {
         get { return _ultimateValue; }
         set {
             _ultimateValue = Mathf.Clamp(value, 0, maxUltimateValue);
