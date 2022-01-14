@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance;
 
     private void Awake() {
-        
         Instance = this;
     }
 
@@ -59,6 +58,7 @@ public class GameManager : MonoBehaviour {
     #endregion
 
     #region VARIABLES
+
     public bool isUltimate;
     public float maxUltimateValue;
 
@@ -68,15 +68,14 @@ public class GameManager : MonoBehaviour {
         get { return _ultimateValue; }
         set {
             _ultimateValue = Mathf.Clamp(value, 0, maxUltimateValue);
-            if(UIManager.Instance != null) UIManager.Instance.ultimateValue = _ultimateValue / maxUltimateValue;
+            if (UIManager.Instance != null) UIManager.Instance.ultimateValue = _ultimateValue / maxUltimateValue;
         }
     }
 
     public int Score;
 
-    [Header("---- GAME")]
-    public bool gameIsPause = false;
-    
+    [Header("---- GAME")] public bool gameIsPause = false;
+
 
     [Header("---- MOUSE")] [SerializeField]
     private float offsetPadViewFinder;
@@ -88,14 +87,15 @@ public class GameManager : MonoBehaviour {
 
     [Header("---- JUICES")] [SerializeField]
     public Effect firstEffect;
-    
+
 
     [SerializeField] public Effect secondEffect;
-   public CombinaisonColorEffect[] colorEffectsList;
+    public CombinaisonColorEffect[] colorEffectsList;
     public Color currentColor;
 
-    [Header("---- STRAW")] 
-    [SerializeField] private bool disableStraw = false;
+    [Header("---- STRAW")] [SerializeField]
+    private bool disableStraw = false;
+
     public Straw actualStraw;
     public List<StrawClass> strawsClass; //Liste de toute les pailles
     public Transform strawTRansform;
@@ -114,23 +114,27 @@ public class GameManager : MonoBehaviour {
 
 
     //Bullet
-    [Header("---- SETTINGS")] 
-    [SerializeField] private int shootRate;
+    [Header("---- SETTINGS")] [SerializeField]
+    private int shootRate;
+
     public GameObject Player;
 
-    [Header("---- CURVES")] 
-    [SerializeField] private AnimationCurve endRoomTime;
+    [Header("---- CURVES")] [SerializeField]
+    private AnimationCurve endRoomTime;
+
     private float timer;
     private bool animate;
 
-    [Header("---- IN GAME EFFECT")] 
-    [SerializeField] private Volume endRoomPostProcess = null;
+    [Header("---- IN GAME EFFECT")] [SerializeField]
+    private Volume endRoomPostProcess = null;
+
     [SerializeField] private AnimationCurve endRoomWeigthCurve = null;
 
     [Header("---- DEBUG")] public Vector2 _lookDir;
     public StrawClass actualStrawClass;
+
     #endregion
-    
+
     private void OnValidate() {
         foreach (StrawClass str in strawsClass) {
             if (str.strawSO != null)
@@ -140,7 +144,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
         AddCommandConsole();
-        
+
         //LeaderBoard Setup
         /*LootLockerSDKManager.StartSession("Player", (response) =>
         {
@@ -153,15 +157,15 @@ public class GameManager : MonoBehaviour {
         else GetND();
         if (Playercontroller.Instance != null) {
             Player = Playercontroller.Instance.gameObject;
-            if(strawTRansform == null) strawTRansform = Playercontroller.Instance.strawTransform;
+            if (strawTRansform == null) strawTRansform = Playercontroller.Instance.strawTransform;
         }
-        
+
         animate = false;
         timer = 0;
-        
+
         ChangeStraw(actualStraw);
         lastInput = Vector3.right * viewFinderDistance;
-        
+
         foreach (StrawClass str in strawsClass) {
             str.StrawParent.SetActive(str == actualStrawClass);
         }
@@ -174,26 +178,28 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    
+
     /// <summary>
     /// Add the command to the console
     /// </summary>
     private void AddCommandConsole() {
         CommandConsole STRAW = new CommandConsole("setstraw", "setstraw : Set the actual Straw of the player", new List<CommandClass>() {new CommandClass(typeof(Straw))}, (value) => { actualStraw = (Straw) Enum.Parse(typeof(Straw), value[0]); });
         CommandConsole SCORE = new CommandConsole("addScore", "addScore : add value score to the actual score", new List<CommandClass>() {new CommandClass(typeof(int))}, (value) => { AddScore(int.Parse(value[0])); });
-        CommandConsole RESOURCE = new CommandConsole("addResource", "addResource : add value to the actual Resource", new List<CommandClass>() {new CommandClass(typeof(int))}, (value) => { if(NeverDestroy.Instance != null) NeverDestroy.Instance.AddRessource(int.Parse(value[0])); });
-        
+        CommandConsole RESOURCE = new CommandConsole("addResource", "addResource : add value to the actual Resource", new List<CommandClass>() {new CommandClass(typeof(int))}, (value) => {
+            if (NeverDestroy.Instance != null) NeverDestroy.Instance.AddRessource(int.Parse(value[0]));
+        });
+
         CommandConsole EFFECT = new CommandConsole("seteffect", "seteffect : Set the actual Effects of the player", new List<CommandClass>() {new CommandClass(typeof(Effect)), new CommandClass(typeof(Effect))}, (value) => {
             firstEffect = (Effect) Enum.Parse(typeof(Effect), value[0]);
             secondEffect = (Effect) Enum.Parse(typeof(Effect), value[1]);
         });
-        
+
         CommandConsole ARSENAL = new CommandConsole("setarsenal", "setarsenal : Set the Straw and the Effects of the player", new List<CommandClass>() {new CommandClass(typeof(Straw)), new CommandClass(typeof(Effect)), new CommandClass(typeof(Effect))}, (value) => {
             actualStraw = (Straw) Enum.Parse(typeof(Straw), value[0]);
             firstEffect = (Effect) Enum.Parse(typeof(Effect), value[1]);
             secondEffect = (Effect) Enum.Parse(typeof(Effect), value[2]);
         });
-        
+
         CommandConsole GOTO = new CommandConsole("go", "go : Go to another area in the game", new List<CommandClass>() {new CommandClass(typeof(Area))}, (value) => {
             switch ((Area) Enum.Parse(typeof(Area), value[0])) {
                 case Area.hub:
@@ -209,7 +215,7 @@ public class GameManager : MonoBehaviour {
                 case Area.level01:
                     NeverDestroy.Instance.level = 1;
                     SetND();
-                    UnityEngine.SceneManagement.SceneManager.LoadScene("YOP_Basic");
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("Level 01");
                     break;
                 case Area.shop01:
                     NeverDestroy.Instance.level = 1;
@@ -219,7 +225,7 @@ public class GameManager : MonoBehaviour {
                 case Area.level02:
                     NeverDestroy.Instance.level = 2;
                     SetND();
-                    UnityEngine.SceneManagement.SceneManager.LoadScene("YOP_Basic");
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("Level 02");
                     break;
                 case Area.shop02:
                     NeverDestroy.Instance.level = 2;
@@ -247,6 +253,7 @@ public class GameManager : MonoBehaviour {
                             Playercontroller.Instance.transform.position = room.transform.GetChild(0).position;
                         }
                     }
+
                     break;
                 case Area.firstroom:
                     foreach (RoomManager room in Generation.Instance.RoomList) {
@@ -264,54 +271,45 @@ public class GameManager : MonoBehaviour {
                             Playercontroller.Instance.transform.position = room.transform.position;
                         }
                     }
+
                     break;
             }
         });
-        
+
         CommandConsoleRuntime.Instance.AddCommand(STRAW);
         CommandConsoleRuntime.Instance.AddCommand(SCORE);
         CommandConsoleRuntime.Instance.AddCommand(RESOURCE);
-        
+
         CommandConsoleRuntime.Instance.AddCommand(EFFECT);
         CommandConsoleRuntime.Instance.AddCommand(ARSENAL);
         CommandConsoleRuntime.Instance.AddCommand(GOTO);
     }
 
-    private void Update()
-    {
-        if (!HealthPlayer.Instance.isDeath)
-        {
+    private void Update() {
+        if (!HealthPlayer.Instance.isDeath) {
             if (animate) EndRoomAnimation();
 
-            if (isUltimate && !disableStraw)
-            {
-                if (actualStrawClass.ultimateStrawSO.timeValue > timerUltimate)
-                {
+            if (isUltimate && !disableStraw) {
+                if (actualStrawClass.ultimateStrawSO.timeValue > timerUltimate) {
                     timerUltimate += Time.deltaTime;
                 }
-                else
-                {
+                else {
                     timerUltimate = 0;
                     isUltimate = false;
                 }
             }
 
             mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (shooting && !isUltimate && PoolManager.Instance != null && !disableStraw)
-            {
-                switch (actualStrawClass.strawSO.rateMode)
-                {
-                    case StrawSO.RateMode.FireLoading:
-                    {
+            if (shooting && !isUltimate && PoolManager.Instance != null && !disableStraw && Player.GetComponent<Playercontroller>().falling == false) {
+                switch (actualStrawClass.strawSO.rateMode) {
+                    case StrawSO.RateMode.FireLoading:{
                         shootLoading += Time.deltaTime;
-                        if (shootLoading >= 0.35f)
-                        {
+                        if (shootLoading >= 0.35f) {
                             EndLoading = true;
                             snipStrawFx.SetActive(true);
                         }
 
-                        if (shootLoading >= actualStrawClass.strawSO.timeValue)
-                        {
+                        if (shootLoading >= actualStrawClass.strawSO.timeValue) {
                             actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
 
                             shootLoading = 0;
@@ -322,21 +320,17 @@ public class GameManager : MonoBehaviour {
 
                         break;
                     }
-                    case StrawSO.RateMode.FireRate:
-                    {
-                        if (shootCooldown >= actualStrawClass.strawSO.timeValue)
-                        {
+                    case StrawSO.RateMode.FireRate:{
+                        if (shootCooldown >= actualStrawClass.strawSO.timeValue) {
                             shootCooldown = 0;
                             if (countShootRate == actualStrawClass.strawSO.effectAllNumberShoot &&
                                 (actualStrawClass.strawSO.rateMainParameter ||
-                                 actualStrawClass.strawSO.rateSecondParameter))
-                            {
+                                 actualStrawClass.strawSO.rateSecondParameter)) {
                                 actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, 1);
 
                                 countShootRate = 0;
                             }
-                            else
-                            {
+                            else {
                                 actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
 
                                 countShootRate++;
@@ -348,11 +342,8 @@ public class GameManager : MonoBehaviour {
                 }
             }
 
-            if (actualStrawClass.ultimateStrawSO != null &&
-                actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate && !disableStraw)
-            {
-                if (ultimateValue >= 125)
-                {
+            if (actualStrawClass.ultimateStrawSO != null && actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate && !disableStraw && Player.GetComponent<Playercontroller>().falling == false) {
+                if (ultimateValue >= 125) {
                     actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
                     HealthPlayer.Instance.ultimateAura.SetActive(true);
                     HealthPlayer.Instance.CancelUltimate();
@@ -363,10 +354,8 @@ public class GameManager : MonoBehaviour {
                 utlimate = false;
             }
 
-            if (!shooting && !disableStraw)
-            {
-                if (EndLoading)
-                {
+            if (!shooting && !disableStraw && Player.GetComponent<Playercontroller>().falling == false) {
+                if (EndLoading) {
                     actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
 
                     shootLoading = 0;
@@ -384,12 +373,9 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private void FixedUpdate()
-    {
-        if (!HealthPlayer.Instance.isDeath)
-        {
-            if (isMouse && actualStrawClass.StrawName != "")
-            {
+    private void FixedUpdate() {
+        if (!HealthPlayer.Instance.isDeath) {
+            if (isMouse && actualStrawClass.StrawName != "") {
                 Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x,
                     actualStrawClass.StrawParent.transform.position.y);
                 _lookDir = new Vector2(mousepos.x, mousepos.y) - Position;
@@ -401,10 +387,8 @@ public class GameManager : MonoBehaviour {
 
                 if (strawTRansform != null) strawTRansform.rotation = Quaternion.Euler(0f, 0f, angle);
             }
-            else
-            {
-                if (ViewPad.magnitude > 0.5f)
-                {
+            else {
+                if (ViewPad.magnitude > 0.5f) {
                     angle = Mathf.Atan2(ViewPad.y, ViewPad.x) * Mathf.Rad2Deg;
                     lastInput = ViewPad.normalized;
                     UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(
@@ -422,17 +406,18 @@ public class GameManager : MonoBehaviour {
     }
 
     #region END ROOM
+
     /// <summary>
     /// Make bloom in the room when the room end
     /// </summary>
     private void EndRoomAnimation() {
         timer += Time.deltaTime * (1 / Time.timeScale);
         Time.timeScale = endRoomTime.Evaluate(timer);
-        if(endRoomPostProcess != null) endRoomPostProcess.weight = endRoomWeigthCurve.Evaluate(timer);
+        if (endRoomPostProcess != null) endRoomPostProcess.weight = endRoomWeigthCurve.Evaluate(timer);
 
         if (timer > 1) animate = false;
     }
-    
+
     /// <summary>
     /// Called when the room is finished
     /// </summary>
@@ -440,6 +425,7 @@ public class GameManager : MonoBehaviour {
         timer = 0;
         animate = true;
     }
+
     #endregion END ROOM
 
     #region NeverDestroy
@@ -463,8 +449,9 @@ public class GameManager : MonoBehaviour {
         NeverDestroy.Instance.ultimateValue = _ultimateValue;
         NeverDestroy.Instance.Score = Score;
     }
+
     #endregion
-    
+
     /// <summary>
     /// Change the actual straw
     /// </summary>
@@ -480,7 +467,6 @@ public class GameManager : MonoBehaviour {
         actualStrawClass.StrawParent.SetActive(true);
         strawSprite = actualStrawClass.StrawParent.GetComponent<SpriteRenderer>();
         SetVisualEffect();
-
     }
 
 
@@ -489,22 +475,32 @@ public class GameManager : MonoBehaviour {
         UIManager.Instance.scoreText.text = Score.ToString();
     }
 
-    
-  public  void SetVisualEffect() {
-                for (int i = 0; i < colorEffectsList.Length; i++) {
-                    if (colorEffectsList[i].firstEffect == firstEffect && colorEffectsList[i].secondEffect == secondEffect
-                        || colorEffectsList[i].firstEffect == secondEffect && colorEffectsList[i].secondEffect == firstEffect) {
-                        currentColor = colorEffectsList[i].combinaisonColor;
-                    }
-                }
+
+    public void SetVisualEffect() {
+        for (int i = 0; i < colorEffectsList.Length; i++) {
+            if (colorEffectsList[i].firstEffect == firstEffect && colorEffectsList[i].secondEffect == secondEffect
+                || colorEffectsList[i].firstEffect == secondEffect && colorEffectsList[i].secondEffect == firstEffect) {
+                currentColor = colorEffectsList[i].combinaisonColor;
+            }
+        }
     }
 
-  [Serializable]
-  public class CombinaisonColorEffect {
-      public Effect firstEffect;
-      public Effect secondEffect;
-      public Color combinaisonColor;
-  }
+    [Serializable]
+    public class CombinaisonColorEffect {
+        public Effect firstEffect;
+        public Effect secondEffect;
+        public Color combinaisonColor;
+    }
 }
 
-public enum Area {lastroom, firstroom, hub, train, level01, shop01, level02, shop02, boss}
+public enum Area {
+    lastroom,
+    firstroom,
+    hub,
+    train,
+    level01,
+    shop01,
+    level02,
+    shop02,
+    boss
+}

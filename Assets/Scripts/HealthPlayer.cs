@@ -195,6 +195,7 @@ public class HealthPlayer : MonoBehaviour {
         StartCoroutine(UpdateLife());
     }
 
+    
     public void OnDeathPlayer() {
         if((NeverDestroy.Instance.minute*60+ NeverDestroy.Instance.second) != 0 )
         GameManager.Instance.Score += (20*60/ (NeverDestroy.Instance.minute*60+ NeverDestroy.Instance.second));
