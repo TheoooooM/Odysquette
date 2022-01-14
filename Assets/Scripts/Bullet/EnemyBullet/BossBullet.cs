@@ -13,6 +13,8 @@ public class BossBullet : MonoBehaviour
    float damageTimer;
    [SerializeField]
    private Transform impact;
+
+   [SerializeField] private GameObject explosionRocket;
   [SerializeField]
    private LayerMask currentLayerMask;
    private float speed;
@@ -39,7 +41,8 @@ public class BossBullet : MonoBehaviour
 
        rocket.position = basePos.position;
      }
-
+     rocket.gameObject.SetActive(true);
+explosionRocket.SetActive(false);
      baseTimer = 0;
     damageTimer = 0;
    
@@ -66,17 +69,20 @@ public class BossBullet : MonoBehaviour
      
       if (damageTime > damageTimer)
       {
+        
 
         if(Physics2D.OverlapCircle(impact.position, 0.88f, currentLayerMask ))
         {
           if(!Playercontroller.Instance.InDash)
           HealthPlayer.Instance.TakeDamagePlayer(1);
         }
+        rocket.gameObject.SetActive(false);
+        explosionRocket.SetActive(true);
           damageTimer +=Time.deltaTime;
         }
         else
         {
-      
+        
          
           EnemySpawnerManager.Instance.bossShootQueue.Enqueue(gameObject);
           gameObject.SetActive(false);
