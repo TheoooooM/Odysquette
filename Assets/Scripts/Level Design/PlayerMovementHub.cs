@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerMovementHub : MonoBehaviour {
     [SerializeField] private Playercontroller player = null;
+    [SerializeField] private GameObject cursor = null;
     [SerializeField] private Collider2D collider2D = null;
     
     [SerializeField] private Transform startPos = null; 
@@ -14,6 +15,7 @@ public class PlayerMovementHub : MonoBehaviour {
     private bool hasPlayedAnim = false;
     
     private void Start() {
+        cursor.SetActive(false);
         transform.position = startPos.position;
         GetComponent<Animator>().Play("Move_Front");
         collider2D.enabled = false;
@@ -26,6 +28,7 @@ public class PlayerMovementHub : MonoBehaviour {
                 hasPlayedAnim = true;
                 player.StartInput();
                 collider2D.enabled = true;
+                cursor.SetActive(true);
             }
         }
     }

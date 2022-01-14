@@ -29,7 +29,7 @@ public class UIManager : MonoBehaviour {
     public CustomSliderUI MusicSlider => musicSlider;
     [Space] 
     [SerializeField] private UpdateCanvasInfo informationCanvasUI = null;
-    
+    [SerializeField] private float animationInterfacValue = 0.05f;
     
     [Header("----Game Over----")] 
     [SerializeField] private GameObject GameOverPanel;
@@ -100,7 +100,7 @@ public class UIManager : MonoBehaviour {
         ultimateImg.GetComponent<RectTransform>().sizeDelta = new Vector2(ultimateImg.GetComponent<RectTransform>().sizeDelta.x,  Mathf.Lerp( ultimateImg.GetComponent<RectTransform>().sizeDelta.y , height, Time.deltaTime));
 
         if(Input.GetKey(KeyCode.LeftAlt)) informationCanvasUI.UpdateData();
-        informationPanel.alpha += Input.GetKey(KeyCode.LeftAlt) ? .1f : -.1f;
+        informationPanel.alpha += Input.GetKey(KeyCode.LeftAlt) ? animationInterfacValue * Time.deltaTime : -animationInterfacValue * Time.deltaTime;
     }
 
     /// <summary>
