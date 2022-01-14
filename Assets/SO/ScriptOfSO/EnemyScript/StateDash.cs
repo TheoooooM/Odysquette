@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -15,20 +16,30 @@ public class StateDash : StateEnemySO {
     public AnimationCurve curveKnockback;
 
     public Vector3 extentsRangeDetection;
-    public LayerMask layerMask;
-
+    public LayerMask layerMaskDash;
+    public float sizeColliderWall;
+    public LayerMask layerMaskDashWall;
     public override bool CheckCondition(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary) {
         Rigidbody2D rb = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyEnemy];
         Rigidbody2D rbPlayer = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyPlayer];
         if (Vector2.Distance(rb.position, rbPlayer.position) < rangeDetection) {
             Vector2 direction = (rbPlayer.position - rb.position);
-            RaycastHit2D hit = Physics2D.BoxCast(rb.position, extentsRangeDetection, 0, direction.normalized, direction.magnitude, layerMask);
+            RaycastHit2D hit = Physics2D.BoxCast(rb.position, extentsRangeDetection, 0, direction.normalized, direction.magnitude);
             ExtDebug.DrawBoxCastBox(rb.position, extentsRangeDetection / 2, Quaternion.identity, direction.normalized, direction.magnitude, Color.red);
 
-            if (hit.collider.gameObject.layer == 9) {
+            if (hit.collider.gameObject.layer == 9)
+            {
+              Collider2D detectWall= Physics2D.OverlapCircle(rb.position, sizeColliderWall, layerMaskDashWall);
+                if (detectWall)
+                {
+                    return false;
+                }
+                  
+              
                 Transform target = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.AimDash];
                 target.position = rb.position + (direction.normalized) * distanceDash;
                 target.gameObject.SetActive(true);
+                
 
 
                 Debug.DrawRay(rb.position, direction * rangeDetection);
@@ -64,6 +75,7 @@ public class StateDash : StateEnemySO {
 
         enemyDashCollision.inDash = true;
         if (enemyDashCollision.isTrigger) {
+            Debug.Log("lit toi la collision");
             Playercontroller.Instance.KnockBack(timeKnockback, enemyDashCollision.direction, curveKnockback, speedKnockback);
             CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.CollideDuringPlayState);
             enemyDashCollision.direction = Vector2.zero;
@@ -76,8 +88,10 @@ public class StateDash : StateEnemySO {
         if (Vector2.Distance(rb.position, transformDash.position) < 0.2f || enemyDashCollision.contactWall) {
             CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.EndPlayState);
             enemyDashCollision.inDash = false;
+            Debug.Log("lit toi la collision avec les murs");
             transformDash.gameObject.SetActive(false);
             rb.velocity = Vector2.zero;
+            Debug.Log(Vector2.Distance(rb.position, transformDash.position) < 0.2f);
             endStep = true;
             enemyDashCollision.contactWall = false;
 

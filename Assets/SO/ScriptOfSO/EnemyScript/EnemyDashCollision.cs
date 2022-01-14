@@ -14,7 +14,8 @@ public class EnemyDashCollision : MonoBehaviour
 
     private LayerMask currentLayerMask;
     public Vector2 direction;
-
+    [SerializeField]
+    private Transform smokeSpawn;
     public bool firstGhost;
     public bool contactWall;
     public Vector2 contact;
@@ -52,6 +53,12 @@ public class EnemyDashCollision : MonoBehaviour
     GameObject  fxPrefab =  EnemySpawnerManager.Instance.SpawnFxDash(contact);
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         fxPrefab.transform.rotation = Quaternion.Euler(0,0,angle);
+    }
+    public void SpawnFxSmoke()
+    {
+     GameObject obj = EnemySpawnerManager.Instance.SpawnEnemyPool(smokeSpawn.position, EnemySpawnerManager.Instance.fxSmokeQueue, EnemySpawnerManager.Instance.fxSmokeDashPrefab);
+     obj.transform.rotation = smokeSpawn.rotation;
+
     }
     
 
