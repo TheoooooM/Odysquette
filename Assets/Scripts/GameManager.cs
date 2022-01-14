@@ -394,8 +394,7 @@ public class GameManager : MonoBehaviour {
                     actualStrawClass.StrawParent.transform.position.y);
                 _lookDir = new Vector2(mousepos.x, mousepos.y) - Position;
                 angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
-                if (UIManager.Instance != null)
-                    UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(mousepos);
+                if (UIManager.Instance != null) UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(mousepos);
 
                 if (angle >= 90 && angle <= 180 || angle <= -90 && angle >= -180) strawSprite.flipY = true;
                 else strawSprite.flipY = false;
