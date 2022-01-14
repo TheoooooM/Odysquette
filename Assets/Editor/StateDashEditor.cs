@@ -37,7 +37,7 @@ public class StateDashEditor : StateSOEditor
                           EditorGUILayout.Space(4f);
                           EditorGUILayout.PropertyField(serializedObject.FindProperty("extentsRangeDetection"), new GUIContent("Wall Detection Box"));
                           EditorGUILayout.Space(4f);
-                          EditorGUILayout.PropertyField(serializedObject.FindProperty("layerMask"));
+                          EditorGUILayout.PropertyField(serializedObject.FindProperty("layerMaskDash"));
                           EditorGUILayout.Space(4f);
                           using (new GUILayout.HorizontalScope())
                           {
