@@ -12,7 +12,9 @@ public class EnemySpawnerManager : MonoBehaviour {
     public  Queue<GameObject> bossShootQueue = new Queue<GameObject>();
     public GameObject bossShootBullet;
     public  Queue<GameObject> fxDashQueue = new Queue<GameObject>();
+    public  Queue<GameObject> fxSmokeQueue  = new Queue<GameObject>();
     public GameObject fxDashPrefab;
+    public GameObject fxSmokeDashPrefab;
     private void Awake() {
         Instance = this;
     }
@@ -87,7 +89,7 @@ public class EnemySpawnerManager : MonoBehaviour {
         SpawnEnemyPool(bullet, bossShootQueue, bossShootBullet);
     }
 
-   GameObject SpawnEnemyPool(Vector3 bullet, Queue<GameObject> currentQueue, GameObject currentObj)
+    public GameObject SpawnEnemyPool(Vector3 bullet, Queue<GameObject> currentQueue, GameObject currentObj)
     {
           GameObject obj;
                 if (currentQueue.Count == 0)
@@ -108,8 +110,6 @@ public class EnemySpawnerManager : MonoBehaviour {
       return obj;
     }
     
-
-
 }
 
 [Serializable]
