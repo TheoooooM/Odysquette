@@ -148,7 +148,10 @@ public class CurveBullet : Bullet {
         isColliding = true;
         
         if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls")||other.gameObject.CompareTag("ShieldEnemy"))) {
-            DestroyBulletIfStuck();
+            if (GameManager.Instance.HasEffect(GameManager.Effect.poison)) PoolManager.Instance.SpawnPoisonPool(transform, other.contacts[0].normal);
+            if (GameManager.Instance.HasEffect(GameManager.Effect.explosive)) Explosion();
+            
+            StartCoroutine(DestroyBulletIfStuck());
             test1 = true;
             _bounceCount--;
           
@@ -168,10 +171,9 @@ public class CurveBullet : Bullet {
             PoolManager.Instance.SpawnImpactPool(transform);
         }
         else {
-            if(other.gameObject.CompareTag("Walls"))
-Debug.Log("desactive");
-DesactiveBullet();
-
+            if (GameManager.Instance.HasEffect(GameManager.Effect.poison) && !other.gameObject.CompareTag("Walls")) PoolManager.Instance.SpawnPoisonPool(transform, other.contacts[0].normal);
+            if (GameManager.Instance.HasEffect(GameManager.Effect.explosive) && !other.gameObject.CompareTag("Walls")) Explosion();
+            DesactiveBullet();
         }
     }
 
@@ -181,8 +183,7 @@ DesactiveBullet();
     
     }
 
-
-
+    
     protected override IEnumerator DestroyBulletIfStuck()
     {test = true;
         yield return new WaitForSeconds(0.5f);
@@ -194,37 +195,4 @@ DesactiveBullet();
             DesactiveBullet();
         }
     }
-    /*
-     * public virtual void OnCollisionEnter2D(Collision2D other) {
-        //Debug.Log("collide with " + rb.velocity);
-        
-        isColliding = true;
-        
-        if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls")||other.gameObject.CompareTag("ShieldEnemy"))){ 
-            AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact);
-
-            StartCoroutine(DestroyBulletIfStuck());
-            
-            _bounceCount--;
-            var speed = lastVelocity.magnitude;
-            //Debug.Log(lastVelocity);
-@ -187,19 +188,21 @@ public class Bullet : MonoBehaviour {
-            DesactiveBullet();
-        }
-    }
-    
-        private void OnCollisionExit2D(Collision2D other)
-    {
-        Debug.Log(rb.velocity);
-        rb.velocity = lastVelocity;
-        Debug.Log(rb.velocity);
-        isColliding = false;
-    }
-
-
-    IEnumerator  DestroyBulletIfStuck() {
-        yield return new WaitForSeconds(0.15f);
-        if(isColliding || rb.velocity.magnitude <= .025f) DesactiveBullet();
-    }
-     */
 }
