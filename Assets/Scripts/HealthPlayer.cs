@@ -24,6 +24,7 @@ public class HealthPlayer : MonoBehaviour {
     [SerializeField] private Material ultimateMaterial;
     [Space]
     public bool isDeath;
+    [SerializeField] private bool canTakeDamage = false;
     [Space]
     public GameObject ultimateAura;
     // Start is called before the first frame update
@@ -81,7 +82,12 @@ public class HealthPlayer : MonoBehaviour {
             else if(life < 0) TakeDamagePlayer(-life);
         });
         
+        CommandConsole INVICIBLE = new CommandConsole("invicible", "invicible : become invicible to ennemy", null, (_) => {
+            canTakeDamage = !canTakeDamage;
+        });
+        
         CommandConsoleRuntime.Instance.AddCommand(REGEN);
+        CommandConsoleRuntime.Instance.AddCommand(INVICIBLE);
     }
     
     private void Update() {
@@ -120,7 +126,7 @@ public class HealthPlayer : MonoBehaviour {
     /// </summary>
     /// <param name="damage"></param>
     public void TakeDamagePlayer(int damage) {
-        if (!isInvincible) {
+        if (!isInvincible && !canTakeDamage) {
             if (healthPlayer - damage <= 0) StartCoroutine(PlayAnimationDeath());
             
             AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Damage);
@@ -194,8 +200,8 @@ public class HealthPlayer : MonoBehaviour {
     /// </summary>
     /// <param name="heal"></param>
     public void GiveHealthPlayer(int heal) {
+        if(healthPlayer != 6 && healthFx != null) Instantiate(healthFx, transform.position - transform.up / 2, Quaternion.identity, transform);
         healthPlayer = Mathf.Clamp(healthPlayer + heal, 0, 6);
-        if (healthFx != null) Instantiate(healthFx, transform.position - transform.up / 2, Quaternion.identity, transform);
         StartCoroutine(UpdateLife());
     }
 
@@ -214,7 +220,6 @@ public class HealthPlayer : MonoBehaviour {
         AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Death);
     }
     
-
     private IEnumerator PlayAnimationDeath()
     {
         isDeath = true;

@@ -200,6 +200,11 @@ public class GameManager : MonoBehaviour {
             secondEffect = (Effect) Enum.Parse(typeof(Effect), value[2]);
         });
 
+        CommandConsole ULTIMATE = new CommandConsole("ultimate", "ultimate : charge the ultimate to the full value", null, (_) => {
+            ultimateValue = maxUltimateValue;
+        });
+        
+        
         CommandConsole GOTO = new CommandConsole("go", "go : Go to another area in the game", new List<CommandClass>() {new CommandClass(typeof(Area))}, (value) => {
             switch ((Area) Enum.Parse(typeof(Area), value[0])) {
                 case Area.hub:
@@ -282,6 +287,7 @@ public class GameManager : MonoBehaviour {
 
         CommandConsoleRuntime.Instance.AddCommand(EFFECT);
         CommandConsoleRuntime.Instance.AddCommand(ARSENAL);
+        CommandConsoleRuntime.Instance.AddCommand(ULTIMATE);
         CommandConsoleRuntime.Instance.AddCommand(GOTO);
     }
 
