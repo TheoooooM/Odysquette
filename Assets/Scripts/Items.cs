@@ -44,6 +44,11 @@ public class Items : MonoBehaviour {
 
    private void Update() {
       if (Input.GetKeyUp(KeyCode.E) && !shop) playerInput.Interface.Enable();
+      if (GameManager.Instance.shooting)
+      {
+         groundCanvas.SetActive(false);
+         if(itemType == type.straw)transform.GetChild(0).GetComponent<SetStrawUI>().DestroyActualStrawData();
+      }
    }
    
    /// <summary>
@@ -52,7 +57,7 @@ public class Items : MonoBehaviour {
    /// <param name="obj"></param>
    private void ButtonOnperformed(InputAction.CallbackContext obj) {
       Debug.Log("Performed");
-      if (inRange) {
+      if (inRange && !GameManager.Instance.isUltimate) {
          Debug.Log("in range");
          if (cost <= NeverDestroy.Instance.ressources && shop) {
             Debug.Log("pay " + cost);
@@ -154,7 +159,7 @@ public class Items : MonoBehaviour {
    /// <param name="other"></param>
    private void OnTriggerEnter2D(Collider2D other) {
       if (other.transform.CompareTag("Player")) {
-         GetComponent<SpriteRenderer>().color = Color.yellow;
+         if(!GameManager.Instance.isUltimate) GetComponent<SpriteRenderer>().color = Color.yellow;
          inRange = true;
          if (itemType == type.straw) {
             groundCanvas.SetActive(true);
