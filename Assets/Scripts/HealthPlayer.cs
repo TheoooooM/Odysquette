@@ -1,29 +1,34 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using UnityEditor;
 using UnityEngine;
 
 public class HealthPlayer : MonoBehaviour {
     public Rigidbody2D rb;
+    [Space]
     [SerializeField] private CameraShake cameraShake;
     [SerializeField] public int maxHealth;
     [SerializeField] public int healthPlayer;
+    [SerializeField] private GameObject healthFx = null;
     private int lastHealth = 0;
-    [SerializeField]
-    private Animator animator;
+    [Space]
+    [SerializeField] private Animator animator;
+    [Space]
     [SerializeField] private float timeInvincible;
     private SpriteRenderer spriteRenderer;
     [SerializeField] private bool isInvincible;
     [SerializeField] private float timerInvincible;
+    [Space]
     public bool playUltimateSound;
+    [Space]
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material ultimateMaterial;
+    [Space]
     public bool isDeath;
+    [Space]
     public GameObject ultimateAura;
     // Start is called before the first frame update
     public static HealthPlayer Instance;
+    [Space]
     public Playercontroller playerController;
     public bool isGameOver;
 
@@ -159,16 +164,16 @@ public class HealthPlayer : MonoBehaviour {
             if (oldHeartImg == newHeartImg) {
                 UIManager.Instance.HeartsLifes[newHeartImg].GetComponent<Animator>().SetFloat("lifeValue", UIManager.Instance.HeartsLifes[newHeartImg].GetComponent<Animator>().GetFloat("lifeValue") + (0.5f * lifeChangeValueTo1));
                 for (int j = 0; j < 3; j++) {
-                    if(j != newHeartImg) UIManager.Instance.HeartsLifes[j].GetComponent<Animator>().SetTrigger("UpdateLife");
+                    if(j != newHeartImg && lifeChange < 0) UIManager.Instance.HeartsLifes[j].GetComponent<Animator>().SetTrigger("UpdateLife");
                 }
                 lastHealth += 1 * lifeChangeValueTo1;
             }
             else {
                 if (lifeChange > 0) {
-                    UIManager.Instance.HeartsLifes[newHeartImg].GetComponent<Animator>().SetFloat("lifeValue", UIManager.Instance.HeartsLifes[newHeartImg].GetComponent<Animator>().GetFloat("lifeValue") + (0.5f * lifeChangeValueTo1));
-                    for (int j = 0; j < 3; j++) {
+                    UIManager.Instance.HeartsLifes[newHeartImg].GetComponent<Animator>().SetFloat("lifeValue", UIManager.Instance.HeartsLifes[newHeartImg].GetComponent<Animator>().GetFloat("lifeValue") + (0.5f * lifeChangeValueTo1));   
+                    /*for (int j = 0; j < 3; j++) {
                         if(j != newHeartImg) UIManager.Instance.HeartsLifes[j].GetComponent<Animator>().SetTrigger("UpdateLife");
-                    }
+                    }*/
                 }
                 else {
                     UIManager.Instance.HeartsLifes[oldHeartImg].GetComponent<Animator>().SetFloat("lifeValue", UIManager.Instance.HeartsLifes[oldHeartImg].GetComponent<Animator>().GetFloat("lifeValue") + (0.5f * lifeChangeValueTo1));
@@ -180,18 +185,17 @@ public class HealthPlayer : MonoBehaviour {
                 lastHealth += 1 * lifeChangeValueTo1;
             }
 
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(lifeChange < 0 ? 2 : 1);
         }
     }
-
-
+    
     /// <summary>
     /// Heal the player
     /// </summary>
     /// <param name="heal"></param>
     public void GiveHealthPlayer(int heal) {
         healthPlayer = Mathf.Clamp(healthPlayer + heal, 0, 6);
-
+        if (healthFx != null) Instantiate(healthFx, transform.position - transform.up / 2, Quaternion.identity, transform);
         StartCoroutine(UpdateLife());
     }
 
