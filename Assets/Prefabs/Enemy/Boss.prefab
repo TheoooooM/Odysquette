@@ -598,7 +598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f96c1d9b3aca1ac4db92131aff25a32c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scorePoint: 3
+  scorePoint: 10000
   enemyFeedBack: {fileID: 0}
   isActivate: 0
   isContactWall: 0
@@ -653,6 +653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11d60a33e2c50154d9aec4ed729b6886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CircleSimonPart: []
   sliderLockLife: {fileID: 9056198148138222470}
   colorName:
   - BASE
@@ -682,6 +683,9 @@ MonoBehaviour:
   - _ENDSPINBACKLEFT
   - _ENDSPINFRONTRIGHT
   - _ENDSPINFRONTLEFT
+  lockDoorEvent:
+    m_PersistentCalls:
+      m_Calls: []
   baseturrets:
   - {fileID: 4512851394618653116}
   - {fileID: 4512851393255716667}
@@ -692,6 +696,7 @@ MonoBehaviour:
   timeBetweenShootTurret: 3
   inSetPhase: 0
   inUpdatePhase: 0
+  isTriggerDoor: 0
   timeOffset: 3
   shieldTurrets:
   - {fileID: 8107312819490778123}
@@ -1210,7 +1215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee24b64328372438bf89022919dcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scorePoint: 3
+  scorePoint: 200
   enemyFeedBack: {fileID: 0}
   isActivate: 1
   isContactWall: 0
@@ -1666,7 +1671,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee24b64328372438bf89022919dcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scorePoint: 3
+  scorePoint: 200
   enemyFeedBack: {fileID: 0}
   isActivate: 1
   isContactWall: 0
@@ -1953,7 +1958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee24b64328372438bf89022919dcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scorePoint: 3
+  scorePoint: 200
   enemyFeedBack: {fileID: 0}
   isActivate: 1
   isContactWall: 0
@@ -2387,7 +2392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee24b64328372438bf89022919dcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scorePoint: 3
+  scorePoint: 200
   enemyFeedBack: {fileID: 0}
   isActivate: 1
   isContactWall: 0
