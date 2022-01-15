@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour {
         set {
             _ultimateValue = Mathf.Clamp(value, 0, maxUltimateValue);
 
-            UIManager.Instance.UltSlider.value = _ultimateValue;
+            if(UIManager.Instance != null) UIManager.Instance.UltSlider.value = _ultimateValue;
         }
     }
 
@@ -84,20 +84,23 @@ public class GameManager : MonoBehaviour {
     public Effect firstEffect;
 
     [SerializeField] public Effect secondEffect;
-    [SerializeField] CombinaisonColorEffect[] colorEffectsList;
+   public CombinaisonColorEffect[] colorEffectsList;
     public Color currentColor;
 
     [Header("---- STRAW")] 
+    [SerializeField] private bool disableStraw = false;
     public Straw actualStraw;
     public List<StrawClass> strawsClass; //Liste de toute les pailles
-    private Transform strawTRansform;
+    public Transform strawTRansform;
     public float timerUltimate;
     public bool shooting;
     public bool utlimate;
     public float shootCooldown;
     private int countShootRate;
+    [SerializeField] private GameObject snipStrawFx;
     private float shootLoading;
     private bool EndLoading;
+    public SpriteRenderer strawSprite;
 
     [Header("---- INPUT")] public bool isMouse = true;
     public Vector2 ViewPad;
@@ -106,7 +109,7 @@ public class GameManager : MonoBehaviour {
     //Bullet
     [Header("---- SETTINGS")] 
     [SerializeField] private int shootRate;
-    [HideInInspector] public GameObject Player;
+    public GameObject Player;
 
     [Header("---- CURVES")] 
     [SerializeField] private AnimationCurve endRoomTime;
@@ -131,11 +134,14 @@ public class GameManager : MonoBehaviour {
     {
         if (NeverDestroy.Instance == null) Instantiate(Resources.Load<GameObject>("NeverDestroy"));
         else GetND();
-        strawTRansform = Playercontroller.Instance.strawTransform;
+        if (Playercontroller.Instance != null) {
+            Player = Playercontroller.Instance.gameObject;
+            if(strawTRansform == null) strawTRansform = Playercontroller.Instance.strawTransform;
+        }
+        
         animate = false;
         timer = 0;
         
-        if (Playercontroller.Instance != null) Player = Playercontroller.Instance.gameObject;
         ChangeStraw(actualStraw);
         lastInput = Vector3.right * viewFinderDistance;
         
@@ -153,9 +159,8 @@ public class GameManager : MonoBehaviour {
 
     private void Update() {
         if (animate) EndRoomAnimation();
-
-
-        if (isUltimate) {
+        
+        if (isUltimate && !disableStraw) {
             if (actualStrawClass.ultimateStrawSO.timeValue > timerUltimate) {
                 timerUltimate += Time.deltaTime;
             }
@@ -166,21 +171,20 @@ public class GameManager : MonoBehaviour {
         }
 
         mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (shooting && !isUltimate && PoolManager.Instance != null) {
+        if (shooting && !isUltimate && PoolManager.Instance != null && !disableStraw) {
             switch (actualStrawClass.strawSO.rateMode) {
                 case StrawSO.RateMode.FireLoading:{
                     shootLoading += Time.deltaTime;
-                    if (shootLoading >= 0.25f) {
+                    if (shootLoading >= 0.35f) {
                         EndLoading = true;
-                    }
-
-                    if (shootLoading >= actualStrawClass.strawSO.timeValue - 0.1f) {
-                        EndLoading = false;
+                        snipStrawFx.SetActive(true);
                     }
 
                     if (shootLoading >= actualStrawClass.strawSO.timeValue) {
                         actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
                         shootLoading = 0;
+                        snipStrawFx.SetActive(false);
+                        EndLoading = false;
                     }
 
 
@@ -204,10 +208,8 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        if (actualStrawClass.ultimateStrawSO != null && actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate) {
-            Debug.Log("testssss");
+        if (actualStrawClass.ultimateStrawSO != null && actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate && !disableStraw) {
             if (ultimateValue >= 100) {
-                Debug.Log("ouhahahahah");
                 actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
                 isUltimate = true;
                 ultimateValue -= 100;
@@ -216,31 +218,33 @@ public class GameManager : MonoBehaviour {
             utlimate = false;
         }
 
-        if (!shooting) {
+        if (!shooting && !disableStraw) {
             if (EndLoading) {
                 actualStrawClass.strawSO.Shoot(actualStrawClass.spawnerTransform, this, shootLoading);
                 shootLoading = 0;
-
+                snipStrawFx.SetActive(false);
                 EndLoading = false;
             }
         }
 
         shootCooldown += Time.deltaTime;
 
-        shootCooldown = Mathf.Min(shootCooldown, actualStrawClass.strawSO.timeValue);
+        if(actualStrawClass.StrawName != "") shootCooldown = Mathf.Min(shootCooldown, actualStrawClass.strawSO.timeValue);
 
         if (actualStrawClass.StrawType != actualStraw) ChangeStraw(actualStraw);
     }
 
     private void FixedUpdate() {
-        //---------------- Oriente la paille ------------------------
         if (isMouse) {
             Vector2 Position = new Vector2(actualStrawClass.StrawParent.transform.position.x, actualStrawClass.StrawParent.transform.position.y);
             _lookDir = new Vector2(mousepos.x, mousepos.y) - Position;
             angle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
             if (UIManager.Instance != null) UIManager.Instance.cursor.transform.position = main.WorldToScreenPoint(mousepos);
 
-            strawTRansform.rotation = Quaternion.Euler(0f, 0f, angle);
+            if (angle >= 90 && angle <= 180 || angle <= -90 && angle >= -180) strawSprite.flipY = true;
+            else strawSprite.flipY = false;
+
+            if (strawTRansform != null) strawTRansform.rotation = Quaternion.Euler(0f, 0f, angle);
         }
         else {
             if (ViewPad.magnitude > 0.5f) {
@@ -259,7 +263,6 @@ public class GameManager : MonoBehaviour {
         }
 
         actualStrawClass.StrawParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
-        //--------------------------------------------------------------
     }
 
 
@@ -288,6 +291,9 @@ public class GameManager : MonoBehaviour {
         firstEffect = NeverDestroy.Instance.firstEffect;
         secondEffect = NeverDestroy.Instance.secondEffect;
         actualStraw = NeverDestroy.Instance.actualStraw;
+        ultimateValue = NeverDestroy.Instance.ultimateValue;
+        UIManager.Instance.UltSlider.value = _ultimateValue;
+        NeverDestroy.Instance.AddRessource(0);
     }
 
     public void SetND() {
@@ -295,6 +301,7 @@ public class GameManager : MonoBehaviour {
         NeverDestroy.Instance.secondEffect = secondEffect;
         NeverDestroy.Instance.actualStraw = actualStraw;
         NeverDestroy.Instance.life = HealthPlayer.Instance.healthPlayer;
+        NeverDestroy.Instance.ultimateValue = ultimateValue;
     }
     
     /// <summary>
@@ -311,14 +318,21 @@ public class GameManager : MonoBehaviour {
 
         //actualStrawClass.StrawParent.GetComponent<SpriteRenderer>().sprite = actualStrawClass.strawSO.strawRenderer;
         actualStrawClass.StrawParent.SetActive(true);
-        for (int i = 0; i < colorEffectsList.Length; i++) {
-            if (colorEffectsList[i].firstEffect == firstEffect && colorEffectsList[i].secondEffect == secondEffect
-                || colorEffectsList[i].firstEffect == secondEffect && colorEffectsList[i].secondEffect == firstEffect) {
-                currentColor = colorEffectsList[i].combinaisonColor;
-            }
-        }
+        strawSprite = actualStrawClass.StrawParent.GetComponent<SpriteRenderer>();
+        SetVisualEffect();
+
     }
 
+
+  public  void SetVisualEffect()
+    {
+                for (int i = 0; i < colorEffectsList.Length; i++) {
+                    if (colorEffectsList[i].firstEffect == firstEffect && colorEffectsList[i].secondEffect == secondEffect
+                        || colorEffectsList[i].firstEffect == secondEffect && colorEffectsList[i].secondEffect == firstEffect) {
+                        currentColor = colorEffectsList[i].combinaisonColor;
+                    }
+                }
+    }
     public enum ShootMode {
         BasicShoot,
         CurveShoot,

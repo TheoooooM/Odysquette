@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
     public bool isBounce;
-    private bool colliding;
+    public bool colliding;
     public bool hasRange;
     public float damage;
     public float range;
@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour {
     public Vector3 oldPositionPoison;
     [SerializeField] private bool isColliding;
     public Rigidbody2D rb;
-    private Vector3 lastVelocity;
+    public Vector3 lastVelocity;
 
     public float ammountUltimate;
 
@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour {
     private int _pierceCount;
 
     public int bounceCount = 2;
-    private int _bounceCount;
+    public int _bounceCount;
 
     public float poisonCooldown = 5;
     float _poisonCooldown = 0;
@@ -55,7 +55,7 @@ public class Bullet : MonoBehaviour {
         basePosition = transform.position;
         _pierceCount = pierceCount;
         //canBounce = false; 
-
+        lastVelocity = rb.velocity;
         Invoke(nameof(DelayforDrag), 0.5f);
 
         if (GameManager.Instance.firstEffect == GameManager.Effect.pierce || GameManager.Instance.secondEffect == GameManager.Effect.pierce) _pierceCount = pierceCount;
@@ -81,23 +81,31 @@ public class Bullet : MonoBehaviour {
         // transform.rotation = Quaternion.Euler(0f, 0f, GameManager.Instance.angle);
 
 
-        lastVelocity = rb.velocity;
+       
     }
 
     private void FixedUpdate() {
         if (GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison) {
-            //  Debug.Log(distance/rb.velocity.magnitude +"   " +  _poisonCooldown + "   " + Time.deltaTime + "  = " + (_poisonCooldown + Time.deltaTime));
-
-
-            if (_poisonCooldown < distance / rb.velocity.magnitude) {
+            /*if (_poisonCooldown < distance / rb.velocity.magnitude) {
                 _poisonCooldown += Time.fixedDeltaTime;
+            }*/
+            // v= d/t => t = d/v => d = vt
+            
+            
+            if (Vector2.Distance(oldPositionPoison, transform.position) > distance) {
+                oldPositionPoison = transform.position;
+                PoolManager.Instance.SpawnPoisonPool(transform);
+                //_poisonCooldown = poisonCooldown;
             }
-            else {
+            
+            /*else {
+                oldPositionPoison = transform.position;
                 //Debug.Log(_poisonCooldown);
                 PoolManager.Instance.SpawnPoisonPool(transform);
                 _poisonCooldown = poisonCooldown;
-            }
+            }*/
         }
+        if(!isColliding)lastVelocity = rb.velocity;
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
@@ -137,8 +145,11 @@ public class Bullet : MonoBehaviour {
             
             if (_pierceCount > 0) {
                 _pierceCount--;
+                PoolManager.Instance.SpawnPiercePool(transform);
+                PoolManager.Instance.SpawnImpactPool(transform);
             }
             else {
+                
                 DesactiveBullet();
             }
         }
@@ -148,20 +159,25 @@ public class Bullet : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+  public virtual void OnCollisionEnter2D(Collision2D other)
     {
         colliding = true;
-        if (_bounceCount > 0 && other.gameObject.CompareTag("Walls")) {
+        Debug.Log("collide with " + rb.velocity);
+        if (_bounceCount > 0 && other.gameObject.CompareTag("Walls") && lastVelocity.x!=0 && lastVelocity.y!=0) {
             _bounceCount--;
             var speed = lastVelocity.magnitude;
             //Debug.Log(lastVelocity);
 
             var direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
             rb.velocity = direction * Mathf.Max(speed, 0f);
+            lastVelocity = rb.velocity;
             var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
             transform.rotation = Quaternion.Euler(0, 0, angle);
+            
 
             isBounce = true;
+            Debug.Log(isBounce);
+            PoolManager.Instance.SpawnImpactPool(transform);
         }
         else {
             DesactiveBullet();
@@ -178,8 +194,17 @@ public class Bullet : MonoBehaviour {
         colliding = false;
     }
 
+
+    private float maxDistance = 15;
     void Explosion() {
         PoolManager.Instance.SpawnExplosionPool(transform);
+        if (Camera.main != null) {
+            float distanceToCamera = Mathf.Abs(Vector2.Distance(Camera.main.transform.position, transform.position));
+            float distanceSubstract = Mathf.Clamp(maxDistance - distanceToCamera, 0, maxDistance);
+            float ratio = distanceSubstract / maxDistance;
+            
+            Camera.main.GetComponent<CameraShake>().CreateCameraShake(.085f * ratio, .15f * ratio);
+        }
     }
 
     void Ice(GameObject gam) {
@@ -191,11 +216,12 @@ public class Bullet : MonoBehaviour {
         isEnable = true;
     }
 
-    void DesactiveBullet() {
+   public void DesactiveBullet() {
         if (isDesactive == false) {
             StopAllCoroutines();
             gameObject.SetActive(false);
-
+            PoolManager.Instance.SpawnImpactPool(transform);
+            //if(GameManager.Instance.firstEffect == GameManager.Effect.explosion && GameManager.Instance.secondEffect == GameManager.Effect.explosion) PoolManager.Instance.SpawnExplosionPool(transform);
             if (rateMode == StrawSO.RateMode.Ultimate) {
                 PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][1].Enqueue(gameObject);
             }

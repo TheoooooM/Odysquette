@@ -13,7 +13,8 @@ public class UIManager : MonoBehaviour
 
     public string sceneToLoad;
     public GameObject cursor;
-    public GameObject[] HeartsLife;
+    public List<Hearth> HeartsLifes;
+    public List<Hearth> _HeartsLife;
     public Slider UltSlider;
     // Start is called before the first frame update
     public static UIManager Instance;
@@ -35,8 +36,8 @@ public class UIManager : MonoBehaviour
     
     private void Awake()
     {
-        
         Instance = this;
+        GameOverPanel.SetActive(false);
     }
     private void Start()
     {
@@ -53,9 +54,9 @@ public class UIManager : MonoBehaviour
 
 
     public void GameOver()
-    { GameOverPanel.SetActive(true);
+    { 
+        GameOverPanel.SetActive(true);
         Time.timeScale = 0;
-       
     }
 
     public void PlayAgain()

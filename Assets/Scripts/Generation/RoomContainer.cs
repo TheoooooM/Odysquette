@@ -92,7 +92,7 @@ public class RoomContainer : MonoBehaviour {
             }
             else {
                 openTop.SetActive(false);
-                closeTop.SetActive(true);
+                closeTop.SetActive(false);
             }
         }
 
@@ -110,7 +110,7 @@ public class RoomContainer : MonoBehaviour {
             }
             else {
                 openLeft.SetActive(false);
-                closeLeft.SetActive(true);
+                closeLeft.SetActive(false);
             }
         }
 
@@ -129,7 +129,7 @@ public class RoomContainer : MonoBehaviour {
             }
             else {
                 openRight.SetActive(false);
-                closeRight.SetActive(true);
+                closeRight.SetActive(false);
             }
         }
 
@@ -148,7 +148,7 @@ public class RoomContainer : MonoBehaviour {
             }
             else {
                 openBot.SetActive(false);
-                closeBot.SetActive(true);
+                closeBot.SetActive(false);
             }
         }
     }
@@ -158,6 +158,8 @@ public class RoomContainer : MonoBehaviour {
     /// </summary>
     /// <param name="active"></param>
     private void ActivateNeighbor(bool active) {
+        if (Generator == null) return;
+        
         if (!Generator.disableNeighboor) return;
         
         if (Generator.map[(int) roomMapPos.x - 1, (int) roomMapPos.y] != null) Generator.map[(int) roomMapPos.x - 1, (int) roomMapPos.y].neighbor = active;

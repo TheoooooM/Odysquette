@@ -74,7 +74,7 @@ public class Chest : MonoBehaviour {
 
         
         while (item == null) {
-            index = Random.Range(1, 4);
+            index = Random.Range(1, 6);
 
 
             strawSelect = index switch
@@ -160,7 +160,7 @@ public class Chest : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D other) {
         if (other.CompareTag("Player")) {
-            canOpen = true;
+            canOpen = false;
             sprite.color = Color.white;
         }
     }

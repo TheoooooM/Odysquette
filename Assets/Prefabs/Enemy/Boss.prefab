@@ -194,10 +194,11 @@ GameObject:
   - component: {fileID: 4512851393080758038}
   - component: {fileID: 4512851393080758039}
   - component: {fileID: 4512851393080758036}
-  - component: {fileID: 4512851393080758037}
   - component: {fileID: 4512851393080758042}
   - component: {fileID: 867352224232273417}
   - component: {fileID: 8565142783127015580}
+  - component: {fileID: 2105533335983440603}
+  - component: {fileID: 235117669260147664}
   m_Layer: 8
   m_Name: Boss
   m_TagString: Enemy
@@ -213,8 +214,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4512851393080758034}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3842659, y: -1.1426411, z: 8.937716}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4512851394486423831}
   - {fileID: 4512851394081132782}
@@ -241,7 +242,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: e8a65c6061707934ea1f23159495d2c7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -262,7 +263,7 @@ SpriteRenderer:
   m_SortingLayerID: -1990800739
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 511812539270186847, guid: 70968b1621c7b5444a220161eb41444f, type: 3}
+  m_Sprite: {fileID: -4165222119527955206, guid: e608bc066bee0c841977cd594fe981ad, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -280,13 +281,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4512851393080758034}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84d29982ec27ce94f94b8e5f480cce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyFeedBack: {fileID: 0}
   isActivate: 0
+  isContactWall: 0
   EMainStatsSo: {fileID: 11400000, guid: e6a387d1bac6de3428663017dbf73ccd, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -325,6 +327,7 @@ MonoBehaviour:
   IsFirstStartPlayed: 0
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
+  timerCurrentState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
 --- !u!114 &4512851393080758038
@@ -394,32 +397,6 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
---- !u!61 &4512851393080758037
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4512851393080758034}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 1.5}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!114 &4512851393080758042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,12 +422,22 @@ MonoBehaviour:
   - {fileID: 4512851394194437571}
   - {fileID: 4512851394842105116}
   - {fileID: 4512851394574263887}
-  timeBegin: 0
-  timeEnd: 0
-  timerBegin: 0
-  timerEnd: 0
   numberEnabledTurrets: 
   turret: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
+  currentBossPhase: 0
+  healthConditionList:
+  - phaseBoss: 1
+    firstUse: 0
+    healthTrigger: 4250
+  - phaseBoss: 2
+    firstUse: 0
+    healthTrigger: 3000
+  - phaseBoss: 3
+    firstUse: 0
+    healthTrigger: 1750
+  - phaseBoss: 4
+    firstUse: 0
+    healthTrigger: 500
 --- !u!114 &867352224232273417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,7 +450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eb8f267594d2034f82913ef06ed7131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 14.62
+  range: 19.7
   patrol: {fileID: 0}
   rb: {fileID: 0}
   aimPatrol: {fileID: 0}
@@ -483,6 +470,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: {fileID: 0}
+--- !u!95 &2105533335983440603
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4512851393080758034}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e14ba94bfa7be464c910fff54c8f7cdc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!61 &235117669260147664
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4512851393080758034}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.823267, y: -1.050374}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 14, y: 6.75}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.566868, y: 4.649252}
+  m_EdgeRadius: 0
 --- !u!1 &4512851393255716662
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,7 +531,7 @@ GameObject:
   - component: {fileID: 4512851393255716660}
   - component: {fileID: 1214578225403730302}
   m_Layer: 8
-  m_Name: Turret (2)
+  m_Name: Turret
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -513,7 +545,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4512851393255716662}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.52, y: 1.27, z: 8.937716}
+  m_LocalPosition: {x: 15.52, y: 1.27, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4512851392810320162}
@@ -541,7 +573,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e8a65c6061707934ea1f23159495d2c7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -587,6 +619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyFeedBack: {fileID: 0}
   isActivate: 1
+  isContactWall: 0
   EMainStatsSo: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -619,6 +652,7 @@ MonoBehaviour:
   IsFirstStartPlayed: 0
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
+  timerCurrentState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 4512851393255716664}
   boxCollider2D: {fileID: 0}
@@ -896,7 +930,7 @@ GameObject:
   - component: {fileID: 4512851393769003416}
   - component: {fileID: 8156060461099689828}
   m_Layer: 8
-  m_Name: Turret (3)
+  m_Name: Turret
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -910,7 +944,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4512851393769003418}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.92, y: -6.82, z: 8.937716}
+  m_LocalPosition: {x: 3.92, y: -6.82, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4512851394436821256}
@@ -938,7 +972,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e8a65c6061707934ea1f23159495d2c7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -984,6 +1018,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyFeedBack: {fileID: 0}
   isActivate: 1
+  isContactWall: 0
   EMainStatsSo: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -1016,6 +1051,7 @@ MonoBehaviour:
   IsFirstStartPlayed: 0
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
+  timerCurrentState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 4512851393769003420}
   boxCollider2D: {fileID: 0}
@@ -1124,7 +1160,7 @@ GameObject:
   - component: {fileID: 4512851393999645454}
   - component: {fileID: 176144073031690107}
   m_Layer: 8
-  m_Name: Turret (1)
+  m_Name: Turret
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1138,7 +1174,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4512851393999645448}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.22, y: 10.83, z: 8.937716}
+  m_LocalPosition: {x: 4.22, y: 10.83, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4512851394311591329}
@@ -1166,7 +1202,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e8a65c6061707934ea1f23159495d2c7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1212,6 +1248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyFeedBack: {fileID: 0}
   isActivate: 1
+  isContactWall: 0
   EMainStatsSo: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -1244,6 +1281,7 @@ MonoBehaviour:
   IsFirstStartPlayed: 0
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
+  timerCurrentState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 4512851393999645458}
   boxCollider2D: {fileID: 0}
@@ -1347,14 +1385,14 @@ GameObject:
   - component: {fileID: 4512851394052730264}
   - component: {fileID: 4512851394052730271}
   - component: {fileID: 4512851394052730270}
-  - component: {fileID: 4512851394052730265}
-  m_Layer: 8
+  - component: {fileID: 536971363}
+  m_Layer: 22
   m_Name: ShieldEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4512851394052730264
 Transform:
   m_ObjectHideFlags: 0
@@ -6141,8 +6179,8 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!61 &4512851394052730265
-BoxCollider2D:
+--- !u!58 &536971363
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6154,19 +6192,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: -0.96, y: -1.29}
   serializedVersion: 2
-  m_Size: {x: 1.89, y: 1.79}
-  m_EdgeRadius: 0
+  m_Radius: 4.5
 --- !u!1 &4512851394081132777
 GameObject:
   m_ObjectHideFlags: 0
@@ -6177,6 +6205,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4512851394081132782}
   - component: {fileID: 4512851394081132783}
+  - component: {fileID: 4303065977093743207}
   m_Layer: 14
   m_Name: ColliderWall
   m_TagString: Untagged
@@ -6211,7 +6240,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.7480221, y: -0.97909594}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -6222,8 +6251,21 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 4.4185677, y: 4.439149}
   m_EdgeRadius: 0
+--- !u!114 &4303065977093743207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4512851394081132777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1b5b5de83b6e4d46b74399d219ae5a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStateManager: {fileID: 4512851393080758035}
 --- !u!1 &4512851394194436671
 GameObject:
   m_ObjectHideFlags: 0
@@ -6236,7 +6278,7 @@ GameObject:
   - component: {fileID: 4512851394194437571}
   - component: {fileID: 4512851394194437570}
   - component: {fileID: 4512851394194436669}
-  m_Layer: 8
+  m_Layer: 22
   m_Name: ShieldEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11097,7 +11139,7 @@ GameObject:
   - component: {fileID: 4512851394419274408}
   - component: {fileID: 4512851394419274411}
   - component: {fileID: 4512851394419274410}
-  m_Layer: 8
+  m_Layer: 22
   m_Name: ShieldEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15970,7 +16012,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4512851394486423830}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.8, y: -1.28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4512851393080758033}
@@ -16045,7 +16087,7 @@ GameObject:
   - component: {fileID: 4512851394574263887}
   - component: {fileID: 4512851394574263886}
   - component: {fileID: 4512851394574263881}
-  m_Layer: 8
+  m_Layer: 22
   m_Name: ShieldEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20894,7 +20936,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4512851394618653112}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.34, y: 1.1273594, z: 8.937716}
+  m_LocalPosition: {x: -13.34, y: 1.1273594, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4512851393532707552}
@@ -20922,7 +20964,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e8a65c6061707934ea1f23159495d2c7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -20968,6 +21010,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyFeedBack: {fileID: 0}
   isActivate: 1
+  isContactWall: 0
   EMainStatsSo: {fileID: 11400000, guid: 27a5cb2d202c2ce409274c78b33efa8a, type: 2}
   forceApply: {x: 0, y: 0}
   baseObjectListCondition:
@@ -21000,6 +21043,7 @@ MonoBehaviour:
   IsFirstStartPlayed: 0
   roomParent: {fileID: 0}
   timerCurrentStartState: 0
+  timerCurrentState: 0
   rb: {fileID: 0}
   spriteRenderer: {fileID: 4512851394618652994}
   boxCollider2D: {fileID: 0}
@@ -21104,7 +21148,7 @@ GameObject:
   - component: {fileID: 4512851394842105116}
   - component: {fileID: 4512851394842105119}
   - component: {fileID: 4512851394842105118}
-  m_Layer: 8
+  m_Layer: 22
   m_Name: ShieldEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

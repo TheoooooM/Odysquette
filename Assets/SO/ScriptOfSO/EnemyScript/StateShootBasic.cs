@@ -17,7 +17,7 @@ public class StateShootBasic : StateShootSO
         Transform parentBulletTF =
             (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformShoot];
         Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
-        enemyTransform.GetComponent<SpriteRenderer>().color += Color.white;
+     
         Vector3 direction =  (transformPlayer.position-enemyTransform.position).normalized;
         parentBulletTF.transform.position = enemyTransform.position + direction * offSetDistance;
         if (isFirstAimPlayer)
@@ -35,7 +35,7 @@ public class StateShootBasic : StateShootSO
     {
 
         Transform enemyTransform = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.TransformEnemy];
-        enemyTransform.GetComponent<SpriteRenderer>().color -= Color.white;
+  
        
         CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringPlayState);
   
@@ -81,11 +81,13 @@ public class StateShootBasic : StateShootSO
                 }
                 Vector3 rotation = new Vector3();
                 directionPlayer = parentBulletTF.right;
-                if (isAimPlayer)
+                if (isAimPlayer || isFirstAimPlayer)
                 {
                     directionPlayer = (transformPlayer.position - bullet.transform.position).normalized;
                     
                 }
+
+
                 rotation = Quaternion.Euler(0, 0, directions[i]) * directionPlayer;
                 float angle = Mathf.Atan2(rotation.y, rotation.x)*Mathf.Rad2Deg;
                 bullet.transform.rotation = Quaternion.Euler(0, 0, angle) ;

@@ -15,8 +15,7 @@ public class StateMouvementSO : StateEnemySO
     public override void StartState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
     {
      
-        EnemyMovement enemyMovement =
-            (EnemyMovement) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyMovement];
+        EnemyMovement enemyMovement = (EnemyMovement) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyMovement];
         CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringStartState);
         enemyMovement.enabled = true;
      
@@ -25,9 +24,7 @@ public class StateMouvementSO : StateEnemySO
 
     public override void PlayState( Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectDictionary, out bool endStep, EnemyFeedBack enemyFeedBack)
     {
-     
-        EnemyMovement enemyMovement =
-            (EnemyMovement) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyMovement];
+        EnemyMovement enemyMovement = (EnemyMovement) objectDictionary[ExtensionMethods.ObjectInStateManager.EnemyMovement];
         Rigidbody2D rbPlayer = (Rigidbody2D) objectDictionary[ExtensionMethods.ObjectInStateManager.RigidBodyPlayer];
 
         bool _endstep = false;
@@ -47,6 +44,7 @@ public class StateMouvementSO : StateEnemySO
         }
         else
         { 
+            Debug.Log("Set speed");
             enemyMovement.enabled = true;
             enemyMovement.destination = rbPlayer.position;
             _endstep = false; 

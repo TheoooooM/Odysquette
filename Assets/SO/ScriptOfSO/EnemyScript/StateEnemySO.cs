@@ -11,9 +11,9 @@ public class StateEnemySO : ScriptableObject
     public bool openSpecPanel;
     public float timeCondition;
     public bool editFeedBackList;
-    public float healthCondition;
+   
     public bool openKnobDebugPanel;
-    public bool useHealthCondition;
+ 
     public bool useTimeCondition;
     public bool isKnockUpInState =true;
     //debug
