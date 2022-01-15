@@ -491,6 +491,16 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Has the player the effect
+    /// </summary>
+    /// <param name="effet"></param>
+    /// <returns></returns>
+    public bool HasEffect(Effect effet) {
+        return firstEffect == effet || secondEffect == effet;
+    }
+    
+
     [Serializable]
     public class CombinaisonColorEffect {
         public Effect firstEffect;

@@ -36,11 +36,8 @@ public class Bullet : MonoBehaviour {
     
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
-        if (GameManager.Instance.firstEffect == GameManager.Effect.piercing || GameManager.Instance.secondEffect == GameManager.Effect.piercing) _pierceCount = pierceCount;
-        else _pierceCount = 0;
-
-        if (GameManager.Instance.firstEffect == GameManager.Effect.bouncing || GameManager.Instance.secondEffect == GameManager.Effect.bouncing) _bounceCount = bounceCount;
-        else _bounceCount = 0;
+        _pierceCount = GameManager.Instance.HasEffect(GameManager.Effect.piercing) ? pierceCount : 0;
+        _bounceCount = GameManager.Instance.HasEffect(GameManager.Effect.bouncing) ? bounceCount : 0;
         bulletSpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -55,27 +52,23 @@ public class Bullet : MonoBehaviour {
 
         StartCoroutine(WaitForDestroy());
 
-        if (GameManager.Instance.firstEffect == GameManager.Effect.piercing || GameManager.Instance.secondEffect == GameManager.Effect.piercing) _pierceCount = pierceCount;
-        else _pierceCount = 0;
-
-        if (GameManager.Instance.firstEffect == GameManager.Effect.bouncing || GameManager.Instance.secondEffect == GameManager.Effect.bouncing) _bounceCount = bounceCount;
-        else _bounceCount = 0;
+        _pierceCount = GameManager.Instance.HasEffect(GameManager.Effect.piercing) ? pierceCount : 0;
+        _bounceCount = GameManager.Instance.HasEffect(GameManager.Effect.bouncing) ? bounceCount : 0;
         GetComponent<SpriteRenderer>().color = GameManager.Instance.currentColor; 
     }
 
     public virtual void Update() {
         if (hasRange) {
             if (Vector3.Distance(basePosition, transform.position) >= range) {
-                if(GameManager.Instance.firstEffect == GameManager.Effect.explosive || GameManager.Instance.secondEffect == GameManager.Effect.explosive) Explosion();
-                if(GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison) PoolManager.Instance.SpawnPoisonPool(transform, Vector2.zero);
+                if(GameManager.Instance.HasEffect(GameManager.Effect.explosive)) Explosion();
+                if(GameManager.Instance.HasEffect(GameManager.Effect.poison)) PoolManager.Instance.SpawnPoisonPool(transform, Vector2.zero);
                 DesactiveBullet();
             }
         }
-
-
+        
         if (rb.velocity.magnitude <= 0.1 && rb.drag > 0 && isEnable) {
-            if(GameManager.Instance.firstEffect == GameManager.Effect.explosive || GameManager.Instance.secondEffect == GameManager.Effect.explosive) Explosion();
-            if(GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison) PoolManager.Instance.SpawnPoisonPool(transform, Vector2.zero);
+            if(GameManager.Instance.HasEffect(GameManager.Effect.explosive)) Explosion();
+            if(GameManager.Instance.HasEffect(GameManager.Effect.poison)) PoolManager.Instance.SpawnPoisonPool(transform, Vector2.zero);
             DesactiveBullet();
         } 
     }
@@ -83,8 +76,7 @@ public class Bullet : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("DestructableObject")) return;
-        if (isColliding)
-        {
+        if (isColliding) {
             DesactiveBullet();
             return;
         }
@@ -92,28 +84,28 @@ public class Bullet : MonoBehaviour {
         bool doExplosion = false;
         switch (GameManager.Instance.firstEffect) {
             case GameManager.Effect.explosive:
-                doExplosion = true;
+                if(!other.CompareTag("Walls")) doExplosion = true;
                 break;
 
             case GameManager.Effect.poison :
-                if(!other.CompareTag("Walls"))PoolManager.Instance.SpawnPoisonPool(transform, Vector2.zero);
+                if(!other.CompareTag("Walls")) PoolManager.Instance.SpawnPoisonPool(transform, Vector2.zero);
                 break;
             
         }
 
         switch (GameManager.Instance.secondEffect) {
             case GameManager.Effect.explosive:
-                doExplosion = true;
+                if(!other.CompareTag("Walls")) doExplosion = true;
                 break;
             
             case GameManager.Effect.poison :
-                PoolManager.Instance.SpawnPoisonPool(transform, Vector2.zero);
+                if(!other.CompareTag("Walls")) PoolManager.Instance.SpawnPoisonPool(transform, Vector2.zero);
                 break;
           
         }
 
-        if (doExplosion)
-        {
+        //Anti double explosion
+        if (doExplosion) {
             Explosion();
         }
 
@@ -125,18 +117,17 @@ public class Bullet : MonoBehaviour {
                 GameManager.Instance.ultimateValue += enemyStateManager.EMainStatsSo.coeifficentUltimateStrawPoints * ammountUltimate;
             }
             
-            if (_pierceCount > 0 && lastEnemyHit != other.gameObject && (GameManager.Instance.firstEffect == GameManager.Effect.piercing || GameManager.Instance.secondEffect == GameManager.Effect.piercing)) {
+            if (_pierceCount > 0 && lastEnemyHit != other.gameObject && GameManager.Instance.HasEffect(GameManager.Effect.piercing)) {
                 _pierceCount--;
                 PoolManager.Instance.SpawnPiercePool(transform);
                 lastEnemyHit = other.gameObject;
                 //PoolManager.Instance.SpawnImpactPool(transform);
             }
-            else if(pierceCount == 0 || (GameManager.Instance.firstEffect != GameManager.Effect.piercing && GameManager.Instance.secondEffect != GameManager.Effect.piercing)){
+            else if(pierceCount == 0 || GameManager.Instance.HasEffect(GameManager.Effect.piercing)){
                 DesactiveBullet();
             }
         }
         else if (!other.CompareTag("Walls")) {
-            if (GameManager.Instance.firstEffect != GameManager.Effect.explosive && GameManager.Instance.secondEffect != GameManager.Effect.explosive) //AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact, transform.position);
             DesactiveBullet();
         }
     }
@@ -146,8 +137,9 @@ public class Bullet : MonoBehaviour {
         isColliding = true;
         
         if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls")||other.gameObject.CompareTag("ShieldEnemy"))){ 
-     //       AudioManager.Instance.PlayStrawSound(AudioManager.StrawSoundEnum.Impact);
-
+            if (GameManager.Instance.HasEffect(GameManager.Effect.poison)) PoolManager.Instance.SpawnPoisonPool(transform, other.contacts[0].normal);
+            if (GameManager.Instance.HasEffect(GameManager.Effect.explosive)) Explosion();
+            
             StartCoroutine(DestroyBulletIfStuck());
             
             _bounceCount--;
@@ -161,27 +153,20 @@ public class Bullet : MonoBehaviour {
             
             var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
             transform.rotation = Quaternion.Euler(0, 0, angle);
-
-
+            
             isBounce = true;
             Debug.Log(isBounce);
             PoolManager.Instance.SpawnImpactPool(transform);
         }
         else {
-            if (other.gameObject.CompareTag("Walls")) {
-                if (GameManager.Instance.firstEffect == GameManager.Effect.poison || GameManager.Instance.secondEffect == GameManager.Effect.poison) {
-                    PoolManager.Instance.SpawnPoisonPool(transform, other.contacts[0].normal);
-                }
-            }
+            if (GameManager.Instance.HasEffect(GameManager.Effect.poison) && !other.gameObject.CompareTag("Walls")) PoolManager.Instance.SpawnPoisonPool(transform, other.contacts[0].normal);
+            if (GameManager.Instance.HasEffect(GameManager.Effect.explosive) && !other.gameObject.CompareTag("Walls")) Explosion();
             DesactiveBullet();
         }
     }
     
-    protected virtual void OnCollisionExit2D(Collision2D other)
-    {
-
+    protected virtual void OnCollisionExit2D(Collision2D other) {
         rb.velocity = lastVelocity;
-      
         isColliding = false;
     }
 
@@ -192,7 +177,7 @@ public class Bullet : MonoBehaviour {
     }
 
     private float maxDistance = 20;
-    void Explosion() {
+    protected void Explosion() {
         PoolManager.Instance.SpawnExplosionPool(transform);
         if (Camera.main != null) {
             float distanceToCamera = Mathf.Abs(Vector2.Distance(Camera.main.transform.position, transform.position));

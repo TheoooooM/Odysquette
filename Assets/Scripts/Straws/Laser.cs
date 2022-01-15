@@ -25,9 +25,7 @@ public class Laser : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(spawn.position, dir.normalized);
         line.SetPosition(1, hit.point);
 
-        if (GameManager.Instance.firstEffect == GameManager.Effect.bouncing ||
-            GameManager.Instance.secondEffect == GameManager.Effect.bouncing)
-        {
+        if (GameManager.Instance.HasEffect(GameManager.Effect.bouncing)) {
             line.positionCount = 3;
             Vector2 secondDir = Vector2.Reflect(dir.normalized, hit.normal);
             RaycastHit2D secondHit = Physics2D.Raycast(hit.point, secondDir.normalized);
