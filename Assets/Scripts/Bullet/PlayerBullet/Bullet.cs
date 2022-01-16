@@ -123,7 +123,7 @@ public class Bullet : MonoBehaviour {
                 lastEnemyHit = other.gameObject;
                 //PoolManager.Instance.SpawnImpactPool(transform);
             }
-            else if(_pierceCount == 0){
+            else if(pierceCount == 0 || !GameManager.Instance.HasEffect(GameManager.Effect.piercing)){
                 DesactiveBullet();
             }
         }
