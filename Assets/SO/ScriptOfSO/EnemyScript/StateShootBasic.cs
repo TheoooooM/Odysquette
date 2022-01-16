@@ -106,12 +106,12 @@ public class StateShootBasic : StateShootSO
         }
         else
         {
-            enemyStateManager.StartCoroutine(ShootDelay(prefabBullet,parentBulletTF, transformPlayer));
+            enemyStateManager.StartCoroutine(ShootDelay(enemyFeedBack, prefabBullet,parentBulletTF, transformPlayer));
         }
 
         endStep = true;
     }
-     public override IEnumerator ShootDelay(GameObject prefabBullet,Transform parentBulletTF, Transform transformPlayer)
+     public override IEnumerator ShootDelay(EnemyFeedBack enemyFeedBack, GameObject prefabBullet,Transform parentBulletTF, Transform transformPlayer)
     {
         Vector2 directionPlayer = new Vector2();
       
@@ -120,7 +120,7 @@ public class StateShootBasic : StateShootSO
        
              for (int i = 0; i < directions.Length; i++)
                     {
-                      
+                        CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.DuringPlayState);
                         GameObject bullet = EnemySpawnerManager.Instance.SpawnEnnemyShoot(enemyTypeShoot, prefabBullet, parentBulletTF);
                    
                         bullet.SetActive(true);  

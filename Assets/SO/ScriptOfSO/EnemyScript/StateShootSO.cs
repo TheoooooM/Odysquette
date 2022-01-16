@@ -41,7 +41,7 @@ public class StateShootSO : StateEnemySO
    
     public Vector3 extentsRangeDetection;
  
-    public virtual IEnumerator ShootDelay(GameObject prefabBullet, Transform parentBulletTF, Transform transformPlayer)
+    public virtual IEnumerator ShootDelay(EnemyFeedBack enemyFeedBack, GameObject prefabBullet, Transform parentBulletTF, Transform transformPlayer)
     {
       
         yield return null;
