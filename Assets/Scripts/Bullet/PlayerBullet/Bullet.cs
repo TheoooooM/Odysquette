@@ -138,7 +138,6 @@ public class Bullet : MonoBehaviour {
         isColliding = true;
         
         if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls") || other.gameObject.CompareTag("ShieldEnemy") || other.gameObject.CompareTag("DestructableObject"))){
-            Debug.Log("ok1");
             if (GameManager.Instance.HasEffect(GameManager.Effect.poison)) PoolManager.Instance.SpawnPoisonPool(transform, other.contacts[0].normal);
             if (GameManager.Instance.HasEffect(GameManager.Effect.explosive)) Explosion();
 

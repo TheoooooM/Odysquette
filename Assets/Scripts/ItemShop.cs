@@ -6,14 +6,13 @@ using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 public class ItemShop : Chest {
+    public DiscussionWithSeller seller = null;
+    
     public override void Start() {
         base.Start();
         Generate();
     }
-
-    public override void Update() {
-    }
-
+    
     protected override void RdmJuice() {
         GameObject item = null;
         GameManager.Effect effect = GameManager.Effect.none;
@@ -83,6 +82,6 @@ public class ItemShop : Chest {
     protected override void InstantiateItem(GameObject GO) {
         GameObject gam = Instantiate(GO, transform.position, Quaternion.identity, transform.parent);
         gam.GetComponent<Items>().shop = true;
-        gam.GetComponent<Items>().SpawnObject();
+        gam.GetComponent<Items>().SpawnObject(false, seller);
     }
 }

@@ -466,8 +466,7 @@ public class EnemyStateManager : MonoBehaviour {
             OnDeath();
         }
         else {
-   
-     
+
             Knockup(position, knockUpValue, knockup, isExplosion);
             health -= damage;
         }

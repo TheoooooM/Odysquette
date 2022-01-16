@@ -25,13 +25,15 @@ public class Items : MonoBehaviour {
    [SerializeField] private GameObject groundCanvas;
    [SerializeField] private itemSO SO;
 
+   [SerializeField] private DiscussionWithSeller seller;
+
    public bool shop;
 
    /// <summary>
    /// Spawn the object
    /// </summary>
    /// <param name="ground"></param>
-   public void SpawnObject(bool ground = false) {
+   public void SpawnObject(bool ground = false, DiscussionWithSeller sel = null) {
       playerInput = new PlayerMapping();
       if (shop) playerInput.Interface.Enable();
       playerInput.Interface.Button.started += ButtonOnperformed;
@@ -39,6 +41,8 @@ public class Items : MonoBehaviour {
       groundCanvas.SetActive(false);
       if (transform.GetChild(0).GetComponent<SetStrawUI>() == null) shopCanvas.SetActive(false);
 
+      if (sel != null) seller = sel;
+      
       shop = !ground;
    }
 
@@ -56,20 +60,13 @@ public class Items : MonoBehaviour {
    /// </summary>
    /// <param name="obj"></param>
    private void ButtonOnperformed(InputAction.CallbackContext obj) {
-      Debug.Log("Performed");
       if (inRange && !GameManager.Instance.isUltimate) {
-         Debug.Log("in range");
          if (cost <= NeverDestroy.Instance.ressources && shop) {
-            Debug.Log("pay " + cost);
             UseItem(obj.control.displayName);
             NeverDestroy.Instance.AddRessource(-cost);
+            if(seller != null) seller.StartDiscusssion();
          }
-         else if (!shop) {
-            UseItem(obj.control.displayName);
-         }
-         else {
-            Debug.Log("can't buy");
-         }
+         else if (!shop) UseItem(obj.control.displayName);
       }
    }
 
