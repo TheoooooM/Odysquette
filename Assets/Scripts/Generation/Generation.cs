@@ -35,6 +35,9 @@ public class Generation : MonoBehaviour {
 
     [Header("--- ROOMS")] public GameObject StartingRoom;
     public RoomCreator[] normalRoom;
+    [SerializeField] private bool forceRoomOneSpawn = false;
+    private bool roomOneSpawned;
+    private bool tryForce;
     public GameObject endpathRoom;
     private List<RoomManager> roomList = new List<RoomManager>();
     [SerializeField] private List<GameObject> OutsideRoom = new List<GameObject>();
@@ -131,6 +134,7 @@ public class Generation : MonoBehaviour {
             }
             else {
                 yield return new WaitForSeconds(0.05f);
+                if(forceRoomOneSpawn && !roomOneSpawned)tryForce = true;
             }
             
             UIUpdate(i);
@@ -289,9 +293,22 @@ public class Generation : MonoBehaviour {
             validRooms.Add(j);
         }
 
-        if (lastRoomId != -1) validRooms.Remove(lastRoomId);
+        bool forceNow = false;
+        int newRoomID;
+        if (tryForce)
+        {
+            newRoomID = 0;
+            tryForce = false;
+            forceNow = true;
+            Debug.Log("Get Forced");
+        }
+        else
+        {
+            if (lastRoomId != -1) validRooms.Remove(lastRoomId);
+            
+            newRoomID = validRooms[Random.Range(0, validRooms.Count)];
+        }
         
-        int newRoomID = validRooms[Random.Range(0, validRooms.Count)];
         RoomCreator newRoom = normalRoom[newRoomID];
 
         if (newRoom.exitDicitonnary.Count == 0) {
@@ -321,7 +338,12 @@ public class Generation : MonoBehaviour {
             }
             //debug.Log("Can Spawn :" + canSpawn);
 
-            if (canSpawn) {
+            if (canSpawn)
+            {
+                if (forceNow)
+                {
+                    roomOneSpawned = true;
+                }
                 bool ready = false;
                 int x = 0;
                 while (!ready) {

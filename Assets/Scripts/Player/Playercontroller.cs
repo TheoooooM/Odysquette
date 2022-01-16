@@ -72,7 +72,6 @@ public class Playercontroller : MonoBehaviour {
     [Header("---- ANIMATION")]
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private Animation fallAnimation;
-    [SerializeField] private GameObject endSplash;
     public AngleAnimationPlayer[] baseAngleAnimation;
     [SerializeField] private AngleAnimationPlayer currentAngleAnimation;
     #endregion Variables
@@ -545,8 +544,8 @@ public class Playercontroller : MonoBehaviour {
     public void LaunchEndAnimation()
     {
         Debug.Log("Splash !");
-        endSplash.SetActive(true);
-        endSplash.GetComponent<Animator>().Play("End_Splash");
+        UIManager.Instance.endSplash.SetActive(true);
+        UIManager.Instance.endSplash.GetComponent<Animator>().Play("End_Splash");
     }
 }
 

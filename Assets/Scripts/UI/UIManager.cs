@@ -34,6 +34,7 @@ public class UIManager : MonoBehaviour {
     [Header("----Game Over----")] 
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private TextMeshProUGUI GameOverText;
+    public GameObject endSplash;
     public TMP_InputField PlayerName;
     public TextMeshProUGUI totalScoreText;
     [Space] 
