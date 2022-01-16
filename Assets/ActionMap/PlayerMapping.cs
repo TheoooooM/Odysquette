@@ -212,7 +212,7 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""09543617-a00a-4249-b9e4-d1420d305343"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""path"": ""<XInputController>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -222,11 +222,11 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4e28b0b7-24c9-4bcb-b8e2-7de550b21445"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""id"": ""c20c1753-ec43-4ca5-addb-e789161aabfd"",
+                    ""path"": ""<XInputController>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Gamepad"",
+                    ""groups"": """",
                     ""action"": ""SpecialShootGamepad"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -276,6 +276,24 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""34c6710b-2903-48c4-9e72-c71ba2824337"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftGamepadButton"",
+                    ""type"": ""Value"",
+                    ""id"": ""30975d24-91b4-48fa-8b79-6d39629efdfc"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -311,6 +329,138 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                     ""action"": ""InteractBtn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""87820e73-56d8-4b89-aac5-f31a5ce613b7"",
+                    ""path"": ""<XInputController>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""53c4f9cf-535e-4ad7-84b7-c41e8781cc25"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""780cf770-045c-4d45-ac03-dca3671ecdd5"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftGamepadButton"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Up"",
+                    ""id"": ""4df6f249-bb88-407c-88ce-0b24f168233f"",
+                    ""path"": ""<XInputController>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftGamepadButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Down"",
+                    ""id"": ""6267f6a8-d28f-4f31-964a-a9c1cfb8b037"",
+                    ""path"": ""<XInputController>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftGamepadButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Left"",
+                    ""id"": ""3b2e9797-2bfd-4a0f-811b-69b6c6c1315b"",
+                    ""path"": ""<XInputController>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftGamepadButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Right"",
+                    ""id"": ""c7e8f0a0-eeb7-4d20-b5fa-8e8c6dca7e29"",
+                    ""path"": ""<XInputController>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftGamepadButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""6c88ae14-7fe2-4128-9ef4-d75555a5659d"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftGamepadButton"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Up"",
+                    ""id"": ""70014efa-11f5-49a5-80be-a7bf37bff9b7"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftGamepadButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Down"",
+                    ""id"": ""d8548cac-fa16-4923-bbd3-c49fb4efffc4"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftGamepadButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Left"",
+                    ""id"": ""5d495d98-d340-478c-bc9f-1eae95ccc1c7"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftGamepadButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Right"",
+                    ""id"": ""6569a0ee-f62a-4fd8-a943-fb3feee7c2b8"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftGamepadButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -360,6 +510,8 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
         m_Interface = asset.FindActionMap("Interface", throwIfNotFound: true);
         m_Interface_Button = m_Interface.FindAction("Button", throwIfNotFound: true);
         m_Interface_InteractBtn = m_Interface.FindAction("InteractBtn", throwIfNotFound: true);
+        m_Interface_Pause = m_Interface.FindAction("Pause", throwIfNotFound: true);
+        m_Interface_LeftGamepadButton = m_Interface.FindAction("LeftGamepadButton", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -518,12 +670,16 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
     private IInterfaceActions m_InterfaceActionsCallbackInterface;
     private readonly InputAction m_Interface_Button;
     private readonly InputAction m_Interface_InteractBtn;
+    private readonly InputAction m_Interface_Pause;
+    private readonly InputAction m_Interface_LeftGamepadButton;
     public struct InterfaceActions
     {
         private @PlayerMapping m_Wrapper;
         public InterfaceActions(@PlayerMapping wrapper) { m_Wrapper = wrapper; }
         public InputAction @Button => m_Wrapper.m_Interface_Button;
         public InputAction @InteractBtn => m_Wrapper.m_Interface_InteractBtn;
+        public InputAction @Pause => m_Wrapper.m_Interface_Pause;
+        public InputAction @LeftGamepadButton => m_Wrapper.m_Interface_LeftGamepadButton;
         public InputActionMap Get() { return m_Wrapper.m_Interface; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -539,6 +695,12 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                 @InteractBtn.started -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnInteractBtn;
                 @InteractBtn.performed -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnInteractBtn;
                 @InteractBtn.canceled -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnInteractBtn;
+                @Pause.started -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnPause;
+                @LeftGamepadButton.started -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnLeftGamepadButton;
+                @LeftGamepadButton.performed -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnLeftGamepadButton;
+                @LeftGamepadButton.canceled -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnLeftGamepadButton;
             }
             m_Wrapper.m_InterfaceActionsCallbackInterface = instance;
             if (instance != null)
@@ -549,6 +711,12 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                 @InteractBtn.started += instance.OnInteractBtn;
                 @InteractBtn.performed += instance.OnInteractBtn;
                 @InteractBtn.canceled += instance.OnInteractBtn;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
+                @LeftGamepadButton.started += instance.OnLeftGamepadButton;
+                @LeftGamepadButton.performed += instance.OnLeftGamepadButton;
+                @LeftGamepadButton.canceled += instance.OnLeftGamepadButton;
             }
         }
     }
@@ -587,5 +755,7 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
     {
         void OnButton(InputAction.CallbackContext context);
         void OnInteractBtn(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
+        void OnLeftGamepadButton(InputAction.CallbackContext context);
     }
 }

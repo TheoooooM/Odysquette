@@ -90,6 +90,7 @@ public class Playercontroller : MonoBehaviour {
         canPlayAnim = true;
         playerInput = new PlayerMapping();
         playerInput.Player.Enable();
+        playerInput.Interface.Enable();
         playerInput.Player.Shoot.performed += ShootOnperformed;
         playerInput.Player.Shoot.canceled += ShootOncanceled;
         playerInput.Player.ShootGamepad.performed += ShootGamepadOnperformed;
@@ -102,8 +103,16 @@ public class Playercontroller : MonoBehaviour {
         playerInput.Player.DashGamepad.performed += DashGamepadOnperformed;
         playerInput.Player.Dash.canceled += DashCanceled;
         playerInput.Player.DashGamepad.canceled += DashCanceledGamepad;
+        playerInput.Interface.Pause.performed += PauseOnperformed;
         
         defaultSpeed = MouvementSpeed;
+    }
+
+    private void PauseOnperformed(InputAction.CallbackContext obj)
+    {
+        Debug.Log("press Pause Button");
+        if (!GameManager.Instance.gameIsPause) UIManager.Instance.Pause();
+        else UIManager.Instance.Unpause();
     }
 
     public void ChangeInputState(bool activ) {

@@ -1,9 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class CustomSliderUI : MonoBehaviour {
+public class CustomSliderUI : Selectable
+{
+    [SerializeField] private PlayerMapping input;
+    
     [SerializeField] private bool sfxSound = false;
     [Space]
     [SerializeField] private Image sliderImage = null;
@@ -30,12 +35,35 @@ public class CustomSliderUI : MonoBehaviour {
 #endif
 */
 
+
+    protected override void Awake()
+    {
+        base.Awake();
+        input = new PlayerMapping();
+        input.Interface.Enable();
+        input.Interface.LeftGamepadButton.performed += LeftGamepadButtonOnperformed;
+    }
+
+    private void LeftGamepadButtonOnperformed(InputAction.CallbackContext obj)
+    {
+        if (EventSystem.current.currentSelectedGameObject == gameObject)
+        {
+            float value = PlayerPrefs.GetFloat((sfxSound ? "sfx" : "music"), .2f);
+            Debug.Log(obj.ReadValue<Vector2>());
+            value += obj.ReadValue<Vector2>().x/10;
+            value = Mathf.Clamp(value, 0, 1);
+            UpdateSliderValue(value);
+            HandleObject.GetComponent<HandlerSlider>().SetPos(value);
+        }
+    }
+
     /// <summary>
     /// Called at start
     /// </summary>
     private void Start() {
         OpenMethod();
     }
+    
 
     /// <summary>
     /// Method to call when opening the settings menu

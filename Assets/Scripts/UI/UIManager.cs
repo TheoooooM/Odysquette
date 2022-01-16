@@ -5,7 +5,8 @@ using System.Data.OleDb;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 
 public class UIManager : MonoBehaviour {
@@ -35,6 +36,7 @@ public class UIManager : MonoBehaviour {
     [Header("----Game Over----")] 
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private TextMeshProUGUI GameOverText;
+    [SerializeField] private GameObject gameOverFirstButton;
     public GameObject endSplash;
     public TMP_InputField PlayerName;
     public TextMeshProUGUI totalScoreText;
@@ -47,6 +49,7 @@ public class UIManager : MonoBehaviour {
     [Header("----Pause----")] 
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] public GameObject inGameMenu;
+    [SerializeField] private GameObject pauseFirstButton;
     public GameObject PauseMenu => pauseMenu;
 
     [Header("----Ressources & Score----")] 
@@ -111,6 +114,8 @@ public class UIManager : MonoBehaviour {
         inGameMenu.GetComponent<CanvasGroup>().alpha = 0;
         cursor.SetActive(false);
         pauseMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(pauseFirstButton);
         sfxSlider.OpenMethod();
         musicSlider.OpenMethod();
         Time.timeScale = 0f;
@@ -154,6 +159,8 @@ public class UIManager : MonoBehaviour {
         */
         totalScoreText.text = "Final Score : " + NeverDestroy.Instance.Score;
         GameOverPanel.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(gameOverFirstButton);
         //Time.timeScale = 0;
     }
 
