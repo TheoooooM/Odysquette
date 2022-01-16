@@ -430,6 +430,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2727857359122833632, guid: 1a3c8bcdae53ae348931bfd230a43f00, type: 3}
   m_PrefabInstance: {fileID: 1294315798}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1411927629
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1411927630}
+  m_Layer: 0
+  m_Name: RoomPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1411927630
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411927629}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1783872329}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1660600205 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 492872803174236793, guid: 70acb8bed26a74c41bf032877a82a1e2, type: 3}
@@ -441,6 +471,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1783872329 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8730241956978092253, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
+  m_PrefabInstance: {fileID: 8730241957544497542}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1881559862 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1464324219867819126, guid: 1a3c8bcdae53ae348931bfd230a43f00, type: 3}
@@ -976,16 +1011,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8730241956978092250, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
       propertyPath: disableNeighboor
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8730241956978092250, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
+      propertyPath: forceRoomOneSpawn
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8730241956978092250, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
       propertyPath: normalRoom.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8730241956978092250, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
       propertyPath: normalRoom.Array.data[0]
       value: 
-      objectReference: {fileID: 2178715203969850272, guid: 6c57a0741a445e542a7823ad57a87bd6, type: 3}
+      objectReference: {fileID: 1027425271377955494, guid: 13f63c40b834b0e4b9edfa1deecc908a, type: 3}
     - target: {fileID: 8730241956978092250, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
       propertyPath: normalRoom.Array.data[1]
       value: 
@@ -993,15 +1032,15 @@ PrefabInstance:
     - target: {fileID: 8730241956978092250, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
       propertyPath: normalRoom.Array.data[2]
       value: 
-      objectReference: {fileID: 1499031214255302118, guid: 0061ef73b51a8fa41accde7403a37275, type: 3}
+      objectReference: {fileID: 6796309138339182671, guid: e88bb9663c2f24c4f95124923eb955f6, type: 3}
     - target: {fileID: 8730241956978092250, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
       propertyPath: normalRoom.Array.data[3]
       value: 
-      objectReference: {fileID: 1027425271377955494, guid: 13f63c40b834b0e4b9edfa1deecc908a, type: 3}
+      objectReference: {fileID: 1499031214255302118, guid: 0061ef73b51a8fa41accde7403a37275, type: 3}
     - target: {fileID: 8730241956978092250, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
       propertyPath: normalRoom.Array.data[4]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2178715203969850272, guid: 6c57a0741a445e542a7823ad57a87bd6, type: 3}
     - target: {fileID: 8730241956978092250, guid: 39690b0be04e6d34bb76db6ffb2d3c72, type: 3}
       propertyPath: OutsideRoom.Array.data[0]
       value: 
@@ -1089,7 +1128,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5722791561063032387, guid: e3acaea9d04a93b4d90e17652d7ce63f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 38.599976
+      value: 38.600098
+      objectReference: {fileID: 0}
+    - target: {fileID: 5722791561063032387, guid: e3acaea9d04a93b4d90e17652d7ce63f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -121.410034
       objectReference: {fileID: 0}
     - target: {fileID: 6505332164727602219, guid: e3acaea9d04a93b4d90e17652d7ce63f, type: 3}
       propertyPath: m_AnchorMax.x

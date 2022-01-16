@@ -300,15 +300,20 @@ public class Generation : MonoBehaviour {
             newRoomID = 0;
             tryForce = false;
             forceNow = true;
-            Debug.Log("Get Forced");
         }
         else
         {
-            if (lastRoomId != -1) validRooms.Remove(lastRoomId);
-            
+        if (lastRoomId != -1) validRooms.Remove(lastRoomId);
+        switch (lastRoomId) {
+            case 1:
+                validRooms.Remove(2);
+                break;
+            case 2:
+                validRooms.Remove(1);
+                break;
+        }
             newRoomID = validRooms[Random.Range(0, validRooms.Count)];
         }
-        
         RoomCreator newRoom = normalRoom[newRoomID];
 
         if (newRoom.exitDicitonnary.Count == 0) {
@@ -421,25 +426,25 @@ public class Generation : MonoBehaviour {
                                         switch (exitSide) {
                                             case open.top:
                                                 RC.exitTop = true;
-                                                RC.room.exitGO = RC.closeTop.gameObject;
+                                                RC.room.exitGO = RC.lightTop.gameObject;
                                                 //Debug.Log("set exit top at room n°" + i);
                                                 break;
 
                                             case open.left:
                                                 RC.exitLeft = true;
-                                                RC.room.exitGO = RC.closeLeft.gameObject;
+                                                RC.room.exitGO = RC.lightLeft.gameObject;
                                                 //Debug.Log("set exit left at room n°" + i);
                                                 break;
 
                                             case open.right:
                                                 RC.exitRight = true;
-                                                RC.room.exitGO = RC.closeRight.gameObject;
+                                                RC.room.exitGO = RC.lightRight.gameObject;
                                                 //Debug.Log("set exit right at room n°" + i);
                                                 break;
 
                                             case open.bot:
                                                 RC.exitBot = true;
-                                                RC.room.exitGO = RC.closeBot.gameObject;
+                                                RC.room.exitGO = RC.lightBot.gameObject;
                                                 //Debug.Log("set exit bot at room n°" + i);
                                                 break;
                                         }
@@ -449,25 +454,25 @@ public class Generation : MonoBehaviour {
                                         switch (needOpen) {
                                             case open.top:
                                                 RC.exitTop = true;
-                                                RC.room.enterGO = RC.closeTop.gameObject;
+                                                RC.room.enterGO = RC.doorTop.gameObject;
                                                 RC.closeRoom.UpdateCloseRoom(true, exitSide == open.right, exitSide == open.bot, exitSide == open.left, true, NeverDestroy.Instance.level == 2 || forceRedLight);
                                                 break;
 
                                             case open.left:
                                                 RC.exitLeft = true;
-                                                RC.room.enterGO = RC.closeLeft.gameObject;
+                                                RC.room.enterGO = RC.doorLeft.gameObject;
                                                 RC.closeRoom.UpdateCloseRoom(exitSide == open.top, exitSide == open.right, exitSide == open.bot, true, true, NeverDestroy.Instance.level == 2 || forceRedLight);
                                                 break;
 
                                             case open.right:
                                                 RC.exitRight = true;
-                                                RC.room.enterGO = RC.closeRight.gameObject;
+                                                RC.room.enterGO = RC.doorRight.gameObject;
                                                 RC.closeRoom.UpdateCloseRoom(exitSide == open.top, true, exitSide == open.bot, exitSide == open.left, true, NeverDestroy.Instance.level == 2 || forceRedLight);
                                                 break;
 
                                             case open.bot:
                                                 RC.exitBot = true;
-                                                RC.room.enterGO = RC.closeBot.gameObject;
+                                                RC.room.enterGO = RC.doorBot.gameObject;
                                                 RC.closeRoom.UpdateCloseRoom(exitSide == open.top, exitSide == open.right, true, exitSide == open.left, true, NeverDestroy.Instance.level == 2 || forceRedLight);
                                                 break;
                                         }

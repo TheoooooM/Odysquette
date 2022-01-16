@@ -26,6 +26,7 @@ public class RoomManager : MonoBehaviour {
     }
 
     private void Update() {
+        if(enterGO != null) enterGO.SetActive(false);
         if (runningRoom) {
             foreach (RoomContainer RC in partList) {
                 RC.gameObject.SetActive(true);
@@ -43,8 +44,7 @@ public class RoomManager : MonoBehaviour {
             if (ennemiesList.Count == 0) {
                 if (!sendanim) {
                     GameManager.Instance.endRoom();
-                    if(chest != null)
-                   LaunchDrone();
+                    if(chest != null) LaunchDrone();
                     sendanim = true;
                 }
 

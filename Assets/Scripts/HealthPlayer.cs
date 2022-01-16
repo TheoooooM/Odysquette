@@ -4,35 +4,28 @@ using UnityEngine;
 
 public class HealthPlayer : MonoBehaviour {
     public Rigidbody2D rb;
-    [Space]
-    [SerializeField] private CameraShake cameraShake;
+    [Space] [SerializeField] private CameraShake cameraShake;
     [SerializeField] public int maxHealth;
     [SerializeField] public int healthPlayer;
     [SerializeField] private GameObject healthFx = null;
     private int lastHealth = 0;
-    [SerializeField]
-    private float _ultimateSpeedMaterial;
-    [Space]
-    [SerializeField] private Animator animator;
-    [Space]
-    [SerializeField] private float timeInvincible;
+    [SerializeField] private float _ultimateSpeedMaterial;
+    [Space] [SerializeField] private Animator animator;
+    [Space] [SerializeField] private float timeInvincible;
     private SpriteRenderer spriteRenderer;
     [SerializeField] private bool isInvincible;
     [SerializeField] private float timerInvincible;
-    [Space]
-    public bool playUltimateSound;
-    [Space]
-    [SerializeField] private Material defaultMaterial;
+    [Space] public bool playUltimateSound;
+    [Space] [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material ultimateMaterial;
-    [Space]
-    public bool isDeath;
+    [Space] public bool isDeath;
     [SerializeField] private bool canTakeDamage = false;
-    [Space]
-    public GameObject ultimateAura;
+
+    [Space] public GameObject ultimateAura;
+
     // Start is called before the first frame update
     public static HealthPlayer Instance;
-    [Space]
-    public Playercontroller playerController;
+    [Space] public Playercontroller playerController;
     public bool isGameOver;
 
     private void Awake() {
@@ -42,14 +35,14 @@ public class HealthPlayer : MonoBehaviour {
 
     private void Start() {
         AddCommandConsole();
-        
+
         playerController = GetComponent<Playercontroller>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        
+
         if (NeverDestroy.Instance != null) healthPlayer = NeverDestroy.Instance.life;
         else healthPlayer = maxHealth;
         lastHealth = healthPlayer;
-        
+
         rb = GetComponent<Rigidbody2D>();
         if (UIManager.Instance != null) {
             int actualLifeHeart = Mathf.CeilToInt(healthPlayer / 2f);
@@ -79,52 +72,44 @@ public class HealthPlayer : MonoBehaviour {
     private void AddCommandConsole() {
         CommandConsole REGEN = new CommandConsole("life", "life : Take (<0) or Give (>0) life to the player", new List<CommandClass>() {new CommandClass(typeof(int))}, (value) => {
             int life = int.Parse(value[0]);
-            
-            if(life > 0) GiveHealthPlayer(life);
-            else if(life < 0) TakeDamagePlayer(-life);
+
+            if (life > 0) GiveHealthPlayer(life);
+            else if (life < 0) TakeDamagePlayer(-life);
         });
-        
-        CommandConsole INVICIBLE = new CommandConsole("invicible", "invicible : become invicible to ennemy", null, (_) => {
-            canTakeDamage = !canTakeDamage;
-        });
-        
+
+        CommandConsole INVICIBLE = new CommandConsole("invicible", "invicible : become invicible to ennemy", null, (_) => { canTakeDamage = !canTakeDamage; });
+
         CommandConsoleRuntime.Instance.AddCommand(REGEN);
         CommandConsoleRuntime.Instance.AddCommand(INVICIBLE);
     }
-    
+
     private void Update() {
-        if (!isDeath)
-        {
-                    if (isInvincible) {
-                        if (timerInvincible > timeInvincible) {
-                            timerInvincible = 0;
-                            isInvincible = false;
-                            spriteRenderer.color = Color.white;
-                        }
-                        else {
-                            timerInvincible += Time.deltaTime;
-                        }
-                    }
-                    else
-                    {
-                            if (GameManager.Instance.ultimateValue == 125)
-            {
-                if (!playUltimateSound)
-                {
-                    AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.UltimateReady);  
-                    UIManager.Instance.backgroundUltimateUI.material.SetFloat("_Thikness", _ultimateSpeedMaterial);
-                    playUltimateSound = true;
+        if (!isDeath) {
+            if (isInvincible) {
+                if (timerInvincible > timeInvincible) {
+                    timerInvincible = 0;
+                    isInvincible = false;
+                    spriteRenderer.color = Color.white;
                 }
-             
-                    Debug.Log("tdsj");
-                  
-                spriteRenderer.material.SetTexture(spriteRenderer.sprite.name, spriteRenderer.sprite.texture);
-                spriteRenderer.material = ultimateMaterial;
+                else {
+                    timerInvincible += Time.deltaTime;
+                }
             }
+            else {
+                if (GameManager.Instance.ultimateValue == 125) {
+                    if (!playUltimateSound) {
+                        AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.UltimateReady);
+                        UIManager.Instance.backgroundUltimateUI.material.SetFloat("_Thikness", _ultimateSpeedMaterial);
+                        playUltimateSound = true;
                     }
 
-        }
+                    Debug.Log("tdsj");
 
+                    spriteRenderer.material.SetTexture(spriteRenderer.sprite.name, spriteRenderer.sprite.texture);
+                    spriteRenderer.material = ultimateMaterial;
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -134,32 +119,30 @@ public class HealthPlayer : MonoBehaviour {
     public void TakeDamagePlayer(int damage) {
         if (!isInvincible && !canTakeDamage) {
             if (healthPlayer - damage <= 0) StartCoroutine(PlayAnimationDeath());
-            
+
             AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Damage);
             healthPlayer -= damage;
-            if(cameraShake != null) cameraShake.CreateCameraShake(.15f, .4f);
-            
+            if (cameraShake != null) cameraShake.CreateCameraShake(.15f, .4f);
+
             if (UIManager.Instance == null) return;
             StartCoroutine(UpdateLife());
-            
+
             for (int i = UIManager.Instance.HeartsLifes.Count - 1; i > -1; i--) {
-                if(GameManager.Instance.ultimateValue == 125)
+                if (GameManager.Instance.ultimateValue == 125)
                     CancelUltimate();
                 spriteRenderer.material.SetFloat("_HitTime", Time.time);
-                if(GameManager.Instance != null && GameManager.Instance.strawSprite != null) GameManager.Instance.strawSprite.material.SetFloat("_HitTime", Time.time);
+                if (GameManager.Instance != null && GameManager.Instance.strawSprite != null) GameManager.Instance.strawSprite.material.SetFloat("_HitTime", Time.time);
                 isInvincible = true;
             }
         }
     }
-    
-   public void CancelUltimate()
-   {
-       playUltimateSound = false;
-     
-       spriteRenderer.material.SetTexture(spriteRenderer.sprite.name, spriteRenderer.sprite.texture);
-       spriteRenderer.material = defaultMaterial;
-      
-   }
+
+    public void CancelUltimate() {
+        playUltimateSound = false;
+
+        spriteRenderer.material.SetTexture(spriteRenderer.sprite.name, spriteRenderer.sprite.texture);
+        spriteRenderer.material = defaultMaterial;
+    }
 
     /// <summary>
     /// Update the life
@@ -167,24 +150,25 @@ public class HealthPlayer : MonoBehaviour {
     private IEnumerator UpdateLife() {
         int lifeChange = healthPlayer - lastHealth;
         int lifeChangeValueTo1 = (lifeChange > 0 ? 1 : -1);
-        
+
         for (int i = 0; i < Mathf.Abs(lifeChange); i++) {
             int oldHeartImg = Mathf.CeilToInt((lastHealth / 2f) - 1);
             int newHeartImg = Mathf.CeilToInt(((lastHealth + (1 * lifeChangeValueTo1)) / 2f) - 1);
             //Debug.Log(oldHeartImg + " " + newHeartImg);
-            
+
             //int newHeartImg = Mathf.CeilToInt((healthPlayer / 2f) - 1);
 
             if (oldHeartImg == newHeartImg) {
                 UIManager.Instance.HeartsLifes[newHeartImg].GetComponent<Animator>().SetFloat("lifeValue", UIManager.Instance.HeartsLifes[newHeartImg].GetComponent<Animator>().GetFloat("lifeValue") + (0.5f * lifeChangeValueTo1));
                 for (int j = 0; j < 3; j++) {
-                    if(j != newHeartImg && lifeChange < 0) UIManager.Instance.HeartsLifes[j].GetComponent<Animator>().SetTrigger("UpdateLife");
+                    if (j != newHeartImg && lifeChange < 0) UIManager.Instance.HeartsLifes[j].GetComponent<Animator>().SetTrigger("UpdateLife");
                 }
+
                 lastHealth += 1 * lifeChangeValueTo1;
             }
             else {
                 if (lifeChange > 0) {
-                    UIManager.Instance.HeartsLifes[newHeartImg].GetComponent<Animator>().SetFloat("lifeValue", UIManager.Instance.HeartsLifes[newHeartImg].GetComponent<Animator>().GetFloat("lifeValue") + (0.5f * lifeChangeValueTo1));   
+                    UIManager.Instance.HeartsLifes[newHeartImg].GetComponent<Animator>().SetFloat("lifeValue", UIManager.Instance.HeartsLifes[newHeartImg].GetComponent<Animator>().GetFloat("lifeValue") + (0.5f * lifeChangeValueTo1));
                     /*for (int j = 0; j < 3; j++) {
                         if(j != newHeartImg) UIManager.Instance.HeartsLifes[j].GetComponent<Animator>().SetTrigger("UpdateLife");
                     }*/
@@ -192,93 +176,63 @@ public class HealthPlayer : MonoBehaviour {
                 else {
                     UIManager.Instance.HeartsLifes[oldHeartImg].GetComponent<Animator>().SetFloat("lifeValue", UIManager.Instance.HeartsLifes[oldHeartImg].GetComponent<Animator>().GetFloat("lifeValue") + (0.5f * lifeChangeValueTo1));
                     for (int j = 0; j < 3; j++) {
-                        if(j != oldHeartImg) UIManager.Instance.HeartsLifes[j].GetComponent<Animator>().SetTrigger("UpdateLife");
+                        if (j != oldHeartImg) UIManager.Instance.HeartsLifes[j].GetComponent<Animator>().SetTrigger("UpdateLife");
                     }
                 }
-                
+
                 lastHealth += 1 * lifeChangeValueTo1;
             }
 
             yield return new WaitForSeconds(lifeChange < 0 ? 2 : 1);
         }
     }
-    
+
     /// <summary>
     /// Heal the player
     /// </summary>
     /// <param name="heal"></param>
     public void GiveHealthPlayer(int heal) {
-        if(healthPlayer != 6 && healthFx != null) Instantiate(healthFx, transform.position - transform.up / 2, Quaternion.identity, transform);
+        if (healthPlayer != 6 && healthFx != null) Instantiate(healthFx, transform.position - transform.up / 2, Quaternion.identity, transform);
         healthPlayer = Mathf.Clamp(healthPlayer + heal, 0, 6);
         StartCoroutine(UpdateLife());
     }
 
-    
+
     public void OnDeathPlayer() {
-        
-        if((NeverDestroy.Instance.minute*60+ NeverDestroy.Instance.second) != 0 )
-        GameManager.Instance.Score += (20*60/ (NeverDestroy.Instance.minute*60+ NeverDestroy.Instance.second));
+        if ((NeverDestroy.Instance.minute * 60 + NeverDestroy.Instance.second) != 0)
+            GameManager.Instance.Score += (20 * 60 / (NeverDestroy.Instance.minute * 60 + NeverDestroy.Instance.second));
 
         GameManager.Instance.SetND();
         NeverDestroy.Instance.Score = GameManager.Instance.Score;
-      
+
         if (GameManager.Instance != null) GameManager.Instance.enabled = false;
-      
-        
+
+
         if (UIManager.Instance != null) UIManager.Instance.GameOver();
         AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Death);
     }
-    
-    private IEnumerator PlayAnimationDeath()
-    {
+
+    private IEnumerator PlayAnimationDeath() {
         isDeath = true;
         UIManager.Instance.inGameMenu.SetActive(false);
-          spriteRenderer.sortingLayerName = "UI";
-          if(BossManager.instance != null) 
-              BossManager.instance.healthBar.gameObject.SetActive(false);
-        
+        spriteRenderer.sortingLayerName = "UI";
+        if (BossManager.instance != null)
+            BossManager.instance.healthBar.gameObject.SetActive(false);
+
         Time.timeScale = 0;
         yield return new WaitForEndOfFrame();
         SetUpDeath();
         animator.Play("Player_Death");
-        
     }
 
-    void SetUpDeath()
-    {
+    void SetUpDeath() {
         spriteRenderer.material.SetFloat("_HitTime", -1);
         rb.velocity = Vector2.zero;
     }
 
     private void OnTriggerStay2D(Collider2D other) {
-        if (!HealthPlayer.Instance.isDeath)
-        {
+        if (!HealthPlayer.Instance.isDeath) {
             if (other.CompareTag("ShieldEnemy")) TakeDamagePlayer(1);
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

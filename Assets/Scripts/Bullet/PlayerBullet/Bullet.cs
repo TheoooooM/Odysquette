@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Policy;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -76,6 +77,7 @@ public class Bullet : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("DestructableObject")) return;
+
         if (isColliding) {
             DesactiveBullet();
             return;
@@ -123,25 +125,24 @@ public class Bullet : MonoBehaviour {
                 lastEnemyHit = other.gameObject;
                 //PoolManager.Instance.SpawnImpactPool(transform);
             }
-            else if(_pierceCount == 0){
+            else if(pierceCount == 0 || !GameManager.Instance.HasEffect(GameManager.Effect.piercing)){
                 DesactiveBullet();
             }
         }
-        else if (!other.CompareTag("Walls")) {
+        else if (!other.CompareTag("Walls") && !other.CompareTag("DestructableObject")) {
             DesactiveBullet();
         }
     }
-
-
+    
     public virtual void OnCollisionEnter2D(Collision2D other) {
         isColliding = true;
         
-        if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls")||other.gameObject.CompareTag("ShieldEnemy"))){ 
+        if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls") || other.gameObject.CompareTag("ShieldEnemy") || other.gameObject.CompareTag("DestructableObject"))){
             if (GameManager.Instance.HasEffect(GameManager.Effect.poison)) PoolManager.Instance.SpawnPoisonPool(transform, other.contacts[0].normal);
             if (GameManager.Instance.HasEffect(GameManager.Effect.explosive)) Explosion();
-            
+
             StartCoroutine(DestroyBulletIfStuck());
-            
+
             _bounceCount--;
             AudioManager.Instance.PlayImpactStraw(AudioManager.StrawSoundEnum.Bounce, transform.position);
             var speed = lastVelocity.magnitude;
@@ -150,17 +151,22 @@ public class Bullet : MonoBehaviour {
             var direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
             rb.velocity = direction * Mathf.Max(speed, 0f);
             lastVelocity = rb.velocity;
-            
+
             var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
             transform.rotation = Quaternion.Euler(0, 0, angle);
-            
+
             isBounce = true;
             Debug.Log(isBounce);
-            PoolManager.Instance.SpawnImpactPool(transform);
+            if (GameManager.Instance.HasEffect(GameManager.Effect.explosive)) PoolManager.Instance.SpawnImpactPool(transform);
+
+            if (other.gameObject.CompareTag("DestructableObject")) other.gameObject.GetComponent<DestructableObejct>().TakeDamage(damage);
         }
         else {
-            if (GameManager.Instance.HasEffect(GameManager.Effect.poison) && !other.gameObject.CompareTag("Walls")) PoolManager.Instance.SpawnPoisonPool(transform, other.contacts[0].normal);
-            if (GameManager.Instance.HasEffect(GameManager.Effect.explosive) && !other.gameObject.CompareTag("Walls")) Explosion();
+            if (GameManager.Instance.HasEffect(GameManager.Effect.poison)) PoolManager.Instance.SpawnPoisonPool(transform, other.contacts[0].normal);
+            if (GameManager.Instance.HasEffect(GameManager.Effect.explosive)) Explosion();
+            
+            if (other.gameObject.CompareTag("DestructableObject")) other.gameObject.GetComponent<DestructableObejct>().TakeDamage(damage);
+            
             DesactiveBullet();
         }
     }
@@ -203,7 +209,6 @@ public class Bullet : MonoBehaviour {
             gameObject.SetActive(false);
             PoolManager.Instance.SpawnImpactPool(transform);
             isEnable = false;
-            Debug.Log("je me desactive");
             //if(GameManager.Instance.firstEffect == GameManager.Effect.explosion && GameManager.Instance.secondEffect == GameManager.Effect.explosion) PoolManager.Instance.SpawnExplosionPool(transform);
             if (rateMode == StrawSO.RateMode.Ultimate) {
                 PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][1].Enqueue(gameObject);

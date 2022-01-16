@@ -30,7 +30,6 @@ public class RoomContainer : MonoBehaviour {
 
     [Header("=======================DEBUG=========================")]
     public bool exitTop = true;
-
     public bool exitLeft = true;
     public bool exitRight = true;
     public bool exitBot = true;
@@ -41,11 +40,16 @@ public class RoomContainer : MonoBehaviour {
 
 
     [Header("=======================PAS TOUCHE !!!=========================")]
-    [SerializeField] public GameObject closeBot;
-
-    [SerializeField] public GameObject closeLeft;
-    [SerializeField] public GameObject closeRight;
-    [SerializeField] public GameObject closeTop;
+    [SerializeField] public GameObject doorBot;
+    [SerializeField] public GameObject doorLeft;
+    [SerializeField] public GameObject doorRight;
+    [SerializeField] public GameObject doorTop;
+    [Space]
+    [SerializeField] public GameObject lightBot;
+    [SerializeField] public GameObject lightLeft;
+    [SerializeField] public GameObject lightRight;
+    [SerializeField] public GameObject lightTop;
+    [Space]
     [SerializeField] private GameObject openBot;
     [SerializeField] private GameObject openLeft;
     [SerializeField] private GameObject openRight;
@@ -87,77 +91,83 @@ public class RoomContainer : MonoBehaviour {
         exitList = new Dictionary<int, Generation.open>();
         exitAmount = 0;
 
+        //TOP
         if (partTop) {
             openTop.SetActive(false);
-            closeTop.SetActive(false);
+            doorTop.SetActive(false);
             exitTop = false;
         }
-        else {
+        else { 
             if (exitTop) {
                 openTop.SetActive(true);
-                closeTop.SetActive(false);
+                doorTop.SetActive(true);
+                lightTop.SetActive(true);
                 exitList.Add(exitAmount, Generation.open.top);
                 exitAmount++;
             }
             else {
                 openTop.SetActive(false);
-                closeTop.SetActive(false);
+                doorTop.SetActive(false);
             }
         }
 
+        //LEFT
         if (partLeft) {
             openLeft.SetActive(false);
-            closeLeft.SetActive(false);
+            doorLeft.SetActive(false);
             exitLeft = false;
         }
         else {
             if (exitLeft) {
                 openLeft.SetActive(true);
-                closeLeft.SetActive(false);
+                doorLeft.SetActive(true);
+                lightLeft.SetActive(true);
                 exitList.Add(exitAmount, Generation.open.left);
                 exitAmount++;
             }
             else {
                 openLeft.SetActive(false);
-                closeLeft.SetActive(false);
+                doorLeft.SetActive(false);
             }
         }
 
-
+        //RIGHT
         if (partRight) {
             openRight.SetActive(false);
-            closeRight.SetActive(false);
+            doorRight.SetActive(false);
             exitRight = false;
         }
         else {
             if (exitRight) {
                 openRight.SetActive(true);
-                closeRight.SetActive(false);
+                doorRight.SetActive(true);
+                lightRight.SetActive(true);
                 exitList.Add(exitAmount, Generation.open.right);
                 exitAmount++;
             }
             else {
                 openRight.SetActive(false);
-                closeRight.SetActive(false);
+                doorRight.SetActive(false);
             }
         }
 
-
+        //BOT
         if (partBot) {
             openBot.SetActive(false);
-            closeBot.SetActive(false);
+            doorBot.SetActive(false);
             exitBot = false;
         }
         else {
             if (exitBot) {
                 openBot.SetActive(true);
-                closeBot.SetActive(false);
+                doorBot.SetActive(true);
+                lightBot.SetActive(true);
                 exitList.Add(exitAmount, Generation.open.bot);
                 exitAmount++;
             }
             else {
                 openBot.SetActive(false);
-                closeBot.SetActive(false);
+                doorBot.SetActive(false);
             }
         }
     }
