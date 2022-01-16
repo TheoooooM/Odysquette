@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CircleCollider2D))]
 public class PlayerDetectionEvent : MonoBehaviour {
     #region Variables
+    [SerializeField] private AudioSource audio = null;
+    [Space]
     [SerializeField] private UnityEvent enterTriggerEvent =  null;
     [SerializeField] private UnityEvent interactTriggerEvent =  null;
     [SerializeField] private UnityEvent exitTriggerEvent =  null;
@@ -26,8 +28,7 @@ public class PlayerDetectionEvent : MonoBehaviour {
         playerInput = new PlayerMapping();
         playerInput.Interface.InteractBtn.performed += PressE;
     }
-
-
+    
     #region Player Detection
     /// <summary>
     /// When the player enter in collision
@@ -61,4 +62,11 @@ public class PlayerDetectionEvent : MonoBehaviour {
     }
 
     #endregion Player Detection
+
+    /// <summary>
+    /// Update the volume of the sound
+    /// </summary>
+    public void UpdateVolume() {
+        if(audio != null) audio.volume = 0.05f * AudioManager.Instance.SfxSoundMultiplier;
+    }
 }

@@ -33,24 +33,20 @@ public class DroneManager : MonoBehaviour
     private void Awake() {
         instance = this;
     }
-    private void OnEnable()
-    {
-
-        AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Drone);
+    private void OnEnable() {
+        if(AudioManager.Instance != null) AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Drone);
         Debug.Log("testaa");
         int random = Random.Range(0, 100);
-        if (chestProcentDrop > random)
-        {
+        if (chestProcentDrop > random) {
             withParcel = true;
             animator.Play(idleWithParcel);
         }
-        else
-        {
+        else {
             withParcel = false;
             animator.Play(idleWithoutParcel);
         }
 
-        posForLaunchParcel = Playercontroller.Instance.transform.position + new Vector3(0, yPlus, 0);
+        if(Playercontroller.Instance != null) posForLaunchParcel = Playercontroller.Instance.transform.position + new Vector3(0, yPlus, 0);
         transform.position = SetRandomPosition();
     }
 
