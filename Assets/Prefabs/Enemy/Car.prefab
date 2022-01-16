@@ -74,6 +74,7 @@ MonoBehaviour:
   enemyDashCollision: {fileID: 5175634095495853138}
   aimPoint: {fileID: 2259390503282645450}
   angle: 90
+  rb: {fileID: 2259390503688608350}
 --- !u!1 &2259390503688608288
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,6 +311,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectEnemyArea: {fileID: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 16778240
   ESM: {fileID: 0}
   range: 17
   patrol: {fileID: 11400000, guid: 1a5e71f4ee653b244a10f5b078c899b3, type: 2}

@@ -124,9 +124,13 @@ public class Playercontroller : MonoBehaviour {
             if (playerInput == null) return;
             if (inKnockback)
             {
-                if (timerKnockBack < timeKnockback)
+                if (falling)
+                    ResetKnockack();
+                else if (timerKnockBack < timeKnockback)
                 {
+                    
                     timerKnockBack += Time.deltaTime;
+                    Debug.Log(currentDirectionKnockback);
                     rb.velocity = currentDirectionKnockback *
                                   curveSpeedKnockback.Evaluate(timerKnockBack / timeKnockback) * speedKnockback;
                 }

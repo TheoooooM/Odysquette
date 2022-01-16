@@ -29,7 +29,7 @@ public class BossBullet : MonoBehaviour
  
     
      speed = (Vector2.Distance(rocket.position, impact.position)/baseTime)*Time.deltaTime;
-     Debug.Log(speed);
+ 
  
 
    }
