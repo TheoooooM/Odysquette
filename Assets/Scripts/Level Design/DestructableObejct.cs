@@ -11,6 +11,7 @@ public class DestructableObejct : MonoBehaviour {
     [SerializeField] private List<Collider2D> colliderPathRecalculation = new List<Collider2D>();
     [SerializeField] private BoxCollider2D col = null;
     [SerializeField] private bool useTrigger = false;
+    public bool UseTrigger => useTrigger;
     [SerializeField] private bool recalculatePath = false;
 
     [Header("---- OBJECT LIFE")] 

@@ -135,6 +135,7 @@ public class AudioManager : MonoBehaviour {
     private float shootTimer;
 
     private float sfxSoundMultiplier = 0;
+    public float SfxSoundMultiplier => sfxSoundMultiplier;
     private float musicSoundMultiplier = 0;
 
     private void Update() {
@@ -208,9 +209,14 @@ public class AudioManager : MonoBehaviour {
             musicAudioSource.Play();
         }
         //IN LEVEL
-        else if (musicSound.inLevelCalmMusic.sceneMusicName != "" && scene.name.ToUpper() == musicSound.inLevelCalmMusic.sceneMusicName.ToUpper() && (musicSound.inLevelCalmMusic.music != null && musicSound.inLevelbattleMusic.music != null)) {
+        else if (musicSound.inLevelCalmMusic.sceneMusicName != "" && scene.name.ToUpper() == musicSound.inLevelCalmMusic.sceneMusicName.ToUpper() && musicSound.inLevelCalmMusic.music != null) {
             musicAudioSource.Stop();
             musicAudioSource.clip = musicSound.inLevelCalmMusic.music;
+            musicAudioSource.Play();
+        }
+        else if (musicSound.inLevelbattleMusic.sceneMusicName != "" && scene.name.ToUpper() == musicSound.inLevelbattleMusic.sceneMusicName.ToUpper() && musicSound.inLevelbattleMusic.music != null) {
+            musicAudioSource.Stop();
+            musicAudioSource.clip = musicSound.inLevelbattleMusic.music;
             musicAudioSource.Play();
         }
         //BOSS
@@ -359,7 +365,7 @@ public class AudioManager : MonoBehaviour {
 
                 if (strawSound.explosion[0] != null && canExplosion == true) {
                     float explosionRatio = GetRatio(pos, maxDistancePoison);
-                    calmSfxAudioSource.PlayOneShot(strawSound.explosion[0], Random.Range(calmSfxAudioSource.volume - .2f, calmSfxAudioSource.volume - .1f) * explosionRatio * .75f * sfxSoundMultiplier);
+                    calmSfxAudioSource.PlayOneShot(strawSound.explosion[0], Random.Range(calmSfxAudioSource.volume - .2f, calmSfxAudioSource.volume - .1f) * explosionRatio * .85f * sfxSoundMultiplier);
                     canExplosion = false;
                     explosionTimer = 0;
                 }

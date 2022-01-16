@@ -73,10 +73,12 @@ public class Bullet : MonoBehaviour {
             DesactiveBullet();
         } 
     }
-
-
+    
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag("DestructableObject")) return;
+        if (other.CompareTag("DestructableObject") && other.GetComponent<DestructableObejct>().UseTrigger) {
+            other.GetComponent<DestructableObejct>().TakeDamage(damage);
+            return;
+        }
 
         if (isColliding) {
             DesactiveBullet();
