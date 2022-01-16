@@ -31,30 +31,6 @@ public class DestructableObejct : MonoBehaviour {
     }
 
     /// <summary>
-    /// When a bullet enter in trigger
-    /// </summary>
-    /// <param name="other"></param>
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (!useTrigger) return;
-        
-        if (other.CompareTag("Bullet")) {
-            if (other.GetComponent<Bullet>() != null) actualLife -= other.GetComponent<Bullet>().damage;
-            if(actualLife <= 0) DisableObjects();
-        }
-    }
-
-    /// <summary>
-    /// When a bullet enter in collision
-    /// </summary>
-    /// <param name="other"></param>
-    private void OnCollisionEnter2D(Collision2D other) {
-        if (useTrigger) return;
-        if (other.gameObject.CompareTag("Bullet")) {
-            if (other.gameObject.GetComponent<Bullet>() != null) TakeDamage(other.gameObject.GetComponent<Bullet>().damage);
-        }
-    }
-
-    /// <summary>
     /// Deal damage to the object
     /// </summary>
     /// <param name="damage"></param>

@@ -58,8 +58,7 @@ public class EnemyStateManager : MonoBehaviour {
     public RoomManager roomParent;
 
     //Delegate
-    public delegate void CurrentState(Dictionary<ExtensionMethods.ObjectInStateManager, Object>
-        objectValue, out bool endStep, EnemyFeedBack enemyFeedBack);
+    public delegate void CurrentState(Dictionary<ExtensionMethods.ObjectInStateManager, Object> objectValue, out bool endStep, EnemyFeedBack enemyFeedBack);
 
     public CurrentState CurrentFixedState;
 
@@ -81,6 +80,9 @@ public class EnemyStateManager : MonoBehaviour {
     private float poisonTimeLapse = 0.25f;
     private List<GameObject> poisonGam = new List<GameObject>();
 
+    [SerializeField] private Collider2D col = null;
+    
+    
     private void OnValidate() {
         //   
         // spriteRenderer.sprite = EMainStatsSo.sprite;
@@ -289,7 +291,7 @@ public class EnemyStateManager : MonoBehaviour {
     }
 
     private void ApplyState() {
-        if (IsCurrentStartPlayed || IsCurrentStatePlayed) {
+        if ((IsCurrentStartPlayed || IsCurrentStatePlayed) && !isDead) {
             bool _endstep = false;
             if (CurrentFixedState != null) {
                 if (EMainStatsSo.stateEnnemList[indexCurrentState].isFixedUpdate) {
@@ -402,17 +404,18 @@ public class EnemyStateManager : MonoBehaviour {
 
                 rb.constraints = RigidbodyConstraints2D.FreezePosition;
                 roomParent.ennemiesList.Remove(transform.parent.gameObject);
-                this.enabled = false;
                 
                 Animator animator = GetComponent<Animator>();
                 animator.Play("FallAnim");
-                
-                StartCoroutine(ShowCurrentClipLength(gameObject.transform.parent.gameObject, animator));
+                this.enabled = false;
+
+                Destroy(transform.parent.gameObject, 1);
             }
             else {
                 AudioManager.Instance.PlayEnemyDeathSound(AudioManager.EnemySoundEnum.Death, gameObject);
 
                 collider2D.enabled = false;
+                col.enabled = false;
 
                 rb.constraints = RigidbodyConstraints2D.FreezePosition;
                 roomParent.ennemiesList.Remove(transform.parent.gameObject);
@@ -463,8 +466,7 @@ public class EnemyStateManager : MonoBehaviour {
             OnDeath();
         }
         else {
-   
-     
+
             Knockup(position, knockUpValue, knockup, isExplosion);
             health -= damage;
         }
@@ -493,11 +495,6 @@ public class EnemyStateManager : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other) {
         if (!HealthPlayer.Instance.playerController.InDash) if (other.gameObject.CompareTag("Player")) HealthPlayer.Instance.TakeDamagePlayer(1);
 
-        if (other.CompareTag("Hole")) {
-            OnDeath(true);
-        }
-        
-        
         if (other.CompareTag("Wind")) {
             StateWind stateWind = other.GetComponent<WindParticleManager>().StateWind;
             windDirection += stateWind.direction * stateWind.speedWind;
