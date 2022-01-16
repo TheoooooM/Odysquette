@@ -207,6 +207,7 @@ public class HealthPlayer : MonoBehaviour {
 
     
     public void OnDeathPlayer() {
+        
         if((NeverDestroy.Instance.minute*60+ NeverDestroy.Instance.second) != 0 )
         GameManager.Instance.Score += (20*60/ (NeverDestroy.Instance.minute*60+ NeverDestroy.Instance.second));
 
@@ -223,6 +224,8 @@ public class HealthPlayer : MonoBehaviour {
     private IEnumerator PlayAnimationDeath()
     {
         isDeath = true;
+        UIManager.Instance.inGameMenu.SetActive(false);
+        Time.timeScale = 0;
         yield return new WaitForEndOfFrame();
         SetUpDeath();
         animator.Play("Player_Death");
@@ -242,3 +245,28 @@ public class HealthPlayer : MonoBehaviour {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

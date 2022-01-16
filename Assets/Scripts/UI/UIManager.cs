@@ -44,7 +44,7 @@ public class UIManager : MonoBehaviour {
     
     [Header("----Pause----")] 
     [SerializeField] private GameObject pauseMenu;
-    [SerializeField] private GameObject inGameMenu;
+    [SerializeField] public GameObject inGameMenu;
     public GameObject PauseMenu => pauseMenu;
 
     [Header("----Ressources & Score----")] 
