@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 5154981315841071874}
   - component: {fileID: 1004160048218586617}
   - component: {fileID: 5739612603508074569}
+  - component: {fileID: 1003535368259695263}
   m_Layer: 8
   m_Name: Hologram
   m_TagString: Enemy
@@ -667,6 +668,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1003535368259695263}
+        m_TargetAssemblyTypeName: DeathHeartLifeEnemy, Assembly-CSharp
+        m_MethodName: DropHeartItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   ParentToDestroy: {fileID: 6353946706901043108}
 --- !u!114 &5154981315841071874
 MonoBehaviour:
@@ -743,6 +756,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: {fileID: 0}
+--- !u!114 &1003535368259695263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6353946706996803575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf4e1eb7ff1a072439a61c5d9b4fa289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heartItem: {fileID: 5387136852087691192, guid: b04e17df814a72f489dc1fdd65e73817, type: 3}
 --- !u!1 &6353946708064069959
 GameObject:
   m_ObjectHideFlags: 0

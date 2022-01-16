@@ -107,6 +107,8 @@ public class EnemySpawnerManager : MonoBehaviour {
     public GameObject SpawnFxDash(Vector3 position)
     {
       GameObject obj =  SpawnEnemyPool(position, fxDashQueue, fxDashPrefab);
+      
+      Debug.Log(obj.name);
       return obj;
     }
     

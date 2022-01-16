@@ -12,6 +12,8 @@ public class HealthPlayer : MonoBehaviour {
     [SerializeField] public int healthPlayer;
     private int lastHealth = 0;
     [SerializeField]
+    private float _ultimateSpeedMaterial;
+    [SerializeField]
     private Animator animator;
     [SerializeField] private float timeInvincible;
     private SpriteRenderer spriteRenderer;
@@ -98,9 +100,13 @@ public class HealthPlayer : MonoBehaviour {
             {
                 if (!playUltimateSound)
                 {
-                    AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.UltimateReady);
+                    AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.UltimateReady);  
+                    UIManager.Instance.backgroundUltimateUI.material.SetFloat("_Thikness", _ultimateSpeedMaterial);
                     playUltimateSound = true;
                 }
+             
+                    Debug.Log("tdsj");
+                  
                 spriteRenderer.material.SetTexture(spriteRenderer.sprite.name, spriteRenderer.sprite.texture);
                 spriteRenderer.material = ultimateMaterial;
             }
@@ -137,9 +143,11 @@ public class HealthPlayer : MonoBehaviour {
     
    public void CancelUltimate()
    {
+       playUltimateSound = false;
      
        spriteRenderer.material.SetTexture(spriteRenderer.sprite.name, spriteRenderer.sprite.texture);
        spriteRenderer.material = defaultMaterial;
+      
    }
 
     /// <summary>

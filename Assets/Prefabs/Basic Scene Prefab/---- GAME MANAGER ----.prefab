@@ -45,13 +45,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isUltimate: 0
   maxUltimateValue: 125
+  _ultimateSpeedMaterial: 0.02
   Score: 0
   gameIsPause: 0
-  offsetPadViewFinder: 0.3
+  offsetPadViewFinder: 0.03
+  mousepos: {x: 0, y: 0}
   angle: 0
   viewFinderDistance: 2
   main: {fileID: 0}
-  firstEffect: 0
+  firstEffect: 1
   secondEffect: 0
   colorEffectsList:
   - firstEffect: 1
@@ -141,7 +143,7 @@ MonoBehaviour:
   shooting: 0
   utlimate: 0
   shootCooldown: 0
-  snipStrawFx: {fileID: 8410869144526307780, guid: cd8ddc45c3aee9443a6ca537e33a3f5f, type: 3}
+  snipStrawFx: {fileID: 0}
   strawSprite: {fileID: 0}
   isMouse: 1
   ViewPad: {x: 0, y: 0}

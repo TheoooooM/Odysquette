@@ -269,7 +269,7 @@ public class AudioManager : MonoBehaviour {
                 
                 calmSfxAudioSource.PlayOneShot(playerSound.droneSound, calmSfxAudioSource.volume * sfxSoundMultiplier);
                 float distanceToDrone =
-                    Mathf.Abs(Vector3.Distance(Generation.Instance.drone.transform.position, Playercontroller.Instance.transform.position));
+                    Mathf.Abs(Vector3.Distance(DroneManager.Instance.transform.position, Playercontroller.Instance.transform.position));
                 float distanceSubstract = Mathf.Clamp(maxDroneSound - distanceToDrone, 0.05f, maxDroneSound);
                 float droneRatio = distanceSubstract / maxDroneSound;
                 calmSfxAudioSource.PlayOneShot(playerSound.droneSound, droneRatio*maxDroneSound);

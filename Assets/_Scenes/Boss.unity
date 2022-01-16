@@ -222,7 +222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8459780909853891385, guid: e9af7abcb18fa524dac3d809be0b9b84, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8459780909853891385, guid: e9af7abcb18fa524dac3d809be0b9b84, type: 3}
       propertyPath: m_LocalPosition.x
@@ -318,7 +318,7 @@ Transform:
   - {fileID: 5592533146833013195}
   - {fileID: 1544256575}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &56690148
 GameObject:
@@ -910,7 +910,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &230784745
 GameObject:
@@ -2502,6 +2502,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1590172233}
     - target: {fileID: 7547639510492287552, guid: 33582d3e89192fd4bb5f6fddb7443a9e, type: 3}
+      propertyPath: firstEffect
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7547639510492287552, guid: 33582d3e89192fd4bb5f6fddb7443a9e, type: 3}
       propertyPath: strawTRansform
       value: 
       objectReference: {fileID: 2141066173}
@@ -2793,7 +2797,7 @@ Transform:
   - {fileID: 74899619}
   - {fileID: 398122701}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &871065774
 MonoBehaviour:
@@ -4514,7 +4518,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1518349284
 GameObject:
@@ -5254,7 +5258,7 @@ RectTransform:
   - {fileID: 155450182}
   - {fileID: 976145080}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5529,7 +5533,7 @@ PrefabInstance:
       objectReference: {fileID: 460934121}
     - target: {fileID: 4512851392882639276, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4512851392882639276, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5575,14 +5579,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758034, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: CircleSimonPart.Array.size
-      value: 4
-      objectReference: {fileID: 0}
+      propertyPath: drone
+      value: 
+      objectReference: {fileID: 2127997672}
     - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
       propertyPath: CircleSimonPart.Array.data[0]
       value: 
@@ -5600,44 +5600,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 486323172}
     - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[5].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[6].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[7].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[8].m_Mode
-      value: 5
+      propertyPath: healthConditionList.Array.data[3].healthTrigger
+      value: 12500
       objectReference: {fileID: 0}
     - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
       propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -5675,234 +5639,18 @@ PrefabInstance:
       propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[8].m_Target
       value: 
       objectReference: {fileID: 3478282848812312519}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[5].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[6].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[7].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[8].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetTrigger
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: set_enabled
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: set_enabled
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
-      value: set_enabled
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
-      value: set_enabled
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[5].m_MethodName
-      value: set_enabled
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[6].m_MethodName
-      value: set_enabled
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[7].m_MethodName
-      value: set_enabled
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[8].m_MethodName
-      value: SetTrigger
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UnityEngine.Animator, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: UnityEngine.Behaviour, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: UnityEngine.Behaviour, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
-      value: UnityEngine.Behaviour, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
-      value: UnityEngine.Behaviour, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[5].m_TargetAssemblyTypeName
-      value: UnityEngine.Behaviour, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[6].m_TargetAssemblyTypeName
-      value: UnityEngine.Behaviour, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[7].m_TargetAssemblyTypeName
-      value: UnityEngine.Behaviour, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[8].m_TargetAssemblyTypeName
-      value: UnityEngine.Animator, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_BoolArgument
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_BoolArgument
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[5].m_Arguments.m_BoolArgument
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[6].m_Arguments.m_BoolArgument
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[7].m_Arguments.m_BoolArgument
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: CloseDoor
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[8].m_Arguments.m_StringArgument
-      value: CloseDoor
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[5].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[6].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[7].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[8].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393255716663, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 27.34
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393255716663, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.75
-      objectReference: {fileID: 0}
     - target: {fileID: 4512851393255716667, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 1633348845}
-    - target: {fileID: 4512851393769003419, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.46
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393769003419, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -14.73
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393769003420, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: m_SortingLayer
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393769003420, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1187178387
-      objectReference: {fileID: 0}
     - target: {fileID: 4512851393769003423, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 1633348845}
-    - target: {fileID: 4512851393999645449, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.46
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393999645449, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 14.16
-      objectReference: {fileID: 0}
     - target: {fileID: 4512851393999645453, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 1633348845}
-    - target: {fileID: 4512851394618652995, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -26.47
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851394618652995, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.84
-      objectReference: {fileID: 0}
     - target: {fileID: 6423815352019209404, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
       propertyPath: part
       value: 
@@ -6619,6 +6367,68 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &2127997671
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6159458578605941931, guid: d35cf90120429b143a8bb9f1a858443b, type: 3}
+      propertyPath: m_Name
+      value: DroneBoss
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286042712125858708, guid: d35cf90120429b143a8bb9f1a858443b, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286042712125858708, guid: d35cf90120429b143a8bb9f1a858443b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286042712125858708, guid: d35cf90120429b143a8bb9f1a858443b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286042712125858708, guid: d35cf90120429b143a8bb9f1a858443b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286042712125858708, guid: d35cf90120429b143a8bb9f1a858443b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286042712125858708, guid: d35cf90120429b143a8bb9f1a858443b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286042712125858708, guid: d35cf90120429b143a8bb9f1a858443b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286042712125858708, guid: d35cf90120429b143a8bb9f1a858443b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286042712125858708, guid: d35cf90120429b143a8bb9f1a858443b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286042712125858708, guid: d35cf90120429b143a8bb9f1a858443b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286042712125858708, guid: d35cf90120429b143a8bb9f1a858443b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d35cf90120429b143a8bb9f1a858443b, type: 3}
+--- !u!1 &2127997672 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6159458578605941931, guid: d35cf90120429b143a8bb9f1a858443b, type: 3}
+  m_PrefabInstance: {fileID: 2127997671}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2129517846
 GameObject:
   m_ObjectHideFlags: 0
