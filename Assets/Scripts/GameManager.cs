@@ -307,7 +307,7 @@ public class GameManager : MonoBehaviour {
                     isUltimate = false;
                 }
             }
-
+                
             mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (shooting && !isUltimate && PoolManager.Instance != null && !disableStraw && Player.GetComponent<Playercontroller>().falling == false) {
                 switch (actualStrawClass.strawSO.rateMode) {

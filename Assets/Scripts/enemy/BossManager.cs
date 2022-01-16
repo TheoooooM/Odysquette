@@ -24,8 +24,7 @@ public class BossManager : MonoBehaviour
   private const string shootName = "_SHOOT";
   private const string beginShootName = "_BEGINSHOOT";
   private const string beginSpinName = "_BEGINSPIN";
-  [SerializeField]
-  private Animator sliderLockLife;
+  public Animator sliderLockLife;
   private const string baseShieldTransition = shieldName + "BASE" + transitionShield + "BLUE";
     [SerializeField] private string[] colorName;
   [SerializeField]
@@ -50,7 +49,7 @@ public class BossManager : MonoBehaviour
   [SerializeField] public Animator shieldBoss;
   private int currentIndexEnabledTurret;
   [SerializeField]
-  private Slider healthBar;
+  public Slider healthBar;
   [SerializeField]
  float timeBetweenShootTurret;
 
@@ -127,9 +126,7 @@ public float shootAnimationTime;
       
       if (beginTime > beginTimer)
       {
-        if(isTriggerDoor)
-          beginTimer += Time.deltaTime;  
-   
+        beginTimer += Time.deltaTime;
       }
       else
       {

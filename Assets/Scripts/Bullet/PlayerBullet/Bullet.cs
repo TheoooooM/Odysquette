@@ -123,7 +123,7 @@ public class Bullet : MonoBehaviour {
                 lastEnemyHit = other.gameObject;
                 //PoolManager.Instance.SpawnImpactPool(transform);
             }
-            else if(pierceCount == 0 || GameManager.Instance.HasEffect(GameManager.Effect.piercing)){
+            else if(_pierceCount == 0){
                 DesactiveBullet();
             }
         }
@@ -203,6 +203,7 @@ public class Bullet : MonoBehaviour {
             gameObject.SetActive(false);
             PoolManager.Instance.SpawnImpactPool(transform);
             isEnable = false;
+            Debug.Log("je me desactive");
             //if(GameManager.Instance.firstEffect == GameManager.Effect.explosion && GameManager.Instance.secondEffect == GameManager.Effect.explosion) PoolManager.Instance.SpawnExplosionPool(transform);
             if (rateMode == StrawSO.RateMode.Ultimate) {
                 PoolManager.Instance.poolDictionary[GameManager.Instance.actualStraw][1].Enqueue(gameObject);

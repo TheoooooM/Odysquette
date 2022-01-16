@@ -267,15 +267,9 @@ public class AudioManager : MonoBehaviour {
                 calmSfxAudioSource.PlayOneShot(playerSound.openChest, calmSfxAudioSource.volume * sfxSoundMultiplier * .65f);
             }
                 break;
-
-            case PlayerSoundEnum.Drone:
-            {
-                
-                calmSfxAudioSource.PlayOneShot(playerSound.droneSound, calmSfxAudioSource.volume * sfxSoundMultiplier);
-                float distanceToDrone =
-                    Mathf.Abs(Vector3.Distance(DroneManager.Instance.transform.position, Playercontroller.Instance.transform.position));
+            
             case PlayerSoundEnum.Drone:{
-                float distanceToDrone = Mathf.Abs(Vector3.Distance(Generation.Instance.drone.transform.position, Playercontroller.Instance.transform.position));
+                float distanceToDrone = Mathf.Abs(Vector3.Distance(DroneManager.Instance.transform.position, Playercontroller.Instance.transform.position));
 
                 float distanceSubstract = Mathf.Clamp(maxDroneSound - distanceToDrone, 0.05f, maxDroneSound);
                 float droneRatio = distanceSubstract / maxDroneSound;

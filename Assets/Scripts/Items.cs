@@ -159,7 +159,6 @@ public class Items : MonoBehaviour {
    /// <param name="other"></param>
    private void OnTriggerEnter2D(Collider2D other) {
       if (other.transform.CompareTag("Player")) {
-         if(!GameManager.Instance.isUltimate) GetComponent<SpriteRenderer>().color = Color.yellow;
          inRange = true;
          if (itemType == type.straw) {
             groundCanvas.SetActive(true);
@@ -179,7 +178,6 @@ public class Items : MonoBehaviour {
    private void OnTriggerExit2D(Collider2D other) {
       if (other.transform.CompareTag("Player")) {
          inRange = false;
-         GetComponent<SpriteRenderer>().color = Color.white;
          if (itemType == type.straw) {
             groundCanvas.SetActive(false);
             transform.GetChild(0).GetComponent<SetStrawUI>().DestroyActualStrawData();

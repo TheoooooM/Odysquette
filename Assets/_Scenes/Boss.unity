@@ -1989,6 +1989,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74081d133d3184640a837f9310c2f791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorLeft: {fileID: 0}
+  doorRight: {fileID: 0}
 --- !u!61 &584969923
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2501,10 +2503,6 @@ PrefabInstance:
       propertyPath: main
       value: 
       objectReference: {fileID: 1590172233}
-    - target: {fileID: 7547639510492287552, guid: 33582d3e89192fd4bb5f6fddb7443a9e, type: 3}
-      propertyPath: firstEffect
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7547639510492287552, guid: 33582d3e89192fd4bb5f6fddb7443a9e, type: 3}
       propertyPath: strawTRansform
       value: 
@@ -4366,7 +4364,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1464324219867819130, guid: 1a3c8bcdae53ae348931bfd230a43f00, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -11.05
+      value: -11.33
       objectReference: {fileID: 0}
     - target: {fileID: 1464324219867819130, guid: 1a3c8bcdae53ae348931bfd230a43f00, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4399,6 +4397,14 @@ PrefabInstance:
     - target: {fileID: 1464324219867819130, guid: 1a3c8bcdae53ae348931bfd230a43f00, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464324219867819131, guid: 1a3c8bcdae53ae348931bfd230a43f00, type: 3}
+      propertyPath: m_SortingLayer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464324219867819131, guid: 1a3c8bcdae53ae348931bfd230a43f00, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1990800739
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a3c8bcdae53ae348931bfd230a43f00, type: 3}
@@ -5599,46 +5605,6 @@ PrefabInstance:
       propertyPath: CircleSimonPart.Array.data[3]
       value: 
       objectReference: {fileID: 486323172}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: healthConditionList.Array.data[3].healthTrigger
-      value: 12500
-      objectReference: {fileID: 0}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 3478282847271904461}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 3478282847820142757}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
-      value: 
-      objectReference: {fileID: 3478282847271904457}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Target
-      value: 
-      objectReference: {fileID: 1531176110}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Target
-      value: 
-      objectReference: {fileID: 1531176111}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[5].m_Target
-      value: 
-      objectReference: {fileID: 3478282848812312515}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[6].m_Target
-      value: 
-      objectReference: {fileID: 124823460}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[7].m_Target
-      value: 
-      objectReference: {fileID: 124823461}
-    - target: {fileID: 4512851393080758042, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
-      propertyPath: lockDoorEvent.m_PersistentCalls.m_Calls.Array.data[8].m_Target
-      value: 
-      objectReference: {fileID: 3478282848812312519}
     - target: {fileID: 4512851393255716667, guid: b892a3c8411460b4d8fbb07d3f5c1a5d, type: 3}
       propertyPath: playerTransform
       value: 

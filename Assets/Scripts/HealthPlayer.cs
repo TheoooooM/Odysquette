@@ -221,7 +221,7 @@ public class HealthPlayer : MonoBehaviour {
 
         GameManager.Instance.SetND();
         NeverDestroy.Instance.Score = GameManager.Instance.Score;
-        
+      
         if (GameManager.Instance != null) GameManager.Instance.enabled = false;
       
         
@@ -233,6 +233,10 @@ public class HealthPlayer : MonoBehaviour {
     {
         isDeath = true;
         UIManager.Instance.inGameMenu.SetActive(false);
+          spriteRenderer.sortingLayerName = "UI";
+          if(BossManager.instance != null) 
+              BossManager.instance.healthBar.gameObject.SetActive(false);
+        
         Time.timeScale = 0;
         yield return new WaitForEndOfFrame();
         SetUpDeath();
