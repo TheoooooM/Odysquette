@@ -153,7 +153,7 @@ public class UIManager : MonoBehaviour {
         */
         totalScoreText.text = "Final Score : " + NeverDestroy.Instance.Score;
         GameOverPanel.SetActive(true);
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
     }
 
     /// <summary>
