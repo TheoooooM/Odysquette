@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CircleCollider2D))]
 public class PlayerDetectionEvent : MonoBehaviour {
@@ -11,6 +12,7 @@ public class PlayerDetectionEvent : MonoBehaviour {
     [SerializeField] private UnityEvent enterTriggerEvent =  null;
     [SerializeField] private UnityEvent interactTriggerEvent =  null;
     [SerializeField] private UnityEvent exitTriggerEvent =  null;
+    [SerializeField] private UnityEvent disableEvent =  null;
     [Space(4)] [SerializeField] private float radiusDetection = 2f;
     [Space(4)] [SerializeField] private bool needToPressE = false;
     private PlayerMapping playerInput;
@@ -68,5 +70,9 @@ public class PlayerDetectionEvent : MonoBehaviour {
     /// </summary>
     public void UpdateVolume() {
         if(audio != null) audio.volume = 0.05f * AudioManager.Instance.SfxSoundMultiplier;
+    }
+
+    public void DisableDoor() {
+        disableEvent.Invoke();
     }
 }

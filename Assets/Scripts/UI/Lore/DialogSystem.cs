@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DialogSystem : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI text = null;
@@ -11,6 +12,8 @@ public class DialogSystem : MonoBehaviour {
     [Space] 
     [SerializeField] private string endTrigger = "";
     [SerializeField] private string endAnimTrigger = "";
+
+    [SerializeField] private UnityEvent endDiscussion = null;
     
     private Animator dialogAnimator = null;
     private bool isInDialog = false;
@@ -18,6 +21,7 @@ public class DialogSystem : MonoBehaviour {
     private int actualTextId = 0;
     
     private void Start() => dialogAnimator = GetComponent<Animator>();
+    
     public void StartDialog() {
         pressEGam.SetActive(false);
         isInDialog = true;
@@ -41,6 +45,7 @@ public class DialogSystem : MonoBehaviour {
                     Playercontroller.Instance.ChangeInputState(true);
                     isInDialog = false;
                     actualTextId = 0;
+                    endDiscussion.Invoke();
                 }
                 else if(canSkip) {
                     canSkip = false;
