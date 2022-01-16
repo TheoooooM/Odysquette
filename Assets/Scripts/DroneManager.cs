@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,7 +14,8 @@ public class DroneManager : MonoBehaviour
     private float minLength;
     [SerializeField] private float maxLength;
     [SerializeField] private float yPlus;
-    
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private SpriteRenderer parcelRenderer;
     private bool goToExit;
     private Vector3 destinationToExit;
     private bool nextToPlayer;
@@ -22,9 +24,18 @@ public class DroneManager : MonoBehaviour
     private const string launchParcel = "DRONE_LAUNCHPARCEL";
     private bool canMove;
     private bool beginLaunch;
+
+    [SerializeField] private Animator animatorParcel;
+    private const string parcelAnimName = "PARCEL_LAUNCHPARCEL";
+    private static DroneManager instance = null;
+    public static DroneManager Instance => instance;
+
+    private void Awake() {
+        instance = this;
+    }
     private void OnEnable()
     {
-        
+
         AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Drone);
         Debug.Log("testaa");
         int random = Random.Range(0, 100);
@@ -78,7 +89,10 @@ public class DroneManager : MonoBehaviour
             if (canMove)
             {
                 Debug.Log("testaa");
-            if(GoToDestination(destinationToExit));
+                if (spriteRenderer.isVisible)
+                {
+                    GoToDestination(destinationToExit * 10);
+                }
             else
             {
                 Debug.Log("testaa");
@@ -109,7 +123,7 @@ public class DroneManager : MonoBehaviour
         {
             Debug.Log("testaa");
             transform.position =
-                Vector3.MoveTowards(transform.position, destination, speed);
+                Vector3.MoveTowards(transform.position, destination, speed*Time.deltaTime);
             return true;
         }
        
@@ -123,7 +137,8 @@ public class DroneManager : MonoBehaviour
     {
         beginLaunch = true;
         animator.Play(launchParcel);
-       
+        parcelRenderer.gameObject.SetActive(true);
+        animatorParcel.Play(parcelAnimName);
         
         
     }
@@ -138,6 +153,8 @@ public class DroneManager : MonoBehaviour
     {
         beginLaunch = false;
         canMove = true;
+        parcelRenderer.gameObject.SetActive(false);
+        parcelRenderer.sortingLayerName = "UpperEffects";
     }
 
   public  void SetExit()

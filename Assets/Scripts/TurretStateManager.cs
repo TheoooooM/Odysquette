@@ -6,7 +6,7 @@ using UnityEngine;
 public class TurretStateManager : EnemyStateManager
 {
  public BoxCollider2D boxCollider2D;
-
+ 
  public Animator animator;
  private void Awake()
  {
@@ -148,6 +148,7 @@ public class TurretStateManager : EnemyStateManager
     IsCurrentStatePlayed = false;
    }
 
+   
    animator.Play(enemyFeedBack.stateDeathName);
    objectDictionaryState.Clear();
    timerCurrentState = 0;

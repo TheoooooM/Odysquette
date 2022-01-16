@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour {
     [Space] 
     [SerializeField] private CanvasGroup informationPanel = null;
     [Space] 
+    public  Image backgroundUltimateUI;
     public static UIManager Instance;
     float maxUltSlider = 100f;
     [SerializeField] private CustomSliderUI sfxSlider = null;
@@ -57,7 +58,6 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Image timerImg = null;
     [SerializeField] private Sprite chronoSpirte = null;
     [SerializeField] private Sprite pauseSprite = null;
-    
     [Header("----Generation----")] 
     public GameObject LoadingScreen;
     public Slider loadingBar;

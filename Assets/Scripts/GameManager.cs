@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour {
 
     public bool isUltimate;
     public float maxUltimateValue;
-
+   
     float _ultimateValue;
 
     public float ultimateValue {
@@ -69,6 +69,8 @@ public class GameManager : MonoBehaviour {
         set {
             _ultimateValue = Mathf.Clamp(value, 0, maxUltimateValue);
             if (UIManager.Instance != null) UIManager.Instance.ultimateValue = _ultimateValue / maxUltimateValue;
+           
+            
         }
     }
 
@@ -145,6 +147,7 @@ public class GameManager : MonoBehaviour {
     private void Start() {
         AddCommandConsole();
 
+        UIManager.Instance.backgroundUltimateUI.material.SetFloat("_Thikness", 0);
         //LeaderBoard Setup
         /*LootLockerSDKManager.StartSession("Player", (response) =>
         {
@@ -352,8 +355,10 @@ public class GameManager : MonoBehaviour {
                 if (ultimateValue >= 125) {
                     actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
                     HealthPlayer.Instance.ultimateAura.SetActive(true);
+                    UIManager.Instance.backgroundUltimateUI.material.SetFloat("_Thikness", 0);
                     HealthPlayer.Instance.CancelUltimate();
-                    isUltimate = true;
+                    isUltimate = true; 
+                   
                     ultimateValue -= 125;
                 }
 

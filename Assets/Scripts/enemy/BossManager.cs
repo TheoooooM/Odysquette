@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class BossManager : MonoBehaviour
@@ -16,6 +15,8 @@ public class BossManager : MonoBehaviour
   private const string turretActivation = "Activation";
   private const string turretAttack = "Attack";
   private const string bossName = "BOSS_";
+  [SerializeField]
+  private GameObject drone;
   private const string shieldName = "SHIELD_";
   private const string transitionShield = "TO";
   private const string transitionName = "_TRANSITIONTO";
@@ -37,7 +38,7 @@ public class BossManager : MonoBehaviour
   [SerializeField] private string[] inSpinName;
   [SerializeField] private string[] spinName;
   [SerializeField] private string[] endSpinName;
-  [SerializeField] private UnityEvent lockDoorEvent;
+
   private Animator animator;
   private ExtensionMethods.AngleAnimation[] moveFeedback;
   private ExtensionMethods.AngleAnimation[] spinFeedback;
@@ -56,11 +57,7 @@ public class BossManager : MonoBehaviour
  public bool inSetPhase;
  public bool inUpdatePhase;
  public bool isTriggerDoor;
- public void LockDoor()
- {
-   if(isTriggerDoor)
-     lockDoorEvent.Invoke();
- }
+
  
  [SerializeField] private float timeOffset;
   [SerializeField]
@@ -127,9 +124,11 @@ public float shootAnimationTime;
   {
     if (currentBossPhase == ExtensionMethods.PhaseBoss.Begin)
     {
+      
       if (beginTime > beginTimer)
       {
-                beginTimer += Time.deltaTime;  
+        if(isTriggerDoor)
+          beginTimer += Time.deltaTime;  
    
       }
       else
@@ -252,7 +251,7 @@ public float shootAnimationTime;
     
       if (currentIndexEnabledTurret == currentMaxEnabledTurret)
       { 
-        
+      drone.SetActive(true);
         shieldBoss.Play(shieldName+colorName[currentIndexEnabledTurret]+transitionShield+colorName[0]);
         sliderLockLife.Play(sliderName+colorName[currentIndexEnabledTurret]+desactivationSliderName);
         AudioManager.Instance.PlayBossSound(AudioManager.BossSoundEnum.ShieldOff);
