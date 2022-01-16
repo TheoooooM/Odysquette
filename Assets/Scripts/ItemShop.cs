@@ -41,6 +41,8 @@ public class ItemShop : Chest {
                     item = SO.poisonJuice;
                     effect = GameManager.Effect.poison;
                     break;
+                default: effect = GameManager.Effect.none;
+                    break;
             }
             Debug.Log("set " + effect);
         }
