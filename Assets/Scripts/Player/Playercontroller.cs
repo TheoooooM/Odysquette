@@ -139,9 +139,10 @@ public class Playercontroller : MonoBehaviour {
 
             moveVector = Vector2.zero;
 
-            if (GameManager.Instance != null) GameManager.Instance.isMouse = true;
+            //if (GameManager.Instance != null) GameManager.Instance.isMouse = true;
             if (playerInput.Player.Movement.ReadValue<Vector2>() != Vector2.zero && canMove)
             {
+                GameManager.Instance.isMouse = true;
                 moveVector = playerInput.Player.Movement.ReadValue<Vector2>();
                 AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Move);
                 lastMoveVector = moveVector;
@@ -296,7 +297,7 @@ public class Playercontroller : MonoBehaviour {
     private void ShootGamepadOnperformed(InputAction.CallbackContext obj) {
         if (GameManager.Instance != null) {
             if (!InDash) GameManager.Instance.shooting = true;
-            GameManager.Instance.isMouse = true;
+            GameManager.Instance.isMouse = false;
             shootIsPress = true;
         }
     }
