@@ -355,7 +355,6 @@ public class Generation : MonoBehaviour {
                     RoomContainer exitPart = newRoom.partList[Random.Range(0, newRoom.partList.Length)].RoomGO;
 
                     if (exitPart != enterPart || newRoom.partList.Length == 1) {
-                        Debug.Log(exitPart.exitAmount);
                         open exitSide = exitPart.exitList[Random.Range(0, exitPart.exitAmount)];
                         //debug.Log("Exit Part : " + exitPart.roomPos + " ExitSide : " + exitSide);
 
