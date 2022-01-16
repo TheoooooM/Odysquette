@@ -540,6 +540,13 @@ public class Playercontroller : MonoBehaviour {
         }
     }
     #endregion PLAYER ANIMATION
+
+    public void LaunchEndAnimation()
+    {
+        Debug.Log("Splash !");
+        UIManager.Instance.endSplash.SetActive(true);
+        UIManager.Instance.endSplash.GetComponent<Animator>().Play("End_Splash");
+    }
 }
 
 [Serializable]

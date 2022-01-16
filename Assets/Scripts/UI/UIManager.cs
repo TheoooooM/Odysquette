@@ -35,6 +35,7 @@ public class UIManager : MonoBehaviour {
     [Header("----Game Over----")] 
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private TextMeshProUGUI GameOverText;
+    public GameObject endSplash;
     public TMP_InputField PlayerName;
     public TextMeshProUGUI totalScoreText;
     [Space] 
@@ -45,7 +46,7 @@ public class UIManager : MonoBehaviour {
     
     [Header("----Pause----")] 
     [SerializeField] private GameObject pauseMenu;
-    [SerializeField] private GameObject inGameMenu;
+    [SerializeField] public GameObject inGameMenu;
     public GameObject PauseMenu => pauseMenu;
 
     [Header("----Ressources & Score----")] 
@@ -153,7 +154,7 @@ public class UIManager : MonoBehaviour {
         */
         totalScoreText.text = "Final Score : " + NeverDestroy.Instance.Score;
         GameOverPanel.SetActive(true);
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
     }
 
     /// <summary>

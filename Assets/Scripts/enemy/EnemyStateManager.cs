@@ -546,10 +546,8 @@ public class EnemyStateManager : MonoBehaviour {
         }
     }
 
-    public void PlaySound(int soundIndex)
-    {
-        if (inSoundCurrentState)
-            return;
+    public void PlaySound(int soundIndex) {
+        if (inSoundCurrentState) return;
         AudioManager.EnemySoundEnum sound =(AudioManager.EnemySoundEnum) soundIndex;
         AudioManager.Instance.PlayEnemySound(sound);
         inSoundCurrentState = true;

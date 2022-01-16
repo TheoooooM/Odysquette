@@ -30,6 +30,9 @@ public class CameraControllers : MonoBehaviour {
     private Vector3 offSet;
     private float baseCamY = 0;
 
+    bool deathSet = false;
+    private Vector3 deathCameraPos;
+
     private void Start() {
         if (useCameraAsRail) cameraMain.transform.position = new Vector3(minPosX.position.x, 0, -10);
         if (Colorblindness.Instance != null && CommandConsoleRuntime.Instance != null) {
@@ -41,28 +44,51 @@ public class CameraControllers : MonoBehaviour {
     }
 
     private void Update() {
-        if ((!player.gameObject.activeSelf  || (CommandConsoleRuntime.Instance != null && CommandConsoleRuntime.Instance.ObjectChild.activeSelf) || (UIManager.Instance != null && UIManager.Instance.PauseMenu.activeSelf) || reportGam.activeSelf || reporScreenshottGam.activeSelf) || HealthPlayer.Instance.isDeath) return;
-        
-        if (!useCameraAsRail) {
-            Vector3 mousePos = cameraMain.ScreenToWorldPoint(Input.mousePosition);
+        if ((!player.gameObject.activeSelf  || (CommandConsoleRuntime.Instance != null && CommandConsoleRuntime.Instance.ObjectChild.activeSelf) || (UIManager.Instance != null && UIManager.Instance.PauseMenu.activeSelf) || reportGam.activeSelf || reporScreenshottGam.activeSelf)) return;
+       
+        if (!HealthPlayer.Instance.isDeath)
+        {
+            if (!useCameraAsRail) {
+                Vector3 mousePos = cameraMain.ScreenToWorldPoint(Input.mousePosition);
 
-            float camPosX = (mousePos.x - cameraMain.transform.position.x) * 1 / 3;
-            float camPosY = (mousePos.y - cameraMain.transform.position.y) * 1 / 3;
+                float camPosX = (mousePos.x - cameraMain.transform.position.x) * 1 / 3;
+                float camPosY = (mousePos.y - cameraMain.transform.position.y) * 1 / 3;
             
-            if (GameManager.Instance == null) {
-                offSet = new Vector3(player.position.x, player.position.y, -10) + cameraShake.CameraShakeOffset;
+                if (GameManager.Instance == null) {
+                    offSet = new Vector3(player.position.x, player.position.y, -10) + cameraShake.CameraShakeOffset;
+                }
+                else {
+                    if (GameManager.Instance.isMouse) offSet = player.position + new Vector3(camPosX, camPosY, -10) + cameraShake.CameraShakeOffset;
+                    //else offSet = (player.position + (Vector3) GameManager.Instance.ViewPad * distanceCurveY.Evaluate(1));
+                }
             }
             else {
-                if (GameManager.Instance.isMouse) offSet = player.position + new Vector3(camPosX, camPosY, -10) + cameraShake.CameraShakeOffset;
-                //else offSet = (player.position + (Vector3) GameManager.Instance.ViewPad * distanceCurveY.Evaluate(1));
+                offSet = new Vector3(Mathf.Clamp(player.transform.position.x, minPosX.position.x, maxPosX.position.x), baseCamY, -10) + cameraShake.CameraShakeOffset;
+            }
+            cameraMain.transform.position = offSet;
+        }
+        else
+        {
+            if (!deathSet)
+            {
+                //Debug.Log($"Player.position : {player.position}, offset : {offSet}, cameraMain.transform.position : {cameraMain.transform.position}");
+                deathCameraPos = cameraMain.transform.position;
+            }
+
+            if (  (cameraMain.transform.position.x > player.position.x + 1 || cameraMain.transform.position.x < player.position.x - 1)
+                ||(cameraMain.transform.position.y > player.position.y + 1 || cameraMain.transform.position.y < player.position.y - 1))
+            {
+                offSet = ((Vector3) ((Vector2) player.position - (Vector2) cameraMain.transform.position).normalized * 0.3f + cameraMain.transform.position);
+                cameraMain.transform.position = offSet;
+                Debug.Log("DeathMoving");
+            }
+            else
+            {
+                Debug.Log("samePos");
             }
         }
-        else {
-            offSet = new Vector3(Mathf.Clamp(player.transform.position.x, minPosX.position.x, maxPosX.position.x), baseCamY, -10) + cameraShake.CameraShakeOffset;
-        }
-        
-        cameraMain.transform.position = offSet;
     }
+    
     
     private void OnDrawGizmos() {
         if (minPosX != null && maxPosX != null) {
