@@ -10,7 +10,7 @@ public class PlayerDetector : MonoBehaviour {
     #region VARIABLES
 
     [SerializeField] private Collider2D detectEnemyArea;
-
+  
     [SerializeField]
     private EnemyStateManager ESM;
     public float range = 1;
@@ -29,6 +29,8 @@ public class PlayerDetector : MonoBehaviour {
         if (patrol != null) {
             enemyMovement = GetComponent<EnemyMovement>();
             rb = GetComponent<Rigidbody2D>();
+    
+   
             StartCoroutine(WaitGenFinish());
         }
     }
@@ -50,8 +52,8 @@ public class PlayerDetector : MonoBehaviour {
         int rand = Random.Range(0, patrol.directionPatrol.Length);
         destination = patrol.directionPatrol[rand] * length;
         GraphNode node = AstarPath.active.GetNearest((Vector2) ESM.spawnPosition + destination).node;
-
-        if (PathUtilities.IsPathPossible(AstarPath.active.GetNearest(rb.position).node, node) && node.Walkable) {
+       
+        if (PathUtilities.IsPathPossible(AstarPath.active.GetNearest(rb.position).node, node) && node.Walkable) { 
             aimPatrol.position = (Vector2) ESM.spawnPosition + destination;
             PlayPatrol();
         }

@@ -27,11 +27,7 @@ public class StateDash : StateEnemySO {
 
             if (hit.collider.gameObject.layer == 9)
             {
-              Collider2D detectWall= Physics2D.OverlapCircle(rb.position, sizeColliderWall, layerMaskDashWall);
-                if (detectWall)
-                {
-                    return false;
-                }
+         
                   
               
                 Transform target = (Transform) objectDictionary[ExtensionMethods.ObjectInStateManager.AimDash];

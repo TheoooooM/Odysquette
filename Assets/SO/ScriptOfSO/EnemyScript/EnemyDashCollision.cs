@@ -31,16 +31,7 @@ public class EnemyDashCollision : MonoBehaviour
         {
             if (other.CompareTag("Player") && !Playercontroller.Instance.InDash)
             {
-
-              Vector2  directionPlayer =  (Vector3)contact -transform.position;
-                RaycastHit2D hit =
-                    Physics2D.Raycast(transform.position,
-                        directionPlayer, directionPlayer.magnitude,
-                        currentLayerMask);
-                    contact = hit.point ;
-                
-               
-              
+                contact = (Vector3) other.ClosestPoint(transform.position) ;
                 direction =  (Vector3)contact -transform.position;
                
                  isTrigger = true;

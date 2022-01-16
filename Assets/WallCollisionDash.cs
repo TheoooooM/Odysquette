@@ -11,7 +11,7 @@ public class WallCollisionDash : WallCollisionManager
     [SerializeField] private Transform aimPoint;
 
     [SerializeField] private float angle;
-
+    [SerializeField] private Rigidbody2D rb;
     bool CheckAngle(Vector3 point)
     {
         Vector2 directionDash = aimPoint.position - transform.position;
@@ -23,6 +23,15 @@ public class WallCollisionDash : WallCollisionManager
         }
         Debug.Log(angle);
         return false;
+    }
+
+    private void Update()
+    {
+        if (enemyDashCollision.inDash)
+        {
+            if (rb.velocity == Vector2.zero)
+                enemyDashCollision.contactWall = true;
+        }
     }
 
     public override void OnCollisionEnter2D(Collision2D other)
