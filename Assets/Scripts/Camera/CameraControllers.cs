@@ -59,7 +59,7 @@ public class CameraControllers : MonoBehaviour {
                 }
                 else {
                     if (GameManager.Instance.isMouse) offSet = player.position + new Vector3(camPosX, camPosY, -10) + cameraShake.CameraShakeOffset;
-                    //else offSet = (player.position + (Vector3) GameManager.Instance.ViewPad * distanceCurveY.Evaluate(1));
+                    else offSet = (player.position + new Vector3(GameManager.Instance.ViewPad.x, GameManager.Instance.ViewPad.y, -10)) + cameraShake.CameraShakeOffset;
                 }
             }
             else {
