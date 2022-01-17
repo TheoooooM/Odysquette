@@ -75,16 +75,9 @@ public class CameraControllers : MonoBehaviour {
                 deathCameraPos = cameraMain.transform.position;
             }
 
-            if (  (cameraMain.transform.position.x > player.position.x + 1 || cameraMain.transform.position.x < player.position.x - 1)
-                ||(cameraMain.transform.position.y > player.position.y + 1 || cameraMain.transform.position.y < player.position.y - 1))
-            {
+            if (  (cameraMain.transform.position.x > player.position.x + 1 || cameraMain.transform.position.x < player.position.x - 1) ||(cameraMain.transform.position.y > player.position.y + 1 || cameraMain.transform.position.y < player.position.y - 1)) {
                 offSet = ((Vector3) ((Vector2) player.position - (Vector2) cameraMain.transform.position).normalized * 0.3f + cameraMain.transform.position);
                 cameraMain.transform.position = offSet;
-                Debug.Log("DeathMoving");
-            }
-            else
-            {
-                Debug.Log("samePos");
             }
         }
     }

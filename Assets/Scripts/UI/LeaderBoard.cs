@@ -13,7 +13,7 @@ public class LeaderBoard : MonoBehaviour
         Instance = this;
     }
     #endregion
-
+    
     public int[] scoreArray = new int[9];
     public string[] nameArray = new string[9];
     private string[] nameArrayString = new string[9];
@@ -30,8 +30,8 @@ public class LeaderBoard : MonoBehaviour
     public void UpdateArray()
     {
         for (int i = 0; i < scoreArray.Length-1; i++) {
-            scoreArray[i] = PlayerPrefs.GetInt(scoreArrayString[i]);
-            nameArray[i] = PlayerPrefs.GetString(nameArrayString[i]);
+            scoreArray[i] = PlayerPrefs.GetInt(scoreArrayString[i], 0);
+            nameArray[i] = PlayerPrefs.GetString(nameArrayString[i], "");
         }
 
         nameArrayString[0] = "nameOne";
