@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Pathfinding;
 using UnityEngine;
+using Vector3 = System.Numerics.Vector3;
 
 public class RoomContainer : MonoBehaviour {
     public Generation Generator;
@@ -16,6 +17,10 @@ public class RoomContainer : MonoBehaviour {
 
     [Space]
     [SerializeField] private bool outsideRoom = false;
+    public bool OutsideRoom => outsideRoom;
+
+    public RoomContainer neighboorContainer = null;
+    
     #region Generation Variables
 
     public bool playerInRoom;
@@ -171,27 +176,33 @@ public class RoomContainer : MonoBehaviour {
             }
         }
     }
-
+    
+    
     /// <summary>
     /// Activate neighboors base on the position of the player
     /// </summary>
     /// <param name="active"></param>
-    public void ActivateNeighbor(bool active) {
+    public void ActivateNeighbor(bool active){
         if (Generator == null) return;
-        
         if (!Generator.disableNeighboor) return;
-        
-        if (Generator.map[(int) roomMapPos.x - 1, (int) roomMapPos.y] != null) Generator.map[(int) roomMapPos.x - 1, (int) roomMapPos.y].neighbor = active;
-        if (Generator.map[(int) roomMapPos.x + 1, (int) roomMapPos.y] != null) Generator.map[(int) roomMapPos.x + 1, (int) roomMapPos.y].neighbor = active;
-        if (Generator.map[(int) roomMapPos.x, (int) roomMapPos.y - 1] != null) Generator.map[(int) roomMapPos.x, (int) roomMapPos.y - 1].neighbor = active;
-        if (Generator.map[(int) roomMapPos.x, (int) roomMapPos.y + 1] != null) Generator.map[(int) roomMapPos.x, (int) roomMapPos.y + 1].neighbor = active;
 
+        Vector2Int[] posName = new Vector2Int[] {
+            new Vector2Int(-1, 0),
+            new Vector2Int(1, 0),
+            new Vector2Int(0, -1),
+            new Vector2Int(0, 1),
+            new Vector2Int(-1, 1),
+            new Vector2Int(-1, -1),
+            new Vector2Int(1, 1),
+            new Vector2Int(1, -1)
+        };
 
-        if (active) {
-            if (Generator.map[(int) roomMapPos.x - 1, (int) roomMapPos.y] != null) Generator.map[(int) roomMapPos.x - 1, (int) roomMapPos.y].gameObject.SetActive(true);
-            if (Generator.map[(int) roomMapPos.x + 1, (int) roomMapPos.y] != null) Generator.map[(int) roomMapPos.x + 1, (int) roomMapPos.y].gameObject.SetActive(true);
-            if (Generator.map[(int) roomMapPos.x, (int) roomMapPos.y - 1] != null) Generator.map[(int) roomMapPos.x, (int) roomMapPos.y - 1].gameObject.SetActive(true);
-            if (Generator.map[(int) roomMapPos.x, (int) roomMapPos.y + 1] != null) Generator.map[(int) roomMapPos.x, (int) roomMapPos.y + 1].gameObject.SetActive(true);
+        foreach (Vector2Int pos in posName) {
+            RoomContainer neighRoom = Generator.map[(int) roomMapPos.x + pos.x, (int) roomMapPos.y + pos.y];
+            if (neighRoom != null) neighRoom.neighbor = active;
+            if (active && neighRoom != null) neighRoom.gameObject.SetActive(true);
+            
+            if(neighRoom.OutsideRoom && neighRoom.neighboorContainer != null && neighRoom.neighboorContainer == this && !active) neighRoom.gameObject.SetActive(false);
         }
     }
 
