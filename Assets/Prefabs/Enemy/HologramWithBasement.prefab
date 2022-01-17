@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000187556387467572}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.2226667, y: -5.5406666, z: 0}
+  m_LocalPosition: {x: -0.1, y: -0.56, z: 0}
   m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 0.6666667}
   m_Children: []
   m_Father: {fileID: 6353946706996803574}
@@ -45,9 +45,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.0139039755}
   serializedVersion: 2
-  m_Radius: 0.32
+  m_Radius: 0.33390403
 --- !u!114 &6881084126445804718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 1004160048218586617}
   - component: {fileID: 5739612603508074569}
   - component: {fileID: 1003535368259695263}
+  - component: {fileID: 8274530441725110669}
   m_Layer: 8
   m_Name: Hologram
   m_TagString: Enemy
@@ -834,6 +835,22 @@ MonoBehaviour:
   heartItem: {fileID: 5387136852087691192, guid: b04e17df814a72f489dc1fdd65e73817, type: 3}
   position: {x: 0, y: 0, z: 0}
   nextToEnemy: 0
+--- !u!114 &8274530441725110669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6353946706996803575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37e11b53dc720b443925f5b108570c9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstBasement: {fileID: 6353946708064069957}
+  secondBasement: {fileID: 6353946708157474114}
+  hologram: {fileID: 6353946706996803569}
+  index: 0
 --- !u!1 &6353946708064069959
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,7 +903,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: e8a65c6061707934ea1f23159495d2c7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -989,7 +1006,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: e8a65c6061707934ea1f23159495d2c7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
