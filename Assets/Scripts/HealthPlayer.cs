@@ -102,9 +102,6 @@ public class HealthPlayer : MonoBehaviour {
                         UIManager.Instance.backgroundUltimateUI.material.SetFloat("_Thikness", _ultimateSpeedMaterial);
                         playUltimateSound = true;
                     }
-
-                    Debug.Log("tdsj");
-
                     spriteRenderer.material.SetTexture(spriteRenderer.sprite.name, spriteRenderer.sprite.texture);
                     spriteRenderer.material = ultimateMaterial;
                 }

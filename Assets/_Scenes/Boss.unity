@@ -1528,6 +1528,7 @@ MonoBehaviour:
   neighbor: 0
   firstRoom: 0
   outsideRoom: 0
+  numberOfNeighboor: 0
   playerInRoom: 0
   roomRef: {fileID: 871065774}
   roomPos: {x: 2, y: 2}
@@ -1670,7 +1671,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 1728529719aa4944ab8d252f1c937e20, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.19607843}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.29411766}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5038,7 +5039,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 95e47703f8486974d87244a951a4618b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.19607843}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.29411766}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5327,7 +5328,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 3c70fd86d52eb2d43a613d3b5b07507c, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.19607843}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.29411766}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5888,7 +5889,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 5a314c0f4d266cc4ca1c23d288389086, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.19607843}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.29411766}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -6502,9 +6503,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 571245a2075c51248a5d94f5bbd4a097, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -6531,6 +6532,8 @@ MonoBehaviour:
   maxCharacterVisible: 0
   endTrigger: CloseDialog
   endAnimTrigger: SkipText
+  useCustomInput: 0
+  pressCustomInputID: 0
   endDiscussion:
     m_PersistentCalls:
       m_Calls:
@@ -7122,7 +7125,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sensei
+  m_text: S1m0-N
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7233,8 +7236,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 243.80923, y: 126.64455}
-  m_SizeDelta: {x: 186.4411, y: 183.968}
+  m_AnchoredPosition: {x: 244.97263, y: 126.45065}
+  m_SizeDelta: {x: 174.0311, y: 171.9458}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &9169909222819328628
 Canvas:
