@@ -36,7 +36,11 @@ public class PlayerDetector : MonoBehaviour {
     }
     
     #region Basic Methods
-    private void Start() => ESM = GetComponent<EnemyStateManager>();
+
+    private void Start()
+    {ESM = GetComponent<EnemyStateManager>();
+        StartCoroutine(WaitGenFinish());
+    } 
     private void Update() => CheckDetection();
     #endregion Basic Methods
     
@@ -47,27 +51,28 @@ public class PlayerDetector : MonoBehaviour {
 
     private void BeginPatrol() {
         Vector2 destination;
-        aimPatrol.position = rb.position;
+        aimPatrol.position = transform.position;
         float length = Random.Range(patrol.minDistance, patrol.maxDistance);
         int rand = Random.Range(0, patrol.directionPatrol.Length);
         destination = patrol.directionPatrol[rand] * length;
         GraphNode node = AstarPath.active.GetNearest((Vector2) ESM.spawnPosition + destination).node;
-       
         if (PathUtilities.IsPathPossible(AstarPath.active.GetNearest(rb.position).node, node) && node.Walkable) { 
             aimPatrol.position = (Vector2) ESM.spawnPosition + destination;
             PlayPatrol();
         }
-        else {
-            return;
-        }
+       
     }
 
-    private void PlayPatrol() {
+    private void PlayPatrol()
+    {
+        if (!AstarPath.active.GetNearest(transform.position).node.Walkable)
+            aimPatrol.position = ESM.spawnPosition;
+
         enemyMovement.enabled = true;
         enemyMovement.speed = patrol.speed / 3;
         enemyMovement.destination = aimPatrol.position;
         patrolEvent.Invoke();
-        if (Vector2.Distance(rb.position, enemyMovement.destination) < 0.1f) {
+        if (Vector2.Distance(rb.position, enemyMovement.destination) < 0.1f || rb.velocity == Vector2.zero) {
             BeginPatrol();
         }
     }

@@ -12,6 +12,8 @@ using Random = UnityEngine.Random;
 public class EnemyStateManager : MonoBehaviour {
     public int scorePoint = 3;
     public EnemyFeedBack enemyFeedBack;
+
+    public Vector3 directionWall; 
     public bool isActivate = false;
     public bool isContactWall;
     public bool inSoundCurrentState;
