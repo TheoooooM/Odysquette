@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2583979326742575785}
   - component: {fileID: 4641537559775178254}
   - component: {fileID: 4464867250783017710}
+  - component: {fileID: 5551215771572871187}
   m_Layer: 10
   m_Name: Barricade 02
   m_TagString: DestructableObject
@@ -127,14 +128,35 @@ MonoBehaviour:
   - {fileID: 2583979326742575784}
   colliderPathRecalculation:
   - {fileID: 4641537559775178254}
-  col: {fileID: 0}
+  col: {fileID: 4641537559775178254}
   useTrigger: 0
   recalculatePath: 0
-  life: 239
+  life: 240
+  triggerName: Destroy
+  damageName: Damage
   particleToSpawn: {fileID: 0}
   particlePos: {fileID: 2583979326742575786}
   dropRate: 25
   maxRessources: 5
+--- !u!95 &5551215771572871187
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2583979326742575784}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fbd8941c10a2a404b9bc8f4cf21a5e86, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2583979327326564618
 GameObject:
   m_ObjectHideFlags: 0

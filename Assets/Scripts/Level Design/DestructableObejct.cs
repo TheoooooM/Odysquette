@@ -16,6 +16,8 @@ public class DestructableObejct : MonoBehaviour {
 
     [Header("---- OBJECT LIFE")] 
     [SerializeField] private float life = 0;
+    [SerializeField] private string triggerName = "";
+    [SerializeField] private string damageName = "";
     private float actualLife = 0;
     
     [Header("---- PARTICLES")] 
@@ -37,13 +39,17 @@ public class DestructableObejct : MonoBehaviour {
     /// <param name="damage"></param>
     public void TakeDamage(float damage) {
         actualLife -= damage;
-        if(actualLife <= 0) DisableObjects();
+        if(GetComponent<Animator>() != null) GetComponent<Animator>().SetTrigger(damageName);
+        if (actualLife <= 0) {
+            if(GetComponent<Animator>() != null) GetComponent<Animator>().SetTrigger(triggerName);
+            else DisableObjects();
+        }
     }
 
     /// <summary>
     /// Disable all the object
     /// </summary>
-    private void DisableObjects() {
+    public void DisableObjects() {
         foreach (Collider2D col2D in colliderPathRecalculation) {
             Bounds bounds = col2D.bounds;
             AstarPath.active.UpdateGraphs(bounds);
