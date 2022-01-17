@@ -80,6 +80,12 @@ public class Items : MonoBehaviour {
          groundCanvas.SetActive(false);
          if(itemType == type.straw)transform.GetChild(0).GetComponent<SetStrawUI>().DestroyActualStrawData();
       }
+
+      if (HealthPlayer.Instance.isDeath)
+      {
+         groundCanvas.SetActive(false);
+         if(itemType == type.straw)transform.GetChild(0).GetComponent<SetStrawUI>().DestroyActualStrawData();
+      }
    }
    
    /// <summary>
