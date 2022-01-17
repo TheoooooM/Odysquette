@@ -96,15 +96,17 @@ public class UIManager : MonoBehaviour {
             loadingBar.value += loadingBar.maxValue * chargeSpeed * 0.01f;
         }
 
-        UltimateImageData data = ultimateImg.GetComponent<UltimateImageData>();
-        ultimateAnim.SetInteger("UltimateProcent", (int) (ultimateValue * 100));
-        float posY = Mathf.Clamp(data.MinPosY + Mathf.Abs(data.MinPosY - data.MaxPosY) * ultimateValue, data.MinPosY, data.MaxPosY);
-        float height = Mathf.Clamp((data.MaxHeight - data.MinHeight) * ultimateValue, data.MinHeight, data.MaxHeight);
-        ultimateImg.GetComponent<RectTransform>().localPosition = new Vector3(ultimateImg.GetComponent<RectTransform>().localPosition.x, Mathf.Lerp( ultimateImg.GetComponent<RectTransform>().localPosition.y , posY, Time.deltaTime), ultimateImg.GetComponent<RectTransform>().localPosition.z);
-        ultimateImg.GetComponent<RectTransform>().sizeDelta = new Vector2(ultimateImg.GetComponent<RectTransform>().sizeDelta.x,  Mathf.Lerp( ultimateImg.GetComponent<RectTransform>().sizeDelta.y , height, Time.deltaTime));
+        if (inGameMenu.activeSelf) {
+            UltimateImageData data = ultimateImg.GetComponent<UltimateImageData>();
+            ultimateAnim.SetInteger("UltimateProcent", (int) (ultimateValue * 100));
+            float posY = Mathf.Clamp(data.MinPosY + Mathf.Abs(data.MinPosY - data.MaxPosY) * ultimateValue, data.MinPosY, data.MaxPosY);
+            float height = Mathf.Clamp((data.MaxHeight - data.MinHeight) * ultimateValue, data.MinHeight, data.MaxHeight);
+            ultimateImg.GetComponent<RectTransform>().localPosition = new Vector3(ultimateImg.GetComponent<RectTransform>().localPosition.x, Mathf.Lerp( ultimateImg.GetComponent<RectTransform>().localPosition.y , posY, Time.deltaTime), ultimateImg.GetComponent<RectTransform>().localPosition.z);
+            ultimateImg.GetComponent<RectTransform>().sizeDelta = new Vector2(ultimateImg.GetComponent<RectTransform>().sizeDelta.x,  Mathf.Lerp( ultimateImg.GetComponent<RectTransform>().sizeDelta.y , height, Time.deltaTime));
 
-        if(Input.GetKey(KeyCode.LeftAlt)) informationCanvasUI.UpdateData();
-        informationPanel.alpha += Input.GetKey(KeyCode.LeftAlt) ? animationInterfacValue * Time.deltaTime : -animationInterfacValue * Time.deltaTime;
+            if(Input.GetKey(KeyCode.LeftAlt)) informationCanvasUI.UpdateData();
+            informationPanel.alpha += Input.GetKey(KeyCode.LeftAlt) ? animationInterfacValue * Time.deltaTime : -animationInterfacValue * Time.deltaTime;
+        }
     }
 
     /// <summary>
@@ -145,6 +147,13 @@ public class UIManager : MonoBehaviour {
             finalNameTxt[i].text = leaderboard.nameArray[i];
             finalScoreTxt[i].text = leaderboard.scoreArray[i].ToString();
         }
+    }
+
+    /// <summary>
+    /// Quit the leaderboard when press resume
+    /// </summary>
+    public void QuitLeaderboard() {
+        leaderboard.gameObject.SetActive(false);
     }
     #endregion Score
 

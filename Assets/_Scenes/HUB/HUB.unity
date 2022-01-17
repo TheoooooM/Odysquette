@@ -702,6 +702,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 141201337}
     m_Modifications:
+    - target: {fileID: 471315064, guid: ebec07c317ab2a54f89f46f505ff47e3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 714290813, guid: ebec07c317ab2a54f89f46f505ff47e3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1736981282, guid: ebec07c317ab2a54f89f46f505ff47e3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1439850697666046935, guid: ebec07c317ab2a54f89f46f505ff47e3, type: 3}
       propertyPath: m_Name
       value: ---- INTERFACE
@@ -754,51 +766,20 @@ PrefabInstance:
       propertyPath: isHUB
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2484891583160465988, guid: ebec07c317ab2a54f89f46f505ff47e3, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -262.21518
-      objectReference: {fileID: 0}
-    - target: {fileID: 2484891583160465988, guid: ebec07c317ab2a54f89f46f505ff47e3, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.000061035156
-      objectReference: {fileID: 0}
-    - target: {fileID: 2786246895488307707, guid: ebec07c317ab2a54f89f46f505ff47e3, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2786246895488307707, guid: ebec07c317ab2a54f89f46f505ff47e3, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2864233590650913897, guid: ebec07c317ab2a54f89f46f505ff47e3, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -229.52988
-      objectReference: {fileID: 0}
-    - target: {fileID: 2864233590650913897, guid: ebec07c317ab2a54f89f46f505ff47e3, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.0000076293945
-      objectReference: {fileID: 0}
-    - target: {fileID: 6973079010271426606, guid: ebec07c317ab2a54f89f46f505ff47e3, type: 3}
-      propertyPath: m_FillAmount
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 8588562610838183342, guid: ebec07c317ab2a54f89f46f505ff47e3, type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8588562610868285656, guid: ebec07c317ab2a54f89f46f505ff47e3, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8588562610868285658, guid: ebec07c317ab2a54f89f46f505ff47e3, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebec07c317ab2a54f89f46f505ff47e3, type: 3}
 --- !u!4 &148710076 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1439850697666046936, guid: ebec07c317ab2a54f89f46f505ff47e3, type: 3}
+  m_PrefabInstance: {fileID: 148710075}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &148710077 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 714290813, guid: ebec07c317ab2a54f89f46f505ff47e3, type: 3}
   m_PrefabInstance: {fileID: 148710075}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &151830907 stripped
@@ -5247,6 +5228,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 611353530582274819, guid: cc16ba305cd0c0a4cb9b7145107e1cb0, type: 3}
+      propertyPath: kodakFlash
+      value: 
+      objectReference: {fileID: 8300000, guid: 93e2bbaa18d72df41bba0440e3a695a0, type: 3}
     - target: {fileID: 5233931782087560096, guid: cc16ba305cd0c0a4cb9b7145107e1cb0, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -5409,6 +5394,17 @@ Transform:
   m_Father: {fileID: 813892712}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1110274214 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1439850697666046937, guid: ebec07c317ab2a54f89f46f505ff47e3, type: 3}
+  m_PrefabInstance: {fileID: 148710075}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e23f4c1bd230e944aa63ac2ab24b9a0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1139526411
 GameObject:
   m_ObjectHideFlags: 0
@@ -6498,7 +6494,31 @@ MonoBehaviour:
         m_CallState: 2
   interactTriggerEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 148710077}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1110274214}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: setLeaderboard
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   exitTriggerEvent:
     m_PersistentCalls:
       m_Calls:
@@ -6514,7 +6534,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 148710077}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -6526,6 +6546,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  disableEvent:
+    m_PersistentCalls:
+      m_Calls: []
   radiusDetection: 2
   needToPressE: 1
 --- !u!58 &1397469156
@@ -7452,6 +7475,9 @@ MonoBehaviour:
   exitTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
+  disableEvent:
+    m_PersistentCalls:
+      m_Calls: []
   radiusDetection: 3
   needToPressE: 0
 --- !u!58 &1566419594
@@ -7935,6 +7961,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   exitTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  disableEvent:
     m_PersistentCalls:
       m_Calls: []
   radiusDetection: 3.03
