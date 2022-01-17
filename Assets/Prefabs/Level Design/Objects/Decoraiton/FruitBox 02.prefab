@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 7278906038559745602}
   - component: {fileID: 1462363369728281760}
   - component: {fileID: 3598846783337257988}
+  - component: {fileID: 3152050083483532271}
   m_Layer: 10
   m_Name: FruitBox 02
   m_TagString: DestructableObject
@@ -207,13 +208,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gamToDesactivate:
   - {fileID: 7278906038559745603}
+  spriteDestruction: []
   colliderPathRecalculation:
   - {fileID: 1462363369728281760}
-  col: {fileID: 0}
+  col: {fileID: 1462363369728281760}
   useTrigger: 0
   recalculatePath: 0
-  life: 79
+  life: 10
+  triggerName: Destroy
   particleToSpawn: {fileID: 0}
   particlePos: {fileID: 7278906038559745605}
   dropRate: 50
   maxRessources: 3
+--- !u!95 &3152050083483532271
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7278906038559745603}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f2f6e42f5930b044cb0b6d73d8697f24, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

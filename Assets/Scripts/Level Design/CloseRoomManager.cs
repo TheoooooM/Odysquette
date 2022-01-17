@@ -26,15 +26,19 @@ public class CloseRoomManager : MonoBehaviour {
     public void UpdateCloseRoom(bool openTop, bool openRight, bool openBottom, bool openLeft, bool changeLight = true, bool isLevelTwo = false) {
         if(closeRoom.CloseRoomTop != null) closeRoom.CloseRoomTop.SetActive(!openTop);
         foreach (GameObject gam in closeRoom.ObjectToDisableTop) { gam.SetActive(openTop); }
+        foreach (GameObject gam in closeRoom.ObjectToEnableTop) { gam.SetActive(openTop); }
         
         if(closeRoom.CloseRoomRight != null) closeRoom.CloseRoomRight.SetActive(!openRight);
         foreach (GameObject gam in closeRoom.ObjectToDisableRight) { gam.SetActive(openRight); }
+        foreach (GameObject gam in closeRoom.ObjectToEnableRight) { gam.SetActive(openRight); }
 
         if(closeRoom.CloseRoomBottom != null) closeRoom.CloseRoomBottom.SetActive(!openBottom);
         foreach (GameObject gam in closeRoom.ObjectToDisableBottom) { gam.SetActive(openBottom); }
+        foreach (GameObject gam in closeRoom.ObjectToEnableBottom) { gam.SetActive(openBottom); }
 
         if(closeRoom.CloseRoomLeft != null) closeRoom.CloseRoomLeft.SetActive(!openLeft);
         foreach (GameObject gam in closeRoom.ObjectToDisableLeft) { gam.SetActive(openLeft); }
+        foreach (GameObject gam in closeRoom.ObjectToEnableLeft) { gam.SetActive(openLeft); }
 
         if (changeLight) {
             if (isLevelTwo) ChangeRandomBuildingsLightLV2();
@@ -109,4 +113,17 @@ public class CloseRoomClass {
     
     [SerializeField] private List<GameObject> objectToDisableLeft = new List<GameObject>();
     public List<GameObject> ObjectToDisableLeft => objectToDisableLeft;
+    
+    [Space]
+    [SerializeField] private List<GameObject> objectToEnableTop = new List<GameObject>();
+    public List<GameObject> ObjectToEnableTop => objectToEnableTop;
+    
+    [SerializeField] private List<GameObject> objectToEnableRight = new List<GameObject>();
+    public List<GameObject> ObjectToEnableRight => objectToEnableRight;
+    
+    [SerializeField] private List<GameObject> objectToEnableBottom = new List<GameObject>();
+    public List<GameObject> ObjectToEnableBottom => objectToEnableBottom;
+    
+    [SerializeField] private List<GameObject> objectToEnableLeft = new List<GameObject>();
+    public List<GameObject> ObjectToEnableLeft => objectToEnableLeft;
 }
