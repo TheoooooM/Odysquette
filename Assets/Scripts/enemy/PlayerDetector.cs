@@ -39,7 +39,7 @@ public class PlayerDetector : MonoBehaviour {
 
     private void Start()
     {ESM = GetComponent<EnemyStateManager>();
-        StartCoroutine(WaitGenFinish());
+        if (patrol != null) StartCoroutine(WaitGenFinish());
     } 
     private void Update() => CheckDetection();
     #endregion Basic Methods

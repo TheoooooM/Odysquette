@@ -118,7 +118,17 @@ public class Bullet : MonoBehaviour {
             if(enemyStateManager.enabled) enemyStateManager.TakeDamage(damage, rb.position, knockUpValue, true, false);
             
             if (rateMode != StrawSO.RateMode.Ultimate) {
-                GameManager.Instance.ultimateValue += enemyStateManager.EMainStatsSo.coeifficentUltimateStrawPoints * ammountUltimate;
+                if (BossManager.instance != null)
+                {
+                    if (BossManager.instance.currentBossPhase != ExtensionMethods.PhaseBoss.Begin)
+                    {
+                        GameManager.Instance.ultimateValue += enemyStateManager.EMainStatsSo.coeifficentUltimateStrawPoints * ammountUltimate;
+                    }
+                }
+                else
+                {
+                    GameManager.Instance.ultimateValue += enemyStateManager.EMainStatsSo.coeifficentUltimateStrawPoints * ammountUltimate;
+                }
             }
             
             if (_pierceCount > 0 && lastEnemyHit != other.gameObject && GameManager.Instance.HasEffect(GameManager.Effect.piercing)) {
