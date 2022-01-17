@@ -267,6 +267,7 @@ public class Playercontroller : MonoBehaviour {
 
                 if (ultimateIsPress)
                 {
+                    Debug.Log("Ulti");
                     GameManager.Instance.utlimate = true;
                 }
 
@@ -316,7 +317,7 @@ public class Playercontroller : MonoBehaviour {
     }
     private void ShootOncanceled(InputAction.CallbackContext obj) { if(GameManager.Instance != null) GameManager.Instance.shooting = false; shootIsPress = false;}
     private void ShootGamepadOncanceled(InputAction.CallbackContext obj) { if(GameManager.Instance != null) GameManager.Instance.shooting = false; shootIsPress = false; }
-    private void SpecialShootOnperformed(InputAction.CallbackContext obj) { if(GameManager.Instance != null) if (!InDash) GameManager.Instance.utlimate = true; ultimateIsPress = true; }
+    private void SpecialShootOnperformed(InputAction.CallbackContext obj) { if(GameManager.Instance != null) if (!InDash) GameManager.Instance.utlimate = true; ultimateIsPress = true;}
     private void SpecialShootGamepadOnperformed(InputAction.CallbackContext obj) { if(GameManager.Instance != null) if (!InDash) GameManager.Instance.utlimate = true;
         ultimateIsPress = true;
     }

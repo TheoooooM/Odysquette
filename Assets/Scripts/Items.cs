@@ -27,6 +27,8 @@ public class Items : MonoBehaviour {
 
    [SerializeField] private DiscussionWithSeller seller;
 
+   private bool keypressed = true;
+   
    public bool shop;
 
    /// <summary>
@@ -35,8 +37,12 @@ public class Items : MonoBehaviour {
    /// <param name="ground"></param>
    public void SpawnObject(bool ground = false, DiscussionWithSeller sel = null) {
       playerInput = new PlayerMapping();
-      if (shop) playerInput.Interface.Enable();
+      playerInput.Interface.Enable();
       playerInput.Interface.Button.started += ButtonOnperformed;
+      playerInput.Interface.Button.canceled += ButtonOncanceled;
+      playerInput.Interface.GamePadButton.started += GamePadButtonOnstarted;
+      playerInput.Interface.GamePadButton.canceled += context => keypressed = false;
+      
 
       groundCanvas.SetActive(false);
       if (transform.GetChild(0).GetComponent<SetStrawUI>() == null) shopCanvas.SetActive(false);
@@ -46,8 +52,29 @@ public class Items : MonoBehaviour {
       shop = !ground;
    }
 
+   private void GamePadButtonOnstarted(InputAction.CallbackContext obj)
+   {
+      Debug.Log("GamePadBtn" + keypressed);
+      if (!keypressed)
+      {
+         keypressed = true;
+         if (inRange && !GameManager.Instance.isUltimate) {
+            if (cost <= NeverDestroy.Instance.ressources && shop) {
+               UseItem(obj.control.displayName, true);
+               NeverDestroy.Instance.AddRessource(-cost);
+               if(seller != null) seller.StartDiscusssion();
+            }
+            else if (!shop) UseItem(obj.control.displayName, true);
+         }
+      }
+   }
+
+   private void ButtonOncanceled(InputAction.CallbackContext obj)
+   {
+      keypressed = false;
+   }
+
    private void Update() {
-      if (Input.GetKeyUp(KeyCode.E) && !shop) playerInput.Interface.Enable();
       if (GameManager.Instance.shooting)
       {
          groundCanvas.SetActive(false);
@@ -59,14 +86,21 @@ public class Items : MonoBehaviour {
    /// When the player press a button
    /// </summary>
    /// <param name="obj"></param>
-   private void ButtonOnperformed(InputAction.CallbackContext obj) {
-      if (inRange && !GameManager.Instance.isUltimate) {
-         if (cost <= NeverDestroy.Instance.ressources && shop) {
-            UseItem(obj.control.displayName);
-            NeverDestroy.Instance.AddRessource(-cost);
-            if(seller != null) seller.StartDiscusssion();
+   private void ButtonOnperformed(InputAction.CallbackContext obj)
+   {
+      
+      if (!keypressed)
+      {
+         
+         keypressed = true;
+         if (inRange && !GameManager.Instance.isUltimate) {
+            if (cost <= NeverDestroy.Instance.ressources && shop) {
+               UseItem(obj.control.displayName);
+               NeverDestroy.Instance.AddRessource(-cost);
+               if(seller != null) seller.StartDiscusssion();
+            }
+            else if (!shop) UseItem(obj.control.displayName);
          }
-         else if (!shop) UseItem(obj.control.displayName);
       }
    }
 
@@ -74,49 +108,98 @@ public class Items : MonoBehaviour {
    /// When the player press a key
    /// </summary>
    /// <param name="buttonPress"></param>
-   private void UseItem(string buttonPress = "E") { 
-      
-      switch (buttonPress) {
-         case "E":
-            switch (itemType) {
-               case type.straw:
-                  transform.GetChild(0).GetComponent<SetStrawUI>().DestroyActualStrawData();
-                  DropStraw();
-                  GameManager.Instance.actualStraw = straw;
+   private void UseItem(string buttonPress = "E", bool isGamepad = false) { 
+      Debug.Log(buttonPress);
+      if (!isGamepad)
+      {
+         switch (buttonPress) {
+            case "E":
+               switch (itemType) {
+                  case type.straw:
+                     transform.GetChild(0).GetComponent<SetStrawUI>().DestroyActualStrawData();
+                     DropStraw();
+                     GameManager.Instance.actualStraw = straw;
                   
-                  break;
+                     break;
 
-               case type.juice:
-                  GameManager.Instance.secondEffect = effect;
-                  GameManager.Instance.SetVisualEffect();
-                  break;
+                  case type.juice:
+                     GameManager.Instance.secondEffect = effect;
+                     GameManager.Instance.SetVisualEffect();
+                     break;
 
-               case type.life:
-                  if(HealthPlayer.Instance != null) HealthPlayer.Instance.GiveHealthPlayer(1);
-                  break;
-               case type.doubleLife:
-                  if(HealthPlayer.Instance != null) HealthPlayer.Instance.GiveHealthPlayer(2);
-                  break;
-            }
-            AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.TakeItem);
-            Destroy(gameObject);
-            break;
+                  case type.life:
+                     if(HealthPlayer.Instance != null) HealthPlayer.Instance.GiveHealthPlayer(1);
+                     break;
+                  case type.doubleLife:
+                     if(HealthPlayer.Instance != null) HealthPlayer.Instance.GiveHealthPlayer(2);
+                     break;
+               }
+               AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.TakeItem);
+               Destroy(gameObject);
+               break;
 
-         case "A":
-            switch (itemType) {
-               case type.straw: break;
-               case type.juice:
+            case "A":
+               switch (itemType) {
+                  case type.straw: break;
+                  case type.juice:
+                     GameManager.Instance.firstEffect = effect;
+                     GameManager.Instance.SetVisualEffect();
+                     Destroy(gameObject);
+                     break;
+
+                  case type.life: break;
+
+                  case type.doubleLife: break;
+               }
+               AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.TakeItem);
+               break;
+         }
+      }
+      else
+      {
+         switch (buttonPress)
+         {
+            case "A" :
+               switch (itemType)
+               {
+                  case type.straw :
+                     transform.GetChild(0).GetComponent<SetStrawUI>().DestroyActualStrawData();
+                     DropStraw();
+                     GameManager.Instance.actualStraw = straw;
+                     break;
+                  
+                  case type.life:
+                     if(HealthPlayer.Instance != null) HealthPlayer.Instance.GiveHealthPlayer(1);
+                     break;
+                  
+                  case type.doubleLife:
+                     if(HealthPlayer.Instance != null) HealthPlayer.Instance.GiveHealthPlayer(2);
+                     break;
+                  
+               }
+               AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.TakeItem);
+               Destroy(gameObject);
+               break;
+            
+            case "X" :
+               if (itemType == type.juice)
+               {
                   GameManager.Instance.firstEffect = effect;
                   GameManager.Instance.SetVisualEffect();
                   Destroy(gameObject);
-                  break;
-
-               case type.life: break;
-
-               case type.doubleLife: break;
-            }
-            AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.TakeItem);
-            break;
+               }
+               break;
+            
+            case "Y" :
+               if (itemType == type.juice)
+               {
+                  GameManager.Instance.secondEffect = effect;
+                  GameManager.Instance.SetVisualEffect();
+                  Destroy(gameObject);
+               }
+               break;
+         }
+         AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.TakeItem);
       }
    }
 

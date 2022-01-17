@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Events;
 
 public class DialogSystem : MonoBehaviour {
@@ -19,7 +21,33 @@ public class DialogSystem : MonoBehaviour {
     private bool isInDialog = false;
     private bool canSkip = false;
     private int actualTextId = 0;
-    
+
+    private PlayerMapping input;
+
+    private void Awake()
+    {
+        input = new PlayerMapping();
+        input.Interface.Enable();
+        input.Interface.InteractBtn.started += InteractBtnOnstarted;
+    }
+
+    private void InteractBtnOnstarted(InputAction.CallbackContext obj)
+    {
+        if (actualTextId == textList.Count - 1 && text.maxVisibleCharacters >= textList[actualTextId].Length) {
+            dialogAnimator.SetTrigger(endTrigger);
+            Playercontroller.Instance.ChangeInputState(true);
+            isInDialog = false;
+            actualTextId = 0;
+        }
+        else if(canSkip) {
+            canSkip = false;
+            maxCharacterVisible = 0;
+            text.maxVisibleCharacters = (int) maxCharacterVisible;
+            actualTextId++;
+            pressEGam.SetActive(false);
+        }
+    }
+
     private void Start() => dialogAnimator = GetComponent<Animator>();
     
     public void StartDialog() {

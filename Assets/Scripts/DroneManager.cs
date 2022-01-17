@@ -35,7 +35,6 @@ public class DroneManager : MonoBehaviour
     }
     private void OnEnable() {
         if(AudioManager.Instance != null) AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Drone);
-        Debug.Log("testaa");
         int random = Random.Range(0, 100);
         if (chestProcentDrop > random) {
             withParcel = true;
@@ -58,7 +57,6 @@ public class DroneManager : MonoBehaviour
 
     Vector3 SetRandomPosition()
     {
-        Debug.Log("testaa");
         Vector2 randomDirection = Random.insideUnitCircle;
         float randomLength = Random.Range(minLength, maxLength);
         return posForLaunchParcel + (Vector3) randomDirection * randomLength;
@@ -70,12 +68,9 @@ public class DroneManager : MonoBehaviour
         {
             if (!beginLaunch)
             {
-                
-                Debug.Log("testaa");
             if (GoToDestination(posForLaunchParcel)) ;
             else
             {
-                Debug.Log("testaa");
                 CheckIfParcel();
             }
         }
@@ -84,14 +79,12 @@ public class DroneManager : MonoBehaviour
         {
             if (canMove)
             {
-                Debug.Log("testaa");
                 if (spriteRenderer.isVisible)
                 {
                     GoToDestination(destinationToExit * 10);
                 }
             else
             {
-                Debug.Log("testaa");
                 gameObject.SetActive(false);
             }
             }
@@ -114,10 +107,8 @@ public class DroneManager : MonoBehaviour
     
    bool GoToDestination(Vector3 destination)
    {
-       Debug.Log(Vector3.Distance(transform.position, destination));
        if (Vector3.Distance(transform.position, destination) > .1f) 
         {
-            Debug.Log("testaa");
             transform.position =
                 Vector3.MoveTowards(transform.position, destination, speed*Time.deltaTime);
             return true;

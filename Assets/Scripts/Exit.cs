@@ -35,6 +35,7 @@ public class Exit : MonoBehaviour {
 
     private void OnTriggerStay2D(Collider2D other) {
         if (ePress) {
+            Debug.Log("StillUsing");
             GameManager.Instance.SetND();
             if(!isShop && ! isHubTransition) NeverDestroy.Instance.PauseTimer();
             if (other.CompareTag("Player")) sceneManager.StartLoadScene(sceneToLoad);

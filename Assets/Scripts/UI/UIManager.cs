@@ -168,6 +168,7 @@ public class UIManager : MonoBehaviour {
         */
         totalScoreText.text = "Final Score : " + NeverDestroy.Instance.Score;
         GameOverPanel.SetActive(true);
+        cursor.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(gameOverFirstButton);
         //Time.timeScale = 0;

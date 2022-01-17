@@ -269,6 +269,15 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""GamePadButton"",
+                    ""type"": ""Value"",
+                    ""id"": ""6c2542e0-559f-4d80-aeee-bde9e61a60d6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""InteractBtn"",
                     ""type"": ""Value"",
                     ""id"": ""1c3efa28-bb21-4c3f-8d92-bd04f0ebf017"",
@@ -299,30 +308,19 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""ca5d2060-907c-4c44-ad32-0e4886c38094"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Button"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b82a2ac1-7735-4320-9705-4ab24e781622"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Button"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""27ba39f8-9d1b-42d6-be0e-c9c912b18b87"",
                     ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractBtn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5d91d9f7-9be4-4ad5-9746-56c067d29794"",
+                    ""path"": ""<XInputController>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -461,6 +459,61 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                     ""action"": ""LeftGamepadButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b565f03-9a6c-46ca-a50b-57e91cad8a05"",
+                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GamePadButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""63ff1122-5b0a-41f8-a94b-f6dbe21b6793"",
+                    ""path"": ""<XInputController>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GamePadButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4c1d5b3c-04cb-4559-b94a-ab5318842f9d"",
+                    ""path"": ""<XInputController>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GamePadButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ca5d2060-907c-4c44-ad32-0e4886c38094"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Button"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b82a2ac1-7735-4320-9705-4ab24e781622"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Button"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -509,6 +562,7 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
         // Interface
         m_Interface = asset.FindActionMap("Interface", throwIfNotFound: true);
         m_Interface_Button = m_Interface.FindAction("Button", throwIfNotFound: true);
+        m_Interface_GamePadButton = m_Interface.FindAction("GamePadButton", throwIfNotFound: true);
         m_Interface_InteractBtn = m_Interface.FindAction("InteractBtn", throwIfNotFound: true);
         m_Interface_Pause = m_Interface.FindAction("Pause", throwIfNotFound: true);
         m_Interface_LeftGamepadButton = m_Interface.FindAction("LeftGamepadButton", throwIfNotFound: true);
@@ -669,6 +723,7 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Interface;
     private IInterfaceActions m_InterfaceActionsCallbackInterface;
     private readonly InputAction m_Interface_Button;
+    private readonly InputAction m_Interface_GamePadButton;
     private readonly InputAction m_Interface_InteractBtn;
     private readonly InputAction m_Interface_Pause;
     private readonly InputAction m_Interface_LeftGamepadButton;
@@ -677,6 +732,7 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
         private @PlayerMapping m_Wrapper;
         public InterfaceActions(@PlayerMapping wrapper) { m_Wrapper = wrapper; }
         public InputAction @Button => m_Wrapper.m_Interface_Button;
+        public InputAction @GamePadButton => m_Wrapper.m_Interface_GamePadButton;
         public InputAction @InteractBtn => m_Wrapper.m_Interface_InteractBtn;
         public InputAction @Pause => m_Wrapper.m_Interface_Pause;
         public InputAction @LeftGamepadButton => m_Wrapper.m_Interface_LeftGamepadButton;
@@ -692,6 +748,9 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                 @Button.started -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnButton;
                 @Button.performed -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnButton;
                 @Button.canceled -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnButton;
+                @GamePadButton.started -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnGamePadButton;
+                @GamePadButton.performed -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnGamePadButton;
+                @GamePadButton.canceled -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnGamePadButton;
                 @InteractBtn.started -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnInteractBtn;
                 @InteractBtn.performed -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnInteractBtn;
                 @InteractBtn.canceled -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnInteractBtn;
@@ -708,6 +767,9 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                 @Button.started += instance.OnButton;
                 @Button.performed += instance.OnButton;
                 @Button.canceled += instance.OnButton;
+                @GamePadButton.started += instance.OnGamePadButton;
+                @GamePadButton.performed += instance.OnGamePadButton;
+                @GamePadButton.canceled += instance.OnGamePadButton;
                 @InteractBtn.started += instance.OnInteractBtn;
                 @InteractBtn.performed += instance.OnInteractBtn;
                 @InteractBtn.canceled += instance.OnInteractBtn;
@@ -754,6 +816,7 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
     public interface IInterfaceActions
     {
         void OnButton(InputAction.CallbackContext context);
+        void OnGamePadButton(InputAction.CallbackContext context);
         void OnInteractBtn(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnLeftGamepadButton(InputAction.CallbackContext context);
