@@ -166,19 +166,22 @@ public class Items : MonoBehaviour {
                      transform.GetChild(0).GetComponent<SetStrawUI>().DestroyActualStrawData();
                      DropStraw();
                      GameManager.Instance.actualStraw = straw;
+                     Destroy(gameObject);
                      break;
                   
                   case type.life:
                      if(HealthPlayer.Instance != null) HealthPlayer.Instance.GiveHealthPlayer(1);
+                     Destroy(gameObject);
                      break;
                   
                   case type.doubleLife:
                      if(HealthPlayer.Instance != null) HealthPlayer.Instance.GiveHealthPlayer(2);
+                     Destroy(gameObject);
                      break;
                   
                }
                AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.TakeItem);
-               Destroy(gameObject);
+               
                break;
             
             case "X" :
