@@ -147,7 +147,7 @@ public class CurveBullet : Bullet {
     {
         isColliding = true;
         
-        if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls")||other.gameObject.CompareTag("ShieldEnemy"))) {
+        if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls") || ! other.gameObject.CompareTag("DestructableObject")) ||other.gameObject.CompareTag("ShieldEnemy")) {
             if (GameManager.Instance.HasEffect(GameManager.Effect.poison)) PoolManager.Instance.SpawnPoisonPool(transform, other.contacts[0].normal);
             if (GameManager.Instance.HasEffect(GameManager.Effect.explosive)) Explosion();
             
@@ -171,8 +171,8 @@ public class CurveBullet : Bullet {
             PoolManager.Instance.SpawnImpactPool(transform);
         }
         else {
-            if (GameManager.Instance.HasEffect(GameManager.Effect.poison) && !other.gameObject.CompareTag("Walls")) PoolManager.Instance.SpawnPoisonPool(transform, other.contacts[0].normal);
-            if (GameManager.Instance.HasEffect(GameManager.Effect.explosive) && !other.gameObject.CompareTag("Walls")) Explosion();
+            if (GameManager.Instance.HasEffect(GameManager.Effect.poison) && ((!other.gameObject.CompareTag("Walls")) ||! other.gameObject.CompareTag("DestructableObject"))) PoolManager.Instance.SpawnPoisonPool(transform, other.contacts[0].normal);
+            if (GameManager.Instance.HasEffect(GameManager.Effect.explosive) && ((!other.gameObject.CompareTag("Walls")) ||! other.gameObject.CompareTag("DestructableObject"))) Explosion();
             DesactiveBullet();
         }
     }
