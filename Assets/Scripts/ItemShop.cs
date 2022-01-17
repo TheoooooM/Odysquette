@@ -43,7 +43,7 @@ public class ItemShop : Chest {
                 default: effect = GameManager.Effect.none;
                     break;
             }
-            Debug.Log("set " + effect);
+            //Debug.Log("set " + effect);
         }
 
         InstantiateItem(item);

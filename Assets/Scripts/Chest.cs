@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 public class Chest : MonoBehaviour {
@@ -16,17 +17,29 @@ public class Chest : MonoBehaviour {
     [SerializeField] private Color interactableColor;
     private SpriteRenderer sprite;
 
-    public virtual void Start() {
-        sprite = GetComponent<SpriteRenderer>();
+    private PlayerMapping input;
+
+    private void Awake()
+    {
+        input = new PlayerMapping();
+        input.Interface.Enable();
+        input.Interface.InteractBtn.performed += InteractBtnOnperformed;
     }
 
-    public virtual void Update() {
-        if (Input.GetKeyDown(KeyCode.E) && canOpen)
+    private void InteractBtnOnperformed(InputAction.CallbackContext obj)
+    {
+        if (canOpen)
         {
             AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.OpenChest);
             Generate();
         }
     }
+
+    public virtual void Start() {
+        sprite = GetComponent<SpriteRenderer>();
+    }
+
+    
 
     protected virtual void Generate() {
         float totalProb = 0;
