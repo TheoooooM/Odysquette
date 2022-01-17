@@ -63,8 +63,7 @@ public class EnemyDashCollision : MonoBehaviour
         } 
     }
 
-    public void CancelSmokeBool()
-    {
+    public void CancelSmokeBool() {
         smokeSpawn.localPosition = Vector3.zero; 
         isSmoke = false;
     }
