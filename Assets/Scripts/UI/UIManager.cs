@@ -66,6 +66,10 @@ public class UIManager : MonoBehaviour {
     public Slider loadingBar;
     public float chargeSpeed = 2.5f;
     [HideInInspector] public float loadingValue;
+    
+    
+    
+    
     #endregion VARIABLES
     
     private void Awake()

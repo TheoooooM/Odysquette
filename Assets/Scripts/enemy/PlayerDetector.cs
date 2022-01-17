@@ -104,7 +104,7 @@ public class PlayerDetector : MonoBehaviour {
         if (GetComponent<EnemyStateManager>() != null && callEnemy) {
             foreach (GameObject enemy in GetComponent<EnemyStateManager>().roomParent.ennemiesList) {
                 float distance = Vector2.Distance(transform.position, enemy.transform.position);
-                if (distance <= range && ESM.roomParent.runningRoom) {
+                if (distance <= range / 1.65f && ESM.roomParent.runningRoom) {
                     if(enemy.GetComponentInChildren<PlayerDetector>() != null) enemy.GetComponentInChildren<PlayerDetector>().EndDetection(false);
                 }
             }
