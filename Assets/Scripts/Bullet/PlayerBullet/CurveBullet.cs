@@ -111,7 +111,14 @@ public class CurveBullet : Bullet {
                     else {
                       
                         if (currentListWaypoint[currentStepPoint] == currentListWaypoint[currentListWaypoint.Count - 1]) {
+                            
+                            if(GameManager.Instance.HasEffect(GameManager.Effect.poison))
+                                PoolManager.Instance.SpawnPoisonPool(transform, transform.position);
+
+                                if (GameManager.Instance.HasEffect(GameManager.Effect.explosive))
+                                    Explosion();
                             DesactiveBullet();
+                            
                             Debug.Log("desacti ou lave");
                             return;
                         }
@@ -173,8 +180,10 @@ public class CurveBullet : Bullet {
         else {
             if (GameManager.Instance.HasEffect(GameManager.Effect.poison) && ((!other.gameObject.CompareTag("Walls")) ||! other.gameObject.CompareTag("DestructableObject"))) PoolManager.Instance.SpawnPoisonPool(transform, other.contacts[0].normal);
             if (GameManager.Instance.HasEffect(GameManager.Effect.explosive) && ((!other.gameObject.CompareTag("Walls")) ||! other.gameObject.CompareTag("DestructableObject"))) Explosion();
+            
             DesactiveBullet();
         }
+        if (other.gameObject.CompareTag("DestructableObject")) other.gameObject.GetComponent<DestructableObejct>().TakeDamage(damage);
     }
 
     protected override void OnCollisionExit2D(Collision2D other)

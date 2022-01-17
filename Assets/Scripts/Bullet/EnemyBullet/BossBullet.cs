@@ -25,13 +25,7 @@ public class BossBullet : MonoBehaviour
   
    private void Start()
    {
-    
- 
-    
-     speed = (Vector2.Distance(rocket.position, impact.position)/baseTime)*Time.deltaTime;
- 
- 
-
+     speed = (Vector2.Distance(rocket.position, impact.position)/baseTime);
    }
 
    private void OnEnable()
@@ -59,7 +53,7 @@ explosionRocket.SetActive(false);
     if (baseTime > baseTimer)
     {
       rocket.position = Vector2.MoveTowards(rocket.position, 
-        impact.position, speed);
+        impact.position, speed*Time.deltaTime);
       
       baseTimer +=Time.deltaTime;
       
