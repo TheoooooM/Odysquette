@@ -92,15 +92,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.65
-  m_fontSizeBase: 0.65
+  m_fontSize: 0.575
+  m_fontSizeBase: 0.575
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -288,6 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77ed7cc6d0c900846a2a8f8400ff3e1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audio: {fileID: 0}
   enterTriggerEvent:
     m_PersistentCalls:
       m_Calls:
@@ -333,6 +334,9 @@ MonoBehaviour:
           m_StringArgument: CloseCanvas
           m_BoolArgument: 0
         m_CallState: 2
+  disableEvent:
+    m_PersistentCalls:
+      m_Calls: []
   radiusDetection: 3.25
   needToPressE: 0
 --- !u!1 &3863356971534163401

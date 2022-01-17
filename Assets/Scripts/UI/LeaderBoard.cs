@@ -27,13 +27,7 @@ public class LeaderBoard : MonoBehaviour
         UpdateArray();
     }
 
-    public void UpdateArray()
-    {
-        for (int i = 0; i < scoreArray.Length-1; i++) {
-            scoreArray[i] = PlayerPrefs.GetInt(scoreArrayString[i], 0);
-            nameArray[i] = PlayerPrefs.GetString(nameArrayString[i], "");
-        }
-
+    public void UpdateArray() {
         nameArrayString[0] = "nameOne";
         nameArrayString[1] = "nameTwo";
         nameArrayString[2] = "nameThree";
@@ -53,6 +47,11 @@ public class LeaderBoard : MonoBehaviour
         scoreArrayString[6] = "scoreSeven";
         scoreArrayString[7] = "scoreEight";
         scoreArrayString[8] = "scoreNine";
+        
+        for (int i = 0; i < scoreArray.Length-1; i++) {
+            scoreArray[i] = PlayerPrefs.GetInt(scoreArrayString[i], 0);
+            nameArray[i] = PlayerPrefs.GetString(nameArrayString[i], "");
+        }
     }
     
     public void SetScore(string name, int score) {

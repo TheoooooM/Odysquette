@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DisquetteDiscussionManager : MonoBehaviour {
-    [SerializeField] private List<string> textDisquetteList = new List<string>();
+    [SerializeField, TextArea] private List<string> textDisquetteList = new List<string>();
     private List<string> enabledText = new List<string>();
 
     /// <summary>
