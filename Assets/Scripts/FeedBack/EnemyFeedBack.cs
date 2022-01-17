@@ -26,7 +26,6 @@ public class EnemyFeedBack : MonoBehaviour
 
     public void LaunchAnimation(string stateName)
     {
-        Debug.Log(stateName);
         if (animator.GetCurrentAnimatorStateInfo(0).IsName(stateName))
             return;
   

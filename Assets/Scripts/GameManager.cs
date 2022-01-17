@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using LootLocker.Requests;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -146,6 +147,8 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
         AddCommandConsole();
+
+        utlimate = false;
 
         UIManager.Instance.backgroundUltimateUI.material.SetFloat("_Thikness", 0);
         //LeaderBoard Setup
@@ -353,7 +356,7 @@ public class GameManager : MonoBehaviour {
                 }
             }
 
-            if (actualStrawClass.ultimateStrawSO != null && actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate && !disableStraw && Player.GetComponent<Playercontroller>().falling == false) {
+            if (actualStrawClass.ultimateStrawSO != null && actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate && !disableStraw && !Player.GetComponent<Playercontroller>().falling) {
                 if (ultimateValue >= 125) ShootUltimate();
             }
 
@@ -384,10 +387,8 @@ public class GameManager : MonoBehaviour {
         HealthPlayer.Instance.ultimateAura.SetActive(true);
         UIManager.Instance.backgroundUltimateUI.material.SetFloat("_Thikness", 0);
         HealthPlayer.Instance.CancelUltimate();
-        isUltimate = true; 
-                   
+        isUltimate = true;
         ultimateValue -= 125;
-        
         utlimate = false;
     }
     #endregion SHOOT

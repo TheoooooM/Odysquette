@@ -48,7 +48,7 @@ public class Bullet : MonoBehaviour {
         isDesactive = false;
         isEnable = false;
         basePosition = transform.position;
-        _pierceCount = pierceCount;
+        //_pierceCount = pierceCount;
         Invoke(nameof(DelayforDrag), 0.5f);
 
         StartCoroutine(WaitForDestroy());
@@ -115,28 +115,32 @@ public class Bullet : MonoBehaviour {
 
         if (other.CompareTag("Enemy")) {
             EnemyStateManager enemyStateManager = other.GetComponent<EnemyStateManager>();
-            if(enemyStateManager.enabled)
-            enemyStateManager.TakeDamage(damage, rb.position, knockUpValue, true, false);
+            if(enemyStateManager.enabled) enemyStateManager.TakeDamage(damage, rb.position, knockUpValue, true, false);
+            
             if (rateMode != StrawSO.RateMode.Ultimate) {
                 GameManager.Instance.ultimateValue += enemyStateManager.EMainStatsSo.coeifficentUltimateStrawPoints * ammountUltimate;
             }
             
             if (_pierceCount > 0 && lastEnemyHit != other.gameObject && GameManager.Instance.HasEffect(GameManager.Effect.piercing)) {
+                Debug.Log(other.gameObject.name);
                 _pierceCount--;
                 PoolManager.Instance.SpawnPiercePool(transform);
                 lastEnemyHit = other.gameObject;
                 //PoolManager.Instance.SpawnImpactPool(transform);
             }
-            else if(pierceCount == 0 || !GameManager.Instance.HasEffect(GameManager.Effect.piercing)){
+            else if(_pierceCount == 0 || !GameManager.Instance.HasEffect(GameManager.Effect.piercing)){
                 DesactiveBullet();
             }
         }
-        else if (!other.CompareTag("Walls") && !other.CompareTag("DestructableObject")) {
+        else if (!other.CompareTag("Walls") && !other.CompareTag("DestructableObject") && !other.CompareTag("Untagged")) {
+            Debug.Log(other.gameObject.tag);
             DesactiveBullet();
         }
     }
     
     public virtual void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.CompareTag("Enemy")) return;
+        
         isColliding = true;
         
         if (_bounceCount > 0 && (other.gameObject.CompareTag("Walls") || other.gameObject.CompareTag("ShieldEnemy") || other.gameObject.CompareTag("DestructableObject"))){

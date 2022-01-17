@@ -69,7 +69,6 @@ public class StateDash : StateEnemySO {
 
         enemyDashCollision.inDash = true;
         if (enemyDashCollision.isTrigger) {
-            Debug.Log("lit toi la collision");
             Playercontroller.Instance.KnockBack(timeKnockback, enemyDashCollision.direction, curveKnockback, speedKnockback);
             CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.CollideDuringPlayState);
             enemyDashCollision.direction = Vector2.zero;
@@ -82,10 +81,8 @@ public class StateDash : StateEnemySO {
         if (Vector2.Distance(rb.position, transformDash.position) < 0.2f || enemyDashCollision.contactWall) {
             CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.EndPlayState);
             enemyDashCollision.inDash = false;
-            Debug.Log("lit toi la collision avec les murs");
             transformDash.gameObject.SetActive(false);
             rb.velocity = Vector2.zero;
-            Debug.Log(Vector2.Distance(rb.position, transformDash.position) < 0.2f);
             endStep = true;
             enemyDashCollision.contactWall = false;
 

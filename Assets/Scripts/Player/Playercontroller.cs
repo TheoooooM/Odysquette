@@ -95,10 +95,10 @@ public class Playercontroller : MonoBehaviour {
         playerInput.Player.Shoot.canceled += ShootOncanceled;
         playerInput.Player.ShootGamepad.performed += ShootGamepadOnperformed;
         playerInput.Player.ShootGamepad.canceled += ShootGamepadOncanceled;
-        playerInput.Player.SpecialShoot.performed += SpecialShootOnperformed;
-        playerInput.Player.SpecialShootGamepad.performed += SpecialShootGamepadOnperformed;
+        playerInput.Player.SpecialShoot.started += SpecialShootOnperformed;
+        playerInput.Player.SpecialShootGamepad.started += SpecialShootGamepadOnperformed;
         playerInput.Player.SpecialShoot.canceled += SpecialShootOncanceled;
-        playerInput.Player.SpecialShoot.canceled += SpecialShootGamepadOncanceled;
+        playerInput.Player.SpecialShootGamepad.canceled += SpecialShootGamepadOncanceled;
         playerInput.Player.Dash.performed += DashOnperformed;
         playerInput.Player.DashGamepad.performed += DashGamepadOnperformed;
         playerInput.Player.Dash.canceled += DashCanceled;
@@ -139,9 +139,7 @@ public class Playercontroller : MonoBehaviour {
                 {
                     
                     timerKnockBack += Time.deltaTime;
-                    Debug.Log(currentDirectionKnockback);
-                    rb.velocity = currentDirectionKnockback *
-                                  curveSpeedKnockback.Evaluate(timerKnockBack / timeKnockback) * speedKnockback;
+                    rb.velocity = currentDirectionKnockback * curveSpeedKnockback.Evaluate(timerKnockBack / timeKnockback) * speedKnockback;
                 }
                 else ResetKnockack();
 
@@ -214,8 +212,7 @@ public class Playercontroller : MonoBehaviour {
         }
     }
 
-    private void FixedUpdate()
-    {
+    private void FixedUpdate() {
         if (!HealthPlayer.Instance.isDeath)
         {
             if (inKnockback)
@@ -260,14 +257,11 @@ public class Playercontroller : MonoBehaviour {
             else if (timerDash > timeDash)
             {
                 InDash = false;
-                if (shootIsPress)
-                {
+                if (shootIsPress) {
                     GameManager.Instance.shooting = true;
                 }
 
-                if (ultimateIsPress)
-                {
-                    Debug.Log("Ulti");
+                if (ultimateIsPress) {
                     GameManager.Instance.utlimate = true;
                 }
 
@@ -317,17 +311,18 @@ public class Playercontroller : MonoBehaviour {
     }
     private void ShootOncanceled(InputAction.CallbackContext obj) { if(GameManager.Instance != null) GameManager.Instance.shooting = false; shootIsPress = false;}
     private void ShootGamepadOncanceled(InputAction.CallbackContext obj) { if(GameManager.Instance != null) GameManager.Instance.shooting = false; shootIsPress = false; }
-    private void SpecialShootOnperformed(InputAction.CallbackContext obj) { if(GameManager.Instance != null) if (!InDash) GameManager.Instance.utlimate = true; ultimateIsPress = true;}
-    private void SpecialShootGamepadOnperformed(InputAction.CallbackContext obj) { if(GameManager.Instance != null) if (!InDash) GameManager.Instance.utlimate = true;
+
+    private void SpecialShootOnperformed(InputAction.CallbackContext obj) {
+        if(GameManager.Instance != null && !InDash) GameManager.Instance.utlimate = true; 
+        ultimateIsPress = true;
+    }
+    private void SpecialShootGamepadOnperformed(InputAction.CallbackContext obj) { 
+        if(GameManager.Instance != null && !InDash) GameManager.Instance.utlimate = true;
         ultimateIsPress = true;
     }
 
-    void SpecialShootOncanceled(InputAction.CallbackContext obj)
-    {
-        ultimateIsPress = false;}
-    void SpecialShootGamepadOncanceled(InputAction.CallbackContext obj)
-    {
-        ultimateIsPress = false;}
+    void SpecialShootOncanceled(InputAction.CallbackContext obj) => ultimateIsPress = false;
+    void SpecialShootGamepadOncanceled(InputAction.CallbackContext obj) => ultimateIsPress = false;
     #endregion Get Inputs
 
     //FALL

@@ -18,10 +18,8 @@ public class WallCollisionDash : WallCollisionManager
         Vector2 directionCollider = point - transform.position;
         if (Vector2.Angle(directionCollider, directionDash) < angle)
         {
-            Debug.Log(angle);
             return true;
         }
-        Debug.Log(angle);
         return false;
     }
 
