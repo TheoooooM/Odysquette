@@ -34,21 +34,8 @@ public class DialogSystem : MonoBehaviour {
         input.Interface.InteractBtn.started += InteractBtnOnstarted;
     }
 
-    private void InteractBtnOnstarted(InputAction.CallbackContext obj)
-    {
-        if (actualTextId == textList.Count - 1 && text.maxVisibleCharacters >= textList[actualTextId].Length) {
-            dialogAnimator.SetTrigger(endTrigger);
-            Playercontroller.Instance.ChangeInputState(true);
-            isInDialog = false;
-            actualTextId = 0;
-        }
-        else if(canSkip) {
-            canSkip = false;
-            maxCharacterVisible = 0;
-            text.maxVisibleCharacters = (int) maxCharacterVisible;
-            actualTextId++;
-            pressEGam.SetActive(false);
-        }
+    private void InteractBtnOnstarted(InputAction.CallbackContext obj) {
+        if(isInDialog && (actualTextId != pressCustomInputID || !useCustomInput)) ChangeTextState();
     }
 
     private void Start() => dialogAnimator = GetComponent<Animator>();
@@ -71,10 +58,7 @@ public class DialogSystem : MonoBehaviour {
                 pressEGam.GetComponent<TextMeshProUGUI>().text = actualTextId == pressCustomInputID && useCustomInput ? "PRESS RIGHT MOUSE BUTTON" : "PRESS E";
             }
             
-            if (Input.GetKeyDown(KeyCode.E) && (actualTextId != pressCustomInputID || !useCustomInput)) {
-                ChangeTextState();
-            }
-            else if (Input.GetMouseButtonDown(1) && actualTextId == pressCustomInputID && useCustomInput) {
+            if (Input.GetMouseButtonDown(1) && actualTextId == pressCustomInputID && useCustomInput) {
                 GameManager.Instance.ShootUltimate();
                 ChangeTextState();
             }
