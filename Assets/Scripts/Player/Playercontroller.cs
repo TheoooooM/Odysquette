@@ -362,7 +362,7 @@ public class Playercontroller : MonoBehaviour {
     /// <param name="Indash"></param>
     /// <param name="fl"></param>
     public void StartFall(fallScript.Side side, bool Indash = false, fallScript fl = null) {
-        Debug.Log("fall");
+      
         switch (side)
         {
             case fallScript.Side.top:

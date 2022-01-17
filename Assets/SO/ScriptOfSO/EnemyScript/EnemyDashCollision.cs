@@ -19,7 +19,7 @@ public class EnemyDashCollision : MonoBehaviour
     public bool firstGhost;
     public bool contactWall;
     public Vector2 contact;
-
+    private bool isSmoke; 
     private void Start()
     {
         currentLayerMask = LayerMask.NameToLayer("Player");
@@ -32,7 +32,7 @@ public class EnemyDashCollision : MonoBehaviour
             if (other.CompareTag("Player") && !Playercontroller.Instance.InDash)
             {
                 contact = (Vector3) other.ClosestPoint(transform.position) ;
-                direction =  (Vector3)contact -transform.position;
+                direction =  ((Vector3)contact -transform.position).normalized;
                
                  isTrigger = true;
             }
@@ -48,8 +48,25 @@ public class EnemyDashCollision : MonoBehaviour
     }
     public void SpawnFxSmoke()
     {
-     GameObject obj = EnemySpawnerManager.Instance.SpawnEnemyPool(smokeSpawn.position, EnemySpawnerManager.Instance.fxSmokeQueue, EnemySpawnerManager.Instance.fxSmokeDashPrefab);
-     obj.transform.rotation = smokeSpawn.rotation;
+
+        StartCoroutine(WaitFrameSmokeAnimation());
+    }
+
+    IEnumerator WaitFrameSmokeAnimation()
+    {
+        yield return new WaitForEndOfFrame();
+        if (!isSmoke)
+        {
+            isSmoke = true;
+            GameObject obj = EnemySpawnerManager.Instance.SpawnEnemyPool(smokeSpawn.position, EnemySpawnerManager.Instance.fxSmokeQueue, EnemySpawnerManager.Instance.fxSmokeDashPrefab);
+            obj.transform.rotation = smokeSpawn.rotation;
+        } 
+    }
+
+    public void CancelSmokeBool()
+    {
+        smokeSpawn.localPosition = Vector3.zero; 
+        isSmoke = false;
     }
     
 
