@@ -19,7 +19,7 @@ public class RoomContainer : MonoBehaviour {
     [SerializeField] private bool outsideRoom = false;
     public bool OutsideRoom => outsideRoom;
 
-    public RoomContainer neighboorContainer = null;
+    public int numberOfNeighboor = 0;
     
     #region Generation Variables
 
@@ -186,7 +186,7 @@ public class RoomContainer : MonoBehaviour {
         if (Generator == null) return;
         if (!Generator.disableNeighboor) return;
 
-        Vector2Int[] posName = new Vector2Int[] {
+        Vector2Int[] posName = {
             new Vector2Int(-1, 0),
             new Vector2Int(1, 0),
             new Vector2Int(0, -1),
@@ -199,10 +199,16 @@ public class RoomContainer : MonoBehaviour {
 
         foreach (Vector2Int pos in posName) {
             RoomContainer neighRoom = Generator.map[(int) roomMapPos.x + pos.x, (int) roomMapPos.y + pos.y];
-            if (neighRoom != null) neighRoom.neighbor = active;
-            if (active && neighRoom != null) neighRoom.gameObject.SetActive(true);
+            if(neighRoom == null) continue;
+            neighRoom.numberOfNeighboor += active ? 1 : -1;
             
-            if(neighRoom.OutsideRoom && neighRoom.neighboorContainer != null && neighRoom.neighboorContainer == this && !active) neighRoom.gameObject.SetActive(false);
+            //Debug.Log(neighRoom + " " + neighRoom.OutsideRoom + " " + neighRoom.neighboorContainer.roomMapPos + " =? " + roomMapPos + " activ : " + active + " " + (neighRoom.neighboorContainer.roomMapPos == roomMapPos));
+            
+            if ((neighRoom.numberOfNeighboor == 0 && !active) || (neighRoom.numberOfNeighboor > 0 && active) ) neighRoom.neighbor = active;
+            if(neighRoom.numberOfNeighboor > 0 && active) neighRoom.gameObject.SetActive(true);
+            if(neighRoom.OutsideRoom && neighRoom.numberOfNeighboor == 0 && !active) neighRoom.gameObject.SetActive(false);
+            /*if (active) neighRoom.gameObject.SetActive(true);
+            if (neighRoom.OutsideRoom && (neighRoom.neighboorContainer != null && neighRoom.neighboorContainer.roomMapPos == roomMapPos) && !active) neighRoom.gameObject.SetActive(false);*/
         }
     }
 
