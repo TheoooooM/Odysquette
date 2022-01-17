@@ -32,7 +32,7 @@ public class CameraControllers : MonoBehaviour {
 
     bool deathSet = false;
     private Vector3 deathCameraPos;
-
+    
     private void Start() {
         if (useCameraAsRail) cameraMain.transform.position = new Vector3(minPosX.position.x, 0, -10);
         if (Colorblindness.Instance != null && CommandConsoleRuntime.Instance != null) {

@@ -1461,7 +1461,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2709561131280274930, guid: 10cb611fbe6c7f642aeb7d8311a28f3c, type: 3}
       propertyPath: m_text
-      value: We place all our faith in you!
+      value: This world is no place for dictator!
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709561131280274930, guid: 10cb611fbe6c7f642aeb7d8311a28f3c, type: 3}
+      propertyPath: m_fontSize
+      value: 0.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709561131280274930, guid: 10cb611fbe6c7f642aeb7d8311a28f3c, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.58
       objectReference: {fileID: 0}
     - target: {fileID: 2709561131280274931, guid: 10cb611fbe6c7f642aeb7d8311a28f3c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1518,7 +1526,7 @@ Transform:
   - {fileID: 277197591}
   - {fileID: 1514775250}
   m_Father: {fileID: 379624313}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &284753391
 GameObject:
@@ -2181,7 +2189,6 @@ Transform:
   - {fileID: 813892712}
   - {fileID: 799577199}
   - {fileID: 1718080724}
-  - {fileID: 1566419595}
   - {fileID: 1397469154}
   - {fileID: 281547127}
   m_Father: {fileID: 0}
@@ -3861,7 +3868,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4125771558171050999, guid: 6542af212bd8ec6488659898a2be3c46, type: 3}
       propertyPath: m_text
-      value: "EUREKA! It worked! \nYou're alive!"
+      value: IT WORKED! We've been trying to create you for weeks now!
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6542af212bd8ec6488659898a2be3c46, type: 3}
@@ -6260,7 +6267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2709561131280274930, guid: 10cb611fbe6c7f642aeb7d8311a28f3c, type: 3}
       propertyPath: m_text
-      value: Poy! We created you to get rid of S1-m0N!
+      value: "Poy! We created you to get rid of \nS1-m0N! "
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10cb611fbe6c7f642aeb7d8311a28f3c, type: 3}
@@ -6438,7 +6445,7 @@ Transform:
   m_Children:
   - {fileID: 1476307512}
   m_Father: {fileID: 379624313}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1397469155
 MonoBehaviour:
@@ -6466,30 +6473,6 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
-        m_MethodName: set_text
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: PRESS E TO OPEN LEADERBOARD
           m_BoolArgument: 1
         m_CallState: 2
   interactTriggerEvent:
@@ -7210,7 +7193,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4125771558171050999, guid: 6542af212bd8ec6488659898a2be3c46, type: 3}
       propertyPath: m_text
-      value: Press *<b>Escape</b>* to open the pause menu!
+      value: Press Escape/Option to open the pause menu! You can change some settings
+        of the game!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4125771558171050999, guid: 6542af212bd8ec6488659898a2be3c46, type: 3}
+      propertyPath: m_fontSize
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4125771558171050999, guid: 6542af212bd8ec6488659898a2be3c46, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6542af212bd8ec6488659898a2be3c46, type: 3}
@@ -7435,81 +7427,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerMovementHub: {fileID: 1294315807}
   playerPrefab: {fileID: 1294315800}
---- !u!1 &1566419592
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1566419595}
-  - component: {fileID: 1566419594}
-  - component: {fileID: 1566419593}
-  m_Layer: 0
-  m_Name: CreditMenu
-  m_TagString: Untagged
-  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1566419593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1566419592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77ed7cc6d0c900846a2a8f8400ff3e1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audio: {fileID: 0}
-  enterTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  interactTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  exitTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  disableEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  radiusDetection: 3
-  needToPressE: 0
---- !u!58 &1566419594
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1566419592}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 3
---- !u!4 &1566419595
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1566419592}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -14.41, y: 9.87, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 379624313}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1586712849
 GameObject:
   m_ObjectHideFlags: 0
@@ -9016,7 +8933,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4125771558171050999, guid: 6542af212bd8ec6488659898a2be3c46, type: 3}
       propertyPath: m_text
-      value: Feel free to talk to everyone!
+      value: Feel free to talk to everyone. They may have usefull informations for
+        you!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4125771558171050999, guid: 6542af212bd8ec6488659898a2be3c46, type: 3}
+      propertyPath: m_fontSize
+      value: 0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 4125771558171050999, guid: 6542af212bd8ec6488659898a2be3c46, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.47
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6542af212bd8ec6488659898a2be3c46, type: 3}
@@ -9885,14 +9811,6 @@ PrefabInstance:
     - target: {fileID: 4125771557912049215, guid: 6542af212bd8ec6488659898a2be3c46, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4125771558171050999, guid: 6542af212bd8ec6488659898a2be3c46, type: 3}
-      propertyPath: m_text
-      value: Take the subway down to start your mission!
-      objectReference: {fileID: 0}
-    - target: {fileID: 4125771558171050999, guid: 6542af212bd8ec6488659898a2be3c46, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6542af212bd8ec6488659898a2be3c46, type: 3}

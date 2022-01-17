@@ -308,9 +308,9 @@ public class GameManager : MonoBehaviour {
                 }
             }
 
-            if (isMouse) Cursor.visible = true;
-            else Cursor.visible = false;
+            Cursor.visible = isMouse;
             mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            
             if (shooting && !isUltimate && PoolManager.Instance != null && !disableStraw && Player.GetComponent<Playercontroller>().falling == false) {
                 switch (actualStrawClass.strawSO.rateMode) {
                     case StrawSO.RateMode.FireLoading:{
@@ -354,17 +354,7 @@ public class GameManager : MonoBehaviour {
             }
 
             if (actualStrawClass.ultimateStrawSO != null && actualStrawClass.ultimateStrawSO.rateMode == StrawSO.RateMode.Ultimate && utlimate && !disableStraw && Player.GetComponent<Playercontroller>().falling == false) {
-                if (ultimateValue >= 125) {
-                    actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
-                    HealthPlayer.Instance.ultimateAura.SetActive(true);
-                    UIManager.Instance.backgroundUltimateUI.material.SetFloat("_Thikness", 0);
-                    HealthPlayer.Instance.CancelUltimate();
-                    isUltimate = true; 
-                   
-                    ultimateValue -= 125;
-                }
-
-                utlimate = false;
+                if (ultimateValue >= 125) ShootUltimate();
             }
 
             if (!shooting && !disableStraw && Player.GetComponent<Playercontroller>().falling == false) {
@@ -386,6 +376,23 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    
+    #region SHOOT
+
+    public void ShootUltimate() {
+        actualStrawClass.ultimateStrawSO.Shoot(actualStrawClass.spawnerTransform, this, 0);
+        HealthPlayer.Instance.ultimateAura.SetActive(true);
+        UIManager.Instance.backgroundUltimateUI.material.SetFloat("_Thikness", 0);
+        HealthPlayer.Instance.CancelUltimate();
+        isUltimate = true; 
+                   
+        ultimateValue -= 125;
+        
+        utlimate = false;
+    }
+    #endregion SHOOT
+    
+    
     private void FixedUpdate() {
         if (!HealthPlayer.Instance.isDeath) {
             if (isMouse && actualStrawClass.StrawName != "") {
