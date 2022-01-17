@@ -39,7 +39,7 @@ public class WallCollisionDash : WallCollisionManager
         {
             if (enemyDashCollision.inDash)
             {
-                if( CheckAngle(other.contacts[0].point))
+                if( CheckAngle(other.contacts[0].point) || rb.velocity == Vector2.zero)
             enemyDashCollision.contactWall = true;
                 
             }
