@@ -46,21 +46,23 @@ public class EnemyDashCollision : MonoBehaviour
         fxPrefab.transform.rotation = Quaternion.Euler(0,0,angle);
         print("je fais le dash");
     }
+
     public void SpawnFxSmoke()
     {
-
-        StartCoroutine(WaitFrameSmokeAnimation());
+        if (!isSmoke)
+        {
+            StartCoroutine(WaitFrameSmokeAnimation());
+        }
     }
 
     IEnumerator WaitFrameSmokeAnimation()
     {
         yield return new WaitForEndOfFrame();
-        if (!isSmoke)
-        {
+        
             isSmoke = true;
             GameObject obj = EnemySpawnerManager.Instance.SpawnEnemyPool(smokeSpawn.position, EnemySpawnerManager.Instance.fxSmokeQueue, EnemySpawnerManager.Instance.fxSmokeDashPrefab);
             obj.transform.rotation = smokeSpawn.rotation;
-        } 
+        
     }
 
     public void CancelSmokeBool() {
@@ -68,14 +70,11 @@ public class EnemyDashCollision : MonoBehaviour
         isSmoke = false;
     }
     
-
-
-
     public void GhostDash()
     {
         if (!firstGhost)
         {
-            EnemySpawnerManager.Instance.GetFromPool(transform);
+            EnemySpawnerManager.Instance.GetFromPool(transform); 
             firstGhost = true;
         }
         if (Vector3.Distance(transform.position , lastImageposition) > distanceBetweenImage)
@@ -83,7 +82,6 @@ public class EnemyDashCollision : MonoBehaviour
             EnemySpawnerManager.Instance.GetFromPool(transform);
             lastImageposition = transform.position;
         }
-      
     }
 
     public void CancelGhostDash()
