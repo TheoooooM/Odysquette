@@ -128,7 +128,4 @@ public class LeaderBoard : MonoBehaviour
             }
         }*/
     }
-
-
-
 }
