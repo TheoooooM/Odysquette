@@ -294,8 +294,9 @@ public class BossManager : MonoBehaviour {
         AudioManager.Instance.PlayBossSound(sound);
     }
 
-    public void PlaySoundWithoutCheck(int soundIndex)
-    {
+    
+    public void PlaySoundWithoutCheck(int soundIndex) {
+        Debug.Log("ok");
         AudioManager.BossSoundEnum sound = (AudioManager.BossSoundEnum) soundIndex;
         AudioManager.Instance.PlayBossSound(sound);
     }

@@ -115,7 +115,7 @@ public class UIManager : MonoBehaviour {
     /// Pause the game
     /// </summary>
     public void Pause() {
-        if (Generation.Instance == null || (Generation.Instance != null && !Generation.Instance.endGeneration)) return; 
+        if ((Generation.Instance != null && !Generation.Instance.endGeneration)) return; 
         inGameMenu.GetComponent<CanvasGroup>().alpha = 0;
         cursor.SetActive(false);
         pauseMenu.SetActive(true);

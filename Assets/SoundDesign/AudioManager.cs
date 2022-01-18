@@ -107,6 +107,10 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] private float timeBetweentwoBounce = 0.07f;
     [SerializeField] private float timeBetweentwoPierce = 0.07f;
     [SerializeField] private float timeBetweenTwoShoot = 0.1f;
+    [SerializeField] private float timeBetweenTurretShoot = 0.1f;
+    [SerializeField] private float timeBetweenDashBoss = 0.1f;
+    
+    
     [Space] [SerializeField] private float maxDistanceExplosion = 15;
     [SerializeField] private float maxDistanceImpact = 15;
     [SerializeField] private float maxDistanceBounce = 35;
@@ -128,11 +132,19 @@ public class AudioManager : MonoBehaviour {
     private bool canBounce = true;
     private bool canPierce = true;
     private bool canPoison = true;
+    
+    
+    private bool canTurretShoot = true;
+    private bool canDashBoss = true;
+    
+    
     private float impactTimer = 0;
     private float poisonTimer = 0;
     private float pierceTimer = 0;
     private float bounceTimer = 0;
     private float explosionTimer = 0;
+    private float turretShootTimer = 0;
+    private float dashBossTimer = 0;
     
     //SHOOT
     private bool canShoot = true;
@@ -176,6 +188,16 @@ public class AudioManager : MonoBehaviour {
         if (!canShoot) {
             shootTimer += Time.deltaTime;
             if (shootTimer >= timeBetweenTwoShoot) canShoot = true;
+        }
+        
+        if (!canTurretShoot) {
+            turretShootTimer += Time.deltaTime;
+            if (turretShootTimer >= timeBetweenTurretShoot) canTurretShoot = true;
+        }
+        
+        if (!canDashBoss) {
+            dashBossTimer += Time.deltaTime;
+            if (dashBossTimer >= timeBetweenDashBoss) canDashBoss = true;
         }
 
         sfxSoundMultiplier = Mathf.Clamp(PlayerPrefs.GetFloat("sfx", .2f) * .7f, 0, 1);
@@ -318,13 +340,14 @@ public class AudioManager : MonoBehaviour {
     }
 
     public void PlayBossSound(BossSoundEnum sound) {
+       
         switch (sound) {
             case BossSoundEnum.ShieldOff:{
-                calmSfxAudioSource.PlayOneShot(cancelShieldBoss,  calmSfxAudioSource.volume * sfxSoundMultiplier * 85f);
+                calmSfxAudioSource.PlayOneShot(cancelShieldBoss,  calmSfxAudioSource.volume * sfxSoundMultiplier * .85f);
             }
                 break;
             case BossSoundEnum.ShieldOn:{
-                calmSfxAudioSource.PlayOneShot(activateShieldBoss,  calmSfxAudioSource.volume * sfxSoundMultiplier * 85f);
+                calmSfxAudioSource.PlayOneShot(activateShieldBoss,  calmSfxAudioSource.volume * sfxSoundMultiplier * .85f);
             }
                 break;
             case BossSoundEnum.ShootBoss:{
@@ -332,11 +355,19 @@ public class AudioManager : MonoBehaviour {
             }
                 break;
             case BossSoundEnum.ShootTurret:{
-                calmSfxAudioSource.PlayOneShot(shootTurret,  calmSfxAudioSource.volume * sfxSoundMultiplier * 85f);
+                if (canTurretShoot) {
+                    calmSfxAudioSource.PlayOneShot(shootTurret,  calmSfxAudioSource.volume * sfxSoundMultiplier * .65f);
+                    canTurretShoot = false;
+                    turretShootTimer = 0;
+                }
             }
                 break;
             case BossSoundEnum.DashBoss:{
-                calmSfxAudioSource.PlayOneShot(shootTurret,  calmSfxAudioSource.volume * (sfxSoundMultiplier -0.2f)  * 85f);
+                if (canDashBoss) {
+                    calmSfxAudioSource.PlayOneShot(dashBoss,  calmSfxAudioSource.volume * (sfxSoundMultiplier -0.2f)  * .85f);
+                    canDashBoss = false;
+                    dashBossTimer = 0;
+                }
             }
                 break;
         }
