@@ -118,8 +118,6 @@ public class Generation : MonoBehaviour {
         endGeneration = false;
         currentPos = new Vector2(mapSize / 2, mapSize / 2);
 
-        UIManager.Instance.loadingBar.maxValue = nbrOfRoom;
-        UIManager.Instance.loadingBar.value = 0;
         UIManager.Instance.LoadingScreen.SetActive(true);
 
         GenerateFirstRoom();
@@ -166,9 +164,6 @@ public class Generation : MonoBehaviour {
                 break;
             }
         }
-
-        endGeneration = true;
-        UIUpdate();
 
         if (loopGeneration) {
             yield return new WaitForSeconds(.25f);
@@ -513,9 +508,14 @@ public class Generation : MonoBehaviour {
             for (int i = 0; i < room.transform.childCount; i++) {
                 mapPos = new Vector2Int((int) room.transform.GetChild(i).GetComponent<RoomContainer>().roomMapPos.x, (int) room.transform.GetChild(i).GetComponent<RoomContainer>().roomMapPos.y);
                 SearchNeighboorForInstanatiation(mapPos, room.transform.GetChild(i).transform.position);
+                yield return new WaitForSeconds(.2f);
             }
         }
         yield return null;
+        
+        endGeneration = true;
+        sceneMan.OpenScene();
+        UIUpdate();
     }
 
     /// <summary>
@@ -640,8 +640,6 @@ public class Generation : MonoBehaviour {
     private void UIUpdate(int value = 0){
         if (UIManager.Instance == null) return;
         UIManager UI = UIManager.Instance;
-        if (value > UI.loadingBar.value) UI.loadingValue = value;
         if (endGeneration) UI.LoadingScreen.SetActive(false);
-        sceneMan.OpenScene();
     }
 }

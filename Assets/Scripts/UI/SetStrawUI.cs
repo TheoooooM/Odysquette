@@ -48,7 +48,7 @@ public class SetStrawUI : MonoBehaviour {
         }
 
         float damage = possibleStraw[(int) straw].damage;
-        float fireRate = possibleStraw[(int) straw].timeValue;
+        float fireRate = maxFireRate - possibleStraw[(int) straw].timeValue;
 
         int numberOfBullet = straw switch {
             GameManager.Straw.basic => 1,
