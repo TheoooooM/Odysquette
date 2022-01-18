@@ -303,6 +303,15 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Select"",
+                    ""type"": ""Button"",
+                    ""id"": ""98cbdff3-3194-4a40-b7a6-65da327174e6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -514,6 +523,28 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                     ""action"": ""Button"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""175cc40a-8ac7-446c-a221-a8965269f91f"",
+                    ""path"": ""<Keyboard>/leftAlt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""04bca3fd-171f-4dc2-aa62-cab624e50f8d"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -566,6 +597,7 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
         m_Interface_InteractBtn = m_Interface.FindAction("InteractBtn", throwIfNotFound: true);
         m_Interface_Pause = m_Interface.FindAction("Pause", throwIfNotFound: true);
         m_Interface_LeftGamepadButton = m_Interface.FindAction("LeftGamepadButton", throwIfNotFound: true);
+        m_Interface_Select = m_Interface.FindAction("Select", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -727,6 +759,7 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
     private readonly InputAction m_Interface_InteractBtn;
     private readonly InputAction m_Interface_Pause;
     private readonly InputAction m_Interface_LeftGamepadButton;
+    private readonly InputAction m_Interface_Select;
     public struct InterfaceActions
     {
         private @PlayerMapping m_Wrapper;
@@ -736,6 +769,7 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
         public InputAction @InteractBtn => m_Wrapper.m_Interface_InteractBtn;
         public InputAction @Pause => m_Wrapper.m_Interface_Pause;
         public InputAction @LeftGamepadButton => m_Wrapper.m_Interface_LeftGamepadButton;
+        public InputAction @Select => m_Wrapper.m_Interface_Select;
         public InputActionMap Get() { return m_Wrapper.m_Interface; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -760,6 +794,9 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                 @LeftGamepadButton.started -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnLeftGamepadButton;
                 @LeftGamepadButton.performed -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnLeftGamepadButton;
                 @LeftGamepadButton.canceled -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnLeftGamepadButton;
+                @Select.started -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnSelect;
+                @Select.performed -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnSelect;
+                @Select.canceled -= m_Wrapper.m_InterfaceActionsCallbackInterface.OnSelect;
             }
             m_Wrapper.m_InterfaceActionsCallbackInterface = instance;
             if (instance != null)
@@ -779,6 +816,9 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
                 @LeftGamepadButton.started += instance.OnLeftGamepadButton;
                 @LeftGamepadButton.performed += instance.OnLeftGamepadButton;
                 @LeftGamepadButton.canceled += instance.OnLeftGamepadButton;
+                @Select.started += instance.OnSelect;
+                @Select.performed += instance.OnSelect;
+                @Select.canceled += instance.OnSelect;
             }
         }
     }
@@ -820,5 +860,6 @@ public partial class @PlayerMapping : IInputActionCollection2, IDisposable
         void OnInteractBtn(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnLeftGamepadButton(InputAction.CallbackContext context);
+        void OnSelect(InputAction.CallbackContext context);
     }
 }

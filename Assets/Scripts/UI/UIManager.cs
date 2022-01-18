@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 
 public class UIManager : MonoBehaviour {
@@ -17,6 +18,7 @@ public class UIManager : MonoBehaviour {
     public float ultimateValue = 0;
     [Space] 
     [SerializeField] private CanvasGroup informationPanel = null;
+    private bool showingInfoPanel;
     [Space] 
     public  Image backgroundUltimateUI;
     public static UIManager Instance;
@@ -57,16 +59,29 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Image timerImg = null;
     [SerializeField] private Sprite chronoSpirte = null;
     [SerializeField] private Sprite pauseSprite = null;
-    [Header("----Generation----")] 
-    public GameObject LoadingScreen;
+    [Header("----Generation----")] public GameObject LoadingScreen;
+
+    private PlayerMapping input;
     #endregion VARIABLES
     
     private void Awake()
     {
+        input = new PlayerMapping();
+        input.Interface.Enable();
+        input.Interface.Select.performed += SelectOnperformed;
+        input.Interface.Select.canceled += context => showingInfoPanel = false;
         Instance = this;
         GameOverPanel.SetActive(false);
         
     }
+
+    private void SelectOnperformed(InputAction.CallbackContext obj)
+    {
+        Debug.Log("Show Interface");
+        informationCanvasUI.UpdateData();
+        showingInfoPanel = true;
+    }
+
     private void Start() {
         CommandConsole RESTART = new CommandConsole("restart", "restart : Restart all the game", null, (_) => { PlayAgain(); });
         CommandConsoleRuntime.Instance.AddCommand(RESTART);
@@ -93,8 +108,8 @@ public class UIManager : MonoBehaviour {
             ultimateImg.GetComponent<RectTransform>().localPosition = new Vector3(ultimateImg.GetComponent<RectTransform>().localPosition.x, Mathf.Lerp( ultimateImg.GetComponent<RectTransform>().localPosition.y , posY, Time.deltaTime), ultimateImg.GetComponent<RectTransform>().localPosition.z);
             ultimateImg.GetComponent<RectTransform>().sizeDelta = new Vector2(ultimateImg.GetComponent<RectTransform>().sizeDelta.x,  Mathf.Lerp( ultimateImg.GetComponent<RectTransform>().sizeDelta.y , height, Time.deltaTime));
 
-            if(Input.GetKey(KeyCode.LeftAlt)) informationCanvasUI.UpdateData();
-            informationPanel.alpha += Input.GetKey(KeyCode.LeftAlt) ? animationInterfacValue * Time.deltaTime : -animationInterfacValue * Time.deltaTime;
+            
+            informationPanel.alpha += showingInfoPanel ? animationInterfacValue * Time.deltaTime : -animationInterfacValue * Time.deltaTime;
         }
     }
 
