@@ -43,7 +43,7 @@ public class NeverDestroy : MonoBehaviour
     private string secondText;
     private bool canTimer = false;
 
-
+    public bool isAWin = false;
     private void Start() {
         if (minute < 10) minuteText = "0" + minute;
         else minuteText = minute.ToString();
@@ -105,5 +105,12 @@ public class NeverDestroy : MonoBehaviour
             UIManager.Instance.PauseTimer();
             UIManager.Instance.Timer.text = minuteText + " : " + secondText;
         }
+    }
+
+    /// <summary>
+    /// Win the fight
+    /// </summary>
+    public void GoHUbWin() {
+        isAWin = true;
     }
 }

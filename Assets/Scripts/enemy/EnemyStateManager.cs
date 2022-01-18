@@ -417,7 +417,7 @@ public class EnemyStateManager : MonoBehaviour {
                 AudioManager.Instance.PlayEnemyDeathSound(AudioManager.EnemySoundEnum.Death, gameObject);
 
                 collider2D.enabled = false;
-                col.enabled = false;
+                if(col != null) col.enabled = false;
 
                 rb.constraints = RigidbodyConstraints2D.FreezePosition;
                 roomParent.ennemiesList.Remove(transform.parent.gameObject);
