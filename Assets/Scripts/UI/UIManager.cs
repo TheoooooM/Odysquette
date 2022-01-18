@@ -216,6 +216,13 @@ public class UIManager : MonoBehaviour {
     }
 
 
+    /// <summary>
+    /// Disable the in game UI
+    /// </summary>
+    public void DisableUI() {
+        inGameMenu.SetActive(false);
+    }
+
     // Update is called once per frame
 
 }
