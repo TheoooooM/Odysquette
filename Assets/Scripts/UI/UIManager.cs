@@ -75,9 +75,7 @@ public class UIManager : MonoBehaviour {
         
     }
 
-    private void SelectOnperformed(InputAction.CallbackContext obj)
-    {
-        Debug.Log("Show Interface");
+    private void SelectOnperformed(InputAction.CallbackContext obj) {
         informationCanvasUI.UpdateData();
         showingInfoPanel = true;
     }
