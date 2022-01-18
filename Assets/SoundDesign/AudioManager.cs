@@ -16,8 +16,11 @@ public class AudioManager : MonoBehaviour {
     public static AudioManager Instance => instance;
 
     private void Awake() {
-        instance = this;
-        DontDestroyOnLoad(gameObject);
+        if (instance == null) {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else Destroy(gameObject);
     }
 
     #endregion INSTANCE
@@ -253,7 +256,7 @@ public class AudioManager : MonoBehaviour {
             case PlayerSoundEnum.Ressources:
             {
                 int rand = Random.Range(0, playerSound.ressourcesSoundList.Length);
-             calmSfxAudioSource.PlayOneShot(playerSound.ressourcesSoundList[rand], playerMovementAudioSource.volume  * sfxSoundMultiplier);
+             calmSfxAudioSource.PlayOneShot(playerSound.ressourcesSoundList[rand], playerMovementAudioSource.volume  * sfxSoundMultiplier * .25f);
                 }
                 break;
             case PlayerSoundEnum.Death:{
@@ -283,10 +286,9 @@ public class AudioManager : MonoBehaviour {
             
             case PlayerSoundEnum.Drone:{
                 float distanceToDrone = Mathf.Abs(Vector3.Distance(DroneManager.Instance.transform.position, Playercontroller.Instance.transform.position));
-
                 float distanceSubstract = Mathf.Clamp(maxDroneSound - distanceToDrone, 0.05f, maxDroneSound);
                 float droneRatio = distanceSubstract / maxDroneSound;
-                calmSfxAudioSource.PlayOneShot(playerSound.droneSound, droneRatio * maxDroneSound * 0.05f);
+                calmSfxAudioSource.PlayOneShot(playerSound.droneSound, droneRatio * maxDroneSound * 0.01f * sfxSoundMultiplier);
             }
                 break;
             case PlayerSoundEnum.UltimateReady:{

@@ -31,11 +31,21 @@ public class DialogSystem : MonoBehaviour {
     {
         input = new PlayerMapping();
         input.Interface.Enable();
+        input.Player.Enable();
         input.Interface.InteractBtn.started += InteractBtnOnstarted;
+        input.Player.SpecialShoot.started += InteractSpecialShoot;
+        input.Player.SpecialShootGamepad.started += InteractSpecialShoot;
     }
 
     private void InteractBtnOnstarted(InputAction.CallbackContext obj) {
         if(isInDialog && (actualTextId != pressCustomInputID || !useCustomInput)) ChangeTextState();
+    }
+    
+    private void InteractSpecialShoot(InputAction.CallbackContext obj) {
+        if(actualTextId == pressCustomInputID && useCustomInput && text.maxVisibleCharacters >= textList[actualTextId].Length) {
+            GameManager.Instance.ShootUltimate();
+            ChangeTextState();ChangeTextState();
+        }
     }
 
     private void Start() => dialogAnimator = GetComponent<Animator>();
@@ -55,12 +65,7 @@ public class DialogSystem : MonoBehaviour {
             if (text.maxVisibleCharacters >= textList[actualTextId].Length) {
                 canSkip = true;
                 pressEGam.SetActive(true);
-                pressEGam.GetComponent<TextMeshProUGUI>().text = actualTextId == pressCustomInputID && useCustomInput ? "PRESS RIGHT MOUSE BUTTON" : "PRESS E";
-            }
-            
-            if (Input.GetMouseButtonDown(1) && actualTextId == pressCustomInputID && useCustomInput) {
-                GameManager.Instance.ShootUltimate();
-                ChangeTextState();
+                pressEGam.GetComponent<TextMeshProUGUI>().text = actualTextId == pressCustomInputID && useCustomInput ? "PRESS RIGHT MOUSE BUTTON / RB (XBOX)" : "PRESS E / A (XBOX)";
             }
         }
     }

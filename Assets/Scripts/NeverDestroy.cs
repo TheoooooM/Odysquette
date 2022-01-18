@@ -113,4 +113,8 @@ public class NeverDestroy : MonoBehaviour
     public void GoHUbWin() {
         isAWin = true;
     }
+
+    public void ResetNeverDestroy() {
+        Destroy(gameObject);
+    }
 }

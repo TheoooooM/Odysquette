@@ -9,7 +9,6 @@ public class SpawnAnimation : MonoBehaviour {
     [SerializeField] private bool canSpawn = false;
     
     [Header("PreSpawn Data")]
-    [SerializeField] private Animator startCanvasAnim = null;
     [SerializeField] private bool hasSpawn = false;
     #endregion Variables
 
@@ -18,9 +17,8 @@ public class SpawnAnimation : MonoBehaviour {
     }
 
     private void Update() {
-        if ((Input.anyKeyDown) && !hasSpawn && canSpawn) {
+        if (!hasSpawn && canSpawn) {
             hasSpawn = true;
-            startCanvasAnim.SetTrigger("CloseAnim");
             machineAnimator.SetTrigger("SpawnPlayer");
         }
     }
@@ -31,6 +29,5 @@ public class SpawnAnimation : MonoBehaviour {
     /// </summary>
     public void ChangePressMenuState() {
         canSpawn = true;
-        startCanvasAnim.SetTrigger("PressAnim");
     }
 }
