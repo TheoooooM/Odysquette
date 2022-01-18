@@ -140,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77ed7cc6d0c900846a2a8f8400ff3e1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audio: {fileID: 0}
   enterTriggerEvent:
     m_PersistentCalls:
       m_Calls:
@@ -173,6 +174,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  disableEvent:
+    m_PersistentCalls:
+      m_Calls: []
   radiusDetection: 2
   needToPressE: 0
 --- !u!1 &2964618724567423038
@@ -392,6 +396,7 @@ GameObject:
   - component: {fileID: 2889021236120248295}
   - component: {fileID: 4089460554125462047}
   - component: {fileID: 1581858825259741062}
+  - component: {fileID: 6430653845427114077}
   m_Layer: 0
   m_Name: Press_Tx
   m_TagString: Untagged
@@ -515,3 +520,16 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6430653845427114077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8522000547716310708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3522e5831b1e2c46927bd4c80f71345, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textInput: to open your loot!

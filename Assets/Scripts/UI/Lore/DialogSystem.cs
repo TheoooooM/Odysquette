@@ -65,7 +65,7 @@ public class DialogSystem : MonoBehaviour {
             if (text.maxVisibleCharacters >= textList[actualTextId].Length) {
                 canSkip = true;
                 pressEGam.SetActive(true);
-                pressEGam.GetComponent<TextMeshProUGUI>().text = actualTextId == pressCustomInputID && useCustomInput ? "PRESS RIGHT MOUSE BUTTON / RB (XBOX)" : "PRESS E / A (XBOX)";
+                pressEGam.GetComponent<TextMeshProUGUI>().text = actualTextId == pressCustomInputID && useCustomInput ? (GameManager.Instance.isMouse ? "PRESS RIGHT MOUSE BUTTON" : "PRESS RB") : (GameManager.Instance.isMouse ? "PRESS E" : "PRESS A");
             }
         }
     }

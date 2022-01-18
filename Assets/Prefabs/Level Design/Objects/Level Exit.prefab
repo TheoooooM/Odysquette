@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77ed7cc6d0c900846a2a8f8400ff3e1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audio: {fileID: 0}
   enterTriggerEvent:
     m_PersistentCalls:
       m_Calls:
@@ -231,6 +232,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  disableEvent:
+    m_PersistentCalls:
+      m_Calls: []
   radiusDetection: 2
   needToPressE: 1
 --- !u!114 &6045858535631568993
@@ -336,6 +340,7 @@ GameObject:
   - component: {fileID: 6045858536441125660}
   - component: {fileID: 6045858536441125662}
   - component: {fileID: 6045858536441125661}
+  - component: {fileID: 3150031785642634368}
   m_Layer: 0
   m_Name: Press_Tx
   m_TagString: Untagged
@@ -390,7 +395,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Press E to '
+  m_text: Press E to <b>GO TO THE NEXT LEVEL</b>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c4293999b05086b44bdb581fecf1c679, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -459,3 +464,16 @@ MonoBehaviour:
   m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3150031785642634368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6045858536441125659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3522e5831b1e2c46927bd4c80f71345, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textInput: to go to the next level
