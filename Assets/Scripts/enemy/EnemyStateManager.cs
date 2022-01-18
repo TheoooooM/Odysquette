@@ -393,7 +393,6 @@ public class EnemyStateManager : MonoBehaviour {
     public virtual void OnDeath(bool byFall = false) {
         if (!isDead) {
             isDead = true;
-            
             GameObject GO = Resources.Load<GameObject>("Resource");
             GameManager.Instance.AddScore(scorePoint);
             int rdm = Random.Range(0, 5);
@@ -550,6 +549,12 @@ public class EnemyStateManager : MonoBehaviour {
         AudioManager.EnemySoundEnum sound =(AudioManager.EnemySoundEnum) soundIndex;
         AudioManager.Instance.PlayEnemySound(sound);
         inSoundCurrentState = true;
+    }
+
+    public void PlaySoundWithoutCheck(int soundIndex)
+    {
+        AudioManager.EnemySoundEnum sound =(AudioManager.EnemySoundEnum) soundIndex;
+        AudioManager.Instance.PlayEnemySound(sound);
     }
 
     

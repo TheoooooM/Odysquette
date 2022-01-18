@@ -115,6 +115,7 @@ public class StateShootBasic : StateShootSO
     {
         Vector2 directionPlayer = new Vector2();
       
+        CheckFeedBackEvent(enemyFeedBack, ExtensionMethods.EventFeedBackEnum.ShootOneTimeSound);
         for (int j = 0; j < numberWaveShoot; j++)
         {
        

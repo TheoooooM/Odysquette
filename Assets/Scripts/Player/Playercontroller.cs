@@ -321,8 +321,17 @@ public class Playercontroller : MonoBehaviour {
         ultimateIsPress = true;
     }
 
-    void SpecialShootOncanceled(InputAction.CallbackContext obj) => ultimateIsPress = false;
-    void SpecialShootGamepadOncanceled(InputAction.CallbackContext obj) => ultimateIsPress = false;
+    void SpecialShootOncanceled(InputAction.CallbackContext obj)
+    {
+        if(GameManager.Instance != null) GameManager.Instance.utlimate = false;
+        ultimateIsPress = false;
+    } 
+
+    void SpecialShootGamepadOncanceled(InputAction.CallbackContext obj)
+    {
+        if(GameManager.Instance != null) GameManager.Instance.utlimate = false;
+       ultimateIsPress = false; 
+    } 
     #endregion Get Inputs
 
     //FALL

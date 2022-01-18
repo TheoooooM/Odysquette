@@ -76,8 +76,8 @@ public static class ExtensionMethods
         StartFirstPosition,
         StartSecondPosition,
         CollideDuringPlayState,
-        EndFastMove
-        
+        EndFastMove,
+        ShootOneTimeSound
     }
 
 

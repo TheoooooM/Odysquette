@@ -300,6 +300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scorePoint: 100
   enemyFeedBack: {fileID: 0}
+  directionWall: {x: 0, y: 0, z: 0}
   isActivate: 0
   isContactWall: 0
   inSoundCurrentState: 0
@@ -640,7 +641,7 @@ MonoBehaviour:
             m_CallState: 2
           - m_Target: {fileID: 6353946706996803569}
             m_TargetAssemblyTypeName: EnemyStateManager, Assembly-CSharp
-            m_MethodName: PlaySound
+            m_MethodName: PlaySoundWithoutCheck
             m_Mode: 3
             m_Arguments:
               m_ObjectArgument: {fileID: 0}

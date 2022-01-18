@@ -51,7 +51,8 @@ public class AudioManager : MonoBehaviour {
         TakeItem,
         OpenChest,
         Drone, 
-        UltimateReady
+        UltimateReady,
+        Ressources,
     }
 
     [Header("----ENNEMY SOUND")] public AudioClip ennemiDeath;
@@ -249,6 +250,12 @@ public class AudioManager : MonoBehaviour {
                 }
             }
                 break;
+            case PlayerSoundEnum.Ressources:
+            {
+                int rand = Random.Range(0, playerSound.ressourcesSoundList.Length);
+             calmSfxAudioSource.PlayOneShot(playerSound.ressourcesSoundList[rand], playerMovementAudioSource.volume  * sfxSoundMultiplier);
+                }
+                break;
             case PlayerSoundEnum.Death:{
                 calmSfxAudioSource.PlayOneShot(playerSound.deathSound, calmSfxAudioSource.volume * sfxSoundMultiplier);
             }
@@ -279,7 +286,7 @@ public class AudioManager : MonoBehaviour {
 
                 float distanceSubstract = Mathf.Clamp(maxDroneSound - distanceToDrone, 0.05f, maxDroneSound);
                 float droneRatio = distanceSubstract / maxDroneSound;
-                calmSfxAudioSource.PlayOneShot(playerSound.droneSound, droneRatio * maxDroneSound * .65f);
+                calmSfxAudioSource.PlayOneShot(playerSound.droneSound, droneRatio * maxDroneSound * 0.05f);
             }
                 break;
             case PlayerSoundEnum.UltimateReady:{
@@ -484,6 +491,7 @@ public class PlayerSoundData {
     public AudioClip takeItem;
     public AudioClip droneSound;
     public AudioClip ultimateReadySound;
+    public AudioClip[] ressourcesSoundList;
 }
 
 
