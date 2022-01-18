@@ -1,11 +1,7 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data.OleDb;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 
@@ -63,13 +59,6 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Sprite pauseSprite = null;
     [Header("----Generation----")] 
     public GameObject LoadingScreen;
-    public Slider loadingBar;
-    public float chargeSpeed = 2.5f;
-    [HideInInspector] public float loadingValue;
-    
-    
-    
-    
     #endregion VARIABLES
     
     private void Awake()
@@ -96,10 +85,6 @@ public class UIManager : MonoBehaviour {
     /// update the loading bar
     /// </summary>
     private void Update() {
-        if (loadingBar.value < loadingValue) {
-            loadingBar.value += loadingBar.maxValue * chargeSpeed * 0.01f;
-        }
-
         if (inGameMenu.activeSelf) {
             UltimateImageData data = ultimateImg.GetComponent<UltimateImageData>();
             ultimateAnim.SetInteger("UltimateProcent", (int) (ultimateValue * 100));
