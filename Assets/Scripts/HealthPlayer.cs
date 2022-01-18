@@ -216,6 +216,7 @@ public class HealthPlayer : MonoBehaviour {
         isDeath = true;
         UIManager.Instance.inGameMenu.SetActive(false);
         spriteRenderer.sortingLayerName = "UI";
+        GameManager.Instance.actualStrawClass.StrawParent.GetComponent<SpriteRenderer>().sortingLayerName = "UI";
         if (BossManager.instance != null)
             BossManager.instance.healthBar.gameObject.SetActive(false);
 
