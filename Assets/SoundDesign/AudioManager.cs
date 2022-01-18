@@ -222,6 +222,12 @@ public class AudioManager : MonoBehaviour {
             musicAudioSource.clip = musicSound.hubMusic.music;
             musicAudioSource.Play();
         }
+        //HUB WIN
+        if (musicSound.hubWinMusic.sceneMusicName != "" && scene.name.ToUpper() == musicSound.hubWinMusic.sceneMusicName.ToUpper() && musicSound.hubWinMusic.music != null) {
+            musicAudioSource.Stop();
+            musicAudioSource.clip = musicSound.hubWinMusic.music;
+            musicAudioSource.Play();
+        }
         //TRANSITION
         else if (musicSound.transitionLevelMusic.sceneMusicName != "" && scene.name.ToUpper() == musicSound.transitionLevelMusic.sceneMusicName.ToUpper() && musicSound.transitionLevelMusic.music != null) {
             if (musicAudioSource.clip == musicSound.transitionLevelMusic.music) return;
@@ -531,6 +537,7 @@ public class PlayerSoundData {
 [System.Serializable]
 public class MusicSoundData {
     public MusicSoundBaseClass hubMusic = null;
+    public MusicSoundBaseClass hubWinMusic = null;
     public MusicSoundBaseClass transitionLevelMusic = null;
     public MusicSoundBaseClass inLevelCalmMusic = null;
     public MusicSoundBaseClass shopMusic = null;
