@@ -31,6 +31,7 @@ public class Ressource : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            AudioManager.Instance.PlayPlayerSound(AudioManager.PlayerSoundEnum.Ressources);
             NeverDestroy.Instance.AddRessource();
             Destroy(gameObject);
         }
